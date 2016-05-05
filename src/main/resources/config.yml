@@ -1,0 +1,125 @@
+#
+# MoreFish Configuration
+#
+version: 100
+
+contest:
+  auto-start: false
+  ranking-limit: 3
+
+messages:
+  fish: "&b[MoreFish]&r &e%player%&r fished %raritycolor%%length%cm &l%fishwithrarity%"
+  fish-announce: -1
+  new-1st: "&b[MoreFish]&r &e%player%&r is now the new 1st!"
+  new-1st-announce: -1
+
+fish-list:
+  common:
+    Shrimp:
+      display-name: "Shrimp"
+      length-min: 3
+      length-max: 8
+      icon: "RAW_FISH"
+    Anchovy:
+      display-name: "Anchovy"
+      length-min: 7
+      length-max: 13
+      icon: "RAW_FISH"
+    Croacker:
+      display-name: "Croacker"
+      length-min: 12
+      length-max: 15
+      icon: "RAW_FISH"
+    Crab:
+      display-name: "Crab"
+      length-min: 10
+      length-max: 15
+      icon: "RAW_FISH"
+    Mackerel:
+      display-name: "Mackerel"
+      length-min: 15
+      length-max: 30
+      icon: "RAW_FISH"
+  rare:
+    Jellyfish:
+      display-name: "Jellyfish"
+      length-min: 20
+      length-max: 40
+      icon: "RAW_FISH"
+      commands:
+      - "minecraft:effect @p minecraft:poison 3 1"
+      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" The jellyfish stung you with magical power!\",\"color\":\"none\"}]"
+    Squid:
+      display-name: "Squid"
+      length-min: 30
+      length-max: 50
+      icon: "INK_SACK"
+      commands:
+      - "minecraft:effect @p minecraft:blindness 5 1"
+      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" The squid gifted you some darkness!\",\"color\":\"none\"}]"
+    Breadfish:
+      display-name: "Breadfish"
+      lore:
+      - "&7Tell me have you seen"
+      - "&7the marvellous breadfish"
+      length-min: 10
+      length-max: 30
+      icon: "BREAD"
+    Flatfish:
+      display-name: "Flatfish"
+      length-min: 40
+      length-max: 75
+      icon: "RAW_FISH"
+    SeaBream:
+      display-name: "Sea Bream"
+      length-min: 50
+      length-max: 70
+      icon: "RAW_FISH"
+    SeaBass:
+      display-name: "Sea Bass"
+      length-min: 60
+      length-max: 100
+      icon: "RAW_FISH"
+    Salmon:
+      display-name: "Salmon"
+      length-min: 100
+      length-max: 130
+      icon: "RAW_FISH:1"
+  epic:
+    Magikarp:
+      display-name: "Magikarp"
+      lore:
+      - "&7Magikarp used Splash!"
+      length-min: 25
+      length-max: 35
+      icon: "RAW_FISH"
+    Clownfish:
+      display-name: "Clownfish"
+      length-min: 10
+      length-max: 18
+      icon: "RAW_FISH:2"
+    Pufferfish:
+      display-name: "Pufferfish"
+      length-min: 20
+      length-max: 30
+      icon: "RAW_FISH:3"
+    Tuna:
+      display-name: "Tuna"
+      length-min: 130
+      length-max: 180
+      icon: "RAW_FISH"
+  legendary:
+    BlueShark:
+      display-name: "Blue Shark"
+      lore:
+      - "&7&oThe Toughest Fish"
+      length-min: 180
+      length-max: 260
+      icon: "RAW_FISH"
+    PygmyWhale:
+      display-name: "Pygmy Whale"
+      lore:
+      - "&7&oThe Biggest Fish"
+      length-min: 600
+      length-max: 650
+      icon: "RAW_FISH"

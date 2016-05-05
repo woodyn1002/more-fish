@@ -1,0 +1,15 @@
+name: MoreFish
+version: 1.0-SNAPSHOT
+author: Efe
+main: me.elsiff.morefish.MoreFish
+commands:
+  morefish:
+    description: Main command for MoreFish.
+    usage: /morefish
+    aliases: [mf, fish]
+permissions:
+  morefish.admin:
+    default: op
+    description: Give user ability to control the fishing contest.
+  morefish.top:
+    description: Player with this permission can use /morefish top command.
