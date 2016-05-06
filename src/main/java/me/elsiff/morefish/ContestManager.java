@@ -1,6 +1,8 @@
 package me.elsiff.morefish;
 
 import org.bukkit.OfflinePlayer;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
 
@@ -9,6 +11,7 @@ public class ContestManager {
 	private final RecordComparator comparator = new RecordComparator();
 	private final List<Record> recordList = new ArrayList<Record>();
 	private boolean hasStarted = false;
+	private BukkitTask task = null;
 
 	public ContestManager(MoreFish plugin) {
 		this.plugin = plugin;
@@ -26,7 +29,18 @@ public class ContestManager {
 		hasStarted = true;
 	}
 
+	public void startWithTimer(long sec) {
+		task = new TimerTask().runTaskLater(plugin, 20 * sec);
+
+		start();
+	}
+
 	public void stop() {
+		if (task != null) {
+			task.cancel();
+			task = null;
+		}
+
 		recordList.clear();
 		hasStarted = false;
 	}
@@ -57,12 +71,22 @@ public class ContestManager {
 		Collections.sort(recordList, comparator);
 	}
 
-	public Record getRecord(int ranking) {
-		return ((recordList.size() >= ranking) ? recordList.get(ranking - 1) : null);
+	public Record getRecord(int number) {
+		return ((recordList.size() >= number) ? recordList.get(number - 1) : null);
 	}
 
 	public int getRecordAmount() {
 		return recordList.size();
+	}
+
+	public boolean hasRecord(OfflinePlayer player) {
+		for (Record record : recordList) {
+			if (record.getPlayer().equals(player)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public double getRecordLength(OfflinePlayer player) {
@@ -73,6 +97,16 @@ public class ContestManager {
 		}
 
 		return 0.0D;
+	}
+
+	public int getNumber(OfflinePlayer player) {
+		for (int i = 0; i < recordList.size(); i ++) {
+			if (recordList.get(i).getPlayer().equals(player)) {
+				return (i + 1);
+			}
+		}
+
+		return 0;
 	}
 
 	public void clearRecords() {
@@ -105,6 +139,13 @@ public class ContestManager {
 
 		public double getLength() {
 			return fish.getLength();
+		}
+	}
+
+	private class TimerTask extends BukkitRunnable {
+
+		public void run() {
+			plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "morefish stop");
 		}
 	}
 }

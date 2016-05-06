@@ -2,10 +2,12 @@ package me.elsiff.morefish.commands;
 
 import me.elsiff.morefish.ContestManager;
 import me.elsiff.morefish.MoreFish;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -71,9 +73,53 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 				return true;
 			}
 
-			contest.start();
+			boolean hasTimer = false;
+			long sec = 0;
 
-			plugin.getServer().broadcastMessage(prefix + "The fishing contest has started!");
+			if (args.length > 1) {
+				try {
+					sec = Long.parseLong(args[1]);
+				} catch (NumberFormatException ex) {
+					sender.sendMessage(prefix + "'" + args[1] + "' is invalid number.");
+					return true;
+				}
+
+				if (sec <= 0) {
+					sender.sendMessage(prefix + "Only positive number is available.");
+					return true;
+				}
+
+				hasTimer = true;
+				contest.startWithTimer(sec);
+			} else {
+				contest.start();
+			}
+
+
+			String msg = plugin.getConfig().getString("messages.contest-start.text");
+			msg = ChatColor.translateAlternateColorCodes('&', msg);
+
+			boolean broadcast = plugin.getConfig().getBoolean("messages.contest-start.broadcast");
+
+			if (broadcast) {
+				plugin.getServer().broadcastMessage(msg);
+			} else {
+				sender.sendMessage(msg);
+			}
+
+			if (hasTimer) {
+				String msgTimer = plugin.getConfig().getString("messages.contest-start.text-timer");
+				msgTimer = ChatColor.translateAlternateColorCodes('&', msgTimer);
+
+				msgTimer = msgTimer.replaceAll("%sec%", sec + "")
+						.replaceAll("%time%", getTimeString(sec));
+
+				if (broadcast) {
+					plugin.getServer().broadcastMessage(msgTimer);
+				} else {
+					sender.sendMessage(msgTimer);
+				}
+			}
 
 			return true;
 		} else if (args[0].equalsIgnoreCase("stop")) {
@@ -88,19 +134,23 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 				return true;
 			}
 
-			contest.start();
+			contest.stop();
 
-			plugin.getServer().broadcastMessage(prefix + "The fishing contest has stopped!");
 
-			int limit = plugin.getConfig().getInt("contest.ranking-limit");
-			for (int i = 1; i < limit + 1; i ++) {
-				ContestManager.Record record = contest.getRecord(i);
+			String msg = plugin.getConfig().getString("messages.contest-stop.text");
+			msg = ChatColor.translateAlternateColorCodes('&', msg);
 
-				if (record == null)
-					break;
+			boolean showRanking = plugin.getConfig().getBoolean("messages.contest-stop.show-ranking");
+			boolean broadcast = plugin.getConfig().getBoolean("messages.contest-stop.broadcast");
 
-				plugin.getServer().broadcastMessage(prefix +
-						"§9§l" + getOrdinal(i) + "§9:" + record.getPlayer().getName() + ", " + record.getLength() + "cm " + record.getFish().getName());
+			if (broadcast) {
+				plugin.getServer().broadcastMessage(msg);
+			} else {
+				sender.sendMessage(msg);
+			}
+
+			if (showRanking) {
+				sendRankingMessage(sender, broadcast);
 			}
 
 			return true;
@@ -147,24 +197,31 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 			}
 
 			if (contest.getRecordAmount() < 1) {
-				sender.sendMessage(prefix + "Nobody made any record yet.");
+				String msg = plugin.getConfig().getString("messages.contest-top.no-record");
+				sender.sendMessage(msg);
 			} else {
-				int limit = plugin.getConfig().getInt("contest.ranking-limit");
-				for (int i = 1; i < limit + 1; i ++) {
-					ContestManager.Record record = contest.getRecord(i);
-
-					if (record == null)
-						break;
-
-					sender.sendMessage(prefix +
-							"§e" + getOrdinal(i) + "§7: " + record.getPlayer().getName() + ", " + record.getLength() + "cm " + record.getFish().getName());
-				}
+				sendRankingMessage(sender, false);
 			}
 
 			return true;
 		}
 
 		return false;
+	}
+
+	private String getTimeString(long sec) {
+		String str = "";
+
+		int minutes = (int) (sec / 60);
+		int second = (int) (sec - minutes * 60);
+
+		if (minutes > 0) {
+			str += minutes + "m ";
+		}
+
+		str += second + "s";
+
+		return str;
 	}
 
 	private String getOrdinal(int number) {
@@ -177,6 +234,53 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 				return "3rd";
 			default:
 				return number + "th";
+		}
+	}
+
+	private void sendRankingMessage(CommandSender sender, boolean broadcast) {
+		String format = plugin.getConfig().getString("messages.contest-top.text");
+		format = ChatColor.translateAlternateColorCodes('&', format);
+
+		int limit = plugin.getConfig().getInt("contest.ranking-limit");
+
+		for (int i = 1; i < limit + 1; i ++) {
+			ContestManager.Record record = contest.getRecord(i);
+
+			if (record == null)
+				break;
+
+			String msg = format.replaceAll("%ordinal%", getOrdinal(i))
+					.replaceAll("%player%", record.getPlayer().getName())
+					.replaceAll("%length%", record.getLength() + "")
+					.replaceAll("%fish%", record.getFish().getName());
+
+			if (broadcast) {
+				plugin.getServer().broadcastMessage(msg);
+			} else {
+				sender.sendMessage(msg);
+			}
+		}
+
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
+			String msg;
+
+			if (plugin.getContestManager().hasRecord(player)) {
+				int number = contest.getNumber(player);
+				ContestManager.Record record = contest.getRecord(number);
+
+				msg = plugin.getConfig().getString("messages.contest-top.my-record.text")
+						.replaceAll("%ordinal%", getOrdinal(number))
+						.replaceAll("%number%", number + "")
+						.replaceAll("%player%", record.getPlayer().getName())
+						.replaceAll("%length%", record.getLength() + "")
+						.replaceAll("%fish%", record.getFish().getName());
+			} else {
+				msg = plugin.getConfig().getString("messages.contest-top.my-record.no-record");
+			}
+
+			msg = ChatColor.translateAlternateColorCodes('&', msg);
+			player.sendMessage(msg);
 		}
 	}
 }

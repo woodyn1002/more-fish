@@ -29,8 +29,8 @@ public class FishListener implements Listener {
 			CaughtFish fish = plugin.getFishManager().generateRandomFish();
 
 
-			String msgFish = getMessage("fish", event.getPlayer(), fish);
-			int ancFish = plugin.getConfig().getInt("messages.fish-announce");
+			String msgFish = getMessage("catch-fish.text", event.getPlayer(), fish);
+			int ancFish = plugin.getConfig().getInt("messages.catch-fish.announce");
 
 			announceMessage(event.getPlayer(), msgFish, ancFish);
 
@@ -42,8 +42,8 @@ public class FishListener implements Listener {
 
 			if (contest.hasStarted()) {
 				if (contest.isNew1st(fish)) {
-					String msgContest = getMessage("new-1st", event.getPlayer(), fish);
-					int ancContest = plugin.getConfig().getInt("messages.new-1st-announce");
+					String msgContest = getMessage("get-1st.text", event.getPlayer(), fish);
+					int ancContest = plugin.getConfig().getInt("messages.get-1st.announce");
 
 					announceMessage(event.getPlayer(), msgContest, ancContest);
 				}
@@ -74,6 +74,9 @@ public class FishListener implements Listener {
 	}
 
 	private void announceMessage(Player player, String message, int announce) {
+		if (message.isEmpty())
+			return;
+
 		switch (announce) {
 			case -1:
 				plugin.getServer().broadcastMessage(message);

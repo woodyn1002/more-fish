@@ -8,10 +8,26 @@ contest:
   ranking-limit: 3
 
 messages:
-  fish: "&b[MoreFish]&r &e%player%&r fished %raritycolor%%length%cm &l%fishwithrarity%"
-  fish-announce: -1
-  new-1st: "&b[MoreFish]&r &e%player%&r is now the new 1st!"
-  new-1st-announce: -1
+  catch-fish:
+    text: "&b[MoreFish]&r &e%player%&r fished %raritycolor%%length%cm &l%fishwithrarity%"
+    announce: -1
+  get-1st:
+    text: "&b[MoreFish]&r &e%player%&r is now the new 1st!"
+    announce: -1
+  contest-start:
+    text: "&b[MoreFish]&r The fishing contest has started!"
+    text-timer: "&b[MoreFish]&r Running time is limited to %time%."
+    broadcast: true
+  contest-stop:
+    text: "&b[MoreFish]&r The fishing contest has ended!"
+    show-ranking: true
+    broadcast: true
+  contest-top:
+    text: "&b[MoreFish]&r &e%ordinal%. &7: %player%, %length%cm %fish%"
+    no-record: "&b[MoreFish]&r Nobody made any record yet."
+    my-record:
+      text: "&b[MoreFish]&r You're %ordinal% now: %length%cm %fish%"
+      no-record: "&b[MoreFish]&r You didn't get any record."
 
 fish-list:
   common:
