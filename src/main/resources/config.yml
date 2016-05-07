@@ -26,7 +26,7 @@ messages:
     text: "&b[MoreFish]&r &e%ordinal%. &7: %player%, %length%cm %fish%"
     no-record: "&b[MoreFish]&r Nobody made any record yet."
     my-record:
-      text: "&b[MoreFish]&r You're %ordinal% now: %length%cm %fish%"
+      text: "&b[MoreFish]&r You're %ordinal%: %length%cm %fish%"
       no-record: "&b[MoreFish]&r You didn't get any record."
 
 fish-list:
