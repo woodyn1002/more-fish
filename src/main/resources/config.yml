@@ -96,12 +96,12 @@ fish-list:
       length-min: 60
       length-max: 100
       icon: "RAW_FISH"
-    Salmon:
-      display-name: "Salmon"
-      length-min: 100
-      length-max: 130
-      icon: "RAW_FISH:1"
   epic:
+    Pie:
+      display-name: "Pie"
+      length-min: 3.14
+      length-max: 3.14
+      icon: "PUMPKIN_PIE"
     Magikarp:
       display-name: "Magikarp"
       lore:
@@ -119,6 +119,11 @@ fish-list:
       length-min: 20
       length-max: 30
       icon: "RAW_FISH:3"
+    Salmon:
+      display-name: "Salmon"
+      length-min: 100
+      length-max: 130
+      icon: "RAW_FISH:1"
     Tuna:
       display-name: "Tuna"
       length-min: 130

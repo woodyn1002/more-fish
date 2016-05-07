@@ -134,8 +134,6 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 				return true;
 			}
 
-			contest.stop();
-
 
 			String msg = plugin.getConfig().getString("messages.contest-stop.text");
 			msg = ChatColor.translateAlternateColorCodes('&', msg);
@@ -152,6 +150,9 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 			if (showRanking) {
 				sendRankingMessage(sender, broadcast);
 			}
+
+
+			contest.stop();
 
 			return true;
 		} else if (args[0].equalsIgnoreCase("clear")) {
@@ -261,26 +262,36 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 			}
 		}
 
-		if (sender instanceof Player) {
-			Player player = (Player) sender;
-			String msg;
-
-			if (plugin.getContestManager().hasRecord(player)) {
-				int number = contest.getNumber(player);
-				ContestManager.Record record = contest.getRecord(number);
-
-				msg = plugin.getConfig().getString("messages.contest-top.my-record.text")
-						.replaceAll("%ordinal%", getOrdinal(number))
-						.replaceAll("%number%", number + "")
-						.replaceAll("%player%", record.getPlayer().getName())
-						.replaceAll("%length%", record.getLength() + "")
-						.replaceAll("%fish%", record.getFish().getName());
-			} else {
-				msg = plugin.getConfig().getString("messages.contest-top.my-record.no-record");
+		if (broadcast) {
+			for (Player player : plugin.getServer().getOnlinePlayers()) {
+				sendPrivateRankingMessage(player);
 			}
-
-			msg = ChatColor.translateAlternateColorCodes('&', msg);
-			player.sendMessage(msg);
+		} else {
+			if (sender instanceof Player) {
+				Player player = (Player) sender;
+				sendPrivateRankingMessage(player);
+			}
 		}
+	}
+
+	private void sendPrivateRankingMessage(Player player) {
+		String msg;
+
+		if (plugin.getContestManager().hasRecord(player)) {
+			int number = contest.getNumber(player);
+			ContestManager.Record record = contest.getRecord(number);
+
+			msg = plugin.getConfig().getString("messages.contest-top.my-record.text")
+					.replaceAll("%ordinal%", getOrdinal(number))
+					.replaceAll("%number%", number + "")
+					.replaceAll("%player%", record.getPlayer().getName())
+					.replaceAll("%length%", record.getLength() + "")
+					.replaceAll("%fish%", record.getFish().getName());
+		} else {
+			msg = plugin.getConfig().getString("messages.contest-top.my-record.no-record");
+		}
+
+		msg = ChatColor.translateAlternateColorCodes('&', msg);
+		player.sendMessage(msg);
 	}
 }
