@@ -7,11 +7,13 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class FishManager {
 	private final MoreFish plugin;
 	private final Random random = new Random();
+	private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy HH:mm");
 	private final Map<String, CustomFish> fishMap = new HashMap<String, CustomFish>();
 	private final Map<Rarity, List<CustomFish>> rarityMap = new HashMap<Rarity, List<CustomFish>>();
 
@@ -32,7 +34,6 @@ public class FishManager {
 			ConfigurationSection section = config.getConfigurationSection("fish-list." + rarity.name().toLowerCase());
 
 			for (String path : section.getKeys(false)) {
-				String name = path;
 				String displayName = section.getString(path + ".display-name");
 				List<String> lore = new ArrayList<String>();
 				double lengthMin = section.getDouble(path + ".length-min");
@@ -50,7 +51,7 @@ public class FishManager {
 
 				CustomFish fish = new CustomFish(displayName, lore, lengthMin, lengthMax, icon, commands, rarity);
 
-				this.fishMap.put(name, fish);
+				this.fishMap.put(path, fish);
 				this.rarityMap.get(rarity).add(fish);
 			}
 		}
@@ -77,11 +78,26 @@ public class FishManager {
 		ItemStack itemStack = new ItemStack(material, 1, durability);
 		ItemMeta meta = itemStack.getItemMeta();
 
-		String displayName = fish.getRarity().getColor() + fish.getName();
+		String displayName = plugin.getConfig().getString("item-format.display-name")
+				.replaceAll("%player%", fisher)
+				.replaceAll("%rarity%", fish.getRarity().name())
+				.replaceAll("%raritycolor%", fish.getRarity().getColor() + "")
+				.replaceAll("%fish%", fish.getName());
+		displayName = ChatColor.translateAlternateColorCodes('&', displayName);
+		
 		List<String> lore = new ArrayList<String>();
 
-		lore.add("§7" + fish.getLength() + "cm");
-		lore.add("§7Fished by " + fisher);
+		for (String str : plugin.getConfig().getStringList("item-format.lore")) {
+			String line = str
+					.replaceAll("%player%", fisher)
+					.replaceAll("%rarity%", fish.getRarity().name())
+					.replaceAll("%raritycolor%", fish.getRarity().getColor() + "")
+					.replaceAll("%length%", fish.getLength() + "")
+					.replaceAll("%fish%", fish.getName())
+					.replaceAll("%date%", dateFormat.format(new Date()));
+
+			line = ChatColor.translateAlternateColorCodes('&', line);
+		}
 
 		if (!fish.getLore().isEmpty()) {
 			for (String line : fish.getLore()) {

@@ -9,7 +9,7 @@ contest:
 
 messages:
   catch-fish:
-    text: "&b[MoreFish]&r &e%player%&r fished %raritycolor%%length%cm &l%fishwithrarity%"
+    text: "&b[MoreFish]&r &e%player%&r caught %raritycolor%%length%cm &l%fishwithrarity%"
     announce: -1
   get-1st:
     text: "&b[MoreFish]&r &e%player%&r is now the new 1st!"
@@ -28,6 +28,12 @@ messages:
     my-record:
       text: "&b[MoreFish]&r You're %ordinal%: %length%cm %fish%"
       no-record: "&b[MoreFish]&r You didn't get any record."
+
+item-format:
+  display-name: "%raritycolor%%fish%"
+  lore:
+  - "&7%length%cm"
+  - "&7Caught by %player%"
 
 fish-list:
   common:
