@@ -84,7 +84,7 @@ public class FishManager {
 				.replaceAll("%raritycolor%", fish.getRarity().getColor() + "")
 				.replaceAll("%fish%", fish.getName());
 		displayName = ChatColor.translateAlternateColorCodes('&', displayName);
-		
+
 		List<String> lore = new ArrayList<String>();
 
 		for (String str : plugin.getConfig().getStringList("item-format.lore")) {
@@ -97,6 +97,7 @@ public class FishManager {
 					.replaceAll("%date%", dateFormat.format(new Date()));
 
 			line = ChatColor.translateAlternateColorCodes('&', line);
+			lore.add(line);
 		}
 
 		if (!fish.getLore().isEmpty()) {

@@ -6,6 +6,7 @@ version: 100
 contest:
   auto-start: false
   ranking-limit: 3
+  only-for-contest: false
 
 messages:
   catch-fish:

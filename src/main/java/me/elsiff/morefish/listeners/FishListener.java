@@ -26,6 +26,10 @@ public class FishListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onFish(PlayerFishEvent event) {
 		if (event.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
+			if (plugin.getConfig().getBoolean("contest.only-for-contest") && !contest.hasStarted()) {
+				return;
+			}
+
 			CaughtFish fish = plugin.getFishManager().generateRandomFish();
 
 
@@ -74,7 +78,7 @@ public class FishListener implements Listener {
 	}
 
 	private void announceMessage(Player player, String message, int announce) {
-		if (message.isEmpty())
+		if (message.length() == 0)
 			return;
 
 		switch (announce) {
