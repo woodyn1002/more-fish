@@ -251,6 +251,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 				break;
 
 			String msg = format.replaceAll("%ordinal%", getOrdinal(i))
+					.replaceAll("%number%", i + "")
 					.replaceAll("%player%", record.getPlayer().getName())
 					.replaceAll("%length%", record.getLength() + "")
 					.replaceAll("%fish%", record.getFish().getName());

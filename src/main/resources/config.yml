@@ -1,7 +1,7 @@
 #
 # MoreFish Configuration
 #
-version: 100
+version: 101
 
 contest:
   auto-start: false
