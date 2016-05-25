@@ -19,7 +19,7 @@ public class UpdateChecker {
     }
 
     public boolean isUpToDate() {
-        return oldVersion.equals(newVersion);
+        return (oldVersion.contains("SNAPSHOT") || oldVersion.equals(newVersion));
     }
 
     public String getOldVersion() {
@@ -32,7 +32,7 @@ public class UpdateChecker {
 
     private String loadNewVersion() {
         try {
-            URL url = new URL("");
+            URL url = new URL("http://www.spigotmc.org/api/general.php");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
             con.setDoOutput(true);

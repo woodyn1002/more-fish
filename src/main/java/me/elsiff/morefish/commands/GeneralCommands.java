@@ -55,7 +55,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 		if (args.length < 1 || args[0].equalsIgnoreCase("help")) {
 			sender.sendMessage(prefix + "§3> ===== §b§lMoreFish §bv" + plugin.getDescription().getVersion() + "§3 ===== <");
 			sender.sendMessage(prefix + "/" + label + " help");
-			sender.sendMessage(prefix + "/" + label + " start (running time (sec))");
+			sender.sendMessage(prefix + "/" + label + " start (runningTime)");
 			sender.sendMessage(prefix + "/" + label + " stop");
 			sender.sendMessage(prefix + "/" + label + " clear");
 			sender.sendMessage(prefix + "/" + label + " reload");
