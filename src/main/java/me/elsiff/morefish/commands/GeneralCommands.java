@@ -16,11 +16,12 @@ import java.util.List;
 public class GeneralCommands implements CommandExecutor, TabCompleter {
 	private final MoreFish plugin;
 	private final ContestManager contest;
-	private final String prefix = "§b[MoreFish]§r ";
+	private final String prefix;
 
 	public GeneralCommands(MoreFish plugin) {
 		this.plugin = plugin;
 		this.contest = plugin.getContestManager();
+		this.prefix = plugin.prefix;
 	}
 
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
@@ -242,7 +243,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 		String format = plugin.getConfig().getString("messages.contest-top.text");
 		format = ChatColor.translateAlternateColorCodes('&', format);
 
-		int limit = plugin.getConfig().getInt("contest.ranking-limit");
+		int limit = plugin.getConfig().getInt("messages.contest-top.ranking-limit");
 
 		for (int i = 1; i < limit + 1; i ++) {
 			ContestManager.Record record = contest.getRecord(i);

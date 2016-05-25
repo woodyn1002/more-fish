@@ -16,7 +16,7 @@ public class ContestManager {
 	public ContestManager(MoreFish plugin) {
 		this.plugin = plugin;
 
-		if (plugin.getConfig().getBoolean("contest.auto-start")) {
+		if (plugin.getConfig().getBoolean("general.auto-start")) {
 			hasStarted = true;
 		}
 	}

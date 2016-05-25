@@ -26,7 +26,7 @@ public class FishListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onFish(PlayerFishEvent event) {
 		if (event.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
-			if (plugin.getConfig().getBoolean("contest.only-for-contest") && !contest.hasStarted()) {
+			if (plugin.getConfig().getBoolean("general.only-for-contest") && !contest.hasStarted()) {
 				return;
 			}
 
