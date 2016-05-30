@@ -11,166 +11,166 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class FishManager {
-	private final MoreFish plugin;
-	private final Random random = new Random();
-	private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy HH:mm");
-	private final Map<String, CustomFish> fishMap = new HashMap<String, CustomFish>();
-	private final Map<Rarity, List<CustomFish>> rarityMap = new HashMap<Rarity, List<CustomFish>>();
+    private final MoreFish plugin;
+    private final Random random = new Random();
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy HH:mm");
+    private final Map<String, CustomFish> fishMap = new HashMap<String, CustomFish>();
+    private final Map<Rarity, List<CustomFish>> rarityMap = new HashMap<Rarity, List<CustomFish>>();
 
-	public FishManager(MoreFish plugin) {
-		this.plugin = plugin;
+    public FishManager(MoreFish plugin) {
+        this.plugin = plugin;
 
-		loadFishList();
-	}
+        loadFishList();
+    }
 
-	public void loadFishList() {
-		for (Rarity key : Rarity.values()) {
-			rarityMap.put(key, new ArrayList<CustomFish>());
-		}
+    public void loadFishList() {
+        for (Rarity key : Rarity.values()) {
+            rarityMap.put(key, new ArrayList<CustomFish>());
+        }
 
-		FileConfiguration config = plugin.getConfig();
+        FileConfiguration config = plugin.getConfig();
 
-		for (Rarity rarity : Rarity.values()) {
-			ConfigurationSection section = config.getConfigurationSection("fish-list." + rarity.name().toLowerCase());
+        for (Rarity rarity : Rarity.values()) {
+            ConfigurationSection section = config.getConfigurationSection("fish-list." + rarity.name().toLowerCase());
 
-			for (String path : section.getKeys(false)) {
-				String displayName = section.getString(path + ".display-name");
-				List<String> lore = new ArrayList<String>();
-				double lengthMin = section.getDouble(path + ".length-min");
-				double lengthMax = section.getDouble(path + ".length-max");
-				String icon = section.getString(path + ".icon");
-				List<String> commands = new ArrayList<String>();
+            for (String path : section.getKeys(false)) {
+                String displayName = section.getString(path + ".display-name");
+                List<String> lore = new ArrayList<String>();
+                double lengthMin = section.getDouble(path + ".length-min");
+                double lengthMax = section.getDouble(path + ".length-max");
+                String icon = section.getString(path + ".icon");
+                List<String> commands = new ArrayList<String>();
 
-				if (section.contains(path + ".lore")) {
-					lore = section.getStringList(path + ".lore");
-				}
+                if (section.contains(path + ".lore")) {
+                    lore = section.getStringList(path + ".lore");
+                }
 
-				if (section.contains(path + ".commands")) {
-					commands = section.getStringList(path + ".commands");
-				}
+                if (section.contains(path + ".commands")) {
+                    commands = section.getStringList(path + ".commands");
+                }
 
-				CustomFish fish = new CustomFish(displayName, lore, lengthMin, lengthMax, icon, commands, rarity);
+                CustomFish fish = new CustomFish(displayName, lore, lengthMin, lengthMax, icon, commands, rarity);
 
-				this.fishMap.put(path, fish);
-				this.rarityMap.get(rarity).add(fish);
-			}
-		}
+                this.fishMap.put(path, fish);
+                this.rarityMap.get(rarity).add(fish);
+            }
+        }
 
-		plugin.getLogger().info("Loaded " + fishMap.size() + " fish successfully.");
-	}
+        plugin.getLogger().info("Loaded " + fishMap.size() + " fish successfully.");
+    }
 
-	public CaughtFish generateRandomFish() {
-		Rarity rarity = getRandomRarity();
-		CustomFish type = getRandomFish(rarity);
+    public CaughtFish generateRandomFish() {
+        Rarity rarity = getRandomRarity();
+        CustomFish type = getRandomFish(rarity);
 
-		return createCaughtFish(type);
-	}
+        return createCaughtFish(type);
+    }
 
-	public CustomFish getCustomFish(String name) {
-		return fishMap.get(name);
-	}
+    public CustomFish getCustomFish(String name) {
+        return fishMap.get(name);
+    }
 
-	public ItemStack getItemStack(CaughtFish fish, String fisher) {
-		String[] split = fish.getIcon().split(":");
-		Material material = Material.getMaterial(split[0]);
-		short durability = ((split.length > 1) ? Short.parseShort(split[1]) : 0);
+    public ItemStack getItemStack(CaughtFish fish, String fisher) {
+        String[] split = fish.getIcon().split(":");
+        Material material = Material.getMaterial(split[0]);
+        short durability = ((split.length > 1) ? Short.parseShort(split[1]) : 0);
 
-		ItemStack itemStack = new ItemStack(material, 1, durability);
-		ItemMeta meta = itemStack.getItemMeta();
+        ItemStack itemStack = new ItemStack(material, 1, durability);
+        ItemMeta meta = itemStack.getItemMeta();
 
-		String displayName = plugin.getConfig().getString("item-format.display-name")
-				.replaceAll("%player%", fisher)
-				.replaceAll("%rarity%", fish.getRarity().name())
-				.replaceAll("%raritycolor%", fish.getRarity().getColor() + "")
-				.replaceAll("%fish%", fish.getName());
-		displayName = ChatColor.translateAlternateColorCodes('&', displayName);
+        String displayName = plugin.getConfig().getString("item-format.display-name")
+                .replaceAll("%player%", fisher)
+                .replaceAll("%rarity%", fish.getRarity().name())
+                .replaceAll("%raritycolor%", fish.getRarity().getColor() + "")
+                .replaceAll("%fish%", fish.getName());
+        displayName = ChatColor.translateAlternateColorCodes('&', displayName);
 
-		List<String> lore = new ArrayList<String>();
+        List<String> lore = new ArrayList<String>();
 
-		for (String str : plugin.getConfig().getStringList("item-format.lore")) {
-			String line = str
-					.replaceAll("%player%", fisher)
-					.replaceAll("%rarity%", fish.getRarity().name())
-					.replaceAll("%raritycolor%", fish.getRarity().getColor() + "")
-					.replaceAll("%length%", fish.getLength() + "")
-					.replaceAll("%fish%", fish.getName())
-					.replaceAll("%date%", dateFormat.format(new Date()));
+        for (String str : plugin.getConfig().getStringList("item-format.lore")) {
+            String line = str
+                    .replaceAll("%player%", fisher)
+                    .replaceAll("%rarity%", fish.getRarity().name())
+                    .replaceAll("%raritycolor%", fish.getRarity().getColor() + "")
+                    .replaceAll("%length%", fish.getLength() + "")
+                    .replaceAll("%fish%", fish.getName())
+                    .replaceAll("%date%", dateFormat.format(new Date()));
 
-			line = ChatColor.translateAlternateColorCodes('&', line);
-			lore.add(line);
-		}
+            line = ChatColor.translateAlternateColorCodes('&', line);
+            lore.add(line);
+        }
 
-		if (!fish.getLore().isEmpty()) {
-			for (String line : fish.getLore()) {
-				lore.add(ChatColor.translateAlternateColorCodes('&', line));
-			}
-		}
+        if (!fish.getLore().isEmpty()) {
+            for (String line : fish.getLore()) {
+                lore.add(ChatColor.translateAlternateColorCodes('&', line));
+            }
+        }
 
-		meta.setDisplayName(displayName);
-		meta.setLore(lore);
-		itemStack.setItemMeta(meta);
+        meta.setDisplayName(displayName);
+        meta.setLore(lore);
+        itemStack.setItemMeta(meta);
 
-		return itemStack;
-	}
+        return itemStack;
+    }
 
-	private CaughtFish createCaughtFish(CustomFish fish) {
-		double length;
+    private CaughtFish createCaughtFish(CustomFish fish) {
+        double length;
 
-		if (fish.getLengthMax() == fish.getLengthMin()) {
-			length = fish.getLengthMax();
-		} else {
-			int min = (int) fish.getLengthMin();
-			int max = (int) fish.getLengthMax();
+        if (fish.getLengthMax() == fish.getLengthMin()) {
+            length = fish.getLengthMax();
+        } else {
+            int min = (int) fish.getLengthMin();
+            int max = (int) fish.getLengthMax();
 
-			length = random.nextInt(max - min + 1) + min;
-			length += 0.1 * random.nextInt(10);
-		}
+            length = random.nextInt(max - min + 1) + min;
+            length += 0.1 * random.nextInt(10);
+        }
 
-		return new CaughtFish(fish, length);
-	}
+        return new CaughtFish(fish, length);
+    }
 
-	private Rarity getRandomRarity() {
-		double currentVar = 0.0D;
-		double randomVar = Math.random();
+    private Rarity getRandomRarity() {
+        double currentVar = 0.0D;
+        double randomVar = Math.random();
 
-		for (Rarity rarity : Rarity.values()) {
-			currentVar += rarity.getProbability();
+        for (Rarity rarity : Rarity.values()) {
+            currentVar += rarity.getProbability();
 
-			if (randomVar <= currentVar) {
-				return rarity;
-			}
-		}
+            if (randomVar <= currentVar) {
+                return rarity;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	private CustomFish getRandomFish(Rarity rarity) {
-		List<CustomFish> list = rarityMap.get(rarity);
-		int index = random.nextInt(list.size());
+    private CustomFish getRandomFish(Rarity rarity) {
+        List<CustomFish> list = rarityMap.get(rarity);
+        int index = random.nextInt(list.size());
 
-		return list.get(index);
-	}
+        return list.get(index);
+    }
 
-	public enum Rarity {
-		COMMON(ChatColor.RESET, 0.7),
-		RARE(ChatColor.AQUA, 0.22),
-		EPIC(ChatColor.LIGHT_PURPLE, 0.7),
-		LEGENDARY(ChatColor.GREEN, 0.01);
+    public enum Rarity {
+        COMMON(ChatColor.RESET, 0.7),
+        RARE(ChatColor.AQUA, 0.22),
+        EPIC(ChatColor.LIGHT_PURPLE, 0.7),
+        LEGENDARY(ChatColor.GREEN, 0.01);
 
-		private final ChatColor color;
-		private final double probability;
+        private final ChatColor color;
+        private final double probability;
 
-		Rarity(ChatColor color, double probability) {
-			this.color = color;
-			this.probability = probability;
-		}
+        Rarity(ChatColor color, double probability) {
+            this.color = color;
+            this.probability = probability;
+        }
 
-		public ChatColor getColor() {
-			return color;
-		}
+        public ChatColor getColor() {
+            return color;
+        }
 
-		public double getProbability() {
-			return probability;
-		}
-	}
+        public double getProbability() {
+            return probability;
+        }
+    }
 }

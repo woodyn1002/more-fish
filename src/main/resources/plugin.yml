@@ -1,6 +1,6 @@
 name: MoreFish
-version: 1.0.1
-author: Efe
+version: 1.0.2-SNAPSHOT
+author: elsiff
 main: me.elsiff.morefish.MoreFish
 commands:
   morefish:
