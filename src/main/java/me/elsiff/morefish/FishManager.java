@@ -154,7 +154,7 @@ public class FishManager {
     public enum Rarity {
         COMMON(ChatColor.RESET, 0.7),
         RARE(ChatColor.AQUA, 0.22),
-        EPIC(ChatColor.LIGHT_PURPLE, 0.7),
+        EPIC(ChatColor.LIGHT_PURPLE, 0.07),
         LEGENDARY(ChatColor.GREEN, 0.01);
 
         private final ChatColor color;
