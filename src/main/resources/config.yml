@@ -43,33 +43,33 @@ fish-list:
       display-name: "Shrimp"
       length-min: 3
       length-max: 8
-      icon: "RAW_FISH"
+      icon: "minecraft:fish"
     Anchovy:
       display-name: "Anchovy"
       length-min: 7
       length-max: 13
-      icon: "RAW_FISH"
+      icon: "minecraft:fish"
     Croacker:
       display-name: "Croacker"
       length-min: 12
       length-max: 15
-      icon: "RAW_FISH"
+      icon: "minecraft:fish"
     Crab:
       display-name: "Crab"
       length-min: 10
       length-max: 15
-      icon: "RAW_FISH"
+      icon: "minecraft:fish"
     Mackerel:
       display-name: "Mackerel"
       length-min: 15
       length-max: 30
-      icon: "RAW_FISH"
+      icon: "minecraft:fish"
   rare:
     Jellyfish:
       display-name: "Jellyfish"
       length-min: 20
       length-max: 40
-      icon: "RAW_FISH"
+      icon: "minecraft:fish"
       commands:
       - "minecraft:effect @p minecraft:poison 3 1"
       - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" The jellyfish stung you with magical power!\",\"color\":\"none\"}]"
@@ -93,17 +93,17 @@ fish-list:
       display-name: "Flatfish"
       length-min: 40
       length-max: 75
-      icon: "RAW_FISH"
+      icon: "minecraft:fish"
     SeaBream:
       display-name: "Sea Bream"
       length-min: 50
       length-max: 70
-      icon: "RAW_FISH"
+      icon: "minecraft:fish"
     SeaBass:
       display-name: "Sea Bass"
       length-min: 60
       length-max: 100
-      icon: "RAW_FISH"
+      icon: "minecraft:fish"
   epic:
     Pie:
       display-name: "Pie"
@@ -116,27 +116,27 @@ fish-list:
       - "&7Magikarp used Splash!"
       length-min: 25
       length-max: 35
-      icon: "RAW_FISH"
+      icon: "minecraft:fish"
     Clownfish:
       display-name: "Clownfish"
       length-min: 10
       length-max: 18
-      icon: "RAW_FISH:2"
+      icon: "minecraft:fish:2"
     Pufferfish:
       display-name: "Pufferfish"
       length-min: 20
       length-max: 30
-      icon: "RAW_FISH:3"
+      icon: "minecraft:fish:3"
     Salmon:
       display-name: "Salmon"
       length-min: 100
       length-max: 130
-      icon: "RAW_FISH:1"
+      icon: "minecraft:fish:1"
     Tuna:
       display-name: "Tuna"
       length-min: 130
       length-max: 180
-      icon: "RAW_FISH"
+      icon: "minecraft:fish"
   legendary:
     BlueShark:
       display-name: "Blue Shark"
@@ -144,11 +144,11 @@ fish-list:
       - "&7&oThe Toughest Fish"
       length-min: 180
       length-max: 260
-      icon: "RAW_FISH"
+      icon: "minecraft:fish"
     PygmyWhale:
       display-name: "Pygmy Whale"
       lore:
       - "&7&oThe Biggest Fish"
       length-min: 600
       length-max: 650
-      icon: "RAW_FISH"
+      icon: "minecraft:fish"

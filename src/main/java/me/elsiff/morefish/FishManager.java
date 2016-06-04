@@ -1,5 +1,6 @@
 package me.elsiff.morefish;
 
+import me.elsiff.morefish.util.IdentityUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -72,8 +73,13 @@ public class FishManager {
 
     public ItemStack getItemStack(CaughtFish fish, String fisher) {
         String[] split = fish.getIcon().split(":");
-        Material material = Material.getMaterial(split[0]);
+        Material material = IdentityUtils.getMaterial(split[0]);
         short durability = ((split.length > 1) ? Short.parseShort(split[1]) : 0);
+
+        if (material == null) {
+            plugin.getLogger().warning("'" + split[0] + "' is invalid item id!");
+            return null;
+        }
 
         ItemStack itemStack = new ItemStack(material, 1, durability);
         ItemMeta meta = itemStack.getItemMeta();
