@@ -88,7 +88,7 @@ public class FishManager {
     }
 
     public ItemStack getItemStack(CaughtFish fish, String fisher) {
-        String[] split = fish.getIcon().split(":");
+        String[] split = fish.getIcon().split("\\|");
         Material material = IdentityUtils.getMaterial(split[0]);
         short durability = ((split.length > 1) ? Short.parseShort(split[1]) : 0);
 

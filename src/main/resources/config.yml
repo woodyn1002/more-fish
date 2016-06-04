@@ -39,21 +39,21 @@ item-format:
 
 rarity-list:
   common:
-    display-name: "Common"
+    display-name: "COMMON"
     chance: 70
     color: "reset"
     no-broadcast: true
     no-display: true
   rare:
-    display-name: "Rare"
+    display-name: "RARE"
     chance: 22
     color: "aqua"
   epic:
-    display-name: "Epic"
+    display-name: "EPIC"
     chance: 7
     color: "light_purple"
   legendary:
-    display-name: "Legendary"
+    display-name: "LEGENDARY"
     chance: 1
     color: "green"
 
@@ -97,7 +97,7 @@ fish-list:
       display-name: "Squid"
       length-min: 30
       length-max: 50
-      icon: "INK_SACK"
+      icon: "minecraft:dye"
       commands:
       - "minecraft:effect @p minecraft:blindness 5 1"
       - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" The squid gifted you some darkness!\",\"color\":\"none\"}]"
@@ -108,7 +108,7 @@ fish-list:
       - "&7the marvellous breadfish"
       length-min: 10
       length-max: 30
-      icon: "BREAD"
+      icon: "minecraft:bread"
     Flatfish:
       display-name: "Flatfish"
       length-min: 40
@@ -129,7 +129,7 @@ fish-list:
       display-name: "Pie"
       length-min: 3.14
       length-max: 3.14
-      icon: "PUMPKIN_PIE"
+      icon: "minecraft:pumpkin_pie"
     Magikarp:
       display-name: "Magikarp"
       lore:
@@ -141,17 +141,17 @@ fish-list:
       display-name: "Clownfish"
       length-min: 10
       length-max: 18
-      icon: "minecraft:fish:2"
+      icon: "minecraft:fish|2"
     Pufferfish:
       display-name: "Pufferfish"
       length-min: 20
       length-max: 30
-      icon: "minecraft:fish:3"
+      icon: "minecraft:fish|3"
     Salmon:
       display-name: "Salmon"
       length-min: 100
       length-max: 130
-      icon: "minecraft:fish:1"
+      icon: "minecraft:fish|1"
     Tuna:
       display-name: "Tuna"
       length-min: 130
