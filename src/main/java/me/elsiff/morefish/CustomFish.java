@@ -9,9 +9,9 @@ public class CustomFish {
     private final double lengthMax;
     private final String icon;
     private final List<String> commands;
-    private final FishManager.Rarity rarity;
+    private final Rarity rarity;
 
-    public CustomFish(String name, List<String> lore, double lengthMin, double lengthMax, String icon, List<String> commands, FishManager.Rarity rarity) {
+    public CustomFish(String name, List<String> lore, double lengthMin, double lengthMax, String icon, List<String> commands, Rarity rarity) {
         this.name = name;
         this.lore = lore;
         this.lengthMin = lengthMin;
@@ -45,7 +45,7 @@ public class CustomFish {
         return commands;
     }
 
-    public FishManager.Rarity getRarity() {
+    public Rarity getRarity() {
         return rarity;
     }
 }

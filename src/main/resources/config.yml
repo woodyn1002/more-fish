@@ -37,6 +37,26 @@ item-format:
   - "&7%length%cm"
   - "&7Caught by %player%"
 
+rarity-list:
+  common:
+    display-name: "Common"
+    chance: 70
+    color: "reset"
+    no-broadcast: true
+    no-display: true
+  rare:
+    display-name: "Rare"
+    chance: 22
+    color: "aqua"
+  epic:
+    display-name: "Epic"
+    chance: 7
+    color: "light_purple"
+  legendary:
+    display-name: "Legendary"
+    chance: 1
+    color: "green"
+
 fish-list:
   common:
     Shrimp:

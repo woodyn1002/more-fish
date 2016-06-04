@@ -15,6 +15,7 @@ public class FishManager {
     private final MoreFish plugin;
     private final Random random = new Random();
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy HH:mm");
+    private final List<Rarity> rarityList = new ArrayList<Rarity>();
     private final Map<String, CustomFish> fishMap = new HashMap<String, CustomFish>();
     private final Map<Rarity, List<CustomFish>> rarityMap = new HashMap<Rarity, List<CustomFish>>();
 
@@ -25,14 +26,29 @@ public class FishManager {
     }
 
     public void loadFishList() {
-        for (Rarity key : Rarity.values()) {
+        FileConfiguration config = plugin.getConfig();
+
+        ConfigurationSection rarities = config.getConfigurationSection("rarity-list");
+
+        for (String path : rarities.getKeys(false)) {
+            String displayName = rarities.getString(path + ".display-name");
+            double chance = rarities.getDouble(path + ".chance") * 0.01;
+            ChatColor color = ChatColor.valueOf(rarities.getString(path + ".color").toUpperCase());
+
+            boolean noBroadcast = ((rarities.contains(path + ".no-broadcast")) && rarities.getBoolean(path + ".no-broadcast"));
+            boolean noDisplay = ((rarities.contains(path + ".no-display")) && rarities.getBoolean(path + ".no-display"));
+
+            Rarity rarity = new Rarity(path, displayName, chance, color, noBroadcast, noDisplay);
+
+            rarityList.add(rarity);
+        }
+
+        for (Rarity key : rarityList) {
             rarityMap.put(key, new ArrayList<CustomFish>());
         }
 
-        FileConfiguration config = plugin.getConfig();
-
-        for (Rarity rarity : Rarity.values()) {
-            ConfigurationSection section = config.getConfigurationSection("fish-list." + rarity.name().toLowerCase());
+        for (Rarity rarity : rarityList) {
+            ConfigurationSection section = config.getConfigurationSection("fish-list." + rarity.getName().toLowerCase());
 
             for (String path : section.getKeys(false)) {
                 String displayName = section.getString(path + ".display-name");
@@ -86,7 +102,7 @@ public class FishManager {
 
         String displayName = plugin.getConfig().getString("item-format.display-name")
                 .replaceAll("%player%", fisher)
-                .replaceAll("%rarity%", fish.getRarity().name())
+                .replaceAll("%rarity%", fish.getRarity().getDisplayName())
                 .replaceAll("%raritycolor%", fish.getRarity().getColor() + "")
                 .replaceAll("%fish%", fish.getName());
         displayName = ChatColor.translateAlternateColorCodes('&', displayName);
@@ -96,7 +112,7 @@ public class FishManager {
         for (String str : plugin.getConfig().getStringList("item-format.lore")) {
             String line = str
                     .replaceAll("%player%", fisher)
-                    .replaceAll("%rarity%", fish.getRarity().name())
+                    .replaceAll("%rarity%", fish.getRarity().getDisplayName())
                     .replaceAll("%raritycolor%", fish.getRarity().getColor() + "")
                     .replaceAll("%length%", fish.getLength() + "")
                     .replaceAll("%fish%", fish.getName())
@@ -139,8 +155,8 @@ public class FishManager {
         double currentVar = 0.0D;
         double randomVar = Math.random();
 
-        for (Rarity rarity : Rarity.values()) {
-            currentVar += rarity.getProbability();
+        for (Rarity rarity : rarityList) {
+            currentVar += rarity.getChance();
 
             if (randomVar <= currentVar) {
                 return rarity;
@@ -155,28 +171,5 @@ public class FishManager {
         int index = random.nextInt(list.size());
 
         return list.get(index);
-    }
-
-    public enum Rarity {
-        COMMON(ChatColor.RESET, 0.7),
-        RARE(ChatColor.AQUA, 0.22),
-        EPIC(ChatColor.LIGHT_PURPLE, 0.07),
-        LEGENDARY(ChatColor.GREEN, 0.01);
-
-        private final ChatColor color;
-        private final double probability;
-
-        Rarity(ChatColor color, double probability) {
-            this.color = color;
-            this.probability = probability;
-        }
-
-        public ChatColor getColor() {
-            return color;
-        }
-
-        public double getProbability() {
-            return probability;
-        }
     }
 }

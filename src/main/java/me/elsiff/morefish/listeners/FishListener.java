@@ -36,6 +36,10 @@ public class FishListener implements Listener {
             String msgFish = getMessage("catch-fish.text", event.getPlayer(), fish);
             int ancFish = plugin.getConfig().getInt("messages.catch-fish.announce");
 
+            if (fish.getRarity().isNoBroadcast()) {
+                ancFish = 0;
+            }
+
             announceMessage(event.getPlayer(), msgFish, ancFish);
 
 
@@ -67,10 +71,10 @@ public class FishListener implements Listener {
 
         message = message.replaceAll("%player%", player.getName())
                 .replaceAll("%length%", fish.getLength() + "")
-                .replaceAll("%rarity%", fish.getRarity().name())
+                .replaceAll("%rarity%", fish.getRarity().getDisplayName())
                 .replaceAll("%raritycolor%", fish.getRarity().getColor() + "")
                 .replaceAll("%fish%", fish.getName())
-                .replaceAll("%fishwithrarity%", (((fish.getRarity() == FishManager.Rarity.COMMON) ? "" : fish.getRarity().name() + " ")) + fish.getName());
+                .replaceAll("%fishwithrarity%", (((fish.getRarity().isNoDisplay()) ? "" : fish.getRarity().getDisplayName() + " ")) + fish.getName());
 
         message = ChatColor.translateAlternateColorCodes('&', message);
 
