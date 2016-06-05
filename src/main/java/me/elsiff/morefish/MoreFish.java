@@ -15,7 +15,7 @@ public class MoreFish extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        int configVer = 101;
+        int configVer = 102;
 
         saveDefaultConfig();
 

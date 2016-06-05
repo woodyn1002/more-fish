@@ -1,7 +1,7 @@
 #
 # MoreFish Configuration
 #
-version: 101
+version: 102
 
 general:
   check-update: true
