@@ -26,6 +26,9 @@ public class FishManager {
     }
 
     public void loadFishList() {
+        fishMap.clear();
+        rarityMap.clear();
+
         FileConfiguration config = plugin.getConfig();
 
         ConfigurationSection rarities = config.getConfigurationSection("rarity-list");

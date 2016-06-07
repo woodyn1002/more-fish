@@ -200,6 +200,8 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 
             if (contest.getRecordAmount() < 1) {
                 String msg = plugin.getConfig().getString("messages.contest-top.no-record");
+                msg = ChatColor.translateAlternateColorCodes('&', msg);
+
                 sender.sendMessage(msg);
             } else {
                 sendRankingMessage(sender, false);
