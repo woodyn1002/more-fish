@@ -1,6 +1,7 @@
 package me.elsiff.morefish;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -85,6 +86,10 @@ public class ContestManager {
 
         for (int i = 0; i < rewards.length && i < recordList.size(); i ++) {
             ItemStack stack = rewards[i];
+
+            if (stack == null || stack.getType() == Material.AIR)
+                continue;
+
             int number = i + 1;
             OfflinePlayer oPlayer = getRecord(number).getPlayer();
 
