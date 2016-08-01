@@ -30,6 +30,9 @@ messages:
     my-record:
       text: "&b[MoreFish]&r You're %ordinal%: %length%cm %fish%"
       no-record: "&b[MoreFish]&r You didn't get any record."
+  contest-reward:
+    text: "&b[MoreFish]&r You've got &e%item%&r as the %ordinal% reward of contest!"
+
 
 item-format:
   display-name: "%raritycolor%%fish%"

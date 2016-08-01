@@ -33,6 +33,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
                 list.add("start");
                 list.add("stop");
                 list.add("clear");
+                list.add("rewards");
             }
 
             if (sender.hasPermission("morefish.top")) {
@@ -57,6 +58,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             sender.sendMessage(prefix + "/" + label + " help");
             sender.sendMessage(prefix + "/" + label + " start (runningTime)");
             sender.sendMessage(prefix + "/" + label + " stop");
+            sender.sendMessage(prefix + "/" + label + " rewards");
             sender.sendMessage(prefix + "/" + label + " clear");
             sender.sendMessage(prefix + "/" + label + " reload");
             sender.sendMessage(prefix + "/" + label + " top");
@@ -208,9 +210,28 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             }
 
             return true;
-        }
+        } else if (args[0].equalsIgnoreCase("rewards")) {
 
-        return false;
+            if (!(sender instanceof Player)) {
+                sender.sendMessage(prefix + "This is an in-game command.");
+                return true;
+            }
+
+            Player player = (Player) sender;
+
+            if (!player.hasPermission("morefish.admin")) {
+                player.sendMessage(prefix + "You don't have the permission.");
+                return true;
+            }
+
+            plugin.getRewardsGUI().openGUI(player);
+
+            return true;
+        } else {
+            sender.sendMessage(prefix + "That's an invalid command.");
+
+            return true;
+        }
     }
 
     private String getTimeString(long sec) {
@@ -228,19 +249,6 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
         return str;
     }
 
-    private String getOrdinal(int number) {
-        switch (number) {
-            case 1:
-                return "1st";
-            case 2:
-                return "2nd";
-            case 3:
-                return "3rd";
-            default:
-                return number + "th";
-        }
-    }
-
     private void sendRankingMessage(CommandSender sender, boolean broadcast) {
         String format = plugin.getConfig().getString("messages.contest-top.text");
         format = ChatColor.translateAlternateColorCodes('&', format);
@@ -253,7 +261,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             if (record == null)
                 break;
 
-            String msg = format.replaceAll("%ordinal%", getOrdinal(i))
+            String msg = format.replaceAll("%ordinal%", plugin.getOrdinal(i))
                     .replaceAll("%number%", i + "")
                     .replaceAll("%player%", record.getPlayer().getName())
                     .replaceAll("%length%", record.getLength() + "")
@@ -286,7 +294,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             ContestManager.Record record = contest.getRecord(number);
 
             msg = plugin.getConfig().getString("messages.contest-top.my-record.text")
-                    .replaceAll("%ordinal%", getOrdinal(number))
+                    .replaceAll("%ordinal%", plugin.getOrdinal(number))
                     .replaceAll("%number%", number + "")
                     .replaceAll("%player%", record.getPlayer().getName())
                     .replaceAll("%length%", record.getLength() + "")

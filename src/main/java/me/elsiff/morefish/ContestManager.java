@@ -1,15 +1,24 @@
 package me.elsiff.morefish;
 
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class ContestManager {
     private final MoreFish plugin;
     private final RecordComparator comparator = new RecordComparator();
     private final List<Record> recordList = new ArrayList<Record>();
+    private final File fileRewards;
+    private final FileConfiguration configRewards;
     private boolean hasStarted = false;
     private BukkitTask task = null;
 
@@ -18,6 +27,30 @@ public class ContestManager {
 
         if (plugin.getConfig().getBoolean("general.auto-start")) {
             hasStarted = true;
+        }
+
+        fileRewards = new File(plugin.getDataFolder(), "rewards.yml");
+
+        if (!fileRewards.exists()) {
+            try {
+                boolean created = fileRewards.createNewFile();
+
+                if (!created) {
+                    plugin.getLogger().warning("Failed to create rewards.yml!");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        configRewards = YamlConfiguration.loadConfiguration(fileRewards);
+    }
+
+    private void saveRewards() {
+        try {
+            configRewards.save(fileRewards);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -41,8 +74,69 @@ public class ContestManager {
             task = null;
         }
 
+        giveRewards();
+
         recordList.clear();
         hasStarted = false;
+    }
+
+    private void giveRewards() {
+        ItemStack[] rewards = getRewards();
+
+        for (int i = 0; i < rewards.length && i < recordList.size(); i ++) {
+            ItemStack stack = rewards[i];
+            int number = i + 1;
+            OfflinePlayer oPlayer = getRecord(number).getPlayer();
+
+            if (!oPlayer.isOnline()) {
+                plugin.getLogger().info("The " + oPlayer.getName() + "'s reward of fishing contest has not sent as the player is offline now.");
+                continue;
+            }
+
+            Player player = oPlayer.getPlayer();
+
+            if (player.getInventory().firstEmpty() != -1) {
+                player.getInventory().addItem(stack);
+            } else {
+                player.getWorld().dropItem(player.getLocation(), stack);
+            }
+
+            String msg = plugin.getConfig().getString("messages.contest-reward.text");
+            msg = ChatColor.translateAlternateColorCodes('&', msg);
+
+            msg = msg.replaceAll("%player%", player.getName())
+                    .replaceAll("%item%", getItemName(stack))
+                    .replaceAll("%ordinal%", plugin.getOrdinal(number))
+                    .replaceAll("%number%", number + "");
+
+            player.sendMessage(msg);
+        }
+    }
+
+    private String getItemName(ItemStack item) {
+        return ((item.hasItemMeta() && item.getItemMeta().hasDisplayName()) ?
+                item.getItemMeta().getDisplayName() : item.getType().name().toLowerCase().replaceAll("_", " "));
+    }
+
+    public ItemStack[] getRewards() {
+        ItemStack[] rewards = new ItemStack[8];
+
+        for (String path : configRewards.getKeys(false)) {
+            int i = Integer.parseInt(path.substring(7));
+            ItemStack item = configRewards.getItemStack("reward_" + i);
+
+            rewards[i] = item;
+        }
+
+        return rewards;
+    }
+
+    public void setRewards(ItemStack[] rewards) {
+        for (int i = 0; i < rewards.length; i ++) {
+            configRewards.set("reward_" + i, rewards[i]);
+        }
+
+        saveRewards();
     }
 
     public boolean isNew1st(CaughtFish fish) {
