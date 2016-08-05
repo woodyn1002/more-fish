@@ -8,6 +8,13 @@ general:
   auto-start: false
   only-for-contest: false
 
+auto-running:
+  enable: false
+  required-players: 5
+  timer: 300
+  delay: 60
+  period: 60
+
 messages:
   catch-fish:
     text: "&b[MoreFish]&r &e%player%&r caught %raritycolor%%length%cm &l%fishwithrarity%"

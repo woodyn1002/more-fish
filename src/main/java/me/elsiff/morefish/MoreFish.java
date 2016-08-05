@@ -37,6 +37,21 @@ public class MoreFish extends JavaPlugin {
         manager.registerEvents(new PlayerListener(this), this);
         manager.registerEvents(rewardsGUI, this);
 
+        if (getConfig().getBoolean("auto-running.enable")) {
+            final int required = getConfig().getInt("auto-running.required-players");
+            final long timer = getConfig().getLong("auto-running.timer");
+            long delay = getConfig().getLong("auto-running.delay");
+            long period = getConfig().getLong("auto-running.period");
+
+            getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+                public void run() {
+                    if (getServer().getOnlinePlayers().size() >= required) {
+                        getServer().dispatchCommand(getServer().getConsoleSender(), "morefish start " + timer);
+                    }
+                }
+            }, delay, period);
+        }
+
         getLogger().info("Plugin has been enabled!");
     }
 

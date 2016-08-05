@@ -1,5 +1,5 @@
 name: MoreFish
-version: 1.1.1
+version: 1.1.2-SNAPSHOT
 author: elsiff
 main: me.elsiff.morefish.MoreFish
 commands:
