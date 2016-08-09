@@ -1,7 +1,7 @@
 #
 # MoreFish Configuration
 #
-version: 110
+version: 112
 
 general:
   check-update: true
@@ -102,7 +102,7 @@ fish-list:
       icon: "minecraft:fish"
       commands:
       - "minecraft:effect @p minecraft:poison 3 1"
-      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" The jellyfish stung you with magical power!\",\"color\":\"none\"}]"
+      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" The jellyfish made you feel very bad!\",\"color\":\"none\"}]"
     Squid:
       display-name: "Squid"
       length-min: 30
@@ -172,13 +172,23 @@ fish-list:
       display-name: "Blue Shark"
       lore:
       - "&7&oThe Toughest Fish"
+      - "&7Get &9Strength Ⅰ (2:00)&7 when you eat it."
       length-min: 180
       length-max: 260
       icon: "minecraft:fish"
+      food-effects:
+        commands:
+        - "minecraft:effect @p minecraft:strength 120 1"
     PygmyWhale:
       display-name: "Pygmy Whale"
       lore:
       - "&7&oThe Biggest Fish"
+      - "&7Get &9full health and hunger&7 when you eat it."
       length-min: 600
       length-max: 650
       icon: "minecraft:fish"
+      food-effects:
+        points: 20
+        saturation: 14.4
+        commands:
+        - "minecraft:effect @p minecraft:regeneration 2 127"
