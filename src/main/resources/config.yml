@@ -6,7 +6,7 @@
 # Warning: DO NOT edit rewards.yml with your file editor, instead use in-game command '/mf rewards'.
 #
 
-version: 112
+version: 120
 
 general:
   check-update: true
