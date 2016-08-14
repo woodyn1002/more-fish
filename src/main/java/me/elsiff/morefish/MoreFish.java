@@ -5,7 +5,9 @@ import me.elsiff.morefish.listeners.FishListener;
 import me.elsiff.morefish.listeners.PlayerListener;
 import me.elsiff.morefish.listeners.RewardsGUI;
 import me.elsiff.morefish.protocol.UpdateChecker;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MoreFish extends JavaPlugin {
@@ -14,6 +16,8 @@ public class MoreFish extends JavaPlugin {
     private FishManager fishManager;
     private ContestManager contestManager;
     private UpdateChecker updateChecker;
+
+    private Economy econ = null;
 
     @Override
     public void onEnable() {
@@ -37,6 +41,10 @@ public class MoreFish extends JavaPlugin {
         manager.registerEvents(new PlayerListener(this), this);
         manager.registerEvents(rewardsGUI, this);
 
+        if (setupEconomy()) {
+            getLogger().info("Found Vault for economy support.");
+        }
+
         if (getConfig().getBoolean("auto-running.enable")) {
             final int required = getConfig().getInt("auto-running.required-players");
             final long timer = getConfig().getLong("auto-running.timer");
@@ -58,6 +66,20 @@ public class MoreFish extends JavaPlugin {
     @Override
     public void onDisable() {
         getLogger().info("Plugin has been disabled!");
+    }
+
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+
+        econ = rsp.getProvider();
+        return econ != null;
     }
 
     public FishManager getFishManager() {
@@ -87,5 +109,9 @@ public class MoreFish extends JavaPlugin {
 
     public RewardsGUI getRewardsGUI() {
         return rewardsGUI;
+    }
+
+    public Economy getEconomy() {
+        return econ;
     }
 }

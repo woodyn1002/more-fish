@@ -83,38 +83,92 @@ public class ContestManager {
 
     private void giveRewards() {
         ItemStack[] rewards = getRewards();
+        double[] cashPrizes = getCashPrizes();
 
-        for (int i = 0; i < rewards.length && i < recordList.size(); i ++) {
+        Set<Integer> given = new HashSet<Integer>();
+
+        for (int i = 0; i < rewards.length - 1 && i < recordList.size(); i ++) {
             ItemStack stack = rewards[i];
 
             if (stack == null || stack.getType() == Material.AIR)
                 continue;
 
-            int number = i + 1;
-            OfflinePlayer oPlayer = getRecord(number).getPlayer();
+            OfflinePlayer oPlayer = getRecord(i + 1).getPlayer();
+            sendReward(oPlayer, stack);
 
-            if (!oPlayer.isOnline()) {
-                plugin.getLogger().info("The " + oPlayer.getName() + "'s reward of fishing contest has not sent as the player is offline now.");
-                continue;
+            given.add(i);
+        }
+
+        boolean conItem = rewards[7] != null;
+        boolean conCash = cashPrizes[7] != 0.0D;
+
+        if (conItem) {
+            for (int i = 0; i < getRecordAmount(); i ++) {
+                if (given.contains(i))
+                    continue;
+
+                Record record = getRecord(i + 1);
+                sendReward(record.getPlayer(), rewards[7]);
             }
+        }
 
-            Player player = oPlayer.getPlayer();
+        if (conCash) {
+            for (int i = 0; i < getRecordAmount(); i ++) {
+                if (given.contains(i))
+                    continue;
 
-            if (player.getInventory().firstEmpty() != -1) {
-                player.getInventory().addItem(stack);
-            } else {
-                player.getWorld().dropItem(player.getLocation(), stack);
+                Record record = getRecord(i + 1);
+
+                sendCashPrize(record.getPlayer(), cashPrizes[7]);
             }
+        }
+    }
 
-            String msg = plugin.getConfig().getString("messages.contest-reward.text");
+    private void sendReward(OfflinePlayer oPlayer, ItemStack stack) {
+        if (!oPlayer.isOnline()) {
+            plugin.getLogger().info(oPlayer.getName() + "'s reward of fishing contest has not been sent as the player is offline now.");
+            return;
+        }
+
+        Player player = oPlayer.getPlayer();
+
+        if (player.getInventory().firstEmpty() != -1) {
+            player.getInventory().addItem(stack);
+        } else {
+            player.getWorld().dropItem(player.getLocation(), stack);
+        }
+
+        int number = getNumber(player);
+        String msg = plugin.getConfig().getString("messages.contest-reward.text");
+        msg = ChatColor.translateAlternateColorCodes('&', msg);
+
+        msg = msg.replaceAll("%player%", player.getName())
+                .replaceAll("%item%", getItemName(stack))
+                .replaceAll("%ordinal%", plugin.getOrdinal(number))
+                .replaceAll("%number%", number + "");
+
+        player.sendMessage(msg);
+    }
+    
+    private void sendCashPrize(OfflinePlayer player, double amount) {
+        if (!plugin.getEconomy().hasAccount(player)) {
+            plugin.getLogger().info(player.getName() + "'s reward of fishing contest has not been sent as having no economy account.");
+            return;
+        } else {
+            plugin.getEconomy().depositPlayer(player, amount);
+        }
+
+        if (player.isOnline()) {
+            int number = getNumber(player);
+            String msg = plugin.getConfig().getString("messages.contest-reward.cash-prize");
             msg = ChatColor.translateAlternateColorCodes('&', msg);
 
             msg = msg.replaceAll("%player%", player.getName())
-                    .replaceAll("%item%", getItemName(stack))
+                    .replaceAll("%amount%", amount + "")
                     .replaceAll("%ordinal%", plugin.getOrdinal(number))
                     .replaceAll("%number%", number + "");
 
-            player.sendMessage(msg);
+            player.getPlayer().sendMessage(msg);
         }
     }
 
@@ -136,9 +190,30 @@ public class ContestManager {
         return rewards;
     }
 
+    public double[] getCashPrizes() {
+        double[] arr = new double[8];
+
+        for (String path : configRewards.getKeys(false)) {
+            int i = Integer.parseInt(path.substring(11));
+            double amount = configRewards.getDouble("cash-prize_" + i);
+
+            arr[i] = amount;
+        }
+
+        return arr;
+    }
+
     public void setRewards(ItemStack[] rewards) {
         for (int i = 0; i < rewards.length; i ++) {
             configRewards.set("reward_" + i, rewards[i]);
+        }
+
+        saveRewards();
+    }
+
+    public void setCashPrizes(double[] arr) {
+        for (int i = 0; i < arr.length; i ++) {
+            configRewards.set("cash-prize_" + i, arr[i]);
         }
 
         saveRewards();
