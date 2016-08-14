@@ -39,7 +39,7 @@ messages:
       no-record: "&b[MoreFish]&r You didn't get any record."
   contest-reward:
     text: "&b[MoreFish]&r You've got &e%item%&r as the %ordinal% reward of contest!"
-    cash-prize: "&b[MoreFish]&r You've got &e$%amount%&r as the %ordinal% reward of contest!"
+    cash-prize: "&b[MoreFish]&r You've got &e%format%&r as the %ordinal% reward of contest!"
 
 
 item-format:

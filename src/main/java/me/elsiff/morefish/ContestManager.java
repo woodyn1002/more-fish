@@ -82,44 +82,54 @@ public class ContestManager {
     }
 
     private void giveRewards() {
+        Set<Integer> recievers = new HashSet<Integer>();
+
         ItemStack[] rewards = getRewards();
-        double[] cashPrizes = getCashPrizes();
-
-        Set<Integer> given = new HashSet<Integer>();
-
         for (int i = 0; i < rewards.length - 1 && i < recordList.size(); i ++) {
             ItemStack stack = rewards[i];
 
             if (stack == null || stack.getType() == Material.AIR)
                 continue;
 
-            OfflinePlayer oPlayer = getRecord(i + 1).getPlayer();
-            sendReward(oPlayer, stack);
+            OfflinePlayer player = getRecord(i + 1).getPlayer();
+            sendReward(player, stack);
 
-            given.add(i);
+            recievers.add(i);
         }
 
-        boolean conItem = rewards[7] != null;
-        boolean conCash = cashPrizes[7] != 0.0D;
+        if (plugin.getEconomy() != null) {
+            double[] cashPrizes = getCashPrizes();
+            for (int i = 0; i < cashPrizes.length - 1 && i < recordList.size(); i ++) {
+                double amount = cashPrizes[i];
 
-        if (conItem) {
+                if (amount == 0.0D)
+                    continue;
+
+                OfflinePlayer player = getRecord(i + 1).getPlayer();
+                sendCashPrize(player, amount);
+
+                recievers.add(i);
+            }
+
+            if (cashPrizes[7] != 0.0D) {
+                for (int i = 0; i < getRecordAmount(); i ++) {
+                    if (recievers.contains(i))
+                        continue;
+
+                    Record record = getRecord(i + 1);
+
+                    sendCashPrize(record.getPlayer(), cashPrizes[7]);
+                }
+            }
+        }
+
+        if (rewards[7] != null) {
             for (int i = 0; i < getRecordAmount(); i ++) {
-                if (given.contains(i))
+                if (recievers.contains(i))
                     continue;
 
                 Record record = getRecord(i + 1);
                 sendReward(record.getPlayer(), rewards[7]);
-            }
-        }
-
-        if (conCash) {
-            for (int i = 0; i < getRecordAmount(); i ++) {
-                if (given.contains(i))
-                    continue;
-
-                Record record = getRecord(i + 1);
-
-                sendCashPrize(record.getPlayer(), cashPrizes[7]);
             }
         }
     }
@@ -165,6 +175,7 @@ public class ContestManager {
 
             msg = msg.replaceAll("%player%", player.getName())
                     .replaceAll("%amount%", amount + "")
+                    .replaceAll("%format%", plugin.getEconomy().format(amount))
                     .replaceAll("%ordinal%", plugin.getOrdinal(number))
                     .replaceAll("%number%", number + "");
 
@@ -181,6 +192,9 @@ public class ContestManager {
         ItemStack[] rewards = new ItemStack[8];
 
         for (String path : configRewards.getKeys(false)) {
+            if (!path.startsWith("reward_"))
+                continue;
+
             int i = Integer.parseInt(path.substring(7));
             ItemStack item = configRewards.getItemStack("reward_" + i);
 
@@ -194,6 +208,9 @@ public class ContestManager {
         double[] arr = new double[8];
 
         for (String path : configRewards.getKeys(false)) {
+            if (!path.startsWith("cash-prize_"))
+                continue;
+
             int i = Integer.parseInt(path.substring(11));
             double amount = configRewards.getDouble("cash-prize_" + i);
 

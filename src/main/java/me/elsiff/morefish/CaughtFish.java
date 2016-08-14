@@ -4,7 +4,7 @@ public class CaughtFish extends CustomFish {
     private final double length;
 
     public CaughtFish(CustomFish fish, double length) {
-        super(fish.getName(), fish.getLore(), fish.getLengthMin(), fish.getLengthMax(), fish.getIcon(), fish.getCommands(), fish.getRarity());
+        super(fish.getName(), fish.getLore(), fish.getLengthMin(), fish.getLengthMax(), fish.getIcon(), fish.getCommands(), fish.getFoodEffects(), fish.getRarity());
 
         this.length = length;
     }

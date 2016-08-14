@@ -24,7 +24,8 @@ public class RewardsGUI implements Listener {
     }
 
     public void openGUI(Player player) {
-        Inventory inv = plugin.getServer().createInventory(player, 18, "Set the rewards of contest");
+        boolean hasEconomy = plugin.getEconomy() != null;
+        Inventory inv = plugin.getServer().createInventory(player, (hasEconomy ? 18 : 9), "Set the rewards of contest");
 
         ItemStack[] rewards = plugin.getContestManager().getRewards();
 
@@ -42,24 +43,34 @@ public class RewardsGUI implements Listener {
                         "§7Empty slots mean no reward.")
                 .build();
 
-        ItemStack iconMoneyGuide = new ItemBuilder(Material.SIGN)
-                .setDisplayName("§bCash prizes")
-                .addLore("§7The second row is for",
-                        "§7cash prizes.",
-                        "§7Click the emeralds",
-                        "§7to edit cash prizes.")
-                .build();
-
         inv.setItem(8, iconGuide);
-        inv.setItem(17, iconMoneyGuide);
 
-        for (int i = 0; i < 7; i ++) {
-            double amount = 0;
+        if (hasEconomy) {
+            double[] cashPrizes = plugin.getContestManager().getCashPrizes();
 
-            ItemStack iconEmerald = new ItemBuilder(Material.EMERALD)
-                    .setDisplayName("§aAmount: " + amount)
-                    .addLore("§7Click to edit it.")
+            for (int i = 0; i < 8; i ++) {
+                double amount = cashPrizes[i];
+
+                String target = ((i < 7) ? plugin.getOrdinal(i + 1) : "consolation");
+                String format = plugin.getEconomy().format(amount);
+
+                ItemStack iconEmerald = new ItemBuilder(Material.EMERALD)
+                        .setDisplayName("§aPrize for " + target +": §2" + format)
+                        .addLore("§7Click to edit it.")
+                        .build();
+
+                inv.setItem(9 + i, iconEmerald);
+            }
+
+            ItemStack iconMoneyGuide = new ItemBuilder(Material.SIGN)
+                    .setDisplayName("§bCash prizes")
+                    .addLore("§7The second row is for",
+                            "§7cash prizes.",
+                            "§7Click the emeralds",
+                            "§7to edit cash prizes.")
                     .build();
+
+            inv.setItem(17, iconMoneyGuide);
         }
 
         player.openInventory(inv);
@@ -69,18 +80,19 @@ public class RewardsGUI implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent event) {
         if (users.contains(event.getWhoClicked().getUniqueId())) {
-            if (event.getRawSlot() < 9) {
+            if (event.getRawSlot() < 9 || event.getInventory().getSize() < event.getRawSlot()) {
                 return;
             }
 
             event.setCancelled(true);
 
-            if (9 < event.getRawSlot() && event.getRawSlot() < 17) {
+            if (9 <= event.getRawSlot() && event.getRawSlot() <= 16 && plugin.getEconomy() != null) {
+                editors.put(event.getWhoClicked().getUniqueId(), event.getRawSlot() - 9);
+
                 event.getWhoClicked().closeInventory();
 
                 event.getWhoClicked().sendMessage(plugin.prefix + "Enter the value with your chat.");
-
-                editors.put(event.getWhoClicked().getUniqueId(), event.getRawSlot() - 9);
+                event.getWhoClicked().sendMessage(plugin.prefix + "Or type 'cancel' to stop editing.");
             }
         }
     }
@@ -90,12 +102,26 @@ public class RewardsGUI implements Listener {
         UUID id = event.getPlayer().getUniqueId();
 
         if (editors.containsKey(id)) {
+            event.setCancelled(true);
+
+            if (event.getMessage().equalsIgnoreCase("cancel")) {
+                editors.remove(id);
+                openGUI(event.getPlayer());
+
+                event.getPlayer().sendMessage(plugin.prefix + "Stopped editing mode.");
+                return;
+            }
 
             double value;
             try {
                 value = Double.parseDouble(event.getMessage());
             } catch (NumberFormatException ex) {
-                event.getPlayer().sendMessage(plugin.prefix + "'" + event.getMessage() + "' is not valid number. Please enter the number again.");
+                event.getPlayer().sendMessage(plugin.prefix + "'" + event.getMessage() + "' is not valid number. Please enter number again.");
+                return;
+            }
+
+            if (value < 0) {
+                event.getPlayer().sendMessage(plugin.prefix + "The number can't be negative. Please enter correct number.");
                 return;
             }
 
@@ -105,8 +131,10 @@ public class RewardsGUI implements Listener {
             cashPrizes[index] = value;
             plugin.getContestManager().setCashPrizes(cashPrizes);
 
-            event.getPlayer().sendMessage(plugin.prefix + "The value have been entered.");
+            editors.remove(id);
+            openGUI(event.getPlayer());
 
+            event.getPlayer().sendMessage(plugin.prefix + "The value have been entered.");
         }
     }
 
@@ -128,7 +156,9 @@ public class RewardsGUI implements Listener {
 
             plugin.getContestManager().setRewards(rewards);
 
-            event.getPlayer().sendMessage(plugin.prefix + "The changes have been saved.");
+            if (!editors.containsKey(event.getPlayer().getUniqueId())) {
+                event.getPlayer().sendMessage(plugin.prefix + "The changes have been saved.");
+            }
         }
     }
 }
