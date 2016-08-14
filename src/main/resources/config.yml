@@ -199,7 +199,8 @@ fish-list:
       display-name: "Pygmy Whale"
       lore:
       - "&7&oThe Biggest Fish"
-      - "&7Get &9full health and hunger&7 when you eat it."
+      - "&7Get &9full health and hunger&7"
+      - "when you eat it."
       length-min: 600
       length-max: 650
       icon: "minecraft:fish"

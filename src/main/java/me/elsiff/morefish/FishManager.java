@@ -72,11 +72,11 @@ public class FishManager {
                 }
 
                 if (section.contains(path + ".food-effects")) {
-                    if (section.contains(path + ".food-effects.point")) {
-                        foodEffects.setPoints(section.getInt(path + ".food-effects.point"));
+                    if (section.contains(path + ".food-effects.points")) {
+                        foodEffects.setPoints(section.getInt(path + ".food-effects.points"));
                     }
 
-                    if (section.contains(path + ".food-effects.point")) {
+                    if (section.contains(path + ".food-effects.saturation")) {
                         foodEffects.setSaturation((float) section.getDouble(path + ".food-effects.saturation"));
                     }
 
