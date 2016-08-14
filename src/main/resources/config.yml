@@ -100,6 +100,11 @@ fish-list:
       length-min: 15
       length-max: 30
       icon: "minecraft:fish"
+    Herring:
+      display-name: "Herring"
+      length-min: 20
+      length-max: 30
+      icon: "minecraft:fish"
   rare:
     Jellyfish:
       display-name: "Jellyfish"
@@ -168,6 +173,11 @@ fish-list:
       length-min: 100
       length-max: 130
       icon: "minecraft:fish|1"
+    BlackDrum:
+      display-name: "Black Drum"
+      length-min: 100
+      length-max: 180
+      icon: "minecraft:fish"
     Tuna:
       display-name: "Tuna"
       length-min: 130
