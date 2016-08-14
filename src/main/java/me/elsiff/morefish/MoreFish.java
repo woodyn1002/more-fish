@@ -57,7 +57,7 @@ public class MoreFish extends JavaPlugin {
                         getServer().dispatchCommand(getServer().getConsoleSender(), "morefish start " + timer);
                     }
                 }
-            }, delay, period);
+            }, delay * 20, period * 20);
         }
 
         getLogger().info("Plugin has been enabled!");

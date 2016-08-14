@@ -17,8 +17,8 @@ auto-running:
   enable: false
   required-players: 5
   timer: 300
-  delay: 60
-  period: 60
+  delay: 3600
+  period: 3600
 
 messages:
   catch-fish:
