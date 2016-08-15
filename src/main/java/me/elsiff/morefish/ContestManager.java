@@ -82,7 +82,7 @@ public class ContestManager {
     }
 
     private void giveRewards() {
-        Set<Integer> recievers = new HashSet<Integer>();
+        Set<Integer> receivers = new HashSet<Integer>();
 
         ItemStack[] rewards = getRewards();
         for (int i = 0; i < rewards.length - 1 && i < recordList.size(); i ++) {
@@ -94,7 +94,7 @@ public class ContestManager {
             OfflinePlayer player = getRecord(i + 1).getPlayer();
             sendReward(player, stack);
 
-            recievers.add(i);
+            receivers.add(i);
         }
 
         if (plugin.getEconomy() != null) {
@@ -108,12 +108,12 @@ public class ContestManager {
                 OfflinePlayer player = getRecord(i + 1).getPlayer();
                 sendCashPrize(player, amount);
 
-                recievers.add(i);
+                receivers.add(i);
             }
 
             if (cashPrizes[7] != 0.0D) {
                 for (int i = 0; i < getRecordAmount(); i ++) {
-                    if (recievers.contains(i))
+                    if (receivers.contains(i))
                         continue;
 
                     Record record = getRecord(i + 1);
@@ -125,7 +125,7 @@ public class ContestManager {
 
         if (rewards[7] != null) {
             for (int i = 0; i < getRecordAmount(); i ++) {
-                if (recievers.contains(i))
+                if (receivers.contains(i))
                     continue;
 
                 Record record = getRecord(i + 1);
