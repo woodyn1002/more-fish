@@ -52,7 +52,12 @@ public class RewardsGUI implements Listener {
                 double amount = cashPrizes[i];
 
                 String target = ((i < 7) ? plugin.getOrdinal(i + 1) : "consolation");
-                String format = plugin.getEconomy().format(amount);
+                String format;
+                try {
+                    format = plugin.getEconomy().format(amount);
+                } catch (Exception ex) {
+                    format = "$" + amount;
+                }
 
                 ItemStack iconEmerald = new ItemBuilder(Material.EMERALD)
                         .setDisplayName("§aPrize for " + target +": §2" + format)
