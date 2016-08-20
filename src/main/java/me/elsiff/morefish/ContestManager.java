@@ -173,9 +173,16 @@ public class ContestManager {
             String msg = plugin.getConfig().getString("messages.contest-reward.cash-prize");
             msg = ChatColor.translateAlternateColorCodes('&', msg);
 
+            String format;
+            try {
+                format = plugin.getEconomy().format(amount);
+            } catch (Exception ex) {
+                format = "$" + amount;
+            }
+
             msg = msg.replaceAll("%player%", player.getName())
                     .replaceAll("%amount%", amount + "")
-                    .replaceAll("%format%", plugin.getEconomy().format(amount))
+                    .replaceAll("%format%", format)
                     .replaceAll("%ordinal%", plugin.getOrdinal(number))
                     .replaceAll("%number%", number + "");
 
