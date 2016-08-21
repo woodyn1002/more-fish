@@ -9,6 +9,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.Metrics;
 
 public class MoreFish extends JavaPlugin {
     public final String prefix = "§b[MoreFish]§r ";
@@ -43,6 +44,13 @@ public class MoreFish extends JavaPlugin {
 
         if (setupEconomy()) {
             getLogger().info("Found Vault for economy support.");
+        }
+
+        try {
+            Metrics metrics = new Metrics(this);
+            metrics.start();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
         if (getConfig().getBoolean("auto-running.enable")) {
