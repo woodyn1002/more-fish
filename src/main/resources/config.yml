@@ -6,12 +6,14 @@
 # Warning: DO NOT edit rewards.yml with your file editor, instead use in-game command '/mf rewards'.
 #
 
-version: 120
+version: 121
 
 general:
   check-update: true
   auto-start: false
   only-for-contest: false
+  no-fishing-unless-contest: false
+  contest-disabled-worlds: []
 
 auto-running:
   enable: false
@@ -27,6 +29,8 @@ messages:
   get-1st:
     text: "&b[MoreFish]&r &e%player%&r is now the new 1st!"
     announce: -1
+  no-fishing-allowed:
+    text: "&b[MoreFish]&r You can't fish unless the contest is ongoing."
   contest-start:
     text: "&b[MoreFish]&r The fishing contest has started!"
     text-timer: "&b[MoreFish]&r Running time is limited to %time%."
@@ -188,7 +192,7 @@ fish-list:
       display-name: "Blue Shark"
       lore:
       - "&7&oThe Toughest Fish"
-      - "&7Get &9Strength Ⅰ (2:00)&7 when you eat it."
+      - "&7Get &9Strength I (2:00)&7 when you eat it."
       length-min: 180
       length-max: 260
       icon: "minecraft:fish"

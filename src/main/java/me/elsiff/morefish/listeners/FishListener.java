@@ -25,7 +25,18 @@ public class FishListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onFish(PlayerFishEvent event) {
         if (event.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
-            if (plugin.getConfig().getBoolean("general.only-for-contest") && !contest.hasStarted()) {
+            if (!contest.hasStarted() && plugin.getConfig().getBoolean("general.no-fishing-unless-contest")) {
+                event.setCancelled(true);
+
+                String msg = plugin.getConfig().getString("messages.no-fishing-allowed.text");
+                msg = ChatColor.translateAlternateColorCodes('&', msg);
+
+                event.getPlayer().sendMessage(msg);
+                return;
+            }
+
+            if (plugin.getConfig().getStringList("general.contest-disabled-worlds").contains(event.getPlayer().getWorld().getName()) ||
+                    (plugin.getConfig().getBoolean("general.only-for-contest") && !contest.hasStarted())) {
                 return;
             }
 
