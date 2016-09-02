@@ -22,7 +22,7 @@ public class MoreFish extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        int configVer = 121;
+        int configVer = 122;
 
         saveDefaultConfig();
 
@@ -117,6 +117,10 @@ public class MoreFish extends JavaPlugin {
 
     public RewardsGUI getRewardsGUI() {
         return rewardsGUI;
+    }
+
+    public boolean hasEconomy() {
+        return (econ != null);
     }
 
     public Economy getEconomy() {

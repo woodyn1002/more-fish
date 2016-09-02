@@ -6,7 +6,7 @@
 # Warning: DO NOT edit rewards.yml with your file editor, instead use in-game command '/mf rewards'.
 #
 
-version: 121
+version: 122
 
 general:
   check-update: true
@@ -48,7 +48,7 @@ messages:
       no-record: "&b[MoreFish]&r You didn't get any record."
   contest-reward:
     text: "&b[MoreFish]&r You've got &e%item%&r as the %ordinal% reward of contest!"
-    cash-prize: "&b[MoreFish]&r You've got &e%format%&r as the %ordinal% reward of contest!"
+    cash-prize: "&b[MoreFish]&r You've got &e$%amount%&r as the %ordinal% reward of contest!"
 
 
 item-format:

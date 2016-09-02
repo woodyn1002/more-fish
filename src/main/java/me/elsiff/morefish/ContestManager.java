@@ -97,7 +97,7 @@ public class ContestManager {
             receivers.add(i);
         }
 
-        if (plugin.getEconomy() != null) {
+        if (plugin.hasEconomy()) {
             double[] cashPrizes = getCashPrizes();
             for (int i = 0; i < cashPrizes.length - 1 && i < recordList.size(); i ++) {
                 double amount = cashPrizes[i];
@@ -173,12 +173,7 @@ public class ContestManager {
             String msg = plugin.getConfig().getString("messages.contest-reward.cash-prize");
             msg = ChatColor.translateAlternateColorCodes('&', msg);
 
-            String format;
-            try {
-                format = plugin.getEconomy().format(amount);
-            } catch (Exception ex) {
-                format = "$" + amount;
-            }
+            String format = (msg.contains("%format%") ? plugin.getEconomy().format(amount) : "");
 
             msg = msg.replaceAll("%player%", player.getName())
                     .replaceAll("%amount%", amount + "")

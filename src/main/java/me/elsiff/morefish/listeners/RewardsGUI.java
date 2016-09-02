@@ -24,8 +24,7 @@ public class RewardsGUI implements Listener {
     }
 
     public void openGUI(Player player) {
-        boolean hasEconomy = plugin.getEconomy() != null;
-        Inventory inv = plugin.getServer().createInventory(player, (hasEconomy ? 18 : 9), "Set the rewards of contest");
+        Inventory inv = plugin.getServer().createInventory(player, (plugin.hasEconomy() ? 18 : 9), "Set the rewards of contest");
 
         ItemStack[] rewards = plugin.getContestManager().getRewards();
 
@@ -45,22 +44,16 @@ public class RewardsGUI implements Listener {
 
         inv.setItem(8, iconGuide);
 
-        if (hasEconomy) {
+        if (plugin.hasEconomy()) {
             double[] cashPrizes = plugin.getContestManager().getCashPrizes();
 
             for (int i = 0; i < 8; i ++) {
                 double amount = cashPrizes[i];
 
                 String target = ((i < 7) ? plugin.getOrdinal(i + 1) : "consolation");
-                String format;
-                try {
-                    format = plugin.getEconomy().format(amount);
-                } catch (Exception ex) {
-                    format = "$" + amount;
-                }
 
                 ItemStack iconEmerald = new ItemBuilder(Material.EMERALD)
-                        .setDisplayName("§aPrize for " + target +": §2" + format)
+                        .setDisplayName("§aPrize for " + target +": §2" + amount)
                         .addLore("§7Click to edit it.")
                         .build();
 
@@ -91,7 +84,7 @@ public class RewardsGUI implements Listener {
 
             event.setCancelled(true);
 
-            if (9 <= event.getRawSlot() && event.getRawSlot() <= 16 && plugin.getEconomy() != null) {
+            if (9 <= event.getRawSlot() && event.getRawSlot() <= 16 && plugin.hasEconomy()) {
                 editors.put(event.getWhoClicked().getUniqueId(), event.getRawSlot() - 9);
 
                 event.getWhoClicked().closeInventory();
