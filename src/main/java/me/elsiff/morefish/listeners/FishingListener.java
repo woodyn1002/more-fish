@@ -13,11 +13,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class FishListener implements Listener {
+public class FishingListener implements Listener {
     private final MoreFish plugin;
     private final ContestManager contest;
 
-    public FishListener(MoreFish plugin) {
+    public FishingListener(MoreFish plugin) {
         this.plugin = plugin;
         this.contest = plugin.getContestManager();
     }

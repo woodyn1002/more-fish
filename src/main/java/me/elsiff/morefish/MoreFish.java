@@ -1,7 +1,7 @@
 package me.elsiff.morefish;
 
 import me.elsiff.morefish.commands.GeneralCommands;
-import me.elsiff.morefish.listeners.FishListener;
+import me.elsiff.morefish.listeners.FishingListener;
 import me.elsiff.morefish.listeners.PlayerListener;
 import me.elsiff.morefish.listeners.RewardsGUI;
 import me.elsiff.morefish.protocol.UpdateChecker;
@@ -40,7 +40,7 @@ public class MoreFish extends JavaPlugin {
         getCommand("morefish").setExecutor(new GeneralCommands(this));
 
         PluginManager manager = getServer().getPluginManager();
-        manager.registerEvents(new FishListener(this), this);
+        manager.registerEvents(new FishingListener(this), this);
         manager.registerEvents(new PlayerListener(this), this);
         manager.registerEvents(rewardsGUI, this);
 
