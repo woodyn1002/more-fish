@@ -96,7 +96,7 @@ public class ContestManager {
             receivers.add(i);
         }
 
-        if (plugin.getEconomy() != null) {
+        if (plugin.hasEconomy()) {
             double[] cashPrizes = getCashPrizes();
             for (int i = 0; i < cashPrizes.length - 1 && i < recordList.size(); i ++) {
                 double amount = cashPrizes[i];
@@ -170,12 +170,7 @@ public class ContestManager {
             int number = getNumber(player);
             String msg = plugin.getLocale().getString("reward-cash-prize");
 
-            String format;
-            try {
-                format = plugin.getEconomy().format(amount);
-            } catch (Exception ex) {
-                format = "$" + amount;
-            }
+            String format = (msg.contains("%format%") ? plugin.getEconomy().format(amount) : "");
 
             msg = msg.replaceAll("%player%", player.getName())
                     .replaceAll("%amount%", amount + "")

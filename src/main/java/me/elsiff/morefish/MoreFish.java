@@ -117,12 +117,20 @@ public class MoreFish extends JavaPlugin {
             case 3:
                 return "3rd";
             default:
-                return number + "th";
+                if (number > 20) {
+                    return (number / 10) + getOrdinal(number % 10);
+                } else {
+                    return number + "th";
+                }
         }
     }
 
     public RewardsGUI getRewardsGUI() {
         return rewardsGUI;
+    }
+
+    public boolean hasEconomy() {
+        return (econ != null);
     }
 
     public Economy getEconomy() {
