@@ -28,9 +28,7 @@ public class FishListener implements Listener {
             if (!contest.hasStarted() && plugin.getConfig().getBoolean("general.no-fishing-unless-contest")) {
                 event.setCancelled(true);
 
-                String msg = plugin.getConfig().getString("messages.no-fishing-allowed.text");
-                msg = ChatColor.translateAlternateColorCodes('&', msg);
-
+                String msg = plugin.getLocale().getString("no-fishing-allowed");
                 event.getPlayer().sendMessage(msg);
                 return;
             }
@@ -43,8 +41,8 @@ public class FishListener implements Listener {
             CaughtFish fish = plugin.getFishManager().generateRandomFish();
 
 
-            String msgFish = getMessage("catch-fish.text", event.getPlayer(), fish);
-            int ancFish = plugin.getConfig().getInt("messages.catch-fish.announce");
+            String msgFish = getMessage("catch-fish", event.getPlayer(), fish);
+            int ancFish = plugin.getConfig().getInt("messages.announce-catch");
 
             if (fish.getRarity().isNoBroadcast()) {
                 ancFish = 0;
@@ -60,8 +58,8 @@ public class FishListener implements Listener {
 
             if (contest.hasStarted()) {
                 if (contest.isNew1st(fish)) {
-                    String msgContest = getMessage("get-1st.text", event.getPlayer(), fish);
-                    int ancContest = plugin.getConfig().getInt("messages.get-1st.announce");
+                    String msgContest = getMessage("get-1st", event.getPlayer(), fish);
+                    int ancContest = plugin.getConfig().getInt("messages.announce-new-1st");
 
                     announceMessage(event.getPlayer(), msgContest, ancContest);
                 }
@@ -77,7 +75,7 @@ public class FishListener implements Listener {
     }
 
     private String getMessage(String path, Player player, CaughtFish fish) {
-        String message = plugin.getConfig().getString("messages." + path);
+        String message = plugin.getLocale().getString(path);
 
         message = message.replaceAll("%player%", player.getName())
                 .replaceAll("%length%", fish.getLength() + "")

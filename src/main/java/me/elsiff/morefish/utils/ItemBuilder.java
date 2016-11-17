@@ -1,4 +1,4 @@
-package me.elsiff.morefish.util;
+package me.elsiff.morefish.utils;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

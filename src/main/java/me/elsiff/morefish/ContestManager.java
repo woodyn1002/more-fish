@@ -1,6 +1,5 @@
 package me.elsiff.morefish;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -149,8 +148,7 @@ public class ContestManager {
         }
 
         int number = getNumber(player);
-        String msg = plugin.getConfig().getString("messages.contest-reward.text");
-        msg = ChatColor.translateAlternateColorCodes('&', msg);
+        String msg = plugin.getLocale().getString("reward");
 
         msg = msg.replaceAll("%player%", player.getName())
                 .replaceAll("%item%", getItemName(stack))
@@ -170,8 +168,7 @@ public class ContestManager {
 
         if (player.isOnline()) {
             int number = getNumber(player);
-            String msg = plugin.getConfig().getString("messages.contest-reward.cash-prize");
-            msg = ChatColor.translateAlternateColorCodes('&', msg);
+            String msg = plugin.getLocale().getString("reward-cash-prize");
 
             String format;
             try {

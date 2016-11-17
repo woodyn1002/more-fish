@@ -1,0 +1,38 @@
+#
+# lang_en.yml
+# by elsiff
+#
+
+version: 130
+
+# %player% - The name of fisher
+# %length% - The length of fish
+# %rarity% - The rarity of fish (upper case)
+# %raritycolor% - The color of rarity
+# %fish% - The name of fish
+# %fishwithrarity% - The text whose format is "[Rarity] [Fish Name]" (with color)
+catch-fish: "&b[MoreFish]&r &e%player%&r caught %raritycolor%%length%cm &l%fishwithrarity%"
+get-1st: "&b[MoreFish]&r &e%player%&r is now the new 1st!"
+no-fishing-allowed: "&b[MoreFish]&r You can't fish unless the contest is ongoing."
+
+contest-start: "&b[MoreFish]&r The fishing contest has started!"
+contest-start-timer: "&b[MoreFish]&r Running time is limited to %time%."
+contest-stop: "&b[MoreFish]&r The fishing contest has ended!"
+
+# %ordinal% - The ordinal of player's rank (e.g. 1st, 2nd, 3rd, 4th)
+# %number% - The numeric rank of player
+# %player% - The name of fisher
+# %length% - The length of fish
+# %fish% - The name of fish
+top-list: "&b[MoreFish]&r &e%ordinal%. &7: %player%, %length%cm %fish%"
+top-no-record: "&b[MoreFish]&r Nobody made any record yet."
+top-mine: "&b[MoreFish]&r You're %ordinal%: %length%cm %fish%"
+top-mine-no-record: "&b[MoreFish]&r You didn't get any record."
+
+# %amount% - The amount of given money
+# %format% - The formatted string with money and currency (e.g. $10.00, 30 Dollars) [Warning: Error occurs with EssentialsEcon]
+# %ordinal% - The ordinal of player's rank (e.g. 1st, 2nd, 3rd, 4th)
+# %number% - The numeric rank of player
+# %player% - The name of fisher
+reward: "&b[MoreFish]&r You've got &e%item%&r as the %ordinal% reward of contest!"
+reward-cash-prize: "&b[MoreFish]&r You've got &e%format%&r as the %ordinal% reward of contest!"

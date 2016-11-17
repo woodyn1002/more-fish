@@ -56,7 +56,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
         if (args.length < 1 || args[0].equalsIgnoreCase("help")) {
             sender.sendMessage(prefix + "§3> ===== §b§lMoreFish §bv" + plugin.getDescription().getVersion() + "§3 ===== <");
             sender.sendMessage(prefix + "/" + label + " help");
-            sender.sendMessage(prefix + "/" + label + " start (runningTime)");
+            sender.sendMessage(prefix + "/" + label + " start [runningTime]");
             sender.sendMessage(prefix + "/" + label + " stop");
             sender.sendMessage(prefix + "/" + label + " rewards");
             sender.sendMessage(prefix + "/" + label + " clear");
@@ -99,10 +99,8 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             }
 
 
-            String msg = plugin.getConfig().getString("messages.contest-start.text");
-            msg = ChatColor.translateAlternateColorCodes('&', msg);
-
-            boolean broadcast = plugin.getConfig().getBoolean("messages.contest-start.broadcast");
+            String msg = plugin.getLocale().getString("contest-start");
+            boolean broadcast = plugin.getConfig().getBoolean("messages.broadcast-start");
 
             if (broadcast) {
                 plugin.getServer().broadcastMessage(msg);
@@ -111,9 +109,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             }
 
             if (hasTimer) {
-                String msgTimer = plugin.getConfig().getString("messages.contest-start.text-timer");
-                msgTimer = ChatColor.translateAlternateColorCodes('&', msgTimer);
-
+                String msgTimer = plugin.getLocale().getString("contest-start-timer");
                 msgTimer = msgTimer.replaceAll("%sec%", sec + "")
                         .replaceAll("%time%", getTimeString(sec));
 
@@ -138,11 +134,9 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             }
 
 
-            String msg = plugin.getConfig().getString("messages.contest-stop.text");
-            msg = ChatColor.translateAlternateColorCodes('&', msg);
-
-            boolean showRanking = plugin.getConfig().getBoolean("messages.contest-stop.show-ranking");
-            boolean broadcast = plugin.getConfig().getBoolean("messages.contest-stop.broadcast");
+            String msg = plugin.getLocale().getString("contest-stop");
+            boolean showRanking = plugin.getConfig().getBoolean("messages.show-top-when-stopping");
+            boolean broadcast = plugin.getConfig().getBoolean("messages.broadcast-stop");
 
             if (broadcast) {
                 plugin.getServer().broadcastMessage(msg);
@@ -201,9 +195,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             }
 
             if (contest.getRecordAmount() < 1) {
-                String msg = plugin.getConfig().getString("messages.contest-top.no-record");
-                msg = ChatColor.translateAlternateColorCodes('&', msg);
-
+                String msg = plugin.getLocale().getString("top-no-record");
                 sender.sendMessage(msg);
             } else {
                 sendRankingMessage(sender, false);
@@ -250,10 +242,8 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
     }
 
     private void sendRankingMessage(CommandSender sender, boolean broadcast) {
-        String format = plugin.getConfig().getString("messages.contest-top.text");
-        format = ChatColor.translateAlternateColorCodes('&', format);
-
-        int limit = plugin.getConfig().getInt("messages.contest-top.ranking-limit");
+        String format = plugin.getLocale().getString("top-list");
+        int limit = plugin.getConfig().getInt("messages.top-number");
 
         for (int i = 1; i < limit + 1; i ++) {
             ContestManager.Record record = contest.getRecord(i);
@@ -293,14 +283,14 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             int number = contest.getNumber(player);
             ContestManager.Record record = contest.getRecord(number);
 
-            msg = plugin.getConfig().getString("messages.contest-top.my-record.text")
+            msg = plugin.getLocale().getString("top-mine")
                     .replaceAll("%ordinal%", plugin.getOrdinal(number))
                     .replaceAll("%number%", number + "")
                     .replaceAll("%player%", record.getPlayer().getName())
                     .replaceAll("%length%", record.getLength() + "")
                     .replaceAll("%fish%", record.getFish().getName());
         } else {
-            msg = plugin.getConfig().getString("messages.contest-top.my-record.no-record");
+            msg = plugin.getLocale().getString("top-mine-no-record");
         }
 
         msg = ChatColor.translateAlternateColorCodes('&', msg);

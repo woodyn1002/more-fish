@@ -13,6 +13,7 @@ import org.mcstats.Metrics;
 
 public class MoreFish extends JavaPlugin {
     public final String prefix = "§b[MoreFish]§r ";
+    private Locale locale;
     private RewardsGUI rewardsGUI;
     private FishManager fishManager;
     private ContestManager contestManager;
@@ -22,7 +23,7 @@ public class MoreFish extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        int configVer = 121;
+        int configVer = 130;
 
         saveDefaultConfig();
 
@@ -30,6 +31,7 @@ public class MoreFish extends JavaPlugin {
             getServer().getConsoleSender().sendMessage("§c[MoreFish] Your config.yml is too old! Please make it up-to-date.");
         }
 
+        this.locale = new Locale(this);
         this.rewardsGUI = new RewardsGUI(this);
         this.fishManager = new FishManager(this);
         this.contestManager = new ContestManager(this);
@@ -88,6 +90,10 @@ public class MoreFish extends JavaPlugin {
 
         econ = rsp.getProvider();
         return econ != null;
+    }
+
+    public Locale getLocale() {
+        return locale;
     }
 
     public FishManager getFishManager() {

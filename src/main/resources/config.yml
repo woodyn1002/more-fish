@@ -6,9 +6,10 @@
 # Warning: DO NOT edit rewards.yml with your file editor, instead use in-game command '/mf rewards'.
 #
 
-version: 121
+version: 130
 
 general:
+  locale: 'en'
   check-update: true
   auto-start: false
   only-for-contest: false
@@ -22,194 +23,14 @@ auto-running:
   delay: 3600
   period: 3600
 
-messages:
-  catch-fish:
-    text: "&b[MoreFish]&r &e%player%&r caught %raritycolor%%length%cm &l%fishwithrarity%"
-    announce: -1
-  get-1st:
-    text: "&b[MoreFish]&r &e%player%&r is now the new 1st!"
-    announce: -1
-  no-fishing-allowed:
-    text: "&b[MoreFish]&r You can't fish unless the contest is ongoing."
-  contest-start:
-    text: "&b[MoreFish]&r The fishing contest has started!"
-    text-timer: "&b[MoreFish]&r Running time is limited to %time%."
-    broadcast: true
-  contest-stop:
-    text: "&b[MoreFish]&r The fishing contest has ended!"
-    show-ranking: true
-    broadcast: true
-  contest-top:
-    text: "&b[MoreFish]&r &e%ordinal%. &7: %player%, %length%cm %fish%"
-    no-record: "&b[MoreFish]&r Nobody made any record yet."
-    ranking-limit: 3
-    my-record:
-      text: "&b[MoreFish]&r You're %ordinal%: %length%cm %fish%"
-      no-record: "&b[MoreFish]&r You didn't get any record."
-  contest-reward:
-    text: "&b[MoreFish]&r You've got &e%item%&r as the %ordinal% reward of contest!"
-    cash-prize: "&b[MoreFish]&r You've got &e%format%&r as the %ordinal% reward of contest!"
-
-
-item-format:
-  display-name: "%raritycolor%%fish%"
-  lore:
-  - "&7%length%cm"
-  - "&7Caught by %player%"
-
-rarity-list:
-  common:
-    display-name: "COMMON"
-    chance: 70
-    color: "reset"
-    no-broadcast: true
-    no-display: true
-  rare:
-    display-name: "RARE"
-    chance: 22
-    color: "aqua"
-  epic:
-    display-name: "EPIC"
-    chance: 7
-    color: "light_purple"
-  legendary:
-    display-name: "LEGENDARY"
-    chance: 1
-    color: "green"
-
-fish-list:
-  common:
-    Shrimp:
-      display-name: "Shrimp"
-      length-min: 3
-      length-max: 8
-      icon: "minecraft:fish"
-    Anchovy:
-      display-name: "Anchovy"
-      length-min: 7
-      length-max: 13
-      icon: "minecraft:fish"
-    Croacker:
-      display-name: "Croacker"
-      length-min: 12
-      length-max: 15
-      icon: "minecraft:fish"
-    Crab:
-      display-name: "Crab"
-      length-min: 10
-      length-max: 15
-      icon: "minecraft:fish"
-    Mackerel:
-      display-name: "Mackerel"
-      length-min: 15
-      length-max: 30
-      icon: "minecraft:fish"
-    Herring:
-      display-name: "Herring"
-      length-min: 20
-      length-max: 30
-      icon: "minecraft:fish"
-  rare:
-    Jellyfish:
-      display-name: "Jellyfish"
-      length-min: 20
-      length-max: 40
-      icon: "minecraft:fish"
-      commands:
-      - "minecraft:effect @p minecraft:poison 3 1"
-      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" The jellyfish made you feel very bad!\",\"color\":\"none\"}]"
-    Squid:
-      display-name: "Squid"
-      length-min: 30
-      length-max: 50
-      icon: "minecraft:dye"
-      commands:
-      - "minecraft:effect @p minecraft:blindness 5 1"
-      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" The squid gifted you some darkness!\",\"color\":\"none\"}]"
-    Breadfish:
-      display-name: "Breadfish"
-      lore:
-      - "&7Tell me have you seen"
-      - "&7the marvellous breadfish"
-      length-min: 10
-      length-max: 30
-      icon: "minecraft:bread"
-    Flatfish:
-      display-name: "Flatfish"
-      length-min: 40
-      length-max: 75
-      icon: "minecraft:fish"
-    SeaBream:
-      display-name: "Sea Bream"
-      length-min: 50
-      length-max: 70
-      icon: "minecraft:fish"
-    SeaBass:
-      display-name: "Sea Bass"
-      length-min: 60
-      length-max: 100
-      icon: "minecraft:fish"
-  epic:
-    Pie:
-      display-name: "Pie"
-      length-min: 3.14
-      length-max: 3.14
-      icon: "minecraft:pumpkin_pie"
-    Magikarp:
-      display-name: "Magikarp"
-      lore:
-      - "&7Magikarp used Splash!"
-      length-min: 25
-      length-max: 35
-      icon: "minecraft:fish"
-    Clownfish:
-      display-name: "Clownfish"
-      length-min: 10
-      length-max: 18
-      icon: "minecraft:fish|2"
-    Pufferfish:
-      display-name: "Pufferfish"
-      length-min: 20
-      length-max: 30
-      icon: "minecraft:fish|3"
-    Salmon:
-      display-name: "Salmon"
-      length-min: 100
-      length-max: 130
-      icon: "minecraft:fish|1"
-    BlackDrum:
-      display-name: "Black Drum"
-      length-min: 100
-      length-max: 180
-      icon: "minecraft:fish"
-    Tuna:
-      display-name: "Tuna"
-      length-min: 130
-      length-max: 180
-      icon: "minecraft:fish"
-  legendary:
-    BlueShark:
-      display-name: "Blue Shark"
-      lore:
-      - "&7&oThe Toughest Fish"
-      - "&7Get &9Strength I (2:00)&7 when you eat it."
-      length-min: 180
-      length-max: 260
-      icon: "minecraft:fish"
-      food-effects:
-        commands:
-        - "minecraft:effect @p minecraft:strength 120 1"
-    PygmyWhale:
-      display-name: "Pygmy Whale"
-      lore:
-      - "&7&oThe Biggest Fish"
-      - "&7Get &9full health and hunger&7"
-      - "when you eat it."
-      length-min: 600
-      length-max: 650
-      icon: "minecraft:fish"
-      food-effects:
-        points: 20
-        saturation: 14.4
-        commands:
-        - "minecraft:effect @p minecraft:regeneration 2 127"
+# -- Announcement Value --
+# '-1' means server broadcast
+# '0' is only for the catcher
+# Positive number means the block radius of announcing messages
+messsages:
+  announce-catch: -1
+  announce-new-1st: -1
+  broadcast-start: true
+  broadcast-stop: true
+  show-top-when-stopping: true
+  top-number: 3

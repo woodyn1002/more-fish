@@ -1,6 +1,6 @@
 package me.elsiff.morefish;
 
-import me.elsiff.morefish.util.IdentityUtils;
+import me.elsiff.morefish.utils.IdentityUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -30,8 +30,7 @@ public class FishManager {
         fishMap.clear();
         rarityMap.clear();
 
-        FileConfiguration config = plugin.getConfig();
-
+        FileConfiguration config = plugin.getLocale().getFishConfig();
         ConfigurationSection rarities = config.getConfigurationSection("rarity-list");
 
         for (String path : rarities.getKeys(false)) {
