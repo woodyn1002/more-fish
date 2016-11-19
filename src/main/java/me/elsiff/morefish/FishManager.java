@@ -129,7 +129,9 @@ public class FishManager {
         ItemStack itemStack = new ItemStack(material, 1, durability);
         ItemMeta meta = itemStack.getItemMeta();
 
-        String displayName = plugin.getConfig().getString("item-format.display-name")
+        FileConfiguration config = plugin.getLocale().getFishConfig();
+
+        String displayName = config.getString("item-format.display-name")
                 .replaceAll("%player%", fisher)
                 .replaceAll("%rarity%", fish.getRarity().getDisplayName())
                 .replaceAll("%raritycolor%", fish.getRarity().getColor() + "")
@@ -138,7 +140,7 @@ public class FishManager {
 
         List<String> lore = new ArrayList<String>();
 
-        for (String str : plugin.getConfig().getStringList("item-format.lore")) {
+        for (String str : config.getStringList("item-format.lore")) {
             String line = str
                     .replaceAll("%player%", fisher)
                     .replaceAll("%rarity%", fish.getRarity().getDisplayName())
