@@ -17,6 +17,9 @@ import org.mcstats.Metrics;
 
 public class MoreFish extends JavaPlugin {
     public final String prefix = "§b[MoreFish]§r ";
+    public final int verConfig = 130;
+    public final int verLang = 130;
+    public final int verFish = 130;
     private Locale locale;
     private RewardsGUI rewardsGUI;
     private FishManager fishManager;
@@ -28,11 +31,9 @@ public class MoreFish extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        int configVer = 130;
-
         saveDefaultConfig();
 
-        if (getConfig().getInt("version") != configVer) {
+        if (getConfig().getInt("version") != verConfig) {
             getServer().getConsoleSender().sendMessage("§c[MoreFish] Your config.yml is too old! Please make it up-to-date.");
         }
 

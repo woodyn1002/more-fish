@@ -76,6 +76,10 @@ public class ContestManager {
 
     public void stop() {
         if (task != null) {
+            if (plugin.hasBossBar()) {
+                plugin.getBossBarManager().removeTimerBar();
+            }
+
             task.cancel();
             task = null;
         }
@@ -349,13 +353,13 @@ public class ContestManager {
         public void run() {
             passed ++;
 
+            if (plugin.hasBossBar()) {
+                plugin.getBossBarManager().updateTimerBar(passed, timer);
+            }
+
             if (passed >= timer) {
                 plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "morefish stop");
                 this.cancel();
-            }
-
-            if (plugin.hasBossBar()) {
-                plugin.getBossBarManager().updateTimerBar(passed, timer);
             }
         }
     }

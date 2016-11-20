@@ -17,14 +17,27 @@ public class Locale {
         String langPath = "lang_" + locale + ".yml";
         String fishPath = "fish_" + locale + ".yml";
 
-        plugin.saveResource(langPath, false);
-        plugin.saveResource(fishPath, false);
-
         File langFile = new File(plugin.getDataFolder(), langPath);
-        this.lang = YamlConfiguration.loadConfiguration(langFile);
-
         File fishFile = new File(plugin.getDataFolder(), fishPath);
+
+        if (!langFile.exists()) {
+            plugin.saveResource(langPath, false);
+        }
+
+        if (!fishFile.exists()) {
+            plugin.saveResource(fishPath, false);
+        }
+
+        this.lang = YamlConfiguration.loadConfiguration(langFile);
         this.fish = YamlConfiguration.loadConfiguration(fishFile);
+
+        if (lang.getInt("version") != plugin.verLang) {
+            plugin.getServer().getConsoleSender().sendMessage("§c[MoreFish] Your " + langPath + " is too old! Please make it up-to-date.");
+        }
+
+        if (fish.getInt("version") != plugin.verFish) {
+            plugin.getServer().getConsoleSender().sendMessage("§c[MoreFish] Your " + fishPath + " is too old! Please make it up-to-date.");
+        }
     }
 
     public FileConfiguration getFishConfig() {

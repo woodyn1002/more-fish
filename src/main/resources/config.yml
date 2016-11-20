@@ -28,7 +28,7 @@ auto-running:
 # '-1' means server broadcast
 # '0' is only for the catcher
 # Positive number means the block radius of announcing messages
-messsages:
+messages:
   announce-catch: -1
   announce-new-1st: -1
   broadcast-start: true

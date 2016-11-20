@@ -2,7 +2,6 @@ package me.elsiff.morefish.commands;
 
 import me.elsiff.morefish.managers.ContestManager;
 import me.elsiff.morefish.MoreFish;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -278,7 +277,6 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             msg = plugin.getLocale().getString("top-mine-no-record");
         }
 
-        msg = ChatColor.translateAlternateColorCodes('&', msg);
         player.sendMessage(msg);
     }
 }
