@@ -1,5 +1,5 @@
 #
-# lang_en.yml
+# lang_en.yml for MoreFish
 # by elsiff
 #
 
@@ -73,13 +73,13 @@ rewards-emerald-icon-lore:
 enter-cash-prize:
 - "&b[MoreFish]&r Enter the value with your chat."
 - "&b[MoreFish]&r Or type 'cancel' to stop editing."
-entered-cancel: "Stopped editing mode."
-entered-not-number: "'%s' is not valid number. Please enter number again."
-entered-not-positive: "The number can't be negative. Please enter correct number."
-entered-successfully: "The value have been entered."
-saved-changes: "The changes have been saved."
+entered-cancel: "&b[MoreFish]&r Stopped editing mode."
+entered-not-number: "&b[MoreFish]&r '%s' is not valid number. Please enter number again."
+entered-not-positive: "&b[MoreFish]&r The number can't be negative. Please enter correct number."
+entered-successfully: "&b[MoreFish]&r The value have been entered."
+saved-changes: "&b[MoreFish]&r The changes have been saved."
 
 old-file: "§c[MoreFish] Your %s is too old! Please make it up-to-date."
 new-version:
-- "New version found: %s"
-- "https://www.spigotmc.org/resources/morefish.22926/"
+- "&b[MoreFish]&r New version found: %s"
+- "&b[MoreFish]&r https://www.spigotmc.org/resources/morefish.22926/"
