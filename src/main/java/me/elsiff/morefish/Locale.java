@@ -31,7 +31,7 @@ public class Locale {
         this.lang = YamlConfiguration.loadConfiguration(langFile);
         this.fish = YamlConfiguration.loadConfiguration(fishFile);
 
-        String msg = plugin.getLocale().getString("old-file");
+        String msg = lang.getString("old-file");
 
         if (lang.getInt("version") != plugin.verLang) {
             plugin.getServer().getConsoleSender().sendMessage(String.format(msg, langPath));

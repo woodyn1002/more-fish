@@ -46,11 +46,20 @@ public class RewardsGUI implements Listener {
             for (int i = 0; i < 8; i ++) {
                 double amount = cashPrizes[i];
 
-                String target = ((i < 7) ? plugin.getOrdinal(i + 1) : "consolation");
+                String ordinal = plugin.getOrdinal(i + 1);
+                String number = (i + 1) + "";
+
+                if (i == 7) {
+                    String text = plugin.getLocale().getString("rewards-consolation");
+                    ordinal = text;
+                    number = text;
+                }
 
                 ItemStack iconEmerald = new ItemBuilder(Material.EMERALD)
                         .setDisplayName(plugin.getLocale().getString("rewards-emerald-icon-name")
-                        .replaceAll("%ordinal%", target).replaceAll("%amount%", amount + ""))
+                                .replaceAll("%ordinal%", ordinal)
+                                .replaceAll("%number%", number)
+                                .replaceAll("%amount%", amount + ""))
                         .setLore(plugin.getLocale().getStringList("rewards-emerald-icon-lore"))
                         .build();
 

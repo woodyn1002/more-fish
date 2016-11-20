@@ -19,7 +19,7 @@ no-fishing-allowed: "&b[MoreFish]&r 대회가 진행중일 때만 낚시가 가�
 contest-start: "&b[MoreFish]&r 낚시대회가 시작되었습니다!"
 contest-start-timer: "&b[MoreFish]&r %time%동안 대회가 진행됩니다."
 contest-stop: "&b[MoreFish]&r 낚시대회가 종료되었습니다!"
-timer-boss-bar: "&b낚시대회 &r[%time% 남음]"
+timer-boss-bar: "&b낚시대회 진행중 &r[%time% 남음]"
 time-format-minutes: "분"
 time-format-seconds: "초"
 
@@ -34,12 +34,12 @@ top-mine: "&b[MoreFish]&r 당신은 %number%등입니다: %length%cm %fish%"
 top-mine-no-record: "&b[MoreFish]&r 당신은 대회에 참가하지 않았습니다."
 
 # %amount% - 주어지는 상금의 액수
-# %format% - 형식을 가지는 액수 (예: \10,000, 10,000원) [주의: EssentialsEcon 플러그인과 함께 사용할 경우 오류 발생]
+# %format% - 형식을 가지는 액수 (예: \10,000, 10,000원) [주의: 오류 발생 가능성 있음]
 # %ordinal% - 플레이어의 순위 기수 (예: 1st, 2nd, 3rd)
 # %number% - 플레이어의 순위 등수 (예: 1, 2, 3)
 # %player% - 플레이어의 닉네임
 reward: "&b[MoreFish]&r 대회에서 %number%등을 기록해 &e%item%&r 아이템을 받았습니다!"
-reward-cash-prize: "&b[MoreFish]&r 대회에서 %number%등을 기록해 &e%format%&r만큼의 돈을 받았습니다!"
+reward-cash-prize: "&b[MoreFish]&r 대회에서 %number%등을 기록해 &e%amount%원&r을 받았습니다!"
 
 no-permission: "&b[MoreFish]&r 당신은 권한이 없습니다."
 already-ongoing: "&b[MoreFish]&r 대회가 이미 진행중입니다."
@@ -58,14 +58,15 @@ rewards-guide-icon-lore:
 - "&7첫 번째 슬롯은 1등,"
 - "&7두 번째 슬롯은 2등의"
 - "&7대회 보상이 됩니다."
-- "&78번째 보상은 참가상입니다."
+- "&78번째 슬롯은 참가상입니다."
 - "&7슬롯을 비우면 보상이 없습니다."
 rewards-sign-icon-name: "&b상금"
 rewards-sign-icon-lore:
 - "&7두번째 줄은 상금입니다."
 - "&7에메랄드 아이콘을 클릭해"
 - "&7액수를 설정해주세요."
-rewards-emerald-icon-name: "&a%number%등의 상금: &2%amount%"
+rewards-consolation: "참가상"
+rewards-emerald-icon-name: "&a%ordinal%의 상금: &2%amount%"
 rewards-emerald-icon-lore:
 - "&7클릭으로 수정하세요."
 enter-cash-prize:

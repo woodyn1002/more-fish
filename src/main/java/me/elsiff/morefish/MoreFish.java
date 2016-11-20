@@ -157,7 +157,6 @@ public class MoreFish extends JavaPlugin {
 
         builder.append(second);
         builder.append(getLocale().getString("time-format-seconds"));
-        builder.append("s");
 
         return builder.toString();
     }

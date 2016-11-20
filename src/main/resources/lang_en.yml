@@ -34,7 +34,7 @@ top-mine: "&b[MoreFish]&r You're %ordinal%: %length%cm %fish%"
 top-mine-no-record: "&b[MoreFish]&r You didn't get any record."
 
 # %amount% - The amount of given money
-# %format% - The formatted string with money and currency (e.g. $10.00, 30 Dollars) [Warning: Error occurs with EssentialsEcon]
+# %format% - The formatted string with money and currency (e.g. $10.00, 30 Dollars) [Warning: Error may occurs with this]
 # %ordinal% - The ordinal of player's rank (e.g. 1st, 2nd, 3rd, 4th)
 # %number% - The numeric rank of player
 # %player% - The name of fisher
@@ -67,6 +67,7 @@ rewards-sign-icon-lore:
 - "&7cash prizes."
 - "&7Click the emeralds"
 - "&7to edit the values."
+rewards-consolation: "consolation"
 rewards-emerald-icon-name: "&aPrize for %ordinal%: &2%amount%"
 rewards-emerald-icon-lore:
 - "&7Click to edit it"
