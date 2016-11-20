@@ -15,12 +15,10 @@ import java.util.List;
 public class GeneralCommands implements CommandExecutor, TabCompleter {
     private final MoreFish plugin;
     private final ContestManager contest;
-    private final String prefix;
 
     public GeneralCommands(MoreFish plugin) {
         this.plugin = plugin;
         this.contest = plugin.getContestManager();
-        this.prefix = plugin.prefix;
     }
 
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
@@ -53,6 +51,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length < 1 || args[0].equalsIgnoreCase("help")) {
+            String prefix = "§b[MoreFish]§r ";
             sender.sendMessage(prefix + "§3> ===== §b§lMoreFish §bv" + plugin.getDescription().getVersion() + "§3 ===== <");
             sender.sendMessage(prefix + "/" + label + " help");
             sender.sendMessage(prefix + "/" + label + " start [runningTime]");
@@ -66,12 +65,12 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
         } else if (args[0].equalsIgnoreCase("start")) {
 
             if (!sender.hasPermission("morefish.admin")) {
-                sender.sendMessage(prefix + "You don't have the permission.");
+                sender.sendMessage(plugin.getLocale().getString("no-permission"));
                 return true;
             }
 
             if (contest.hasStarted()) {
-                sender.sendMessage(prefix + "The contest is already ongoing.");
+                sender.sendMessage(plugin.getLocale().getString("already-ongoing"));
                 return true;
             }
 
@@ -82,12 +81,12 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
                 try {
                     sec = Long.parseLong(args[1]);
                 } catch (NumberFormatException ex) {
-                    sender.sendMessage(prefix + "'" + args[1] + "' is invalid number.");
+                    sender.sendMessage(String.format(plugin.getLocale().getString("not-number"), args[1]));
                     return true;
                 }
 
                 if (sec <= 0) {
-                    sender.sendMessage(prefix + "Only positive number is available.");
+                    sender.sendMessage(plugin.getLocale().getString("not-positive"));
                     return true;
                 }
 
@@ -108,8 +107,8 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             }
 
             if (hasTimer) {
-                String msgTimer = plugin.getLocale().getString("contest-start-timer");
-                msgTimer = msgTimer.replaceAll("%sec%", sec + "")
+                String msgTimer = plugin.getLocale().getString("contest-start-timer")
+                        .replaceAll("%sec%", sec + "")
                         .replaceAll("%time%", plugin.getTimeString(sec));
 
                 if (broadcast) {
@@ -123,12 +122,12 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
         } else if (args[0].equalsIgnoreCase("stop")) {
 
             if (!sender.hasPermission("morefish.admin")) {
-                sender.sendMessage(prefix + "You don't have the permission.");
+                sender.sendMessage(plugin.getLocale().getString("no-permission"));
                 return true;
             }
 
             if (!contest.hasStarted()) {
-                sender.sendMessage(prefix + "The contest is already stopped.");
+                sender.sendMessage(plugin.getLocale().getString("already-stopped"));
                 return true;
             }
 
@@ -154,42 +153,42 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
         } else if (args[0].equalsIgnoreCase("clear")) {
 
             if (!sender.hasPermission("morefish.admin")) {
-                sender.sendMessage(prefix + "You don't have the permission.");
+                sender.sendMessage(plugin.getLocale().getString("no-permission"));
                 return true;
             }
 
             if (!contest.hasStarted()) {
-                sender.sendMessage(prefix + "The contest isn't ongoing now.");
+                sender.sendMessage(plugin.getLocale().getString("not-ongoing"));
                 return true;
             }
 
             contest.clearRecords();
 
-            sender.sendMessage(prefix + "The records has been cleared successfully.");
+            sender.sendMessage(plugin.getLocale().getString("clear-records"));
 
             return true;
         } else if (args[0].equalsIgnoreCase("reload")) {
 
             if (!sender.hasPermission("morefish.admin")) {
-                sender.sendMessage(prefix + "You don't have the permission.");
+                sender.sendMessage(plugin.getLocale().getString("no-permission"));
                 return true;
             }
 
             plugin.reloadConfig();
             plugin.getFishManager().loadFishList();
 
-            sender.sendMessage(prefix + "Reloaded the config successfully.");
+            sender.sendMessage(plugin.getLocale().getString("reload-config"));
 
             return true;
         } else if (args[0].equalsIgnoreCase("top")) {
 
             if (!sender.hasPermission("morefish.top")) {
-                sender.sendMessage(prefix + "You don't have the permission.");
+                sender.sendMessage(plugin.getLocale().getString("no-permission"));
                 return true;
             }
 
             if (!contest.hasStarted()) {
-                sender.sendMessage(prefix + "The contest isn't ongoing now.");
+                sender.sendMessage(plugin.getLocale().getString("not-ongoing"));
                 return true;
             }
 
@@ -204,14 +203,14 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
         } else if (args[0].equalsIgnoreCase("rewards")) {
 
             if (!(sender instanceof Player)) {
-                sender.sendMessage(prefix + "This is an in-game command.");
+                sender.sendMessage(plugin.getLocale().getString("in-game-command"));
                 return true;
             }
 
             Player player = (Player) sender;
 
             if (!player.hasPermission("morefish.admin")) {
-                player.sendMessage(prefix + "You don't have the permission.");
+                player.sendMessage(plugin.getLocale().getString("no-permission"));
                 return true;
             }
 
@@ -219,7 +218,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 
             return true;
         } else {
-            sender.sendMessage(prefix + "That's an invalid command.");
+            sender.sendMessage(plugin.getLocale().getString("invalid-command"));
 
             return true;
         }

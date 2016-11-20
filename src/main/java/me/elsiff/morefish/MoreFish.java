@@ -16,7 +16,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 
 public class MoreFish extends JavaPlugin {
-    public final String prefix = "§b[MoreFish]§r ";
     public final int verConfig = 130;
     public final int verLang = 130;
     public final int verFish = 130;
@@ -32,12 +31,12 @@ public class MoreFish extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
+        this.locale = new Locale(this);
 
         if (getConfig().getInt("version") != verConfig) {
-            getServer().getConsoleSender().sendMessage("§c[MoreFish] Your config.yml is too old! Please make it up-to-date.");
+            getServer().getConsoleSender().sendMessage(String.format(getLocale().getString("old-file"), "config.yml"));
         }
 
-        this.locale = new Locale(this);
         this.rewardsGUI = new RewardsGUI(this);
         this.fishManager = new FishManager(this);
         this.contestManager = new ContestManager(this);
@@ -152,10 +151,12 @@ public class MoreFish extends JavaPlugin {
 
         if (minutes > 0) {
             builder.append(minutes);
-            builder.append("m ");
+            builder.append(getLocale().getString("time-format-minutes"));
+            builder.append(" ");
         }
 
         builder.append(second);
+        builder.append(getLocale().getString("time-format-seconds"));
         builder.append("s");
 
         return builder.toString();

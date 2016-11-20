@@ -20,8 +20,9 @@ public class PlayerListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         if (event.getPlayer().isOp() && plugin.getConfig().getBoolean("general.check-update") &&
                 !plugin.getUpdateChecker().isUpToDate()) {
-            event.getPlayer().sendMessage(plugin.prefix + "New version found: " + plugin.getUpdateChecker().getNewVersion());
-            event.getPlayer().sendMessage(plugin.prefix + "https://www.spigotmc.org/resources/morefish.22926/");
+            for (String msg : plugin.getLocale().getStringList("new-version")) {
+                event.getPlayer().sendMessage(String.format(msg, plugin.getUpdateChecker().getNewVersion()));
+            }
         }
 
         if (plugin.getContestManager().hasStarted() && plugin.hasBossBar()) {

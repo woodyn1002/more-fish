@@ -24,7 +24,8 @@ public class RewardsGUI implements Listener {
     }
 
     public void openGUI(Player player) {
-        Inventory inv = plugin.getServer().createInventory(player, (plugin.hasEconomy() ? 18 : 9), "Set the rewards of contest");
+        String title = plugin.getLocale().getString("rewards-gui-title");
+        Inventory inv = plugin.getServer().createInventory(player, (plugin.hasEconomy() ? 18 : 9), title);
 
         ItemStack[] rewards = plugin.getContestManager().getRewards();
 
@@ -33,13 +34,8 @@ public class RewardsGUI implements Listener {
         }
 
         ItemStack iconGuide = new ItemBuilder(Material.SIGN)
-                .setDisplayName("§bPut your items to the slots!")
-                .addLore("§7The first slot means",
-                        "§7the reward of 1st,",
-                        "§7and the second one means",
-                        "§7the reward of 2nd.",
-                        "§78th slot is for consolation.",
-                        "§7Empty slots mean no reward.")
+                .setDisplayName(plugin.getLocale().getString("rewards-guide-icon-name"))
+                .setLore(plugin.getLocale().getStringList("rewards-guide-icon-lore"))
                 .build();
 
         inv.setItem(8, iconGuide);
@@ -53,19 +49,17 @@ public class RewardsGUI implements Listener {
                 String target = ((i < 7) ? plugin.getOrdinal(i + 1) : "consolation");
 
                 ItemStack iconEmerald = new ItemBuilder(Material.EMERALD)
-                        .setDisplayName("§aPrize for " + target +": §2" + amount)
-                        .addLore("§7Click to edit it.")
+                        .setDisplayName(plugin.getLocale().getString("rewards-emerald-icon-name")
+                        .replaceAll("%ordinal%", target).replaceAll("%amount%", amount + ""))
+                        .setLore(plugin.getLocale().getStringList("rewards-emerald-icon-lore"))
                         .build();
 
                 inv.setItem(9 + i, iconEmerald);
             }
 
             ItemStack iconMoneyGuide = new ItemBuilder(Material.SIGN)
-                    .setDisplayName("§bCash prizes")
-                    .addLore("§7The second row is for",
-                            "§7cash prizes.",
-                            "§7Click the emeralds",
-                            "§7to edit cash prizes.")
+                    .setDisplayName(plugin.getLocale().getString("rewards-sign-icon-name"))
+                    .setLore(plugin.getLocale().getStringList("rewards-sign-icon-lore"))
                     .build();
 
             inv.setItem(17, iconMoneyGuide);
@@ -89,8 +83,9 @@ public class RewardsGUI implements Listener {
 
                 event.getWhoClicked().closeInventory();
 
-                event.getWhoClicked().sendMessage(plugin.prefix + "Enter the value with your chat.");
-                event.getWhoClicked().sendMessage(plugin.prefix + "Or type 'cancel' to stop editing.");
+                for (String msg : plugin.getLocale().getStringList("enter-cash-prize")) {
+                    event.getWhoClicked().sendMessage(msg);
+                }
             }
         }
     }
@@ -106,7 +101,7 @@ public class RewardsGUI implements Listener {
                 editors.remove(id);
                 openGUI(event.getPlayer());
 
-                event.getPlayer().sendMessage(plugin.prefix + "Stopped editing mode.");
+                event.getPlayer().sendMessage(plugin.getLocale().getString("entered-cancel"));
                 return;
             }
 
@@ -114,12 +109,12 @@ public class RewardsGUI implements Listener {
             try {
                 value = Double.parseDouble(event.getMessage());
             } catch (NumberFormatException ex) {
-                event.getPlayer().sendMessage(plugin.prefix + "'" + event.getMessage() + "' is not valid number. Please enter number again.");
+                event.getPlayer().sendMessage(String.format(plugin.getLocale().getString("entered-not-number"), event.getMessage()));
                 return;
             }
 
             if (value < 0) {
-                event.getPlayer().sendMessage(plugin.prefix + "The number can't be negative. Please enter correct number.");
+                event.getPlayer().sendMessage(plugin.getLocale().getString("entered-not-positive"));
                 return;
             }
 
@@ -132,7 +127,7 @@ public class RewardsGUI implements Listener {
             editors.remove(id);
             openGUI(event.getPlayer());
 
-            event.getPlayer().sendMessage(plugin.prefix + "The value have been entered.");
+            event.getPlayer().sendMessage(plugin.getLocale().getString("entered-successfully"));
         }
     }
 
@@ -155,7 +150,7 @@ public class RewardsGUI implements Listener {
             plugin.getContestManager().setRewards(rewards);
 
             if (!editors.containsKey(event.getPlayer().getUniqueId())) {
-                event.getPlayer().sendMessage(plugin.prefix + "The changes have been saved.");
+                event.getPlayer().sendMessage(plugin.getLocale().getString("saved-changes"));
             }
         }
     }
