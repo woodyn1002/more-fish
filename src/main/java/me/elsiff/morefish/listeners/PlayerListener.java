@@ -23,6 +23,10 @@ public class PlayerListener implements Listener {
             event.getPlayer().sendMessage(plugin.prefix + "New version found: " + plugin.getUpdateChecker().getNewVersion());
             event.getPlayer().sendMessage(plugin.prefix + "https://www.spigotmc.org/resources/morefish.22926/");
         }
+
+        if (plugin.getContestManager().hasStarted() && plugin.hasBossBar()) {
+            plugin.getBossBarManager().addPlayer(event.getPlayer());
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)

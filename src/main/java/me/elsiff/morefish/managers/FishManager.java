@@ -1,5 +1,9 @@
-package me.elsiff.morefish;
+package me.elsiff.morefish.managers;
 
+import me.elsiff.morefish.CaughtFish;
+import me.elsiff.morefish.CustomFish;
+import me.elsiff.morefish.MoreFish;
+import me.elsiff.morefish.Rarity;
 import me.elsiff.morefish.utils.IdentityUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

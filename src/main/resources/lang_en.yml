@@ -15,9 +15,11 @@ catch-fish: "&b[MoreFish]&r &e%player%&r caught %raritycolor%%length%cm &l%fishw
 get-1st: "&b[MoreFish]&r &e%player%&r is now the new 1st!"
 no-fishing-allowed: "&b[MoreFish]&r You can't fish unless the contest is ongoing."
 
+# %time% - The left time of contest
 contest-start: "&b[MoreFish]&r The fishing contest has started!"
 contest-start-timer: "&b[MoreFish]&r Running time is limited to %time%."
 contest-stop: "&b[MoreFish]&r The fishing contest has ended!"
+timer-boss-bar: "&b&lFishing Contest &9[%time% left]"
 
 # %ordinal% - The ordinal of player's rank (e.g. 1st, 2nd, 3rd, 4th)
 # %number% - The numeric rank of player

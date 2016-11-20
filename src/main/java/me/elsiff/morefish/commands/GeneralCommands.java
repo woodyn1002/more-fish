@@ -1,6 +1,6 @@
 package me.elsiff.morefish.commands;
 
-import me.elsiff.morefish.ContestManager;
+import me.elsiff.morefish.managers.ContestManager;
 import me.elsiff.morefish.MoreFish;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -111,7 +111,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             if (hasTimer) {
                 String msgTimer = plugin.getLocale().getString("contest-start-timer");
                 msgTimer = msgTimer.replaceAll("%sec%", sec + "")
-                        .replaceAll("%time%", getTimeString(sec));
+                        .replaceAll("%time%", plugin.getTimeString(sec));
 
                 if (broadcast) {
                     plugin.getServer().broadcastMessage(msgTimer);
@@ -135,7 +135,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 
 
             String msg = plugin.getLocale().getString("contest-stop");
-            boolean showRanking = plugin.getConfig().getBoolean("messages.show-top-when-stopping");
+            boolean showRanking = plugin.getConfig().getBoolean("messages.show-top-on-ending");
             boolean broadcast = plugin.getConfig().getBoolean("messages.broadcast-stop");
 
             if (broadcast) {
@@ -224,21 +224,6 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 
             return true;
         }
-    }
-
-    private String getTimeString(long sec) {
-        String str = "";
-
-        int minutes = (int) (sec / 60);
-        int second = (int) (sec - minutes * 60);
-
-        if (minutes > 0) {
-            str += minutes + "m ";
-        }
-
-        str += second + "s";
-
-        return str;
     }
 
     private void sendRankingMessage(CommandSender sender, boolean broadcast) {

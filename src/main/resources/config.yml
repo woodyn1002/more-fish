@@ -12,6 +12,7 @@ general:
   locale: 'en'
   check-update: true
   auto-start: false
+  use-boss-bar: true
   only-for-contest: false
   no-fishing-unless-contest: false
   contest-disabled-worlds: []
@@ -32,5 +33,6 @@ messsages:
   announce-new-1st: -1
   broadcast-start: true
   broadcast-stop: true
-  show-top-when-stopping: true
+  show-top-on-ending: true
+  contest-bar-color: 'blue'
   top-number: 3

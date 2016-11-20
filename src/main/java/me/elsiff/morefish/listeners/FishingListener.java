@@ -1,7 +1,7 @@
 package me.elsiff.morefish.listeners;
 
 import me.elsiff.morefish.CaughtFish;
-import me.elsiff.morefish.ContestManager;
+import me.elsiff.morefish.managers.ContestManager;
 import me.elsiff.morefish.MoreFish;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

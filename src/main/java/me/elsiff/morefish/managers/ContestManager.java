@@ -1,5 +1,7 @@
-package me.elsiff.morefish;
+package me.elsiff.morefish.managers;
 
+import me.elsiff.morefish.CaughtFish;
+import me.elsiff.morefish.MoreFish;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -7,7 +9,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class ContestManager {
     private final File fileRewards;
     private final FileConfiguration configRewards;
     private boolean hasStarted = false;
-    private BukkitTask task = null;
+    private TimerTask task = null;
 
     public ContestManager(MoreFish plugin) {
         this.plugin = plugin;
@@ -63,7 +64,12 @@ public class ContestManager {
     }
 
     public void startWithTimer(long sec) {
-        task = new TimerTask().runTaskLater(plugin, 20 * sec);
+        task = new TimerTask(sec);
+        task.runTaskTimer(plugin, 20, 20);
+
+        if (plugin.hasBossBar()) {
+            plugin.getBossBarManager().createTimerBar(sec);
+        }
 
         start();
     }
@@ -333,9 +339,24 @@ public class ContestManager {
     }
 
     private class TimerTask extends BukkitRunnable {
+        private long passed = 0;
+        private final long timer;
+
+        public TimerTask(long sec) {
+            this.timer = sec;
+        }
 
         public void run() {
-            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "morefish stop");
+            passed ++;
+
+            if (passed >= timer) {
+                plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "morefish stop");
+                this.cancel();
+            }
+
+            if (plugin.hasBossBar()) {
+                plugin.getBossBarManager().updateTimerBar(passed, timer);
+            }
         }
     }
 }

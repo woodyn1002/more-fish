@@ -4,8 +4,12 @@ import me.elsiff.morefish.commands.GeneralCommands;
 import me.elsiff.morefish.listeners.FishingListener;
 import me.elsiff.morefish.listeners.PlayerListener;
 import me.elsiff.morefish.listeners.RewardsGUI;
+import me.elsiff.morefish.managers.BossBarManager;
+import me.elsiff.morefish.managers.ContestManager;
+import me.elsiff.morefish.managers.FishManager;
 import me.elsiff.morefish.protocol.UpdateChecker;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Material;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,6 +21,7 @@ public class MoreFish extends JavaPlugin {
     private RewardsGUI rewardsGUI;
     private FishManager fishManager;
     private ContestManager contestManager;
+    private BossBarManager bossBarManager;
     private UpdateChecker updateChecker;
 
     private Economy econ = null;
@@ -36,6 +41,11 @@ public class MoreFish extends JavaPlugin {
         this.fishManager = new FishManager(this);
         this.contestManager = new ContestManager(this);
         this.updateChecker = new UpdateChecker(this);
+
+        // For 1.9+
+        if (getConfig().getBoolean("general.use-boss-bar") && Material.getMaterial("SHIELD") != null) {
+            this.bossBarManager = new BossBarManager(this);
+        }
 
         getCommand("morefish").setExecutor(new GeneralCommands(this));
 
@@ -104,6 +114,14 @@ public class MoreFish extends JavaPlugin {
         return contestManager;
     }
 
+    public BossBarManager getBossBarManager() {
+        return bossBarManager;
+    }
+
+    public boolean hasBossBar() {
+        return (getBossBarManager() != null);
+    }
+
     public UpdateChecker getUpdateChecker() {
         return updateChecker;
     }
@@ -123,6 +141,23 @@ public class MoreFish extends JavaPlugin {
                     return number + "th";
                 }
         }
+    }
+
+    public String getTimeString(long sec) {
+        StringBuilder builder = new StringBuilder();
+
+        int minutes = (int) (sec / 60);
+        int second = (int) (sec - minutes * 60);
+
+        if (minutes > 0) {
+            builder.append(minutes);
+            builder.append("m ");
+        }
+
+        builder.append(second);
+        builder.append("s");
+
+        return builder.toString();
     }
 
     public RewardsGUI getRewardsGUI() {
