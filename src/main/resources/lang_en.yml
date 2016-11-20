@@ -19,7 +19,7 @@ no-fishing-allowed: "&b[MoreFish]&r You can't fish unless the contest is ongoing
 contest-start: "&b[MoreFish]&r The fishing contest has started!"
 contest-start-timer: "&b[MoreFish]&r Running time is limited to %time%."
 contest-stop: "&b[MoreFish]&r The fishing contest has ended!"
-timer-boss-bar: "&b&lFishing Contest &9[%time% left]"
+timer-boss-bar: "&b&lFishing Contest &r[%time% left]"
 time-format-minutes: "m"
 time-format-seconds: "s"
 
@@ -39,7 +39,7 @@ top-mine-no-record: "&b[MoreFish]&r You didn't get any record."
 # %number% - The numeric rank of player
 # %player% - The name of fisher
 reward: "&b[MoreFish]&r You've got &e%item%&r as the %ordinal% reward of contest!"
-reward-cash-prize: "&b[MoreFish]&r You've got &e%format%&r as the %ordinal% reward of contest!"
+reward-cash-prize: "&b[MoreFish]&r You've got &e%amount%&r as the %ordinal% reward of contest!"
 
 no-permission: "&b[MoreFish]&r You don't have the permission."
 already-ongoing: "&b[MoreFish]&r The contest is already ongoing."
