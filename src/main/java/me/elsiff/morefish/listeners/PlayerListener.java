@@ -25,7 +25,7 @@ public class PlayerListener implements Listener {
             }
         }
 
-        if (plugin.getContestManager().hasStarted() && plugin.hasBossBar()) {
+        if (plugin.hasBossBar() && plugin.getContestManager().hasStarted() && plugin.getContestManager().hasTimer()) {
             plugin.getBossBarManager().addPlayer(event.getPlayer());
         }
     }

@@ -59,6 +59,10 @@ public class ContestManager {
         return hasStarted;
     }
 
+    public boolean hasTimer() {
+        return (task != null);
+    }
+
     public void start() {
         hasStarted = true;
     }
