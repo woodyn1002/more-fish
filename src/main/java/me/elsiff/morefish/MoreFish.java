@@ -172,4 +172,8 @@ public class MoreFish extends JavaPlugin {
     public Economy getEconomy() {
         return econ;
     }
+
+    public void reloadLocale() {
+        locale = new Locale(this);
+    }
 }
