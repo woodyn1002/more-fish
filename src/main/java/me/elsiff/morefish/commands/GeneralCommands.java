@@ -22,7 +22,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
     }
 
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         if (args.length < 2) {
             if (sender.hasPermission("morefish.admin")) {

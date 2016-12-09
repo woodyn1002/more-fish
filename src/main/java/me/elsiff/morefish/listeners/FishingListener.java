@@ -38,7 +38,7 @@ public class FishingListener implements Listener {
                 return;
             }
 
-            CaughtFish fish = plugin.getFishManager().generateRandomFish();
+            CaughtFish fish = plugin.getFishManager().generateRandomFish(event.getPlayer());
 
 
             String msgFish = getMessage("catch-fish", event.getPlayer(), fish);

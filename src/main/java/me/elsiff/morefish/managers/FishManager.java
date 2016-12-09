@@ -7,6 +7,7 @@ import me.elsiff.morefish.Rarity;
 import me.elsiff.morefish.utils.IdentityUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -19,10 +20,10 @@ public class FishManager {
     private final MoreFish plugin;
     private final Random random = new Random();
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy HH:mm");
-    private final List<Rarity> rarityList = new ArrayList<Rarity>();
-    private final Map<String, CustomFish> fishMap = new HashMap<String, CustomFish>();
-    private final Map<Rarity, List<CustomFish>> rarityMap = new HashMap<Rarity, List<CustomFish>>();
-    private final Map<String, String> nameMap = new HashMap<String, String>();
+    private final List<Rarity> rarityList = new ArrayList<>();
+    private final Map<String, CustomFish> fishMap = new HashMap<>();
+    private final Map<Rarity, List<CustomFish>> rarityMap = new HashMap<>();
+    private final Map<String, String> nameMap = new HashMap<>();
 
     public FishManager(MoreFish plugin) {
         this.plugin = plugin;
@@ -59,11 +60,11 @@ public class FishManager {
 
             for (String path : section.getKeys(false)) {
                 String displayName = section.getString(path + ".display-name");
-                List<String> lore = new ArrayList<String>();
+                List<String> lore = new ArrayList<>();
                 double lengthMin = section.getDouble(path + ".length-min");
                 double lengthMax = section.getDouble(path + ".length-max");
                 String icon = section.getString(path + ".icon");
-                List<String> commands = new ArrayList<String>();
+                List<String> commands = new ArrayList<>();
                 CustomFish.FoodEffects foodEffects = new CustomFish.FoodEffects();
 
                 if (section.contains(path + ".lore")) {
@@ -99,11 +100,11 @@ public class FishManager {
         plugin.getLogger().info("Loaded " + fishMap.size() + " fish successfully.");
     }
 
-    public CaughtFish generateRandomFish() {
+    public CaughtFish generateRandomFish(OfflinePlayer catcher) {
         Rarity rarity = getRandomRarity();
         CustomFish type = getRandomFish(rarity);
 
-        return createCaughtFish(type);
+        return createCaughtFish(type, catcher);
     }
 
     public CustomFish getCustomFish(String name) {
@@ -142,7 +143,7 @@ public class FishManager {
                 .replaceAll("%fish%", fish.getName());
         displayName = ChatColor.translateAlternateColorCodes('&', displayName);
 
-        List<String> lore = new ArrayList<String>();
+        List<String> lore = new ArrayList<>();
 
         for (String str : config.getStringList("item-format.lore")) {
             String line = str
@@ -163,14 +164,23 @@ public class FishManager {
             }
         }
 
-        meta.setDisplayName(displayName);
+        meta.setDisplayName(displayName + encodeFishData(fish));
         meta.setLore(lore);
         itemStack.setItemMeta(meta);
 
         return itemStack;
     }
 
-    private CaughtFish createCaughtFish(CustomFish fish) {
+    public CaughtFish getCaughtFish(ItemStack itemStack) {
+        if (!itemStack.hasItemMeta() || !itemStack.getItemMeta().hasDisplayName()) {
+            return null;
+        }
+
+        String displayName = itemStack.getItemMeta().getDisplayName();
+        return decodeFishData(displayName);
+    }
+
+    private CaughtFish createCaughtFish(CustomFish fish, OfflinePlayer catcher) {
         double length;
 
         if (fish.getLengthMax() == fish.getLengthMin()) {
@@ -183,7 +193,7 @@ public class FishManager {
             length += 0.1 * random.nextInt(10);
         }
 
-        return new CaughtFish(fish, length);
+        return new CaughtFish(fish, length, catcher);
     }
 
     private Rarity getRandomRarity() {
@@ -206,5 +216,40 @@ public class FishManager {
         int index = random.nextInt(list.size());
 
         return list.get(index);
+    }
+
+    private String encodeFishData(CaughtFish fish) {
+        return "|"
+                .concat("name:" + fish.getName() + "|")
+                .concat("length:" + fish.getLength() + "|")
+                .concat("catcher:" + fish.getCatcher().getUniqueId())
+                .replaceAll(".(?=.)", "&");
+    }
+
+    private CaughtFish decodeFishData(String displayName) {
+        String[] split = displayName.replaceAll("&", "").split("\\|");
+        String name = null;
+        double length = 0.0D;
+        OfflinePlayer catcher = null;
+
+        for (int i = 1; i < split.length; i ++) {
+            String[] arr = split[i].split(":");
+            String key = arr[0];
+            String value = arr[1];
+
+            switch (key) {
+                case "name":
+                    name = value;
+                    break;
+                case "length":
+                    length = Double.parseDouble(value);
+                    break;
+                case "catcher":
+                    catcher = plugin.getServer().getOfflinePlayer(UUID.fromString(value));
+                    break;
+            }
+        }
+
+        return new CaughtFish(getCustomFish(name), length, catcher);
     }
 }

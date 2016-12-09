@@ -17,7 +17,7 @@ import java.util.*;
 public class ContestManager {
     private final MoreFish plugin;
     private final RecordComparator comparator = new RecordComparator();
-    private final List<Record> recordList = new ArrayList<Record>();
+    private final List<Record> recordList = new ArrayList<>();
     private final File fileRewards;
     private final FileConfiguration configRewards;
     private boolean hasStarted = false;
@@ -95,7 +95,7 @@ public class ContestManager {
     }
 
     private void giveRewards() {
-        Set<Integer> receivers = new HashSet<Integer>();
+        Set<Integer> receivers = new HashSet<>();
 
         ItemStack[] rewards = getRewards();
         for (int i = 0; i < rewards.length - 1 && i < recordList.size(); i ++) {

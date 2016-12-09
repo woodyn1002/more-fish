@@ -16,8 +16,8 @@ import java.util.*;
 
 public class RewardsGUI implements Listener {
     private final MoreFish plugin;
-    private final Set<UUID> users = new HashSet<UUID>();
-    private final Map<UUID, Integer> editors = new HashMap<UUID, Integer>();
+    private final Set<UUID> users = new HashSet<>();
+    private final Map<UUID, Integer> editors = new HashMap<>();
 
     public RewardsGUI(MoreFish plugin) {
         this.plugin = plugin;

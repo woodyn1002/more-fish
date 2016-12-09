@@ -52,7 +52,7 @@ public class Locale {
     }
 
     public List<String> getStringList(String path) {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         for (String value : lang.getStringList(path)) {
             list.add(ChatColor.translateAlternateColorCodes('&', value));
