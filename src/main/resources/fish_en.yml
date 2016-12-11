@@ -7,16 +7,16 @@
 # - https://github.com/elsiff/MoreFish/wiki/Custom-Rarity-Tutorial
 #
 
-version: 130
+version: 200
 
 # %player% - The ordinal of player's rank (e.g. 1st, 2nd, 3rd, 4th)
 # %rarity% - The rarity of fish (upper case)
-# %raritycolor% - The color of rarity
+# %rarity_color% - The color of rarity
 # %length% - The length of fish
 # %fish% - The name of fish
 # %date% - The date when the fish was caught
 item-format:
-  display-name: "%raritycolor%%fish%"
+  display-name: "%rarity_color%%fish%"
   lore:
   - "&7%length%cm"
   - "&7Caught by %player%"
@@ -28,17 +28,22 @@ rarity-list:
     color: "reset"
     no-broadcast: true
     no-display: true
+  junk:
+    display-name: "JUNK"
+    chance: 1
+    color: "gray"
+    no-display: true
   rare:
     display-name: "RARE"
     chance: 22
     color: "aqua"
   epic:
     display-name: "EPIC"
-    chance: 7
+    chance: 6.5
     color: "light_purple"
   legendary:
     display-name: "LEGENDARY"
-    chance: 1
+    chance: 0.5
     color: "green"
 
 fish-list:
@@ -73,6 +78,50 @@ fish-list:
       length-min: 20
       length-max: 30
       icon: "minecraft:fish"
+  junk:
+    Pie:
+      display-name: "Pie"
+      length-min: 3.14
+      length-max: 3.14
+      icon: "minecraft:pumpkin_pie"
+      skip-item-format: true
+    Magikarp:
+      display-name: "Magikarp"
+      lore:
+      - "&7Magikarp used Splash!"
+      length-min: 25
+      length-max: 35
+      icon: "minecraft:fish"
+      skip-item-format: true
+    Breadfish:
+      display-name: "Breadfish"
+      lore:
+      - "&7Tell me have you seen"
+      - "&7the marvellous breadfish"
+      length-min: 10
+      length-max: 30
+      icon: "minecraft:bread"
+      skip-item-format: true
+    WoodenAxe:
+      display-name: "Admin's Wooden Axe"
+      lore:
+      - "&7//cut"
+      length-min: 16
+      length-max: 16
+      icon: "minecraft:wooden_axe"
+      skip-item-format: true
+    FishingRod:
+      display-name: "Fishing Rod That Someone Dropped Hitting 'Q' By Mistake"
+      length-min: 16
+      length-max: 16
+      icon: "minecraft:fishing_rod|30"
+      skip-item-format: true
+    SpongeBob:
+      display-name: "Nice Cook Of The Krusty Krab"
+      length-min: 16
+      length-max: 16
+      icon: "minecraft:sponge"
+      skip-item-format: true
   rare:
     Jellyfish:
       display-name: "Jellyfish"
@@ -90,14 +139,6 @@ fish-list:
       commands:
       - "minecraft:effect @p minecraft:blindness 5 1"
       - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" The squid gifted you some darkness!\",\"color\":\"none\"}]"
-    Breadfish:
-      display-name: "Breadfish"
-      lore:
-      - "&7Tell me have you seen"
-      - "&7the marvellous breadfish"
-      length-min: 10
-      length-max: 30
-      icon: "minecraft:bread"
     Flatfish:
       display-name: "Flatfish"
       length-min: 40
@@ -114,18 +155,6 @@ fish-list:
       length-max: 100
       icon: "minecraft:fish"
   epic:
-    Pie:
-      display-name: "Pie"
-      length-min: 3.14
-      length-max: 3.14
-      icon: "minecraft:pumpkin_pie"
-    Magikarp:
-      display-name: "Magikarp"
-      lore:
-      - "&7Magikarp used Splash!"
-      length-min: 25
-      length-max: 35
-      icon: "minecraft:fish"
     Clownfish:
       display-name: "Clownfish"
       length-min: 10
@@ -136,6 +165,11 @@ fish-list:
       length-min: 20
       length-max: 30
       icon: "minecraft:fish|3"
+    SeaTurtle:
+      display-name: "Sea Turtle"
+      length-min: 90
+      length-max: 130
+      icon: "minecraft:fish"
     Salmon:
       display-name: "Salmon"
       length-min: 100
@@ -157,8 +191,8 @@ fish-list:
       lore:
       - "&7&oThe Toughest Fish"
       - "&7Get &9Strength I (2:00)&7 when you eat it."
-      length-min: 180
-      length-max: 260
+      length-min: 160
+      length-max: 240
       icon: "minecraft:fish"
       food-effects:
         commands:

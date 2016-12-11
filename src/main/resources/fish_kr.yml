@@ -7,16 +7,16 @@
 # - https://github.com/elsiff/MoreFish/wiki/Custom-Rarity-Tutorial
 #
 
-version: 130
+version: 200
 
 # %player% - 플레이어의 순위 기수 (예: 1st, 2nd, 3rd)
 # %rarity% - 물고기의 희귀 등급
-# %raritycolor% - 희귀 등급의 색깔
+# %rarity_color% - 희귀 등급의 색깔
 # %length% - 물고기의 길이
 # %fish% - 물고기의 이름
 # %date% - 물고기가 잡힌 날짜 (예: 16/10/02 16:44)
 item-format:
-  display-name: "%raritycolor%%fish%"
+  display-name: "%rarity_color%%fish%"
   lore:
   - "&7%length%cm"
   - "&7Caught by %player%"
@@ -28,17 +28,22 @@ rarity-list:
     color: "reset"
     no-broadcast: true
     no-display: true
+  junk:
+    display-name: "쓰레기"
+    chance: 1
+    color: "gray"
+    no-display: true
   rare:
     display-name: "레어"
     chance: 22
     color: "aqua"
   epic:
     display-name: "에픽"
-    chance: 7
+    chance: 7.5
     color: "light_purple"
   legendary:
     display-name: "레전더리"
-    chance: 1
+    chance: 0.5
     color: "green"
 
 fish-list:
@@ -73,6 +78,44 @@ fish-list:
       length-min: 20
       length-max: 30
       icon: "minecraft:fish"
+  junk:
+    Pie:
+      display-name: "파이"
+      length-min: 3.14
+      length-max: 3.14
+      icon: "minecraft:pumpkin_pie"
+    Magikarp:
+      display-name: "잉어킹"
+      lore:
+      - "&7잉어킹의 튀어오르기!"
+      length-min: 25
+      length-max: 35
+      icon: "minecraft:fish"
+    Breadfish:
+      display-name: "빵물고기"
+      lore:
+      - "&7Tell me have you seen"
+      - "&7the marvellous breadfish"
+      length-min: 10
+      length-max: 30
+      icon: "minecraft:bread"
+    WoodenAxe:
+      display-name: "관리자의 나무 도끼"
+      lore:
+      - "&7//cut"
+      length-min: 16
+      length-max: 16
+      icon: "minecraft:wooden_axe"
+    FishingRod:
+      display-name: "누군가 실수로 Q 눌러 잃어버린 낚싯대"
+      length-min: 16
+      length-max: 16
+      icon: "minecraft:fishing_rod|30"
+    SpongeBob:
+      display-name: "집게리아의 성실한 요리사"
+      length-min: 16
+      length-max: 16
+      icon: "minecraft:sponge"
   rare:
     Jellyfish:
       display-name: "해파리"
@@ -90,14 +133,6 @@ fish-list:
       commands:
       - "minecraft:effect @p minecraft:blindness 5 1"
       - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" The squid gifted you some darkness!\",\"color\":\"none\"}]"
-    Breadfish:
-      display-name: "브레드 피쉬"
-      lore:
-      - "&7Tell me have you seen"
-      - "&7the marvellous breadfish"
-      length-min: 10
-      length-max: 30
-      icon: "minecraft:bread"
     Flatfish:
       display-name: "가자미"
       length-min: 40
@@ -114,18 +149,6 @@ fish-list:
       length-max: 100
       icon: "minecraft:fish"
   epic:
-    Pie:
-      display-name: "파이"
-      length-min: 3.14
-      length-max: 3.14
-      icon: "minecraft:pumpkin_pie"
-    Magikarp:
-      display-name: "잉어킹"
-      lore:
-      - "&7잉어킹의 튀어오르기!"
-      length-min: 25
-      length-max: 35
-      icon: "minecraft:fish"
     Clownfish:
       display-name: "흰동가리"
       length-min: 10

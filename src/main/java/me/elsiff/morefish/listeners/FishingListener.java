@@ -80,9 +80,9 @@ public class FishingListener implements Listener {
         message = message.replaceAll("%player%", player.getName())
                 .replaceAll("%length%", fish.getLength() + "")
                 .replaceAll("%rarity%", fish.getRarity().getDisplayName())
-                .replaceAll("%raritycolor%", fish.getRarity().getColor() + "")
+                .replaceAll("%rarity_color%", fish.getRarity().getColor() + "")
                 .replaceAll("%fish%", fish.getName())
-                .replaceAll("%fishwithrarity%", (((fish.getRarity().isNoDisplay()) ? "" : fish.getRarity().getDisplayName() + " ")) + fish.getName());
+                .replaceAll("%fish_with_rarity%", (((fish.getRarity().isNoDisplay()) ? "" : fish.getRarity().getDisplayName() + " ")) + fish.getName());
 
         message = ChatColor.translateAlternateColorCodes('&', message);
 

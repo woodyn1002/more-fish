@@ -8,10 +8,10 @@ version: 130
 # %player% - 플레이어의 닉네임
 # %length% - 물고기의 길이
 # %rarity% - 물고기의 희귀 등급
-# %raritycolor% - 희귀 등급의 색깔
+# %rarity_color% - 희귀 등급의 색깔
 # %fish% - 물고기의 이름
-# %fishwithrarity% - "[희귀 등급] [이름]" 형식의 색깔있는 텍스트 (예: "레어 오징어")
-catch-fish: "&b[MoreFish]&r &e%player%&r님이 %raritycolor%%length%cm짜리 %fishwithrarity% 물고기를 낚았습니다!"
+# %fish_with_rarity% - "[희귀 등급] [이름]" 형식의 색깔있는 텍스트 (예: "레어 오징어")
+catch-fish: "&b[MoreFish]&r &e%player%&r님이 %rarity_color%%length%cm짜리 %fish_with_rarity% 물고기를 낚았습니다!"
 get-1st: "&b[MoreFish]&r &e%player%&r님이 새로운 1등이 되었습니다!"
 no-fishing-allowed: "&b[MoreFish]&r 대회가 진행중일 때만 낚시가 가능합니다."
 

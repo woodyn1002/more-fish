@@ -64,6 +64,7 @@ public class FishManager {
                 double lengthMin = section.getDouble(path + ".length-min");
                 double lengthMax = section.getDouble(path + ".length-max");
                 String icon = section.getString(path + ".icon");
+                boolean skipItemFormat = (section.contains(path + ".skip-item-format") && section.getBoolean(path + ".skip-item-format"));
                 List<String> commands = new ArrayList<>();
                 CustomFish.FoodEffects foodEffects = new CustomFish.FoodEffects();
 
@@ -89,7 +90,7 @@ public class FishManager {
                     }
                 }
 
-                CustomFish fish = new CustomFish(displayName, lore, lengthMin, lengthMax, icon, commands, foodEffects, rarity);
+                CustomFish fish = new CustomFish(displayName, lore, lengthMin, lengthMax, icon, skipItemFormat, commands, foodEffects, rarity);
 
                 this.fishMap.put(path, fish);
                 this.rarityMap.get(rarity).add(fish);
@@ -134,28 +135,31 @@ public class FishManager {
         ItemStack itemStack = new ItemStack(material, 1, durability);
         ItemMeta meta = itemStack.getItemMeta();
 
-        FileConfiguration config = plugin.getLocale().getFishConfig();
-
-        String displayName = config.getString("item-format.display-name")
-                .replaceAll("%player%", fisher)
-                .replaceAll("%rarity%", fish.getRarity().getDisplayName())
-                .replaceAll("%raritycolor%", fish.getRarity().getColor() + "")
-                .replaceAll("%fish%", fish.getName());
-        displayName = ChatColor.translateAlternateColorCodes('&', displayName);
-
         List<String> lore = new ArrayList<>();
 
-        for (String str : config.getStringList("item-format.lore")) {
-            String line = str
+        if (!fish.hasNoItemFormat()) {
+            FileConfiguration config = plugin.getLocale().getFishConfig();
+
+            String displayName = config.getString("item-format.display-name")
                     .replaceAll("%player%", fisher)
                     .replaceAll("%rarity%", fish.getRarity().getDisplayName())
-                    .replaceAll("%raritycolor%", fish.getRarity().getColor() + "")
-                    .replaceAll("%length%", fish.getLength() + "")
-                    .replaceAll("%fish%", fish.getName())
-                    .replaceAll("%date%", dateFormat.format(new Date()));
+                    .replaceAll("%rarity_color%", fish.getRarity().getColor() + "")
+                    .replaceAll("%fish%", fish.getName());
+            displayName = ChatColor.translateAlternateColorCodes('&', displayName);
+            meta.setDisplayName(displayName + encodeFishData(fish));
 
-            line = ChatColor.translateAlternateColorCodes('&', line);
-            lore.add(line);
+            for (String str : config.getStringList("item-format.lore")) {
+                String line = str
+                        .replaceAll("%player%", fisher)
+                        .replaceAll("%rarity%", fish.getRarity().getDisplayName())
+                        .replaceAll("%rarity_color%", fish.getRarity().getColor() + "")
+                        .replaceAll("%length%", fish.getLength() + "")
+                        .replaceAll("%fish%", fish.getName())
+                        .replaceAll("%date%", dateFormat.format(new Date()));
+
+                line = ChatColor.translateAlternateColorCodes('&', line);
+                lore.add(line);
+            }
         }
 
         if (!fish.getLore().isEmpty()) {
@@ -163,11 +167,9 @@ public class FishManager {
                 lore.add(ChatColor.translateAlternateColorCodes('&', line));
             }
         }
-
-        meta.setDisplayName(displayName + encodeFishData(fish));
         meta.setLore(lore);
-        itemStack.setItemMeta(meta);
 
+        itemStack.setItemMeta(meta);
         return itemStack;
     }
 

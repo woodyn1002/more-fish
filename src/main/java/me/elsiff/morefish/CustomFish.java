@@ -8,16 +8,18 @@ public class CustomFish {
     private final double lengthMin;
     private final double lengthMax;
     private final String icon;
+    private final boolean skipItemFormat;
     private final List<String> commands;
     private final FoodEffects foodEffects;
     private final Rarity rarity;
 
-    public CustomFish(String name, List<String> lore, double lengthMin, double lengthMax, String icon, List<String> commands, FoodEffects foodEffects, Rarity rarity) {
+    public CustomFish(String name, List<String> lore, double lengthMin, double lengthMax, String icon, boolean skipItemFormat, List<String> commands, FoodEffects foodEffects, Rarity rarity) {
         this.name = name;
         this.lore = lore;
         this.lengthMin = lengthMin;
         this.lengthMax = lengthMax;
         this.icon = icon;
+        this.skipItemFormat = skipItemFormat;
         this.commands = commands;
         this.foodEffects = foodEffects;
         this.rarity = rarity;
@@ -41,6 +43,10 @@ public class CustomFish {
 
     public String getIcon() {
         return icon;
+    }
+
+    public boolean hasNoItemFormat() {
+        return skipItemFormat;
     }
 
     public List<String> getCommands() {

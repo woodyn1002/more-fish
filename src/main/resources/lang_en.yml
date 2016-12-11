@@ -8,16 +8,16 @@ version: 130
 # %player% - The name of fisher
 # %length% - The length of fish
 # %rarity% - The rarity of fish (upper case)
-# %raritycolor% - The color of rarity
+# %rarity_color% - The color of rarity
 # %fish% - The name of fish
-# %fishwithrarity% - The text whose format is "[Rarity] [Fish Name]" (with color)
-catch-fish: "&b[MoreFish]&r &e%player%&r caught %raritycolor%%length%cm &l%fishwithrarity%"
+# %fish_with_rarity% - The text whose format is "[Rarity] [Fish Name]" (with color)
+catch-fish: "&b[MoreFish]&r &e%player%&r caught %rarity_color%%length%cm &l%fish_with_rarity%"
 get-1st: "&b[MoreFish]&r &e%player%&r is now the new 1st!"
 no-fishing-allowed: "&b[MoreFish]&r You can't fish unless the contest is ongoing."
 
 # %time% - The left time of contest (e.g. 1m 23s)
 contest-start: "&b[MoreFish]&r The fishing contest has started!"
-contest-start-timer: "&b[MoreFish]&r Running time is limited to %time%."
+contest-start-timer: "&b[MoreFish]&r This contest will end in %time%."
 contest-stop: "&b[MoreFish]&r The fishing contest has ended!"
 timer-boss-bar: "&b&lFishing Contest &r[%time% left]"
 time-format-minutes: "m"
