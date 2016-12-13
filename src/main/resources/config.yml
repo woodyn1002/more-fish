@@ -6,7 +6,7 @@
 # Warning: DO NOT edit rewards.yml with your file editor, instead use in-game command '/mf rewards'.
 #
 
-version: 130
+version: 200
 
 general:
   locale: 'en'
@@ -16,6 +16,7 @@ general:
   only-for-contest: false
   no-fishing-unless-contest: false
   contest-disabled-worlds: []
+  replace-only-fish: false
 
 auto-running:
   enable: false
@@ -23,6 +24,11 @@ auto-running:
   timer: 300
   delay: 3600
   period: 3600
+
+fish-shop:
+  enable: true
+  multiplier: 0.1
+  round-demical-points: true
 
 # -- Announcement Value --
 # '-1' means server broadcast

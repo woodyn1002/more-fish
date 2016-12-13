@@ -3,7 +3,7 @@ version: 2.0.0-SNAPSHOT
 author: elsiff
 website: http://elsiff.me
 main: me.elsiff.morefish.MoreFish
-softdepend: [Vault]
+softdepend: [Vault, Citizens]
 commands:
   morefish:
     description: Main command for MoreFish.
@@ -16,3 +16,6 @@ permissions:
   morefish.top:
     default: true
     description: Player with this permission can use /morefish top command.
+  morefish.shop:
+    default: op
+    description: Player with this permission can use /morefish shop command.

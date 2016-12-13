@@ -43,10 +43,12 @@ public class FishManager {
             double chance = rarities.getDouble(path + ".chance") * 0.01;
             ChatColor color = ChatColor.valueOf(rarities.getString(path + ".color").toUpperCase());
 
-            boolean noBroadcast = ((rarities.contains(path + ".no-broadcast")) && rarities.getBoolean(path + ".no-broadcast"));
-            boolean noDisplay = ((rarities.contains(path + ".no-display")) && rarities.getBoolean(path + ".no-display"));
+            double additionalPrice = ((rarities.contains(path + ".additional-price")) ? rarities.getDouble(path + ".additional-price") : 0.0D);
+            boolean noBroadcast = (rarities.contains(path + ".no-broadcast") && rarities.getBoolean(path + ".no-broadcast"));
+            boolean noDisplay = (rarities.contains(path + ".no-display") && rarities.getBoolean(path + ".no-display"));
+            boolean firework = (rarities.contains(path + ".firework") && rarities.getBoolean(path + ".firework"));
 
-            Rarity rarity = new Rarity(path, displayName, chance, color, noBroadcast, noDisplay);
+            Rarity rarity = new Rarity(path, displayName, chance, color, additionalPrice, noBroadcast, noDisplay, firework);
 
             rarityList.add(rarity);
         }
@@ -90,7 +92,7 @@ public class FishManager {
                     }
                 }
 
-                CustomFish fish = new CustomFish(displayName, lore, lengthMin, lengthMax, icon, skipItemFormat, commands, foodEffects, rarity);
+                CustomFish fish = new CustomFish(path, displayName, lore, lengthMin, lengthMax, icon, skipItemFormat, commands, foodEffects, rarity);
 
                 this.fishMap.put(path, fish);
                 this.rarityMap.get(rarity).add(fish);
@@ -182,6 +184,10 @@ public class FishManager {
         return decodeFishData(displayName);
     }
 
+    public boolean isCustomFish(ItemStack itemStack) {
+        return (getCaughtFish(itemStack) != null);
+    }
+
     private CaughtFish createCaughtFish(CustomFish fish, OfflinePlayer catcher) {
         double length;
 
@@ -221,21 +227,31 @@ public class FishManager {
     }
 
     private String encodeFishData(CaughtFish fish) {
-        return "|"
-                .concat("name:" + fish.getName() + "|")
+        String data = "|"
+                .concat("name:" + fish.getInternalName() + "|")
                 .concat("length:" + fish.getLength() + "|")
                 .concat("catcher:" + fish.getCatcher().getUniqueId())
-                .replaceAll(".(?=.)", "&");
+                .replaceAll("", "§");
+        data = data.substring(0, data.length() - 1);
+        return data;
     }
 
     private CaughtFish decodeFishData(String displayName) {
-        String[] split = displayName.replaceAll("&", "").split("\\|");
+        String[] split = displayName.replaceAll("§", "").split("\\|");
+        if (split.length < 1) {
+            return null;
+        }
+
         String name = null;
         double length = 0.0D;
         OfflinePlayer catcher = null;
 
         for (int i = 1; i < split.length; i ++) {
             String[] arr = split[i].split(":");
+            if (arr.length < 2) {
+                break;
+            }
+
             String key = arr[0];
             String value = arr[1];
 
@@ -252,6 +268,15 @@ public class FishManager {
             }
         }
 
-        return new CaughtFish(getCustomFish(name), length, catcher);
+        if (name == null) {
+            return null;
+        }
+
+        CustomFish fish = getCustomFish(name);
+        if (fish == null) {
+            return null;
+        }
+
+        return new CaughtFish(fish, length, catcher);
     }
 }

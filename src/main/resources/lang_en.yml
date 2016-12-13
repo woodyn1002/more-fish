@@ -3,7 +3,7 @@
 # by elsiff
 #
 
-version: 130
+version: 200
 
 # %player% - The name of fisher
 # %length% - The length of fish
@@ -34,7 +34,6 @@ top-mine: "&b[MoreFish]&r You're %ordinal%: %length%cm %fish%"
 top-mine-no-record: "&b[MoreFish]&r You didn't get any record."
 
 # %amount% - The amount of given money
-# %format% - The formatted string with money and currency (e.g. $10.00, 30 Dollars) [Warning: Error may occurs with this]
 # %ordinal% - The ordinal of player's rank (e.g. 1st, 2nd, 3rd, 4th)
 # %number% - The numeric rank of player
 # %player% - The name of fisher
@@ -50,6 +49,9 @@ not-ongoing: "&b[MoreFish]&r The contest isn't ongoing now."
 clear-records: "&b[MoreFish]&r The records has been cleared successfully."
 reload-config: "&b[MoreFish]&r Reloaded the config successfully."
 in-game-command: "&b[MoreFish]&r This is an in-game command."
+shop-disabled: "&b[MoreFish]&r Fish Shop is disabled now."
+player-not-found: "&b[MoreFish]&r There's no player named '%s'."
+forced-player-to-shop: "&b[MoreFish]&r Forced %s to open Shop GUI."
 invalid-command: "&b[MoreFish]&r That's an invalid command."
 
 rewards-gui-title: "Set the rewards of contest"
@@ -68,7 +70,7 @@ rewards-sign-icon-lore:
 - "&7Click the emeralds"
 - "&7to edit the values."
 rewards-consolation: "consolation"
-rewards-emerald-icon-name: "&aPrize for %ordinal%: &2%amount%"
+rewards-emerald-icon-name: "&aPrize for %ordinal%: $&2%amount%"
 rewards-emerald-icon-lore:
 - "&7Click to edit it"
 enter-cash-prize:
@@ -80,7 +82,14 @@ entered-not-positive: "&b[MoreFish]&r The number can't be negative. Please enter
 entered-successfully: "&b[MoreFish]&r The value have been entered."
 saved-changes: "&b[MoreFish]&r The changes have been saved."
 
-old-file: "§c[MoreFish] Your %s is too old! Please make it up-to-date."
+# %price% - The price of fish
+shop-gui-title: "Put your fish to sell"
+shop-emerald-icon-name: "&aSell for $%price%"
+shop-sold: "&b[MoreFish]&r You sold fish for &a$%price%&r."
+shop-no-fish: "&b[MoreFish]&r There's no fish to sell. Please put them on the slots."
+created-sign-shop: "&b[MoreFish]&r You've created the Fish Shop!"
+
+old-file: "&c[MoreFish] Your %s is too old! Please make it up-to-date."
 new-version:
 - "&b[MoreFish]&r New version found: %s"
 - "&b[MoreFish]&r https://www.spigotmc.org/resources/morefish.22926/"

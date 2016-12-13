@@ -3,6 +3,7 @@ package me.elsiff.morefish;
 import java.util.List;
 
 public class CustomFish {
+    private final String internalName;
     private final String name;
     private final List<String> lore;
     private final double lengthMin;
@@ -13,7 +14,9 @@ public class CustomFish {
     private final FoodEffects foodEffects;
     private final Rarity rarity;
 
-    public CustomFish(String name, List<String> lore, double lengthMin, double lengthMax, String icon, boolean skipItemFormat, List<String> commands, FoodEffects foodEffects, Rarity rarity) {
+    public CustomFish(String internalName, String name, List<String> lore, double lengthMin, double lengthMax, String icon,
+                      boolean skipItemFormat, List<String> commands, FoodEffects foodEffects, Rarity rarity) {
+        this.internalName = internalName;
         this.name = name;
         this.lore = lore;
         this.lengthMin = lengthMin;
@@ -23,6 +26,10 @@ public class CustomFish {
         this.commands = commands;
         this.foodEffects = foodEffects;
         this.rarity = rarity;
+    }
+
+    public String getInternalName() {
+        return internalName;
     }
 
     public String getName() {

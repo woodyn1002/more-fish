@@ -26,25 +26,31 @@ rarity-list:
     display-name: "일반"
     chance: 70
     color: "reset"
+    additional-price: 0.0
     no-broadcast: true
     no-display: true
   junk:
     display-name: "쓰레기"
     chance: 1
     color: "gray"
+    additional-price: -999999
     no-display: true
   rare:
     display-name: "레어"
     chance: 22
     color: "aqua"
+    additional-price: 3.0
   epic:
     display-name: "에픽"
     chance: 7.5
     color: "light_purple"
+    additional-price: 4.0
   legendary:
     display-name: "레전더리"
     chance: 0.5
     color: "green"
+    additional-price: 5.0
+    firework: true
 
 fish-list:
   common:

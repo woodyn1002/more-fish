@@ -173,22 +173,19 @@ public class ContestManager {
     }
     
     private void sendCashPrize(OfflinePlayer player, double amount) {
-        if (!plugin.getEconomy().hasAccount(player)) {
+        if (!plugin.getVaultHooker().getEconomy().hasAccount(player)) {
             plugin.getLogger().info(player.getName() + "'s reward of fishing contest has not been sent as having no economy account.");
             return;
         } else {
-            plugin.getEconomy().depositPlayer(player, amount);
+            plugin.getVaultHooker().getEconomy().depositPlayer(player, amount);
         }
 
         if (player.isOnline()) {
             int number = getNumber(player);
             String msg = plugin.getLocale().getString("reward-cash-prize");
 
-            String format = (msg.contains("%format%") ? plugin.getEconomy().format(amount) : "");
-
             msg = msg.replaceAll("%player%", player.getName())
                     .replaceAll("%amount%", amount + "")
-                    .replaceAll("%format%", format)
                     .replaceAll("%ordinal%", plugin.getOrdinal(number))
                     .replaceAll("%number%", number + "");
 

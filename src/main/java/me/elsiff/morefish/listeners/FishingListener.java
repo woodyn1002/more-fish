@@ -3,8 +3,8 @@ package me.elsiff.morefish.listeners;
 import me.elsiff.morefish.CaughtFish;
 import me.elsiff.morefish.managers.ContestManager;
 import me.elsiff.morefish.MoreFish;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
+import org.bukkit.*;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,6 +12,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkMeta;
 
 public class FishingListener implements Listener {
     private final MoreFish plugin;
@@ -24,7 +25,7 @@ public class FishingListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onFish(PlayerFishEvent event) {
-        if (event.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
+        if (event.getState() == PlayerFishEvent.State.CAUGHT_FISH && event.getCaught() instanceof Item) {
             if (!contest.hasStarted() && plugin.getConfig().getBoolean("general.no-fishing-unless-contest")) {
                 event.setCancelled(true);
 
@@ -34,7 +35,8 @@ public class FishingListener implements Listener {
             }
 
             if (plugin.getConfig().getStringList("general.contest-disabled-worlds").contains(event.getPlayer().getWorld().getName()) ||
-                    (plugin.getConfig().getBoolean("general.only-for-contest") && !contest.hasStarted())) {
+                    (plugin.getConfig().getBoolean("general.only-for-contest") && !contest.hasStarted()) ||
+                    (plugin.getConfig().getBoolean("general.replace-only-fish") && ((Item) event.getCaught()).getItemStack().getType() != Material.RAW_FISH)) {
                 return;
             }
 
@@ -49,6 +51,11 @@ public class FishingListener implements Listener {
             }
 
             announceMessage(event.getPlayer(), msgFish, ancFish);
+
+
+            if (fish.getRarity().hasFirework()) {
+                launchFirework(event.getPlayer().getLocation().add(0, 1, 0));
+            }
 
 
             if (!fish.getCommands().isEmpty()) {
@@ -121,5 +128,20 @@ public class FishingListener implements Listener {
 
             plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), str);
         }
+    }
+
+    private void launchFirework(Location loc) {
+        Firework firework = loc.getWorld().spawn(loc, Firework.class);
+        FireworkMeta meta = firework.getFireworkMeta();
+        FireworkEffect effect = FireworkEffect.builder()
+                .with(FireworkEffect.Type.BALL_LARGE)
+                .withColor(Color.AQUA)
+                .withFade(Color.BLUE)
+                .withTrail()
+                .withFlicker()
+                .build();
+        meta.addEffect(effect);
+        meta.setPower(1);
+        firework.setFireworkMeta(meta);
     }
 }

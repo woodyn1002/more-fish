@@ -3,7 +3,7 @@
 # by elsiff (이프)
 #
 
-version: 130
+version: 200
 
 # %player% - 플레이어의 닉네임
 # %length% - 물고기의 길이
@@ -34,7 +34,6 @@ top-mine: "&b[MoreFish]&r 당신은 %number%등입니다: %length%cm %fish%"
 top-mine-no-record: "&b[MoreFish]&r 당신은 대회에 참가하지 않았습니다."
 
 # %amount% - 주어지는 상금의 액수
-# %format% - 형식을 가지는 액수 (예: \10,000, 10,000원) [주의: 오류 발생 가능성 있음]
 # %ordinal% - 플레이어의 순위 기수 (예: 1st, 2nd, 3rd)
 # %number% - 플레이어의 순위 등수 (예: 1, 2, 3)
 # %player% - 플레이어의 닉네임
@@ -50,6 +49,9 @@ not-ongoing: "&b[MoreFish]&r 대회가 아직 진행중이지 않습니다."
 clear-records: "&b[MoreFish]&r 대회 기록이 모두 제거되었습니다."
 reload-config: "&b[MoreFish]&r config를 리로드했습니다."
 in-game-command: "&b[MoreFish]&r 콘솔에서 입력할 수 없는 명령어입니다."
+shop-disabled: "&b[MoreFish]&r 상점 기능이 비활성화 되어 있습니다."
+player-not-found: "&b[MoreFish]&r %s라는 플레이어를 찾지 못했습니다."
+forced-player-to-shop: "&b[MoreFish]&r %s님에게 상점 GUI를 열었습니다."
 invalid-command: "&b[MoreFish]&r 잘못된 명령어입니다."
 
 rewards-gui-title: "낚시대회 보상 설정"
@@ -65,8 +67,8 @@ rewards-sign-icon-lore:
 - "&7두번째 줄은 상금입니다."
 - "&7에메랄드 아이콘을 클릭해"
 - "&7액수를 설정해주세요."
-rewards-consolation: "참가상"
-rewards-emerald-icon-name: "&a%ordinal%의 상금: &2%amount%"
+rewards-consolation: "아차상"
+rewards-emerald-icon-name: "&a%ordinal%의 상금: ￦&2%amount%"
 rewards-emerald-icon-lore:
 - "&7클릭으로 수정하세요."
 enter-cash-prize:
@@ -78,7 +80,13 @@ entered-not-positive: "&b[MoreFish]&r 정수만 입력할 수 있습니다. 다�
 entered-successfully: "&b[MoreFish]&r 상금이 설정되었습니다."
 saved-changes: "&b[MoreFish]&r 설정된 보상이 저장되었습니다."
 
-old-file: "§c[MoreFish] %s 파일이 오래된 버전입니다. 삭제 후 플러그인을 재실행 해주세요!"
+# %price% - The price of fish
+shop-gui-title: "판매할 물고기를 올려주세요."
+shop-emerald-icon-name: "&a판매: ￦%price%"
+shop-sold: "&b[MoreFish]&r 물고기를 판매하여 &a$%price%&r원을 획득했습니다."
+shop-no-fish: "&b[MoreFish]&r 판매할 물고기를 올려주세요."
+
+old-file: "&c[MoreFish] %s 파일이 오래된 버전입니다. 삭제 후 플러그인을 재실행 해주세요!"
 new-version:
 - "&b[MoreFish]&r 새로운 버전이 발견되었습니다: %s"
 - "&b[MoreFish]&r https://www.spigotmc.org/resources/morefish.22926/"

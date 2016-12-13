@@ -1,35 +1,38 @@
 package me.elsiff.morefish;
 
 import me.elsiff.morefish.commands.GeneralCommands;
-import me.elsiff.morefish.listeners.FishingListener;
-import me.elsiff.morefish.listeners.PlayerListener;
-import me.elsiff.morefish.listeners.RewardsGUI;
+import me.elsiff.morefish.hookers.CitizensHooker;
+import me.elsiff.morefish.hookers.VaultHooker;
+import me.elsiff.morefish.listeners.*;
 import me.elsiff.morefish.managers.BossBarManager;
 import me.elsiff.morefish.managers.ContestManager;
 import me.elsiff.morefish.managers.FishManager;
 import me.elsiff.morefish.protocol.UpdateChecker;
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Material;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 
 public class MoreFish extends JavaPlugin {
-    public final int verConfig = 130;
-    public final int verLang = 130;
-    public final int verFish = 130;
+    private static MoreFish instance;
+    public final int verConfig = 200;
+    public final int verLang = 200;
+    public final int verFish = 200;
     private Locale locale;
     private RewardsGUI rewardsGUI;
+    private FishShopGUI fishShopGUI;
     private FishManager fishManager;
     private ContestManager contestManager;
     private BossBarManager bossBarManager;
     private UpdateChecker updateChecker;
 
-    private Economy econ = null;
+    private VaultHooker vaultHooker;
+    private CitizensHooker citizensHooker;
 
     @Override
     public void onEnable() {
+        instance = this;
+
         saveDefaultConfig();
         this.locale = new Locale(this);
 
@@ -38,6 +41,7 @@ public class MoreFish extends JavaPlugin {
         }
 
         this.rewardsGUI = new RewardsGUI(this);
+        this.fishShopGUI = new FishShopGUI(this);
         this.fishManager = new FishManager(this);
         this.contestManager = new ContestManager(this);
         this.updateChecker = new UpdateChecker(this);
@@ -54,8 +58,25 @@ public class MoreFish extends JavaPlugin {
         manager.registerEvents(new PlayerListener(this), this);
         manager.registerEvents(rewardsGUI, this);
 
-        if (setupEconomy()) {
-            getLogger().info("Found Vault for economy support.");
+        if (getServer().getPluginManager().getPlugin("Vault") != null) {
+            vaultHooker = new VaultHooker(this);
+
+            if (vaultHooker.setupEconomy()) {
+                getLogger().info("Found Vault for economy support.");
+            } else {
+                vaultHooker = null;
+            }
+        }
+
+        if (getServer().getPluginManager().getPlugin("Citizens") != null && getServer().getPluginManager().getPlugin("Citizens").isEnabled()) {
+            citizensHooker = new CitizensHooker(this);
+            citizensHooker.registerTrait();
+            getLogger().info("Found Citizens for Fish Shop Trait.");
+        }
+
+        if (hasEconomy() && getConfig().getBoolean("fish-shop.enable")) {
+            manager.registerEvents(new SignListener(this), this);
+            manager.registerEvents(fishShopGUI, this);
         }
 
         try {
@@ -85,21 +106,15 @@ public class MoreFish extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (getCitizensHooker() != null) {
+            getCitizensHooker().deregisterTrait();
+        }
+
         getLogger().info("Plugin has been disabled!");
     }
 
-    private boolean setupEconomy() {
-        if (getServer().getPluginManager().getPlugin("Vault") == null) {
-            return false;
-        }
-
-        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp == null) {
-            return false;
-        }
-
-        econ = rsp.getProvider();
-        return econ != null;
+    public static MoreFish getInstance() {
+        return instance;
     }
 
     public Locale getLocale() {
@@ -165,12 +180,20 @@ public class MoreFish extends JavaPlugin {
         return rewardsGUI;
     }
 
-    public boolean hasEconomy() {
-        return (econ != null);
+    public FishShopGUI getFishShopGUI() {
+        return fishShopGUI;
     }
 
-    public Economy getEconomy() {
-        return econ;
+    public boolean hasEconomy() {
+        return (vaultHooker != null);
+    }
+
+    public VaultHooker getVaultHooker() {
+        return vaultHooker;
+    }
+
+    public CitizensHooker getCitizensHooker() {
+        return citizensHooker;
     }
 
     public void reloadLocale() {
