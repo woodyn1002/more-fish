@@ -28,7 +28,7 @@ auto-running:
 fish-shop:
   enable: true
   multiplier: 0.1
-  round-demical-points: true
+  round-decimal-points: true
 
 # -- Announcement Value --
 # '-1' means server broadcast

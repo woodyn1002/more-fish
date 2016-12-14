@@ -98,7 +98,7 @@ fish-list:
       length-min: 25
       length-max: 35
       icon: "minecraft:fish"
-      skip-item-format: true
+      skip-item-format: false
     Breadfish:
       display-name: "Breadfish"
       lore:
@@ -107,7 +107,7 @@ fish-list:
       length-min: 10
       length-max: 30
       icon: "minecraft:bread"
-      skip-item-format: true
+      skip-item-format: false
     WoodenAxe:
       display-name: "Admin's Wooden Axe"
       lore:
@@ -115,7 +115,7 @@ fish-list:
       length-min: 16
       length-max: 16
       icon: "minecraft:wooden_axe"
-      skip-item-format: true
+      skip-item-format: false
     FishingRod:
       display-name: "Fishing Rod That Someone Dropped Hitting 'Q' By Mistake"
       length-min: 16

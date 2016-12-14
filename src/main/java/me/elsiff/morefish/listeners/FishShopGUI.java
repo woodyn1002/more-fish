@@ -78,7 +78,7 @@ public class FishShopGUI implements Listener {
                 price = 0.0D;
             }
 
-            if (plugin.getConfig().getBoolean("fish-shop.round-demical-points")) {
+            if (plugin.getConfig().getBoolean("fish-shop.round-decimal-points")) {
                 price = (int) price;
             }
 
