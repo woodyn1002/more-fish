@@ -1,0 +1,283 @@
+#
+# fish_jp.yml for MoreFish
+# translated by tanisou (2.0.1)
+#
+# Wiki:
+# - https://github.com/elsiff/MoreFish/wiki/Custom-Fish-Tutorial
+# - https://github.com/elsiff/MoreFish/wiki/Custom-Rarity-Tutorial
+#
+
+version: 200
+
+# %player% - プレイヤーのランク (例 1st, 2nd, 3rd, 4th)
+# %rarity% - 魚のレアリティ
+# %rarity_color% - レアリティの色
+# %length% - 魚のサイズ
+# %fish% - 魚の名前
+# %date% - 釣った日時
+item-format:
+  display-name: "%rarity_color%%fish%"
+  lore:
+  - "&7%length%cm"
+  - "%player%&7によって釣られました"
+
+rarity-list:
+  gedou:
+    display-name: "外道"
+    chance: 65
+    color: "reset"
+    no-broadcast: true
+    no-display: true
+  junk:
+    display-name: "ゴミ"
+    chance: 1
+    color: "gray"
+    additional-price: -999999
+    no-display: true
+  common:
+    display-name: "普通"
+    chance: 30
+    color: "reset"
+    no-broadcast: true
+    no-display: true
+  rare:
+    display-name: "大物"
+    chance: 3
+    color: "aqua"
+    additional-price: 3.0
+  epic:
+    display-name: "超大物"
+    chance: 0.7
+    color: "light_purple"
+    additional-price: 4.0
+  legendary:
+    display-name: "ヌシ"
+    chance: 0.3
+    color: "green"
+    additional-price: 5.0
+
+fish-list:
+  gedou:
+    Kusahugu:
+      display-name: "クサフグ"
+      length-min: 3
+      length-max: 8
+      icon: "minecraft:fish"
+    Konbu:
+      display-name: "海藻"
+      length-min: 3
+      length-max: 140
+      icon: "minecraft:double_plant|3"
+    Bora:
+      display-name: "ボラ"
+      length-min: 8
+      length-max: 80
+      icon: "minecraft:diamond_hoe|1558{Unbreakable:1b}"
+    Jellyfish:
+      display-name: "ミズクラゲ"
+      length-min: 4
+      length-max: 20
+      icon: "minecraft:fish"
+      commands:
+      - "minecraft:effect @p minecraft:poison 3 1"
+      - "tellraw @p [{\"text\":\" クラゲがあなたに好意を持っている!\",\"color\":\"none\"}]"
+  common:
+    Redjellyfish:
+      display-name: "アカクラゲ"
+      length-min: 4
+      length-max: 30
+      icon: "minecraft:fish"
+      commands:
+      - "minecraft:effect @p minecraft:poison 3 2"
+      - "tellraw @p [{\"text\":\" クラゲがあなたに好意を持っている!\",\"color\":\"none\"}]"
+    Shrimp:
+      display-name: "エビ"
+      length-min: 3
+      length-max: 8
+      icon: "minecraft:fish"
+    Anchovy:
+      display-name: "マイワシ"
+      length-min: 7
+      length-max: 27
+      icon: "minecraft:fish"
+    Maazi:
+      display-name: "マアジ"
+      length-min: 3
+      length-max: 43
+      icon: "minecraft:record_13"
+    Mackerel:
+      display-name: "ゴマサバ"
+      length-min: 15
+      length-max: 30
+      icon: "minecraft:fish"
+    Herring:
+      display-name: "ニシン"
+      length-min: 20
+      length-max: 30
+      icon: "minecraft:fish"
+    Kasago:
+      display-name: "カサゴ"
+      length-min: 5
+      length-max: 30
+      icon: "minecraft:record_chirp"
+    Mahaze:
+      display-name: "マハゼ"
+      length-min: 3
+      length-max: 20
+      icon: "minecraft:record_blocks"
+    Shirogisu:
+      display-name: "シロギス"
+      length-min: 5
+      length-max: 30
+      icon: "minecraft:record_stal"
+    Kawahagi:
+      display-name: "カワハギ"
+      length-min: 5
+      length-max: 30
+      icon: "minecraft:fish"
+  junk:
+    Pie:
+      display-name: "ニシンのパイ"
+      length-min: 3.14
+      length-max: 3.14
+      icon: "minecraft:pumpkin_pie"
+      skip-item-format: true
+    Magikarp:
+      display-name: "コイキング"
+      lore:
+      - "&7コイキングの水鉄砲!"
+      length-min: 25
+      length-max: 35
+      icon: "minecraft:fish"
+      skip-item-format: false
+    Breadfish:
+      display-name: "魚パン"
+      lore:
+      - "&7教えて、あなたが見たものを"
+      - "&7素晴らしい魚パン"
+      length-min: 10
+      length-max: 30
+      icon: "minecraft:bread"
+    WoodenAxe:
+      display-name: "管理人の木の斧"
+      lore:
+      - "&7//cut"
+      length-min: 16
+      length-max: 16
+      icon: "minecraft:wooden_axe"
+      skip-item-format: false
+    FishingRod:
+      display-name: "誰かが間違えてQボタンで捨ててしまった釣り竿"
+      length-min: 16
+      length-max: 16
+      icon: "minecraft:fishing_rod|30"
+      skip-item-format: true
+    SpongeBob:
+      display-name: "カニカーニバーガーの料理人"
+      length-min: 16
+      length-max: 16
+      icon: "minecraft:sponge"
+      skip-item-format: true
+  rare:
+    Aoriika:
+      display-name: "アオリイカ"
+      length-min: 10
+      length-max: 50
+      icon: "minecraft:fish"
+      commands:
+      - "minecraft:effect @p minecraft:blindness 5 1"
+      - "tellraw @p [{\"text\":\" イカがあなたにお祝いのスミを吐いた!\",\"color\":\"none\"}]"
+    MinoKasago:
+      display-name: "ミノカサゴ"
+      length-min: 10
+      length-max: 30
+      icon: "minecraft:record_chirp"
+      commands:
+      - "minecraft:effect @p minecraft:poison 3 2"
+    Flatfish:
+      display-name: "マコガレイ"
+      length-min: 40
+      length-max: 75
+      icon: "minecraft:fish"
+    Madai:
+      display-name: "マダイ"
+      length-min: 14
+      length-max: 110
+      icon: "minecraft:record_far"
+    Kurodai:
+      display-name: "クロダイ"
+      length-min: 5
+      length-max: 48
+      icon: "minecraft:record_mellohi"
+    SeaBass:
+      display-name: "スズキ"
+      length-min: 60
+      length-max: 100
+      icon: "minecraft:record_13"
+  epic:
+    ShimaAzi:
+      display-name: "シマアジ"
+      length-min: 12
+      length-max: 111
+      icon: "minecraft:fish"
+    Rouninazi:
+      display-name: "ロウニンアジ"
+      length-min: 16
+      length-max: 168
+      icon: "minecraft:fish"
+    Shira:
+      display-name: "シイラ"
+      length-min: 38
+      length-max: 190
+      icon: "minecraft:fish"
+    Clownfish:
+      display-name: "カクレクマノミ"
+      length-min: 10
+      length-max: 18
+      icon: "minecraft:fish|2"
+    Pufferfish:
+      display-name: "ハリセンボン"
+      length-min: 20
+      length-max: 30
+      icon: "minecraft:fish|3"
+    Salmon:
+      display-name: "サケ"
+      length-min: 100
+      length-max: 130
+      icon: "minecraft:fish|1"
+  legendary:
+    Kuromaguro:
+      display-name: "クロマグロ"
+      length-min: 50
+      length-max: 180
+      icon: "minecraft:fish"
+    Shirokaziki:
+      display-name: "カジキ"
+      length-min: 80
+      length-max: 450
+      icon: "minecraft:fish"
+    BlueShark:
+      display-name: "アオザメ"
+      lore:
+      - "&7&oThe Toughest Fish"
+      - "&7Get &9Strength I (2:00)&7 when you eat it."
+      length-min: 180
+      length-max: 260
+      icon: "minecraft:fish"
+      food-effects:
+        commands:
+        - "minecraft:effect @p minecraft:strength 120 1"
+    PygmyWhale:
+      display-name: "コセミクジラ"
+      lore:
+      - "&7&oThe Biggest Fish"
+      - "&7Get &9full health and hunger&7"
+      - "when you eat it."
+      length-min: 600
+      length-max: 650
+      icon: "minecraft:fish"
+      food-effects:
+        points: 20
+        saturation: 14.4
+        commands:
+        - "minecraft:effect @p minecraft:regeneration 2 127"
