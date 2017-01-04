@@ -18,6 +18,8 @@ public class MoreFish extends JavaPlugin {
     public final int verConfig = 200;
     public final int verLang = 200;
     public final int verFish = 200;
+    private PluginManager manager;
+
     private Locale locale;
     private RewardsGUI rewardsGUI;
     private FishShopGUI fishShopGUI;
@@ -46,14 +48,11 @@ public class MoreFish extends JavaPlugin {
         this.contestManager = new ContestManager(this);
         this.updateChecker = new UpdateChecker(this);
 
-        // For 1.9+
-        if (getConfig().getBoolean("general.use-boss-bar") && Material.getMaterial("SHIELD") != null) {
-            this.bossBarManager = new BossBarManager(this);
-        }
+        loadBossBar();
 
         getCommand("morefish").setExecutor(new GeneralCommands(this));
 
-        PluginManager manager = getServer().getPluginManager();
+        manager = getServer().getPluginManager();
         manager.registerEvents(new FishingListener(this), this);
         manager.registerEvents(new PlayerListener(this), this);
         manager.registerEvents(rewardsGUI, this);
@@ -74,17 +73,14 @@ public class MoreFish extends JavaPlugin {
             getLogger().info("Found Citizens for Fish Shop Trait.");
         }
 
-        if (hasEconomy() && getConfig().getBoolean("fish-shop.enable")) {
-            manager.registerEvents(new SignListener(this), this);
-            manager.registerEvents(fishShopGUI, this);
-        }
-
         try {
             Metrics metrics = new Metrics(this);
             metrics.start();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
+        loadFishShop();
 
         if (getConfig().getBoolean("auto-running.enable")) {
             final int required = getConfig().getInt("auto-running.required-players");
@@ -102,6 +98,22 @@ public class MoreFish extends JavaPlugin {
         }
 
         getLogger().info("Plugin has been enabled!");
+    }
+
+    public void loadBossBar() {
+        // For 1.9+
+        if (getConfig().getBoolean("general.use-boss-bar") && Material.getMaterial("SHIELD") != null) {
+            this.bossBarManager = new BossBarManager(this);
+        } else {
+            this.bossBarManager = null;
+        }
+    }
+
+    public void loadFishShop() {
+        if (hasEconomy() && getConfig().getBoolean("fish-shop.enable")) {
+            manager.registerEvents(new SignListener(this), this);
+            manager.registerEvents(fishShopGUI, this);
+        }
     }
 
     @Override
