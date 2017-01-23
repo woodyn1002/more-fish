@@ -14,18 +14,19 @@ public class Locale {
 
     public Locale(MoreFish plugin) {
         String locale = plugin.getConfig().getString("general.locale");
+        File folder = new File(plugin.getDataFolder(), "locale");
         String langPath = "lang_" + locale + ".yml";
         String fishPath = "fish_" + locale + ".yml";
 
-        File langFile = new File(plugin.getDataFolder(), langPath);
-        File fishFile = new File(plugin.getDataFolder(), fishPath);
+        File langFile = new File(folder, langPath);
+        File fishFile = new File(folder, fishPath);
 
         if (!langFile.exists()) {
-            plugin.saveResource(langPath, false);
+            plugin.saveResource("locale\\" + langPath, false);
         }
 
         if (!fishFile.exists()) {
-            plugin.saveResource(fishPath, false);
+            plugin.saveResource("locale\\" + fishPath, false);
         }
 
         this.lang = YamlConfiguration.loadConfiguration(langFile);
