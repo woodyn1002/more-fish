@@ -15,7 +15,7 @@ import org.mcstats.Metrics;
 
 public class MoreFish extends JavaPlugin {
     private static MoreFish instance;
-    public final int verConfig = 200;
+    public final int verConfig = 210;
     public final int verLang = 200;
     public final int verFish = 200;
     private PluginManager manager;
@@ -118,6 +118,10 @@ public class MoreFish extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (getConfig().getBoolean("general.save-records")) {
+            contestManager.saveRecords();
+        }
+
         if (getCitizensHooker() != null) {
             getCitizensHooker().deregisterTrait();
         }

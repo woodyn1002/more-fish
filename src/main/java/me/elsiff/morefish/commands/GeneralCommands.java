@@ -287,7 +287,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
                     .replaceAll("%number%", i + "")
                     .replaceAll("%player%", record.getPlayer().getName())
                     .replaceAll("%length%", record.getLength() + "")
-                    .replaceAll("%fish%", record.getFish().getName());
+                    .replaceAll("%fish%", record.getFishName());
 
             if (broadcast) {
                 plugin.getServer().broadcastMessage(msg);
@@ -320,7 +320,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
                     .replaceAll("%number%", number + "")
                     .replaceAll("%player%", record.getPlayer().getName())
                     .replaceAll("%length%", record.getLength() + "")
-                    .replaceAll("%fish%", record.getFish().getName());
+                    .replaceAll("%fish%", record.getFishName());
         } else {
             msg = plugin.getLocale().getString("top-mine-no-record");
         }

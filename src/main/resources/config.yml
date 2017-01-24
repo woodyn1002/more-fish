@@ -6,7 +6,7 @@
 # Warning: DO NOT edit rewards.yml with your file editor, instead use in-game command '/mf rewards'.
 #
 
-version: 200
+version: 210
 
 general:
   locale: 'en'
@@ -17,6 +17,7 @@ general:
   no-fishing-unless-contest: false
   contest-disabled-worlds: []
   replace-only-fish: false
+  save-records: false
 
 auto-running:
   enable: false

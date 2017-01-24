@@ -20,6 +20,8 @@ public class ContestManager {
     private final List<Record> recordList = new ArrayList<>();
     private final File fileRewards;
     private final FileConfiguration configRewards;
+    private File fileRecords;
+    private FileConfiguration configRecords;
     private boolean hasStarted = false;
     private TimerTask task = null;
 
@@ -32,24 +34,69 @@ public class ContestManager {
 
         fileRewards = new File(plugin.getDataFolder(), "rewards.yml");
 
-        if (!fileRewards.exists()) {
+        createFile(fileRewards);
+        configRewards = YamlConfiguration.loadConfiguration(fileRewards);
+
+        if (plugin.getConfig().getBoolean("general.save-records")) {
+            fileRecords = new File(plugin.getDataFolder(), "records.yml");
+            createFile(fileRecords);
+            configRecords = YamlConfiguration.loadConfiguration(fileRecords);
+
+            loadRecords();
+        }
+    }
+
+    private void createFile(File file) {
+        if (!file.exists()) {
             try {
-                boolean created = fileRewards.createNewFile();
+                boolean created = file.createNewFile();
 
                 if (!created) {
-                    plugin.getLogger().warning("Failed to create rewards.yml!");
+                    plugin.getLogger().warning("Failed to create " + file.getName() + "!");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-        configRewards = YamlConfiguration.loadConfiguration(fileRewards);
     }
 
     private void saveRewards() {
         try {
             configRewards.save(fileRewards);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadRecords() {
+        recordList.clear();
+
+        for (String path : configRecords.getKeys(false)) {
+            UUID id = UUID.fromString(configRecords.getString(path + ".player"));
+            OfflinePlayer player = plugin.getServer().getOfflinePlayer(id);
+            String fishName = configRecords.getString(path + ".fish-name");
+            double length = configRecords.getDouble(path + ".length");
+
+            recordList.add(new Record(player, fishName, length));
+        }
+
+        Collections.sort(recordList, comparator);
+    }
+
+    public void saveRecords() {
+        for (String path : configRecords.getKeys(false)) {
+            configRecords.set(path, null);
+        }
+
+        for (int i = 0; i < recordList.size(); i ++) {
+            Record record = recordList.get(i);
+            configRecords.set(i + ".player", record.getPlayer().getUniqueId().toString());
+            configRecords.set(i + ".fish-name", record.getFishName());
+            configRecords.set(i + ".length", record.getLength());
+        }
+
+        try {
+            configRecords.save(fileRecords);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,7 +137,10 @@ public class ContestManager {
 
         giveRewards();
 
-        recordList.clear();
+        if (!plugin.getConfig().getBoolean("general.save-records")) {
+            recordList.clear();
+        }
+
         hasStarted = false;
     }
 
@@ -323,23 +373,29 @@ public class ContestManager {
 
     public class Record {
         private final OfflinePlayer player;
-        private final CaughtFish fish;
+        private final String fishName;
+        private final double length;
 
         public Record(OfflinePlayer player, CaughtFish fish) {
+            this(player, fish.getName(), fish.getLength());
+        }
+
+        public Record(OfflinePlayer player, String fishName, double length) {
             this.player = player;
-            this.fish = fish;
+            this.fishName = fishName;
+            this.length = length;
         }
 
         public OfflinePlayer getPlayer() {
             return player;
         }
 
-        public CaughtFish getFish() {
-            return fish;
+        public String getFishName() {
+            return fishName;
         }
 
         public double getLength() {
-            return fish.getLength();
+            return length;
         }
     }
 
