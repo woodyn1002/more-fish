@@ -13,12 +13,17 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 public class MoreFish extends JavaPlugin {
     private static MoreFish instance;
     public final int verConfig = 210;
     public final int verLang = 200;
     public final int verFish = 200;
     private PluginManager manager;
+    private int taskId = -1;
 
     private Locale locale;
     private RewardsGUI rewardsGUI;
@@ -81,21 +86,7 @@ public class MoreFish extends JavaPlugin {
         }
 
         loadFishShop();
-
-        if (getConfig().getBoolean("auto-running.enable")) {
-            final int required = getConfig().getInt("auto-running.required-players");
-            final long timer = getConfig().getLong("auto-running.timer");
-            long delay = getConfig().getLong("auto-running.delay");
-            long period = getConfig().getLong("auto-running.period");
-
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-                public void run() {
-                    if (getServer().getOnlinePlayers().size() >= required) {
-                        getServer().dispatchCommand(getServer().getConsoleSender(), "morefish start " + timer);
-                    }
-                }
-            }, delay * 20, period * 20);
-        }
+        scheduleAutoRunning();
 
         getLogger().info("Plugin has been enabled!");
     }
@@ -113,6 +104,28 @@ public class MoreFish extends JavaPlugin {
         if (hasEconomy() && getConfig().getBoolean("fish-shop.enable")) {
             manager.registerEvents(new SignListener(this), this);
             manager.registerEvents(fishShopGUI, this);
+        }
+    }
+
+    public void scheduleAutoRunning() {
+        if (taskId != -1)
+            getServer().getScheduler().cancelTask(taskId);
+
+        if (getConfig().getBoolean("auto-running.enable")) {
+            final int required = getConfig().getInt("auto-running.required-players");
+            final long timer = getConfig().getLong("auto-running.timer");
+            final List<String> startTime = getConfig().getStringList("auto-running.start-time");
+            final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+
+            taskId = getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+                public void run() {
+                    String now = dateFormat.format(new Date());
+
+                    if (startTime.contains(now) && getServer().getOnlinePlayers().size() >= required) {
+                        getServer().dispatchCommand(getServer().getConsoleSender(), "morefish start " + timer);
+                    }
+                }
+            }, 0L, 1200L);
         }
     }
 

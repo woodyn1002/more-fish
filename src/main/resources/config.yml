@@ -23,8 +23,13 @@ auto-running:
   enable: false
   required-players: 5
   timer: 300
-  delay: 3600
-  period: 3600
+  # HH:mm (H: 0-23, m: 0-59)
+  start-time:
+  - "09:00"
+  - "11:30"
+  - "14:00"
+  - "18:00"
+  - "21:00"
 
 fish-shop:
   enable: true
