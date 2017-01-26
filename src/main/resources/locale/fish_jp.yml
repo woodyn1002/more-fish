@@ -22,9 +22,9 @@ item-format:
   - "%player%&7によって釣られました"
 
 rarity-list:
-  gedou:
-    display-name: "外道"
-    chance: 65
+  common:
+    display-name: "普通"
+    default: true
     color: "reset"
     no-broadcast: true
     no-display: true
@@ -34,53 +34,23 @@ rarity-list:
     color: "gray"
     additional-price: -999999
     no-display: true
-  common:
-    display-name: "普通"
-    chance: 30
-    color: "reset"
-    no-broadcast: true
-    no-display: true
   rare:
     display-name: "大物"
-    chance: 3
+    chance: 22
     color: "aqua"
     additional-price: 3.0
   epic:
     display-name: "超大物"
-    chance: 0.7
+    chance: 6.5
     color: "light_purple"
     additional-price: 4.0
   legendary:
     display-name: "ヌシ"
-    chance: 0.3
+    chance: 0.5
     color: "green"
     additional-price: 5.0
 
 fish-list:
-  gedou:
-    Kusahugu:
-      display-name: "クサフグ"
-      length-min: 3
-      length-max: 8
-      icon: "minecraft:fish"
-    Konbu:
-      display-name: "海藻"
-      length-min: 3
-      length-max: 140
-      icon: "minecraft:double_plant|3"
-    Bora:
-      display-name: "ボラ"
-      length-min: 8
-      length-max: 80
-      icon: "minecraft:diamond_hoe|1558{Unbreakable:1b}"
-    Jellyfish:
-      display-name: "ミズクラゲ"
-      length-min: 4
-      length-max: 20
-      icon: "minecraft:fish"
-      commands:
-      - "minecraft:effect @p minecraft:poison 3 1"
-      - "tellraw @p [{\"text\":\" クラゲがあなたに好意を持っている!\",\"color\":\"none\"}]"
   common:
     Redjellyfish:
       display-name: "アカクラゲ"

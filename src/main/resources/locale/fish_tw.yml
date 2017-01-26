@@ -24,7 +24,7 @@ item-format:
 rarity-list:
   common:
     display-name: "一般"
-    chance: 70
+    default: true
     color: "reset"
     additional-price: 0.0
     no-broadcast: true

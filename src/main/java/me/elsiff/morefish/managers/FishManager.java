@@ -37,10 +37,12 @@ public class FishManager {
 
         FileConfiguration config = plugin.getLocale().getFishConfig();
         ConfigurationSection rarities = config.getConfigurationSection("rarity-list");
+        double totalChance = 0.0D;
 
         for (String path : rarities.getKeys(false)) {
             String displayName = rarities.getString(path + ".display-name");
-            double chance = rarities.getDouble(path + ".chance") * 0.01;
+            boolean isDefault = (rarities.contains(path + ".default") && rarities.getBoolean(path + ".default"));
+            double chance = (!isDefault ? rarities.getDouble(path + ".chance") * 0.01 : 0.0D);
             ChatColor color = ChatColor.valueOf(rarities.getString(path + ".color").toUpperCase());
 
             double additionalPrice = ((rarities.contains(path + ".additional-price")) ? rarities.getDouble(path + ".additional-price") : 0.0D);
@@ -48,13 +50,22 @@ public class FishManager {
             boolean noDisplay = (rarities.contains(path + ".no-display") && rarities.getBoolean(path + ".no-display"));
             boolean firework = (rarities.contains(path + ".firework") && rarities.getBoolean(path + ".firework"));
 
-            Rarity rarity = new Rarity(path, displayName, chance, color, additionalPrice, noBroadcast, noDisplay, firework);
+            Rarity rarity = new Rarity(path, displayName, isDefault, chance, color, additionalPrice, noBroadcast, noDisplay, firework);
 
             rarityList.add(rarity);
+            totalChance += chance;
         }
 
-        for (Rarity key : rarityList) {
-            rarityMap.put(key, new ArrayList<CustomFish>());
+        ListIterator<Rarity> it = rarityList.listIterator();
+        while (it.hasNext()) {
+            Rarity rarity = it.next();
+
+            if (rarity.isDefault()) {
+                rarity = new Rarity(rarity, 1.0 - totalChance);
+                it.set(rarity);
+            }
+
+            rarityMap.put(rarity, new ArrayList<CustomFish>());
         }
 
         for (Rarity rarity : rarityList) {
