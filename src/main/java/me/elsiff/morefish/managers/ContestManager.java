@@ -307,7 +307,7 @@ public class ContestManager {
         while (it.hasNext()) {
             Record record = it.next();
 
-            if (record.getPlayer().equals(player)) {
+            if (record.getPlayer().getUniqueId().equals(player.getUniqueId())) {
                 if (record.getLength() < fish.getLength()) {
                     it.remove();
                     break;
@@ -352,7 +352,7 @@ public class ContestManager {
 
     public int getNumber(OfflinePlayer player) {
         for (int i = 0; i < recordList.size(); i ++) {
-            if (recordList.get(i).getPlayer().equals(player)) {
+            if (recordList.get(i).getPlayer().getUniqueId().equals(player.getUniqueId())) {
                 return (i + 1);
             }
         }
