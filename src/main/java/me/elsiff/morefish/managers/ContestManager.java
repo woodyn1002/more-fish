@@ -73,11 +73,10 @@ public class ContestManager {
 
         for (String path : configRecords.getKeys(false)) {
             UUID id = UUID.fromString(configRecords.getString(path + ".player"));
-            OfflinePlayer player = plugin.getServer().getOfflinePlayer(id);
             String fishName = configRecords.getString(path + ".fish-name");
             double length = configRecords.getDouble(path + ".length");
 
-            recordList.add(new Record(player, fishName, length));
+            recordList.add(new Record(id, fishName, length));
         }
 
         Collections.sort(recordList, comparator);
@@ -307,7 +306,7 @@ public class ContestManager {
         while (it.hasNext()) {
             Record record = it.next();
 
-            if (record.getPlayer().getUniqueId().equals(player.getUniqueId())) {
+            if (record.getPlayer().equals(player)) {
                 if (record.getLength() < fish.getLength()) {
                     it.remove();
                     break;
@@ -317,7 +316,7 @@ public class ContestManager {
             }
         }
 
-        recordList.add(new Record(player, fish));
+        recordList.add(new Record(player.getUniqueId(), fish));
 
         Collections.sort(recordList, comparator);
     }
@@ -372,22 +371,22 @@ public class ContestManager {
     }
 
     public class Record {
-        private final OfflinePlayer player;
+        private final UUID id;
         private final String fishName;
         private final double length;
 
-        public Record(OfflinePlayer player, CaughtFish fish) {
-            this(player, fish.getName(), fish.getLength());
+        public Record(UUID id, CaughtFish fish) {
+            this(id, fish.getName(), fish.getLength());
         }
 
-        public Record(OfflinePlayer player, String fishName, double length) {
-            this.player = player;
+        public Record(UUID id, String fishName, double length) {
+            this.id = id;
             this.fishName = fishName;
             this.length = length;
         }
 
         public OfflinePlayer getPlayer() {
-            return player;
+            return plugin.getServer().getOfflinePlayer(id);
         }
 
         public String getFishName() {
