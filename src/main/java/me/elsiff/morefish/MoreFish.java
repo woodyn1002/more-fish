@@ -48,7 +48,6 @@ public class MoreFish extends JavaPlugin {
         }
 
         this.rewardsGUI = new RewardsGUI(this);
-        this.fishShopGUI = new FishShopGUI(this);
         this.fishManager = new FishManager(this);
         this.contestManager = new ContestManager(this);
         this.updateChecker = new UpdateChecker(this);
@@ -93,15 +92,21 @@ public class MoreFish extends JavaPlugin {
 
     public void loadBossBar() {
         // For 1.9+
-        if (getConfig().getBoolean("general.use-boss-bar") && Material.getMaterial("SHIELD") != null) {
+        if (this.bossBarManager == null &&
+                getConfig().getBoolean("general.use-boss-bar") && Material.getMaterial("SHIELD") != null) {
             this.bossBarManager = new BossBarManager(this);
-        } else {
+        } else if (this.bossBarManager != null) {
+            this.bossBarManager.removeTimerBar();
             this.bossBarManager = null;
         }
     }
 
     public void loadFishShop() {
+        if (this.fishShopGUI != null)
+            return;
+
         if (hasEconomy() && getConfig().getBoolean("fish-shop.enable")) {
+            this.fishShopGUI = new FishShopGUI(this);
             manager.registerEvents(new SignListener(this), this);
             manager.registerEvents(fishShopGUI, this);
         }
