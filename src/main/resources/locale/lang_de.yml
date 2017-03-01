@@ -3,7 +3,7 @@
 # translated by MushroomEaglet (2.1.0)
 #
 
-version: 200
+version: 211
 
 # %player% - The name of fisher
 # %length% - The length of fish
@@ -48,6 +48,7 @@ not-positive: "&b[MoreFish]&r Es sind nur positive Nummer erlaubt."
 not-ongoing: "&b[MoreFish]&r Es läuft kein Wettbewerb."
 clear-records: "&b[MoreFish]&r Die Rekorde wurden erfolgreich erneuert."
 reload-config: "&b[MoreFish]&r Reload abgeschlossen."
+failed-to-reload: "&b[MoreFish]&r Failed to reload: Please check your console."
 in-game-command: "&b[MoreFish]&r Das ist ein In-Game Kommand."
 shop-disabled: "&b[MoreFish]&r Der Fisch Shop ist aus."
 player-not-found: "&b[MoreFish]&r Es gibt kein Spieler namens '%s'."

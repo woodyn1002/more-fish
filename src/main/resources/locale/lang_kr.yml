@@ -3,7 +3,7 @@
 # by elsiff (이프)
 #
 
-version: 200
+version: 211
 
 # %player% - 플레이어의 닉네임
 # %length% - 물고기의 길이
@@ -48,6 +48,7 @@ not-positive: "&b[MoreFish]&r 오직 정수만 입력할 수 있습니다."
 not-ongoing: "&b[MoreFish]&r 대회가 아직 진행중이지 않습니다."
 clear-records: "&b[MoreFish]&r 대회 기록이 모두 제거되었습니다."
 reload-config: "&b[MoreFish]&r config를 리로드했습니다."
+failed-to-reload: "&b[MoreFish]&r 리로드 실패: 콘솔의 에러 메시지를 확인해주세요."
 in-game-command: "&b[MoreFish]&r 콘솔에서 입력할 수 없는 명령어입니다."
 shop-disabled: "&b[MoreFish]&r 상점 기능이 비활성화 되어 있습니다."
 player-not-found: "&b[MoreFish]&r %s라는 플레이어를 찾지 못했습니다."

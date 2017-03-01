@@ -3,7 +3,7 @@
 # translated by mattematti1 (2.1.0)
 #
 
-version: 200
+version: 211
 
 # %player% - The name of fisher
 # %length% - The length of fish
@@ -48,6 +48,7 @@ not-positive: "&b[MoreFish]&r Sono permessi solo numeri positivi."
 not-ongoing: "&b[MoreFish]&r La gara non è ancora partita."
 clear-records: "&b[MoreFish]&r I record sono stati resettati."
 reload-config: "&b[MoreFish]&r Config ricaricato con successo."
+failed-to-reload: "&b[MoreFish]&r Failed to reload: Please check your console."
 in-game-command: "&b[MoreFish]&r Comando eseguibile dal gioco."
 shop-disabled: "&b[MoreFish]&r Il pescivendolo è disabilitato al momento."
 player-not-found: "&b[MoreFish]&r Nessun giocatore si chiama '%s'."

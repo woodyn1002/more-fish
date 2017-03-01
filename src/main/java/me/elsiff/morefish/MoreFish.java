@@ -20,7 +20,7 @@ import java.util.List;
 public class MoreFish extends JavaPlugin {
     private static MoreFish instance;
     public final int verConfig = 210;
-    public final int verLang = 200;
+    public final int verLang = 211;
     public final int verFish = 200;
     private PluginManager manager;
     private int taskId = -1;
@@ -220,9 +220,5 @@ public class MoreFish extends JavaPlugin {
 
     public CitizensHooker getCitizensHooker() {
         return citizensHooker;
-    }
-
-    public void reloadLocale() {
-        locale = new Locale(this);
     }
 }

@@ -3,7 +3,7 @@
 # by elsiff
 #
 
-version: 200
+version: 211
 
 # %player% - The name of fisher
 # %length% - The length of fish
@@ -48,6 +48,7 @@ not-positive: "&b[MoreFish]&r Only positive number is available."
 not-ongoing: "&b[MoreFish]&r The contest isn't ongoing now."
 clear-records: "&b[MoreFish]&r The records has been cleared successfully."
 reload-config: "&b[MoreFish]&r Reloaded the config successfully."
+failed-to-reload: "&b[MoreFish]&r Failed to reload: Please check your console."
 in-game-command: "&b[MoreFish]&r This is an in-game command."
 shop-disabled: "&b[MoreFish]&r Fish Shop is disabled now."
 player-not-found: "&b[MoreFish]&r There's no player named '%s'."

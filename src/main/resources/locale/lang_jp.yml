@@ -3,7 +3,7 @@
 # translated by tanisou (2.1.0)
 #
 
-version: 200
+version: 211
 
 # %player% - 釣り人の名前
 # %length% - 魚のサイズ
@@ -49,6 +49,7 @@ not-positive: "&b[MoreFish]&r 整数のみが使用可能です"
 not-ongoing: "&b[MoreFish]&r そのコンテストは今は行われていません"
 clear-records: "&b[MoreFish]&r 記録の消去に成功しました"
 reload-config: "&b[MoreFish]&r コンフィグの再読み込みに成功しました"
+failed-to-reload: "&b[MoreFish]&r Failed to reload: Please check your console."
 in-game-command: "&b[MoreFish]&r それはゲーム内のコマンドです"
 invalid-command: "&b[MoreFish]&r それは不正なコマンドです"
 

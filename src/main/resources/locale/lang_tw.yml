@@ -3,7 +3,7 @@
 # translated by blockboard08 (2.1.0)
 #
 
-version: 200
+version: 211
 
 # %player% - 釣魚者的名字
 # %length% - 魚的長度
@@ -48,6 +48,7 @@ not-positive: "&b[MoreFish]&r 只有正數是可行的."
 not-ongoing: "&b[MoreFish]&r 這競賽現在沒有在進行中."
 clear-records: "&b[MoreFish]&r 這些紀錄已經成功地被清除."
 reload-config: "&b[MoreFish]&r 重新讀取配置檔案成功."
+failed-to-reload: "&b[MoreFish]&r Failed to reload: Please check your console."
 in-game-command: "&b[MoreFish]&r 這是一個遊戲中的指令."
 shop-disabled: "&b[MoreFish]&r 魚商店現在被關閉."
 player-not-found: "&b[MoreFish]&r 沒有玩家被叫作 '%s'."

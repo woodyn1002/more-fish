@@ -3,7 +3,7 @@
 # translated by MashuuMidori (2.1.0)
 #
 
-version: 200
+version: 211
 
 # %player% - Nick rybaka
 # %length% - Długość ryby
@@ -48,6 +48,7 @@ not-positive: "&b[MoreFish]&r Tylko dodatnie liczby są przyjmowane."
 not-ongoing: "&b[MoreFish]&r Brak zawodów w trakcie."
 clear-records: "&b[MoreFish]&r Rekordy zostały wyczyszczone poprawnie."
 reload-config: "&b[MoreFish]&r Poprawnie przeładowano konfigurację."
+failed-to-reload: "&b[MoreFish]&r Failed to reload: Please check your console."
 in-game-command: "&b[MoreFish]&r Komenda do użycia wewnątrz gry."
 shop-disabled: "&b[MoreFish]&r Sklep Rybny jest wyłączony."
 player-not-found: "&b[MoreFish]&r Nie znaleziono gracza o nicku '%s'."

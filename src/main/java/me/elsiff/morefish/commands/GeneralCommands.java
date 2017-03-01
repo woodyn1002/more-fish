@@ -176,7 +176,13 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             }
 
             plugin.reloadConfig();
-            plugin.reloadLocale();
+            boolean loaded = plugin.getLocale().loadFiles();
+
+            if (!loaded) {
+                sender.sendMessage(plugin.getLocale().getString("failed-to-reload"));
+                return true;
+            }
+
             plugin.getFishManager().loadFishList();
             plugin.loadFishShop();
             plugin.scheduleAutoRunning();
