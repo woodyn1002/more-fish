@@ -178,7 +178,6 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             plugin.reloadConfig();
             plugin.reloadLocale();
             plugin.getFishManager().loadFishList();
-            plugin.loadBossBar();
             plugin.loadFishShop();
             plugin.scheduleAutoRunning();
 

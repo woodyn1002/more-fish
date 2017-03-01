@@ -52,7 +52,10 @@ public class MoreFish extends JavaPlugin {
         this.contestManager = new ContestManager(this);
         this.updateChecker = new UpdateChecker(this);
 
-        loadBossBar();
+        // For 1.9+
+        if (getConfig().getBoolean("general.use-boss-bar") && Material.getMaterial("SHIELD") != null) {
+            this.bossBarManager = new BossBarManager(this);
+        }
 
         getCommand("morefish").setExecutor(new GeneralCommands(this));
 
@@ -88,17 +91,6 @@ public class MoreFish extends JavaPlugin {
         scheduleAutoRunning();
 
         getLogger().info("Plugin has been enabled!");
-    }
-
-    public void loadBossBar() {
-        // For 1.9+
-        if (this.bossBarManager == null &&
-                getConfig().getBoolean("general.use-boss-bar") && Material.getMaterial("SHIELD") != null) {
-            this.bossBarManager = new BossBarManager(this);
-        } else if (this.bossBarManager != null) {
-            this.bossBarManager.removeTimerBar();
-            this.bossBarManager = null;
-        }
     }
 
     public void loadFishShop() {
