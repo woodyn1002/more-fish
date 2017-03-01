@@ -1,10 +1,12 @@
 package me.elsiff.morefish;
 
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,14 +39,17 @@ public class Locale {
         }
     }
 
-    private FileConfiguration loadConfiguration(File folder, String path) {
-        File langFile = new File(folder, path);
+    private FileConfiguration loadConfiguration(File folder, String path) throws IOException, InvalidConfigurationException {
+        File file = new File(folder, path);
 
-        if (!langFile.exists()) {
+        if (!file.exists()) {
             plugin.saveResource("locale\\" + path, false);
         }
 
-        return YamlConfiguration.loadConfiguration(langFile);
+        YamlConfiguration config = new YamlConfiguration();
+        config.load(file);
+
+        return config;
     }
 
     public FileConfiguration getFishConfig() {

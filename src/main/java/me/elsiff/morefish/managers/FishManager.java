@@ -23,7 +23,6 @@ public class FishManager {
     private final List<Rarity> rarityList = new ArrayList<>();
     private final Map<String, CustomFish> fishMap = new HashMap<>();
     private final Map<Rarity, List<CustomFish>> rarityMap = new HashMap<>();
-    private final Map<String, String> nameMap = new HashMap<>();
 
     public FishManager(MoreFish plugin) {
         this.plugin = plugin;
@@ -107,7 +106,6 @@ public class FishManager {
 
                 this.fishMap.put(path, fish);
                 this.rarityMap.get(rarity).add(fish);
-                this.nameMap.put(displayName, path);
             }
         }
 
@@ -123,16 +121,6 @@ public class FishManager {
 
     public CustomFish getCustomFish(String name) {
         return fishMap.get(name);
-    }
-
-    public String getFishName(ItemStack item) {
-        if (!item.hasItemMeta() || !item.getItemMeta().hasDisplayName()) {
-            return null;
-        }
-
-        String displayName = item.getItemMeta().getDisplayName().substring(2);
-
-        return nameMap.get(displayName);
     }
 
     public ItemStack getItemStack(CaughtFish fish, String fisher) {

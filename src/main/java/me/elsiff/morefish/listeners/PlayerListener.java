@@ -1,5 +1,6 @@
 package me.elsiff.morefish.listeners;
 
+import me.elsiff.morefish.CaughtFish;
 import me.elsiff.morefish.CustomFish;
 import me.elsiff.morefish.MoreFish;
 import org.bukkit.ChatColor;
@@ -32,10 +33,9 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onConsume(PlayerItemConsumeEvent event) {
-        String name = plugin.getFishManager().getFishName(event.getItem());
+        CaughtFish fish = plugin.getFishManager().getCaughtFish(event.getItem());
 
-        if (name != null) {
-            CustomFish fish = plugin.getFishManager().getCustomFish(name);
+        if (fish != null) {
             CustomFish.FoodEffects effects = fish.getFoodEffects();
 
             boolean cancel = false;
