@@ -2,6 +2,7 @@ package me.elsiff.morefish;
 
 import me.elsiff.morefish.commands.GeneralCommands;
 import me.elsiff.morefish.hookers.CitizensHooker;
+import me.elsiff.morefish.hookers.PlaceholderAPIHooker;
 import me.elsiff.morefish.hookers.VaultHooker;
 import me.elsiff.morefish.listeners.*;
 import me.elsiff.morefish.managers.BossBarManager;
@@ -35,6 +36,7 @@ public class MoreFish extends JavaPlugin {
 
     private VaultHooker vaultHooker;
     private CitizensHooker citizensHooker;
+    private PlaceholderAPIHooker placeholderAPIHooker;
 
     @Override
     public void onEnable() {
@@ -64,7 +66,7 @@ public class MoreFish extends JavaPlugin {
         manager.registerEvents(new PlayerListener(this), this);
         manager.registerEvents(rewardsGUI, this);
 
-        if (getServer().getPluginManager().getPlugin("Vault") != null) {
+        if (manager.getPlugin("Vault") != null) {
             vaultHooker = new VaultHooker(this);
 
             if (vaultHooker.setupEconomy()) {
@@ -74,10 +76,15 @@ public class MoreFish extends JavaPlugin {
             }
         }
 
-        if (getServer().getPluginManager().getPlugin("Citizens") != null && getServer().getPluginManager().getPlugin("Citizens").isEnabled()) {
+        if (manager.getPlugin("Citizens") != null && manager.getPlugin("Citizens").isEnabled()) {
             citizensHooker = new CitizensHooker(this);
             citizensHooker.registerTrait();
             getLogger().info("Found Citizens for Fish Shop Trait.");
+        }
+
+        if (manager.getPlugin("PlaceholderAPI") != null) {
+            placeholderAPIHooker = new PlaceholderAPIHooker(this);
+            getLogger().info("Found PlaceholderAPI for placeholders support.");
         }
 
         try {

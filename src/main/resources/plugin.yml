@@ -3,7 +3,7 @@ version: 2.1.2-SNAPSHOT
 author: elsiff
 website: http://elsiff.me
 main: me.elsiff.morefish.MoreFish
-softdepend: [Vault, Citizens]
+softdepend: [Vault, Citizens, PlaceholderAPI]
 commands:
   morefish:
     description: Main command for MoreFish.
