@@ -1,6 +1,7 @@
 package me.elsiff.morefish.listener;
 
 import me.elsiff.morefish.CaughtFish;
+import me.elsiff.morefish.event.PlayerCatchCustomFishEvent;
 import me.elsiff.morefish.manager.ContestManager;
 import me.elsiff.morefish.MoreFish;
 import org.bukkit.*;
@@ -41,6 +42,14 @@ public class FishingListener implements Listener {
             }
 
             CaughtFish fish = plugin.getFishManager().generateRandomFish(event.getPlayer());
+
+
+            PlayerCatchCustomFishEvent customEvent = new PlayerCatchCustomFishEvent(event.getPlayer(), fish, event);
+            plugin.getServer().getPluginManager().callEvent(customEvent);
+
+            if (customEvent.isCancelled()) {
+                return;
+            }
 
 
             String msgFish = getMessage("catch-fish", event.getPlayer(), fish);
