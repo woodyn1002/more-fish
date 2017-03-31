@@ -1,7 +1,7 @@
 name: MoreFish
-version: 2.1.2-SNAPSHOT
 author: elsiff
 website: http://elsiff.me
+version: ${project.version}
 main: me.elsiff.morefish.MoreFish
 softdepend: [Vault, Citizens, PlaceholderAPI]
 commands:
