@@ -1,4 +1,4 @@
-package me.elsiff.morefish.managers;
+package me.elsiff.morefish.manager;
 
 import me.elsiff.morefish.CaughtFish;
 import me.elsiff.morefish.MoreFish;

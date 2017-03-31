@@ -1,4 +1,4 @@
-package me.elsiff.morefish.hookers;
+package me.elsiff.morefish.hooker;
 
 import me.elsiff.morefish.MoreFish;
 import net.milkbowl.vault.economy.Economy;

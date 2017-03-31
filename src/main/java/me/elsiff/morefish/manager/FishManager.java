@@ -1,10 +1,10 @@
-package me.elsiff.morefish.managers;
+package me.elsiff.morefish.manager;
 
 import me.elsiff.morefish.CaughtFish;
 import me.elsiff.morefish.CustomFish;
 import me.elsiff.morefish.MoreFish;
 import me.elsiff.morefish.Rarity;
-import me.elsiff.morefish.utils.IdentityUtils;
+import me.elsiff.morefish.util.IdentityUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -84,8 +84,8 @@ public class FishManager {
                     lore = section.getStringList(path + ".lore");
                 }
 
-                if (section.contains(path + ".commands")) {
-                    commands = section.getStringList(path + ".commands");
+                if (section.contains(path + ".command")) {
+                    commands = section.getStringList(path + ".command");
                 }
 
                 if (section.contains(path + ".food-effects")) {
@@ -97,8 +97,8 @@ public class FishManager {
                         foodEffects.setSaturation((float) section.getDouble(path + ".food-effects.saturation"));
                     }
 
-                    if (section.contains(path + ".food-effects.commands")) {
-                        foodEffects.setCommands(section.getStringList(path + ".food-effects.commands"));
+                    if (section.contains(path + ".food-effects.command")) {
+                        foodEffects.setCommands(section.getStringList(path + ".food-effects.command"));
                     }
                 }
 

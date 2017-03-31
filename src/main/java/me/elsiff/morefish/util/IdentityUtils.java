@@ -1,4 +1,4 @@
-package me.elsiff.morefish.utils;
+package me.elsiff.morefish.util;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

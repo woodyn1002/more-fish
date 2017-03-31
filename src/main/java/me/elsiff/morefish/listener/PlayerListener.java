@@ -1,4 +1,4 @@
-package me.elsiff.morefish.listeners;
+package me.elsiff.morefish.listener;
 
 import me.elsiff.morefish.CaughtFish;
 import me.elsiff.morefish.CustomFish;

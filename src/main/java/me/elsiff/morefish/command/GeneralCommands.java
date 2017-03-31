@@ -1,6 +1,6 @@
-package me.elsiff.morefish.commands;
+package me.elsiff.morefish.command;
 
-import me.elsiff.morefish.managers.ContestManager;
+import me.elsiff.morefish.manager.ContestManager;
 import me.elsiff.morefish.MoreFish;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -1,8 +1,8 @@
-package me.elsiff.morefish.listeners;
+package me.elsiff.morefish.listener;
 
 import me.elsiff.morefish.CaughtFish;
 import me.elsiff.morefish.MoreFish;
-import me.elsiff.morefish.utils.ItemBuilder;
+import me.elsiff.morefish.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

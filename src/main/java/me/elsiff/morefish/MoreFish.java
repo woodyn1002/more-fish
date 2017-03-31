@@ -1,13 +1,13 @@
 package me.elsiff.morefish;
 
-import me.elsiff.morefish.commands.GeneralCommands;
-import me.elsiff.morefish.hookers.CitizensHooker;
-import me.elsiff.morefish.hookers.PlaceholderAPIHooker;
-import me.elsiff.morefish.hookers.VaultHooker;
-import me.elsiff.morefish.listeners.*;
-import me.elsiff.morefish.managers.BossBarManager;
-import me.elsiff.morefish.managers.ContestManager;
-import me.elsiff.morefish.managers.FishManager;
+import me.elsiff.morefish.command.GeneralCommands;
+import me.elsiff.morefish.hooker.CitizensHooker;
+import me.elsiff.morefish.hooker.PlaceholderAPIHooker;
+import me.elsiff.morefish.hooker.VaultHooker;
+import me.elsiff.morefish.listener.*;
+import me.elsiff.morefish.manager.BossBarManager;
+import me.elsiff.morefish.manager.ContestManager;
+import me.elsiff.morefish.manager.FishManager;
 import me.elsiff.morefish.protocol.UpdateChecker;
 import org.bukkit.Material;
 import org.bukkit.plugin.PluginManager;
