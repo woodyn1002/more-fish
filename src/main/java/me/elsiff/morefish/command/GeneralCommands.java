@@ -55,6 +55,11 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length < 1 || args[0].equalsIgnoreCase("help")) {
+            if (!sender.hasPermission("morefish.help")) {
+                sender.sendMessage(plugin.getLocale().getString("no-permission"));
+                return true;
+            }
+
             String prefix = "§b[MoreFish]§r ";
             sender.sendMessage(prefix + "§3> ===== §b§lMoreFish §bv" + plugin.getDescription().getVersion() + "§3 ===== <");
             sender.sendMessage(prefix + "/" + label + " help");

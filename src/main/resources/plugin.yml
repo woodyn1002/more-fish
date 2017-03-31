@@ -13,6 +13,9 @@ permissions:
   morefish.admin:
     default: op
     description: Give user ability to control the fishing contest.
+  morefish.help:
+    default: true
+    description: Player with this permission can use the help command.
   morefish.top:
     default: true
     description: Player with this permission can use /morefish top command.
