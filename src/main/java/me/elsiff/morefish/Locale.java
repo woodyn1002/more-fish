@@ -27,16 +27,6 @@ public class Locale {
         fishPath = "fish_" + locale + ".yml";
 
         loadFiles();
-
-        String msg = lang.getString("old-file");
-
-        if (lang.getInt("version") != plugin.verLang) {
-            plugin.getServer().getConsoleSender().sendMessage(String.format(msg, langPath));
-        }
-
-        if (fish.getInt("version") != plugin.verFish) {
-            plugin.getServer().getConsoleSender().sendMessage(String.format(msg, fishPath));
-        }
     }
 
     private FileConfiguration loadConfiguration(File folder, String path) throws IOException, InvalidConfigurationException {
@@ -50,6 +40,10 @@ public class Locale {
         config.load(file);
 
         return config;
+    }
+
+    public FileConfiguration getLangConfig() {
+        return lang;
     }
 
     public FileConfiguration getFishConfig() {
@@ -80,5 +74,21 @@ public class Locale {
         }
 
         return list;
+    }
+
+    public int getLangVersion() {
+        return lang.getInt("version");
+    }
+
+    public int getFishVersion() {
+        return fish.getInt("version");
+    }
+
+    public String getLangPath() {
+        return langPath;
+    }
+
+    public String getFishPath() {
+        return fishPath;
     }
 }

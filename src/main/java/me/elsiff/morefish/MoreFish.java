@@ -10,6 +10,7 @@ import me.elsiff.morefish.manager.ContestManager;
 import me.elsiff.morefish.manager.FishManager;
 import me.elsiff.morefish.protocol.UpdateChecker;
 import org.bukkit.Material;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
@@ -20,9 +21,6 @@ import java.util.List;
 
 public class MoreFish extends JavaPlugin {
     private static MoreFish instance;
-    public final int verConfig = 210;
-    public final int verLang = 211;
-    public final int verFish = 200;
     private PluginManager manager;
     private int taskId = -1;
 
@@ -38,6 +36,10 @@ public class MoreFish extends JavaPlugin {
     private CitizensHooker citizensHooker;
     private PlaceholderAPIHooker placeholderAPIHooker;
 
+    public static MoreFish getInstance() {
+        return instance;
+    }
+
     @Override
     public void onEnable() {
         instance = this;
@@ -45,9 +47,7 @@ public class MoreFish extends JavaPlugin {
         saveDefaultConfig();
         this.locale = new Locale(this);
 
-        if (getConfig().getInt("version") != verConfig) {
-            getServer().getConsoleSender().sendMessage(String.format(getLocale().getString("old-file"), "config.yml"));
-        }
+        updateConfigFiles();
 
         this.rewardsGUI = new RewardsGUI(this);
         this.fishManager = new FishManager(this);
@@ -100,6 +100,29 @@ public class MoreFish extends JavaPlugin {
         getLogger().info("Plugin has been enabled!");
     }
 
+    private void updateConfigFiles() {
+        final int verConfig = 210;
+        final int verLang = 211;
+        final int verFish = 200;
+        String msg = locale.getString("old-file");
+        ConsoleCommandSender console = getServer().getConsoleSender();
+
+        if (getConfig().getInt("version") != verConfig) {
+            // Update
+            console.sendMessage(String.format(msg, "config.yml"));
+        }
+
+        if (locale.getLangVersion() != verLang) {
+            // Update
+            console.sendMessage(String.format(msg, locale.getLangPath()));
+        }
+
+        if (locale.getFishVersion() != verFish) {
+            // Update
+            console.sendMessage(String.format(msg, locale.getFishPath()));
+        }
+    }
+
     public void loadFishShop() {
         if (this.fishShopGUI != null)
             return;
@@ -144,10 +167,6 @@ public class MoreFish extends JavaPlugin {
         }
 
         getLogger().info("Plugin has been disabled!");
-    }
-
-    public static MoreFish getInstance() {
-        return instance;
     }
 
     public Locale getLocale() {
@@ -227,5 +246,9 @@ public class MoreFish extends JavaPlugin {
 
     public CitizensHooker getCitizensHooker() {
         return citizensHooker;
+    }
+
+    public PlaceholderAPIHooker getPlaceholderAPIHooker() {
+        return placeholderAPIHooker;
     }
 }
