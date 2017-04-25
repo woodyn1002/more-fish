@@ -1,5 +1,7 @@
 package me.elsiff.morefish;
 
+import me.elsiff.morefish.condition.Condition;
+
 import java.util.List;
 
 public class CustomFish {
@@ -12,10 +14,11 @@ public class CustomFish {
     private final boolean skipItemFormat;
     private final List<String> commands;
     private final FoodEffects foodEffects;
+    private final List<Condition> conditions;
     private final Rarity rarity;
 
     public CustomFish(String internalName, String name, List<String> lore, double lengthMin, double lengthMax, String icon,
-                      boolean skipItemFormat, List<String> commands, FoodEffects foodEffects, Rarity rarity) {
+                      boolean skipItemFormat, List<String> commands, FoodEffects foodEffects, List<Condition> conditions, Rarity rarity) {
         this.internalName = internalName;
         this.name = name;
         this.lore = lore;
@@ -25,6 +28,7 @@ public class CustomFish {
         this.skipItemFormat = skipItemFormat;
         this.commands = commands;
         this.foodEffects = foodEffects;
+        this.conditions = conditions;
         this.rarity = rarity;
     }
 
@@ -64,6 +68,10 @@ public class CustomFish {
         return foodEffects;
     }
 
+    public List<Condition> getConditions() {
+        return conditions;
+    }
+
     public Rarity getRarity() {
         return rarity;
     }
@@ -95,20 +103,20 @@ public class CustomFish {
             return points;
         }
 
-        public float getSaturation() {
-            return saturation;
-        }
-
-        public List<String> getCommands() {
-            return commands;
-        }
-
         public void setPoints(int points) {
             this.points = points;
         }
 
+        public float getSaturation() {
+            return saturation;
+        }
+
         public void setSaturation(float saturation) {
             this.saturation = saturation;
+        }
+
+        public List<String> getCommands() {
+            return commands;
         }
 
         public void setCommands(List<String> commands) {

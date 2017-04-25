@@ -4,12 +4,16 @@ import me.elsiff.morefish.CaughtFish;
 import me.elsiff.morefish.CustomFish;
 import me.elsiff.morefish.MoreFish;
 import me.elsiff.morefish.Rarity;
+import me.elsiff.morefish.condition.*;
 import me.elsiff.morefish.util.IdentityUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -79,6 +83,7 @@ public class FishManager {
                 boolean skipItemFormat = (section.contains(path + ".skip-item-format") && section.getBoolean(path + ".skip-item-format"));
                 List<String> commands = new ArrayList<>();
                 CustomFish.FoodEffects foodEffects = new CustomFish.FoodEffects();
+                List<Condition> conditions = new ArrayList<>();
 
                 if (section.contains(path + ".lore")) {
                     lore = section.getStringList(path + ".lore");
@@ -102,7 +107,45 @@ public class FishManager {
                     }
                 }
 
-                CustomFish fish = new CustomFish(path, displayName, lore, lengthMin, lengthMax, icon, skipItemFormat, commands, foodEffects, rarity);
+                if (section.contains(path + ".conditions")) {
+                    List<String> list = section.getStringList("conditions");
+
+                    for (String string : list) {
+                        String[] values = string.split("\\|");
+                        String conId = values[0];
+
+                        switch (conId) {
+                            case "raining":
+                                boolean raining = Boolean.parseBoolean(values[1]);
+                                conditions.add(new RainingCondition(raining));
+                                break;
+                            case "thundering":
+                                boolean thundering = Boolean.parseBoolean(values[1]);
+                                conditions.add(new ThunderingCondition(thundering));
+                                break;
+                            case "time":
+                                String time = values[1].toLowerCase();
+                                conditions.add(new TimeCondition(time));
+                                break;
+                            case "biome":
+                                Biome biome = Biome.valueOf(values[1].toUpperCase());
+                                conditions.add(new BiomeCondition(biome));
+                                break;
+                            case "enchantment":
+                                Enchantment ench = IdentityUtils.getEnchantment(values[1].toLowerCase());
+                                int lv = Integer.parseInt(values[2]);
+                                conditions.add(new EnchantmentCondition(ench, lv));
+                                break;
+                            case "level":
+                                int level = Integer.parseInt(values[1]);
+                                conditions.add(new LevelCondition(level));
+                                break;
+                        }
+                    }
+                }
+
+                CustomFish fish = new CustomFish(path, displayName, lore, lengthMin, lengthMax, icon, skipItemFormat,
+                        commands, foodEffects, conditions, rarity);
 
                 this.fishMap.put(path, fish);
                 this.rarityMap.get(rarity).add(fish);
@@ -112,9 +155,9 @@ public class FishManager {
         plugin.getLogger().info("Loaded " + fishMap.size() + " fish successfully.");
     }
 
-    public CaughtFish generateRandomFish(OfflinePlayer catcher) {
+    public CaughtFish generateRandomFish(Player catcher) {
         Rarity rarity = getRandomRarity();
-        CustomFish type = getRandomFish(rarity);
+        CustomFish type = getRandomFish(rarity, catcher);
 
         return createCaughtFish(type, catcher);
     }
@@ -218,10 +261,21 @@ public class FishManager {
         return null;
     }
 
-    private CustomFish getRandomFish(Rarity rarity) {
+    private CustomFish getRandomFish(Rarity rarity, Player player) {
         List<CustomFish> list = rarityMap.get(rarity);
-        int index = random.nextInt(list.size());
 
+        ListIterator<CustomFish> it = list.listIterator();
+        while (it.hasNext()) {
+            CustomFish fish = it.next();
+
+            for (Condition condition : fish.getConditions()) {
+                if (!condition.isSatisfying(player)) {
+                    it.remove();
+                }
+            }
+        }
+
+        int index = random.nextInt(list.size());
         return list.get(index);
     }
 
@@ -245,7 +299,7 @@ public class FishManager {
         double length = 0.0D;
         OfflinePlayer catcher = null;
 
-        for (int i = 1; i < split.length; i ++) {
+        for (int i = 1; i < split.length; i++) {
             String[] arr = split[i].split(":");
             if (arr.length < 2) {
                 break;
