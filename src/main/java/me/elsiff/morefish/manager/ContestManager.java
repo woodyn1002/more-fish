@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class ContestManager {
+    private static final String PREFIX_REWARD = "reward_";
+    private static final String PREFIX_CASH_PRIZE = "cash-prize_";
     private final MoreFish plugin;
     private final RecordComparator comparator = new RecordComparator();
     private final List<Record> recordList = new ArrayList<>();
@@ -87,7 +89,7 @@ public class ContestManager {
             configRecords.set(path, null);
         }
 
-        for (int i = 0; i < recordList.size(); i ++) {
+        for (int i = 0; i < recordList.size(); i++) {
             Record record = recordList.get(i);
             configRecords.set(i + ".player", record.getPlayer().getUniqueId().toString());
             configRecords.set(i + ".fish-name", record.getFishName());
@@ -147,7 +149,7 @@ public class ContestManager {
         Set<Integer> receivers = new HashSet<>();
 
         ItemStack[] rewards = getRewards();
-        for (int i = 0; i < rewards.length - 1 && i < recordList.size(); i ++) {
+        for (int i = 0; i < rewards.length - 1 && i < recordList.size(); i++) {
             ItemStack stack = rewards[i];
 
             if (stack == null || stack.getType() == Material.AIR)
@@ -161,10 +163,10 @@ public class ContestManager {
 
         if (plugin.hasEconomy()) {
             double[] cashPrizes = getCashPrizes();
-            for (int i = 0; i < cashPrizes.length - 1 && i < recordList.size(); i ++) {
+            for (int i = 0; i < cashPrizes.length - 1 && i < recordList.size(); i++) {
                 double amount = cashPrizes[i];
 
-                if (amount == 0.0D)
+                if (amount <= 0)
                     continue;
 
                 OfflinePlayer player = getRecord(i + 1).getPlayer();
@@ -173,8 +175,8 @@ public class ContestManager {
                 receivers.add(i);
             }
 
-            if (cashPrizes[7] != 0.0D) {
-                for (int i = 0; i < getRecordAmount(); i ++) {
+            if (cashPrizes[7] > 0) {
+                for (int i = 0; i < getRecordAmount(); i++) {
                     if (receivers.contains(i))
                         continue;
 
@@ -186,7 +188,7 @@ public class ContestManager {
         }
 
         if (rewards[7] != null) {
-            for (int i = 0; i < getRecordAmount(); i ++) {
+            for (int i = 0; i < getRecordAmount(); i++) {
                 if (receivers.contains(i))
                     continue;
 
@@ -216,11 +218,11 @@ public class ContestManager {
         msg = msg.replaceAll("%player%", player.getName())
                 .replaceAll("%item%", getItemName(stack))
                 .replaceAll("%ordinal%", plugin.getOrdinal(number))
-                .replaceAll("%number%", number + "");
+                .replaceAll("%number%", Integer.toString(number));
 
         player.sendMessage(msg);
     }
-    
+
     private void sendCashPrize(OfflinePlayer player, double amount) {
         if (!plugin.getVaultHooker().getEconomy().hasAccount(player)) {
             plugin.getLogger().info(player.getName() + "'s reward of fishing contest has not been sent as having no economy account.");
@@ -234,9 +236,9 @@ public class ContestManager {
             String msg = plugin.getLocale().getString("reward-cash-prize");
 
             msg = msg.replaceAll("%player%", player.getName())
-                    .replaceAll("%amount%", amount + "")
+                    .replaceAll("%amount%", Double.toString(amount))
                     .replaceAll("%ordinal%", plugin.getOrdinal(number))
-                    .replaceAll("%number%", number + "");
+                    .replaceAll("%number%", Integer.toString(number));
 
             player.getPlayer().sendMessage(msg);
         }
@@ -251,7 +253,7 @@ public class ContestManager {
         ItemStack[] rewards = new ItemStack[8];
 
         for (String path : configRewards.getKeys(false)) {
-            if (!path.startsWith("reward_"))
+            if (!path.startsWith(PREFIX_REWARD))
                 continue;
 
             int i = Integer.parseInt(path.substring(7));
@@ -263,11 +265,19 @@ public class ContestManager {
         return rewards;
     }
 
+    public void setRewards(ItemStack[] rewards) {
+        for (int i = 0; i < rewards.length; i++) {
+            configRewards.set(PREFIX_REWARD + i, rewards[i]);
+        }
+
+        saveRewards();
+    }
+
     public double[] getCashPrizes() {
         double[] arr = new double[8];
 
         for (String path : configRewards.getKeys(false)) {
-            if (!path.startsWith("cash-prize_"))
+            if (!path.startsWith(PREFIX_CASH_PRIZE))
                 continue;
 
             int i = Integer.parseInt(path.substring(11));
@@ -279,17 +289,9 @@ public class ContestManager {
         return arr;
     }
 
-    public void setRewards(ItemStack[] rewards) {
-        for (int i = 0; i < rewards.length; i ++) {
-            configRewards.set("reward_" + i, rewards[i]);
-        }
-
-        saveRewards();
-    }
-
     public void setCashPrizes(double[] arr) {
-        for (int i = 0; i < arr.length; i ++) {
-            configRewards.set("cash-prize_" + i, arr[i]);
+        for (int i = 0; i < arr.length; i++) {
+            configRewards.set(PREFIX_CASH_PRIZE + i, arr[i]);
         }
 
         saveRewards();
@@ -350,7 +352,7 @@ public class ContestManager {
     }
 
     public int getNumber(OfflinePlayer player) {
-        for (int i = 0; i < recordList.size(); i ++) {
+        for (int i = 0; i < recordList.size(); i++) {
             if (recordList.get(i).getPlayer().getUniqueId().equals(player.getUniqueId())) {
                 return (i + 1);
             }
@@ -366,7 +368,11 @@ public class ContestManager {
     private class RecordComparator implements Comparator<Record> {
 
         public int compare(Record arg0, Record arg1) {
-            return ((arg0.getLength() < arg1.getLength()) ? 1 : ((arg0.getLength() > arg1.getLength()) ? -1 : 0));
+            if (arg0.getLength() < arg1.getLength())
+                return 1;
+            else if ((arg0.getLength() > arg1.getLength()))
+                return -1;
+            return 0;
         }
     }
 
@@ -399,15 +405,15 @@ public class ContestManager {
     }
 
     private class TimerTask extends BukkitRunnable {
-        private long passed = 0;
         private final long timer;
+        private long passed = 0;
 
         public TimerTask(long sec) {
             this.timer = sec;
         }
 
         public void run() {
-            passed ++;
+            passed++;
 
             if (plugin.hasBossBar()) {
                 plugin.getBossBarManager().updateTimerBar(passed, timer);

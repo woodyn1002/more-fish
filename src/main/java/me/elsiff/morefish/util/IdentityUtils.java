@@ -8,6 +8,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class IdentityUtils {
+    private IdentityUtils() {
+        throw new IllegalAccessError("Utility class");
+    }
 
     public static Material getMaterial(String minecraftId) {
         try {

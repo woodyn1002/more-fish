@@ -1,9 +1,9 @@
 package me.elsiff.morefish.listener;
 
 import me.elsiff.morefish.CaughtFish;
+import me.elsiff.morefish.MoreFish;
 import me.elsiff.morefish.event.PlayerCatchCustomFishEvent;
 import me.elsiff.morefish.manager.ContestManager;
-import me.elsiff.morefish.MoreFish;
 import org.bukkit.*;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Item;
@@ -35,9 +35,7 @@ public class FishingListener implements Listener {
                 return;
             }
 
-            if (plugin.getConfig().getStringList("general.contest-disabled-worlds").contains(event.getPlayer().getWorld().getName()) ||
-                    (plugin.getConfig().getBoolean("general.only-for-contest") && !contest.hasStarted()) ||
-                    (plugin.getConfig().getBoolean("general.replace-only-fish") && ((Item) event.getCaught()).getItemStack().getType() != Material.RAW_FISH)) {
+            if (hasEnabled(event)) {
                 return;
             }
 
@@ -88,6 +86,27 @@ public class FishingListener implements Listener {
             Item caught = (Item) event.getCaught();
             caught.setItemStack(itemStack);
         }
+    }
+
+    private boolean hasEnabled(PlayerFishEvent event) {
+        boolean enabled = true;
+
+        // Check if the world hasn't disabled
+        if (plugin.getConfig().getStringList("general.contest-disabled-worlds")
+                .contains(event.getPlayer().getWorld().getName()))
+            enabled = false;
+
+        // Check if the contest is ongoing
+        if (plugin.getConfig().getBoolean("general.only-for-contest") &&
+                !contest.hasStarted())
+            enabled = false;
+
+        // Check if the caught is fish
+        if (plugin.getConfig().getBoolean("general.replace-only-fish") &&
+                ((Item) event.getCaught()).getItemStack().getType() != Material.RAW_FISH)
+            enabled = false;
+
+        return enabled;
     }
 
     private String getMessage(String path, Player player, CaughtFish fish) {

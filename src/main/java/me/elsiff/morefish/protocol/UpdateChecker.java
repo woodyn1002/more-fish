@@ -8,8 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class UpdateChecker {
-    private final String key = "98BE0FE67F88AB82B4C197FAF1DC3B69206EFDCC4D3B80FC83A00037510B99B4";
-    private final String id = "22926";
+    private static final String KEY = "98BE0FE67F88AB82B4C197FAF1DC3B69206EFDCC4D3B80FC83A00037510B99B4";
+    private static final String ID = "22926";
     private String oldVersion;
     private String newVersion;
 
@@ -37,7 +37,7 @@ public class UpdateChecker {
 
             con.setDoOutput(true);
             con.setRequestMethod("POST");
-            con.getOutputStream().write(("key=" + key + "&resource=" + id).getBytes("UTF-8"));
+            con.getOutputStream().write(("key=" + KEY + "&resource=" + ID).getBytes("UTF-8"));
 
             return new BufferedReader(new InputStreamReader(con.getInputStream())).readLine().replaceAll("[a-zA-Z ]", "");
         } catch (Exception ex) {

@@ -1,6 +1,7 @@
 package me.elsiff.morefish.listener;
 
 import me.elsiff.morefish.MoreFish;
+import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,7 +18,9 @@ public class SignListener implements Listener {
 
     @EventHandler
     public void onSignChange(SignChangeEvent event) {
-        if (event.getLine(0).replaceAll("&b", "").replaceAll("§b", "").equalsIgnoreCase("[FishShop]")) {
+        String firstLine = ChatColor.translateAlternateColorCodes('&', event.getLine(0))
+                .replaceAll("§b", "");
+        if ("[FishShop]".equalsIgnoreCase(firstLine)) {
             if (!event.getPlayer().hasPermission("morefish.admin")) {
                 event.getPlayer().sendMessage(plugin.getLocale().getString("no-permission"));
                 return;
@@ -34,7 +37,7 @@ public class SignListener implements Listener {
                 plugin.getFishShopGUI() != null) {
             Sign sign = (Sign) event.getClickedBlock().getState();
 
-            if (sign.getLine(0).equalsIgnoreCase("§b[FishShop]")) {
+            if ("§b[FishShop]".equalsIgnoreCase(sign.getLine(0))) {
                 plugin.getFishShopGUI().openGUI(event.getPlayer());
             }
         }

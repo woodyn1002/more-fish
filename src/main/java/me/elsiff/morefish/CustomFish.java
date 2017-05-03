@@ -92,7 +92,7 @@ public class CustomFish {
         }
 
         public boolean hasSaturation() {
-            return (saturation != -1.0F);
+            return (saturation > 0);
         }
 
         public boolean hasCommands() {

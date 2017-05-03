@@ -77,7 +77,7 @@ public class MoreFish extends JavaPlugin {
         }
 
         if (manager.getPlugin("Citizens") != null && manager.getPlugin("Citizens").isEnabled()) {
-            citizensHooker = new CitizensHooker(this);
+            citizensHooker = new CitizensHooker();
             citizensHooker.registerTrait();
             getLogger().info("Found Citizens for Fish Shop Trait.");
         }

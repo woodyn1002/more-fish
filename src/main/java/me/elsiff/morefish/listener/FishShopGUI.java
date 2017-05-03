@@ -1,5 +1,6 @@
 package me.elsiff.morefish.listener;
 
+import com.google.common.math.DoubleMath;
 import me.elsiff.morefish.CaughtFish;
 import me.elsiff.morefish.MoreFish;
 import me.elsiff.morefish.util.ItemBuilder;
@@ -34,23 +35,19 @@ public class FishShopGUI implements Listener {
             inv.setItem(27 + i, iconGlass);
         }
 
-        updateEmeraldIcon(inv, false);
+        updateEmeraldIcon(inv);
 
         player.openInventory(inv);
         users.add(player.getUniqueId());
     }
 
-    private void updateEmeraldIcon(Inventory inv, boolean calculating) {
+    private void updateEmeraldIcon(Inventory inv) {
         String displayName;
 
-        if (calculating) {
-            displayName = plugin.getLocale().getString("shop-emerald-icon-calculating");
-        } else {
-            double price = getTotalPrice(inv);
-            String priceStr = getPriceString(price);
-            displayName = plugin.getLocale().getString("shop-emerald-icon-name")
-                    .replaceAll("%price%", priceStr);
-        }
+        double price = getTotalPrice(inv);
+        String priceStr = getPriceString(price);
+        displayName = plugin.getLocale().getString("shop-emerald-icon-name")
+                .replaceAll("%price%", priceStr);
 
         ItemStack iconEmerald = new ItemBuilder(Material.EMERALD)
                 .setDisplayName(displayName)
@@ -96,7 +93,7 @@ public class FishShopGUI implements Listener {
             plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    updateEmeraldIcon(inv, false);
+                    updateEmeraldIcon(inv);
                 }
             }, 1L);
 
@@ -147,15 +144,14 @@ public class FishShopGUI implements Listener {
             plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    updateEmeraldIcon(inv, false);
+                    updateEmeraldIcon(inv);
                 }
             }, 1L);
         }
     }
 
     private String getPriceString(double price) {
-        int intPrice = (int) price;
-        return ((price == intPrice) ? intPrice + "" : price + "");
+        return (DoubleMath.isMathematicalInteger(price) ? Integer.toString((int) price) : Double.toString(price));
     }
 
     @EventHandler

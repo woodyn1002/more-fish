@@ -47,7 +47,7 @@ public class RewardsGUI implements Listener {
                 double amount = cashPrizes[i];
 
                 String ordinal = plugin.getOrdinal(i + 1);
-                String number = (i + 1) + "";
+                String number = Integer.toString(i + 1);
 
                 if (i == 7) {
                     String text = plugin.getLocale().getString("rewards-consolation");
@@ -59,7 +59,7 @@ public class RewardsGUI implements Listener {
                         .setDisplayName(plugin.getLocale().getString("rewards-emerald-icon-name")
                                 .replaceAll("%ordinal%", ordinal)
                                 .replaceAll("%number%", number)
-                                .replaceAll("%amount%", amount + ""))
+                                .replaceAll("%amount%", Double.toString(amount)))
                         .setLore(plugin.getLocale().getStringList("rewards-emerald-icon-lore"))
                         .build();
 
@@ -106,7 +106,7 @@ public class RewardsGUI implements Listener {
         if (editors.containsKey(id)) {
             event.setCancelled(true);
 
-            if (event.getMessage().equalsIgnoreCase("cancel")) {
+            if ("cancel".equalsIgnoreCase(event.getMessage())) {
                 editors.remove(id);
                 openGUI(event.getPlayer());
 

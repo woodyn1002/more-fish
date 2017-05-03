@@ -239,7 +239,7 @@ public class FishManager {
             int min = (int) fish.getLengthMin();
             int max = (int) fish.getLengthMax();
 
-            length = random.nextInt(max - min + 1) + min;
+            length = (double) random.nextInt(max - min + 1) + min;
             length += 0.1 * random.nextInt(10);
         }
 

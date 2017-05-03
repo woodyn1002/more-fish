@@ -12,6 +12,10 @@ public class Reflection {
         craftbukkit += version + ".";
     }
 
+    private Reflection() {
+        throw new IllegalAccessError("Utility class");
+    }
+
     public static Class<?> getNMSClass(String name) throws ClassNotFoundException {
         return Class.forName(nms + name);
     }

@@ -6,12 +6,10 @@ import me.elsiff.morefish.manager.ContestManager;
 import org.bukkit.entity.Player;
 
 public class PlaceholderAPIHooker extends EZPlaceholderHook {
-    private final MoreFish plugin;
     private final ContestManager contest;
 
     public PlaceholderAPIHooker(MoreFish plugin) {
         super(plugin, "morefish");
-        this.plugin = plugin;
         this.contest = plugin.getContestManager();
         this.hook();
     }

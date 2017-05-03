@@ -1,7 +1,7 @@
 package me.elsiff.morefish.command;
 
-import me.elsiff.morefish.manager.ContestManager;
 import me.elsiff.morefish.MoreFish;
+import me.elsiff.morefish.manager.ContestManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -54,7 +54,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (args.length < 1 || args[0].equalsIgnoreCase("help")) {
+        if (args.length < 1 || "help".equalsIgnoreCase(args[0])) {
             if (!sender.hasPermission("morefish.help")) {
                 sender.sendMessage(plugin.getLocale().getString("no-permission"));
                 return true;
@@ -72,7 +72,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             sender.sendMessage(prefix + "/" + label + " shop [player]");
 
             return true;
-        } else if (args[0].equalsIgnoreCase("start")) {
+        } else if ("start".equalsIgnoreCase(args[0])) {
             if (!sender.hasPermission("morefish.admin")) {
                 sender.sendMessage(plugin.getLocale().getString("no-permission"));
                 return true;
@@ -117,7 +117,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 
             if (hasTimer) {
                 String msgTimer = plugin.getLocale().getString("contest-start-timer")
-                        .replaceAll("%sec%", sec + "")
+                        .replaceAll("%sec%", Long.toString(sec))
                         .replaceAll("%time%", plugin.getTimeString(sec));
 
                 if (broadcast) {
@@ -128,7 +128,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             }
 
             return true;
-        } else if (args[0].equalsIgnoreCase("stop")) {
+        } else if ("stop".equalsIgnoreCase(args[0])) {
             if (!sender.hasPermission("morefish.admin")) {
                 sender.sendMessage(plugin.getLocale().getString("no-permission"));
                 return true;
@@ -158,7 +158,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             contest.stop();
 
             return true;
-        } else if (args[0].equalsIgnoreCase("clear")) {
+        } else if ("clear".equalsIgnoreCase(args[0])) {
             if (!sender.hasPermission("morefish.admin")) {
                 sender.sendMessage(plugin.getLocale().getString("no-permission"));
                 return true;
@@ -174,7 +174,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             sender.sendMessage(plugin.getLocale().getString("clear-records"));
 
             return true;
-        } else if (args[0].equalsIgnoreCase("reload")) {
+        } else if ("reload".equalsIgnoreCase(args[0])) {
             if (!sender.hasPermission("morefish.admin")) {
                 sender.sendMessage(plugin.getLocale().getString("no-permission"));
                 return true;
@@ -195,7 +195,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             sender.sendMessage(plugin.getLocale().getString("reload-config"));
 
             return true;
-        } else if (args[0].equalsIgnoreCase("top")) {
+        } else if ("top".equalsIgnoreCase(args[0])) {
             if (!sender.hasPermission("morefish.top")) {
                 sender.sendMessage(plugin.getLocale().getString("no-permission"));
                 return true;
@@ -214,7 +214,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             }
 
             return true;
-        } else if (args[0].equalsIgnoreCase("rewards")) {
+        } else if ("rewards".equalsIgnoreCase(args[0])) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage(plugin.getLocale().getString("in-game-command"));
                 return true;
@@ -230,7 +230,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
             plugin.getRewardsGUI().openGUI(player);
 
             return true;
-        } else if (args[0].equalsIgnoreCase("shop")) {
+        } else if ("shop".equalsIgnoreCase(args[0])) {
             if (args.length < 2) {
                 if (!sender.hasPermission("morefish.shop")) {
                     sender.sendMessage(plugin.getLocale().getString("no-permission"));
@@ -295,7 +295,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
                 break;
 
             String msg = format.replaceAll("%ordinal%", plugin.getOrdinal(i))
-                    .replaceAll("%number%", i + "")
+                    .replaceAll("%number%", Integer.toString(i))
                     .replaceAll("%player%", record.getPlayer().getName())
                     .replaceAll("%length%", record.getLength() + "")
                     .replaceAll("%fish%", record.getFishName());
@@ -328,7 +328,7 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
 
             msg = plugin.getLocale().getString("top-mine")
                     .replaceAll("%ordinal%", plugin.getOrdinal(number))
-                    .replaceAll("%number%", number + "")
+                    .replaceAll("%number%", Integer.toString(number))
                     .replaceAll("%player%", record.getPlayer().getName())
                     .replaceAll("%length%", record.getLength() + "")
                     .replaceAll("%fish%", record.getFishName());

@@ -67,8 +67,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder hideAll() {
-        addItemFlags(ItemFlag.values());
-        return this;
+        return addItemFlags(ItemFlag.values());
     }
 
     public ItemStack build() {
