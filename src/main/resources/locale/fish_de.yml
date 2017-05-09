@@ -58,82 +58,95 @@ fish-list:
       display-name: "Garnele"
       length-min: 3
       length-max: 8
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Anchovy:
       display-name: "Anschovis"
       length-min: 7
       length-max: 13
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Croaker:
       display-name: "Croaker"
       length-min: 12
       length-max: 15
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Crab:
       display-name: "Krabbe"
       length-min: 10
       length-max: 15
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Mackerel:
       display-name: "Makrele"
       length-min: 15
       length-max: 30
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Herring:
       display-name: "Hering"
       length-min: 20
       length-max: 30
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
   junk:
     Pie:
       display-name: "Kuchen"
       length-min: 3.14
       length-max: 3.14
-      icon: "minecraft:pumpkin_pie"
+      icon:
+        id: "minecraft:pumpkin_pie"
       skip-item-format: true
     Magikarp:
       display-name: "Kapador"
-      lore:
-      - "&7Kapador setzt Platscher ein!"
       length-min: 25
       length-max: 35
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7Kapador setzt Platscher ein!"
       skip-item-format: false
     Breadfish:
       display-name: "Brotfisch"
-      lore:
-      - "&7hast du jemals den"
-      - "&7fabelhaft Brotfisch gesehen"
       length-min: 10
       length-max: 30
-      icon: "minecraft:bread"
+      icon:
+        id: "minecraft:bread"
+        lore:
+        - "&7hast du jemals den"
+        - "&7fabelhaft Brotfisch gesehen"
       skip-item-format: false
     WoodenAxe:
       display-name: "Admin´s Holzaxt"
-      lore:
-      - "&7//cut"
       length-min: 16
       length-max: 16
-      icon: "minecraft:wooden_axe"
+      icon:
+        id: "minecraft:wooden_axe"
+        lore:
+        - "&7//cut"
       skip-item-format: false
     FishingRod:
       display-name: "Jemmand hat wohl ausversehen 'Q' gedrückt"
       length-min: 16
       length-max: 16
-      icon: "minecraft:fishing_rod|30"
+      icon:
+        id: "minecraft:fishing_rod|30"
       skip-item-format: true
     SpongeBob:
       display-name: "Leckers essen von der Krossen Krabe"
       length-min: 16
       length-max: 16
-      icon: "minecraft:sponge"
+      icon:
+        id: "minecraft:sponge"
       skip-item-format: true
   rare:
     Jellyfish:
       display-name: "Qualle"
       length-min: 20
       length-max: 40
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
       commands:
       - "minecraft:effect @p minecraft:poison 3 1"
       - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" Die Qualle hat dich vergiftet!\",\"color\":\"none\"}]"
@@ -141,7 +154,8 @@ fish-list:
       display-name: "Tintenfisch"
       length-min: 30
       length-max: 50
-      icon: "minecraft:dye"
+      icon:
+        id: "minecraft:dye"
       commands:
       - "minecraft:effect @p minecraft:blindness 5 1"
       - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" Der Tintenfisch hat dich mit Tinte angespritzt!\",\"color\":\"none\"}]"
@@ -149,70 +163,81 @@ fish-list:
       display-name: "Plattfisch"
       length-min: 40
       length-max: 75
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     SeaBream:
       display-name: "Seebrasse"
       length-min: 50
       length-max: 70
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     SeaBass:
       display-name: "Seebarsch"
       length-min: 60
       length-max: 100
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
   epic:
     Clownfish:
       display-name: "Clown Fisch"
       length-min: 10
       length-max: 18
-      icon: "minecraft:fish|2"
+      icon:
+        id: "minecraft:fish|2"
     Pufferfish:
       display-name: "Kugelfisch"
       length-min: 20
       length-max: 30
-      icon: "minecraft:fish|3"
+      icon:
+        id: "minecraft:fish|3"
     SeaTurtle:
       display-name: "Meeresschildkröte"
       length-min: 90
       length-max: 130
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Salmon:
       display-name: "Salmon"
       length-min: 100
       length-max: 130
-      icon: "minecraft:fish|1"
+      icon:
+        id: "minecraft:fish|1"
     BlackDrum:
       display-name: "Schwarzer Trommler"
       length-min: 100
       length-max: 180
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Tuna:
       display-name: "Tuna"
       length-min: 130
       length-max: 180
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
   legendary:
     BlueShark:
       display-name: "Blauer Hai"
-      lore:
-      - "&7&oDer stärkste Hai"
-      - "&7Du bekommst &9Stärke I (2:00)&7"
-      - "&7wenn du ihn isst."
       length-min: 160
       length-max: 240
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7&oDer stärkste Hai"
+        - "&7Du bekommst &9Stärke I (2:00)&7"
+        - "&7wenn du ihn isst."
       food-effects:
         commands:
         - "minecraft:effect @p minecraft:strength 120 1"
     PygmyWhale:
       display-name: "Pygmäenwal"
-      lore:
-      - "&7&oDer größte Fisch"
-      - "&7Du bekommst &9volles Hunger und Leben&7"
-      - "wenn du ihn isst."
       length-min: 600
       length-max: 650
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7&oDer größte Fisch"
+        - "&7Du bekommst &9volles Hunger und Leben&7"
+        - "wenn du ihn isst."
       food-effects:
         points: 20
         saturation: 14.4

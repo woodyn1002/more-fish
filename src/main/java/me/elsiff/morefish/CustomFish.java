@@ -1,27 +1,26 @@
 package me.elsiff.morefish;
 
 import me.elsiff.morefish.condition.Condition;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
 public class CustomFish {
     private final String internalName;
     private final String name;
-    private final List<String> lore;
     private final double lengthMin;
     private final double lengthMax;
-    private final String icon;
+    private final ItemStack icon;
     private final boolean skipItemFormat;
     private final List<String> commands;
     private final FoodEffects foodEffects;
     private final List<Condition> conditions;
     private final Rarity rarity;
 
-    public CustomFish(String internalName, String name, List<String> lore, double lengthMin, double lengthMax, String icon,
+    public CustomFish(String internalName, String name, double lengthMin, double lengthMax, ItemStack icon,
                       boolean skipItemFormat, List<String> commands, FoodEffects foodEffects, List<Condition> conditions, Rarity rarity) {
         this.internalName = internalName;
         this.name = name;
-        this.lore = lore;
         this.lengthMin = lengthMin;
         this.lengthMax = lengthMax;
         this.icon = icon;
@@ -40,10 +39,6 @@ public class CustomFish {
         return name;
     }
 
-    public List<String> getLore() {
-        return lore;
-    }
-
     public double getLengthMin() {
         return lengthMin;
     }
@@ -52,8 +47,8 @@ public class CustomFish {
         return lengthMax;
     }
 
-    public String getIcon() {
-        return icon;
+    public ItemStack getIcon() {
+        return icon.clone();
     }
 
     public boolean hasNoItemFormat() {

@@ -58,82 +58,95 @@ fish-list:
       display-name: "Tôm"
       length-min: 3
       length-max: 8
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Anchovy:
       display-name: "Cá cơm"
       length-min: 7
       length-max: 13
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Croaker:
       display-name: "Cá đù"
       length-min: 12
       length-max: 15
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Crab:
       display-name: "Cua"
       length-min: 10
       length-max: 15
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Mackerel:
       display-name: "Cá thu"
       length-min: 15
       length-max: 30
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Herring:
       display-name: "Cá trích"
       length-min: 20
       length-max: 30
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
   junk:
     Pie:
       display-name: "Bánh"
       length-min: 3.14
       length-max: 3.14
-      icon: "minecraft:pumpkin_pie"
+      icon:
+        id: "minecraft:pumpkin_pie"
       skip-item-format: true
     Magikarp:
       display-name: "Magikarp"
-      lore:
-      - "&7Magikarp sử dụng Splash!"
       length-min: 25
       length-max: 35
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7Magikarp sử dụng Splash!"
       skip-item-format: false
     Breadfish:
       display-name: "Cá bánh mì"
-      lore:
-      - "&7Nói cho tui biết bạn đã nhìn thấy"
-      - "&7Một con cá bánh mì tuyệt vời"
       length-min: 10
       length-max: 30
-      icon: "minecraft:bread"
+      icon:
+        id: "minecraft:bread"
+        lore:
+        - "&7Nói cho tui biết bạn đã nhìn thấy"
+        - "&7Một con cá bánh mì tuyệt vời"
       skip-item-format: false
     WoodenAxe:
       display-name: "Rìu gỗ của Admin"
-      lore:
-      - "&7//cut"
       length-min: 16
       length-max: 16
-      icon: "minecraft:wooden_axe"
+      icon:
+        id: "minecraft:wooden_axe"
+        lore:
+        - "&7//cut"
       skip-item-format: false
     FishingRod:
       display-name: "Cần câu của ai đó bấm nhầm nút Q"
       length-min: 16
       length-max: 16
-      icon: "minecraft:fishing_rod|30"
+      icon:
+        id: "minecraft:fishing_rod|30"
       skip-item-format: true
     SpongeBob:
       display-name: "Món ăn từ Krusty Krab"
       length-min: 16
       length-max: 16
-      icon: "minecraft:sponge"
+      icon:
+        id: "minecraft:sponge"
       skip-item-format: true
   rare:
     Jellyfish:
       display-name: "Sứa"
       length-min: 20
       length-max: 40
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
       commands:
       - "minecraft:effect @p minecraft:poison 3 1"
       - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" Con sứa làm bạn cảm thấy rất tệ!\",\"color\":\"none\"}]"
@@ -141,7 +154,8 @@ fish-list:
       display-name: "Mực"
       length-min: 30
       length-max: 50
-      icon: "minecraft:dye"
+      icon:
+        id: "minecraft:dye"
       commands:
       - "minecraft:effect @p minecraft:blindness 5 1"
       - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" Con mực đã phun vào bạn!\",\"color\":\"none\"}]"
@@ -149,69 +163,80 @@ fish-list:
       display-name: "Cá bẹt"
       length-min: 40
       length-max: 75
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     SeaBream:
       display-name: "Cá tráp"
       length-min: 50
       length-max: 70
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     SeaBass:
       display-name: "Cá vược"
       length-min: 60
       length-max: 100
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
   epic:
     Clownfish:
       display-name: "Cá hề"
       length-min: 10
       length-max: 18
-      icon: "minecraft:fish|2"
+      icon:
+        id: "minecraft:fish|2"
     Pufferfish:
       display-name: "Cá nóc"
       length-min: 20
       length-max: 30
-      icon: "minecraft:fish|3"
+      icon:
+        id: "minecraft:fish|3"
     SeaTurtle:
       display-name: "Rùa biển"
       length-min: 90
       length-max: 130
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Salmon:
       display-name: "Cá hồi"
       length-min: 100
       length-max: 130
-      icon: "minecraft:fish|1"
+      icon:
+        id: "minecraft:fish|1"
     BlackDrum:
       display-name: "Black Drum"
       length-min: 100
       length-max: 180
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Tuna:
       display-name: "Cá ngừ"
       length-min: 130
       length-max: 180
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
   legendary:
     BlueShark:
       display-name: "Cá Mập Xanh"
-      lore:
-      - "&7&oCon cá mạnh nhất"
-      - "&7Cho &9Sức mạnh I (2:00)&7 khi bạn ăn."
       length-min: 160
       length-max: 240
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7&oCon cá mạnh nhất"
+        - "&7Cho &9Sức mạnh I (2:00)&7 khi bạn ăn."
       food-effects:
         commands:
         - "minecraft:effect @p minecraft:strength 120 1"
     PygmyWhale:
       display-name: "Cá voi xanh lùn"
-      lore:
-      - "&7&oCon cá to nhất"
-      - "&7Làm &9đầy máu và thức ăn&7"
-      - "khi bạn ăn."
       length-min: 600
       length-max: 650
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7&oCon cá to nhất"
+        - "&7Làm &9đầy máu và thức ăn&7"
+        - "khi bạn ăn."
       food-effects:
         points: 20
         saturation: 14.4

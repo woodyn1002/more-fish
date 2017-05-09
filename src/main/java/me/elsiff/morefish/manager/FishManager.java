@@ -6,6 +6,7 @@ import me.elsiff.morefish.MoreFish;
 import me.elsiff.morefish.Rarity;
 import me.elsiff.morefish.condition.*;
 import me.elsiff.morefish.util.IdentityUtils;
+import me.elsiff.morefish.util.SkullUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -16,6 +17,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -39,6 +41,24 @@ public class FishManager {
         rarityMap.clear();
 
         FileConfiguration config = plugin.getLocale().getFishConfig();
+
+        loadRarities(config);
+
+        for (Rarity rarity : rarityList) {
+            ConfigurationSection section = config.getConfigurationSection("fish-list." + rarity.getName().toLowerCase());
+
+            for (String path : section.getKeys(false)) {
+                CustomFish fish = createCustomFish(section, path, rarity);
+
+                this.fishMap.put(path, fish);
+                this.rarityMap.get(rarity).add(fish);
+            }
+        }
+
+        plugin.getLogger().info("Loaded " + fishMap.size() + " fish successfully.");
+    }
+
+    private void loadRarities(FileConfiguration config) {
         ConfigurationSection rarities = config.getConfigurationSection("rarity-list");
         double totalChance = 0.0D;
 
@@ -70,89 +90,139 @@ public class FishManager {
 
             rarityMap.put(rarity, new ArrayList<CustomFish>());
         }
+    }
 
-        for (Rarity rarity : rarityList) {
-            ConfigurationSection section = config.getConfigurationSection("fish-list." + rarity.getName().toLowerCase());
+    private CustomFish createCustomFish(ConfigurationSection section, String path, Rarity rarity) {
+        String displayName = section.getString(path + ".display-name");
+        double lengthMin = section.getDouble(path + ".length-min");
+        double lengthMax = section.getDouble(path + ".length-max");
+        ItemStack icon = getIcon(section, path);
+        boolean skipItemFormat = (section.contains(path + ".skip-item-format") &&
+                section.getBoolean(path + ".skip-item-format"));
+        List<String> commands = new ArrayList<>();
+        CustomFish.FoodEffects foodEffects = new CustomFish.FoodEffects();
+        List<Condition> conditions = new ArrayList<>();
 
-            for (String path : section.getKeys(false)) {
-                String displayName = section.getString(path + ".display-name");
-                List<String> lore = new ArrayList<>();
-                double lengthMin = section.getDouble(path + ".length-min");
-                double lengthMax = section.getDouble(path + ".length-max");
-                String icon = section.getString(path + ".icon");
-                boolean skipItemFormat = (section.contains(path + ".skip-item-format") && section.getBoolean(path + ".skip-item-format"));
-                List<String> commands = new ArrayList<>();
-                CustomFish.FoodEffects foodEffects = new CustomFish.FoodEffects();
-                List<Condition> conditions = new ArrayList<>();
+        if (section.contains(path + ".command")) {
+            commands = section.getStringList(path + ".command");
+        }
 
-                if (section.contains(path + ".lore")) {
-                    lore = section.getStringList(path + ".lore");
-                }
+        if (section.contains(path + ".food-effects")) {
+            if (section.contains(path + ".food-effects.points")) {
+                foodEffects.setPoints(section.getInt(path + ".food-effects.points"));
+            }
 
-                if (section.contains(path + ".command")) {
-                    commands = section.getStringList(path + ".command");
-                }
+            if (section.contains(path + ".food-effects.saturation")) {
+                foodEffects.setSaturation((float) section.getDouble(path + ".food-effects.saturation"));
+            }
 
-                if (section.contains(path + ".food-effects")) {
-                    if (section.contains(path + ".food-effects.points")) {
-                        foodEffects.setPoints(section.getInt(path + ".food-effects.points"));
-                    }
-
-                    if (section.contains(path + ".food-effects.saturation")) {
-                        foodEffects.setSaturation((float) section.getDouble(path + ".food-effects.saturation"));
-                    }
-
-                    if (section.contains(path + ".food-effects.command")) {
-                        foodEffects.setCommands(section.getStringList(path + ".food-effects.command"));
-                    }
-                }
-
-                if (section.contains(path + ".conditions")) {
-                    List<String> list = section.getStringList("conditions");
-
-                    for (String string : list) {
-                        String[] values = string.split("\\|");
-                        String conId = values[0];
-
-                        switch (conId) {
-                            case "raining":
-                                boolean raining = Boolean.parseBoolean(values[1]);
-                                conditions.add(new RainingCondition(raining));
-                                break;
-                            case "thundering":
-                                boolean thundering = Boolean.parseBoolean(values[1]);
-                                conditions.add(new ThunderingCondition(thundering));
-                                break;
-                            case "time":
-                                String time = values[1].toLowerCase();
-                                conditions.add(new TimeCondition(time));
-                                break;
-                            case "biome":
-                                Biome biome = Biome.valueOf(values[1].toUpperCase());
-                                conditions.add(new BiomeCondition(biome));
-                                break;
-                            case "enchantment":
-                                Enchantment ench = IdentityUtils.getEnchantment(values[1].toLowerCase());
-                                int lv = Integer.parseInt(values[2]);
-                                conditions.add(new EnchantmentCondition(ench, lv));
-                                break;
-                            case "level":
-                                int level = Integer.parseInt(values[1]);
-                                conditions.add(new LevelCondition(level));
-                                break;
-                        }
-                    }
-                }
-
-                CustomFish fish = new CustomFish(path, displayName, lore, lengthMin, lengthMax, icon, skipItemFormat,
-                        commands, foodEffects, conditions, rarity);
-
-                this.fishMap.put(path, fish);
-                this.rarityMap.get(rarity).add(fish);
+            if (section.contains(path + ".food-effects.command")) {
+                foodEffects.setCommands(section.getStringList(path + ".food-effects.command"));
             }
         }
 
-        plugin.getLogger().info("Loaded " + fishMap.size() + " fish successfully.");
+        if (section.contains(path + ".conditions")) {
+            List<String> list = section.getStringList("conditions");
+
+            for (String content : list) {
+                Condition condition = getCondition(content);
+                conditions.add(condition);
+            }
+        }
+
+        return new CustomFish(path, displayName, lengthMin, lengthMax, icon, skipItemFormat,
+                commands, foodEffects, conditions, rarity);
+    }
+
+    private ItemStack getIcon(ConfigurationSection section, String path) {
+        ItemStack itemStack;
+
+        String id = section.getString(path + ".icon.id");
+        Material material = IdentityUtils.getMaterial(id);
+        if (material == null) {
+            plugin.getLogger().warning("'" + id + "' is invalid item id!");
+            return null;
+        }
+
+        int amount = 1;
+        if (section.contains(path + ".icon.amount")) {
+            amount = section.getInt(path + ".icon.amount");
+        }
+
+        short durability = 0;
+        if (section.contains(path + ".icon.durability")) {
+            durability = (short) section.getInt(path + ".icon.durability");
+        }
+
+        itemStack = new ItemStack(material, amount, durability);
+        ItemMeta meta = itemStack.getItemMeta();
+
+        if (section.contains(path + ".icon.lore")) {
+            meta.setLore(section.getStringList(path + ".icon.lore"));
+        }
+
+        if (section.contains(path + ".icon.enchantments")) {
+            for (String content : section.getStringList(path + ".icon.enchantments")) {
+                String[] values = content.split("\\|");
+                Enchantment ench = IdentityUtils.getEnchantment(values[0].toLowerCase());
+                int lv = Integer.parseInt(values[1]);
+                meta.addEnchant(ench, lv, true);
+            }
+        }
+
+        if (section.contains(path + ".icon.unbreakable")) {
+            boolean value = section.getBoolean(path + ".icon.unbreakable");
+            meta.setUnbreakable(value);
+        }
+
+        if (section.contains(path + ".icon.skull-name")) {
+            SkullMeta skullMeta = (SkullMeta) meta;
+            skullMeta.setOwner(section.getString(path + ".icon-skull-name"));
+        }
+
+        if (section.contains(path + ".icon.skull-texture")) {
+            String url = section.getString(path + ".icon-skull-texture");
+            SkullUtils.setSkullTexture(itemStack, url);
+        }
+
+        return itemStack;
+    }
+
+    private Condition getCondition(String content) {
+        Condition condition;
+        String[] values = content.split("\\|");
+        String conId = values[0];
+
+        switch (conId) {
+            case "raining":
+                boolean raining = Boolean.parseBoolean(values[1]);
+                condition = new RainingCondition(raining);
+                break;
+            case "thundering":
+                boolean thundering = Boolean.parseBoolean(values[1]);
+                condition = new ThunderingCondition(thundering);
+                break;
+            case "time":
+                String time = values[1].toLowerCase();
+                condition = new TimeCondition(time);
+                break;
+            case "biome":
+                Biome biome = Biome.valueOf(values[1].toUpperCase());
+                condition = new BiomeCondition(biome);
+                break;
+            case "enchantment":
+                Enchantment ench = IdentityUtils.getEnchantment(values[1].toLowerCase());
+                int lv = Integer.parseInt(values[2]);
+                condition = new EnchantmentCondition(ench, lv);
+                break;
+            case "level":
+                int level = Integer.parseInt(values[1]);
+                condition = new LevelCondition(level);
+                break;
+            default:
+                return null;
+        }
+        return condition;
     }
 
     public CaughtFish generateRandomFish(Player catcher) {
@@ -167,19 +237,8 @@ public class FishManager {
     }
 
     public ItemStack getItemStack(CaughtFish fish, String fisher) {
-        String[] split = fish.getIcon().split("\\|");
-        Material material = IdentityUtils.getMaterial(split[0]);
-        short durability = ((split.length > 1) ? Short.parseShort(split[1]) : 0);
-
-        if (material == null) {
-            plugin.getLogger().warning("'" + split[0] + "' is invalid item id!");
-            return null;
-        }
-
-        ItemStack itemStack = new ItemStack(material, 1, durability);
+        ItemStack itemStack = fish.getIcon();
         ItemMeta meta = itemStack.getItemMeta();
-
-        List<String> lore = new ArrayList<>();
 
         if (!fish.hasNoItemFormat()) {
             FileConfiguration config = plugin.getLocale().getFishConfig();
@@ -192,6 +251,7 @@ public class FishManager {
             displayName = ChatColor.translateAlternateColorCodes('&', displayName);
             meta.setDisplayName(displayName + encodeFishData(fish));
 
+            List<String> lore = new ArrayList<>();
             for (String str : config.getStringList("item-format.lore")) {
                 String line = str
                         .replaceAll("%player%", fisher)
@@ -204,14 +264,11 @@ public class FishManager {
                 line = ChatColor.translateAlternateColorCodes('&', line);
                 lore.add(line);
             }
-        }
-
-        if (!fish.getLore().isEmpty()) {
-            for (String line : fish.getLore()) {
-                lore.add(ChatColor.translateAlternateColorCodes('&', line));
+            if (meta.hasLore()) {
+                lore.addAll(meta.getLore());
             }
+            meta.setLore(lore);
         }
-        meta.setLore(lore);
 
         itemStack.setItemMeta(meta);
         return itemStack;

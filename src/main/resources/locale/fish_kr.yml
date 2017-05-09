@@ -58,76 +58,89 @@ fish-list:
       display-name: "새우"
       length-min: 3
       length-max: 8
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Anchovy:
       display-name: "멸치"
       length-min: 7
       length-max: 13
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Croaker:
       display-name: "조기"
       length-min: 12
       length-max: 15
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Crab:
       display-name: "게"
       length-min: 10
       length-max: 15
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Mackerel:
       display-name: "고등어"
       length-min: 15
       length-max: 30
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     Herring:
       display-name: "청어"
       length-min: 20
       length-max: 30
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
   junk:
     Pie:
       display-name: "파이"
       length-min: 3.14
       length-max: 3.14
-      icon: "minecraft:pumpkin_pie"
+      icon:
+        id: "minecraft:pumpkin_pie"
     Magikarp:
       display-name: "잉어킹"
-      lore:
-      - "&7잉어킹의 튀어오르기!"
       length-min: 25
       length-max: 35
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7잉어킹의 튀어오르기!"
     Breadfish:
       display-name: "빵물고기"
-      lore:
-      - "&7Tell me have you seen"
-      - "&7the marvellous breadfish"
       length-min: 10
       length-max: 30
-      icon: "minecraft:bread"
+      icon:
+        id: "minecraft:bread"
+        lore:
+        - "&7Tell me have you seen"
+        - "&7the marvellous breadfish"
     WoodenAxe:
       display-name: "관리자의 나무 도끼"
-      lore:
-      - "&7//cut"
       length-min: 16
       length-max: 16
-      icon: "minecraft:wooden_axe"
+      icon:
+        id: "minecraft:wooden_axe"
+        lore:
+        - "&7//cut"
     FishingRod:
       display-name: "누군가 실수로 Q 눌러 잃어버린 낚싯대"
       length-min: 16
       length-max: 16
-      icon: "minecraft:fishing_rod|30"
+      icon:
+        id: "minecraft:fishing_rod|30"
     SpongeBob:
       display-name: "집게리아의 성실한 요리사"
       length-min: 16
       length-max: 16
-      icon: "minecraft:sponge"
+      icon:
+        id: "minecraft:sponge"
   rare:
     Jellyfish:
       display-name: "해파리"
       length-min: 20
       length-max: 40
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
       commands:
       - "minecraft:effect @p minecraft:poison 3 1"
       - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" 해파리가 당신에게 헤롱헤롱한 기분을 선물했습니다!\",\"color\":\"none\"}]"
@@ -135,7 +148,8 @@ fish-list:
       display-name: "오징어"
       length-min: 30
       length-max: 50
-      icon: "minecraft:dye"
+      icon:
+        id: "minecraft:dye"
       commands:
       - "minecraft:effect @p minecraft:blindness 5 1"
       - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" 오징어가 발악하며 당신의 얼굴에 먹물을 쏘았습니다!\",\"color\":\"none\"}]"
@@ -143,58 +157,67 @@ fish-list:
       display-name: "가자미"
       length-min: 40
       length-max: 75
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     SeaBream:
       display-name: "도미"
       length-min: 50
       length-max: 70
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
     SeaBass:
       display-name: "농어"
       length-min: 60
       length-max: 100
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
   epic:
     Clownfish:
       display-name: "흰동가리"
       length-min: 10
       length-max: 18
-      icon: "minecraft:fish|2"
+      icon:
+        id: "minecraft:fish|2"
     Pufferfish:
       display-name: "복어"
       length-min: 20
       length-max: 30
-      icon: "minecraft:fish|3"
+      icon:
+        id: "minecraft:fish|3"
     Salmon:
       display-name: "연어"
       length-min: 100
       length-max: 130
-      icon: "minecraft:fish|1"
+      icon:
+        id: "minecraft:fish|1"
     Tuna:
       display-name: "다랑어"
       length-min: 130
       length-max: 180
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
   legendary:
     BlueShark:
       display-name: "청새리상어"
-      lore:
-      - "&7&o가장 위협적인 물고기"
-      - "&7섭취시 &9힘 I (2:00)&7을 부여합니다."
       length-min: 180
       length-max: 260
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7&o가장 위협적인 물고기"
+        - "&7섭취시 &9힘 I (2:00)&7을 부여합니다."
       food-effects:
         commands:
         - "minecraft:effect @p minecraft:strength 120 1"
     PygmyWhale:
       display-name: "꼬마향고래"
-      lore:
-      - "&7&o가장 거대한 물고기"
-      - "&7섭취시 &9체력과 허기를 모두 회복&7합니다."
       length-min: 600
       length-max: 650
-      icon: "minecraft:fish"
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7&o가장 거대한 물고기"
+        - "&7섭취시 &9체력과 허기를 모두 회복&7합니다."
       food-effects:
         points: 20
         saturation: 14.4
