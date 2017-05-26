@@ -7,8 +7,8 @@ public class CaughtFish extends CustomFish {
     private final OfflinePlayer catcher;
 
     public CaughtFish(CustomFish fish, double length, OfflinePlayer catcher) {
-        super(fish.getInternalName(), fish.getName(), fish.getLore(), fish.getLengthMin(), fish.getLengthMax(),
-                fish.getIcon(), fish.hasNoItemFormat(), fish.getCommands(), fish.getFoodEffects(), fish.getConditions(), fish.getRarity());
+        super(fish.getInternalName(), fish.getName(), fish.getLengthMin(), fish.getLengthMax(), fish.getIcon(),
+                fish.hasNoItemFormat(), fish.getCommands(), fish.getFoodEffects(), fish.getConditions(), fish.getRarity());
 
         this.length = length;
         this.catcher = catcher;

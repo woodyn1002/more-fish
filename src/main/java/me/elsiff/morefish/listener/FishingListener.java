@@ -35,7 +35,7 @@ public class FishingListener implements Listener {
                 return;
             }
 
-            if (hasEnabled(event)) {
+            if (!hasEnabled(event)) {
                 return;
             }
 

@@ -122,7 +122,7 @@ public class FishManager {
         }
 
         if (section.contains(path + ".conditions")) {
-            List<String> list = section.getStringList("conditions");
+            List<String> list = section.getStringList(path + ".conditions");
 
             for (String content : list) {
                 Condition condition = getCondition(content);
@@ -158,7 +158,11 @@ public class FishManager {
         ItemMeta meta = itemStack.getItemMeta();
 
         if (section.contains(path + ".icon.lore")) {
-            meta.setLore(section.getStringList(path + ".icon.lore"));
+            List<String> lore = new ArrayList<>();
+            for (String line : section.getStringList(path + ".icon.lore")) {
+                lore.add(ChatColor.translateAlternateColorCodes('&', line));
+            }
+            meta.setLore(lore);
         }
 
         if (section.contains(path + ".icon.enchantments")) {
@@ -177,12 +181,14 @@ public class FishManager {
 
         if (section.contains(path + ".icon.skull-name")) {
             SkullMeta skullMeta = (SkullMeta) meta;
-            skullMeta.setOwner(section.getString(path + ".icon-skull-name"));
+            skullMeta.setOwner(section.getString(path + ".icon.skull-name"));
         }
 
+        itemStack.setItemMeta(meta);
+
         if (section.contains(path + ".icon.skull-texture")) {
-            String url = section.getString(path + ".icon-skull-texture");
-            SkullUtils.setSkullTexture(itemStack, url);
+            String value = section.getString(path + ".icon.skull-texture");
+            itemStack = SkullUtils.setSkullTexture(itemStack, value);
         }
 
         return itemStack;
@@ -319,16 +325,21 @@ public class FishManager {
     }
 
     private CustomFish getRandomFish(Rarity rarity, Player player) {
-        List<CustomFish> list = rarityMap.get(rarity);
+        List<CustomFish> list = new ArrayList<>(rarityMap.get(rarity));
 
-        ListIterator<CustomFish> it = list.listIterator();
+        Iterator<CustomFish> it = list.iterator();
         while (it.hasNext()) {
             CustomFish fish = it.next();
 
+            boolean remove = false;
             for (Condition condition : fish.getConditions()) {
                 if (!condition.isSatisfying(player)) {
-                    it.remove();
+                    remove = true;
                 }
+            }
+
+            if (remove) {
+                it.remove();
             }
         }
 

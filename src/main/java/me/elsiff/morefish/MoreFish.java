@@ -103,7 +103,7 @@ public class MoreFish extends JavaPlugin {
     private void updateConfigFiles() {
         final int verConfig = 210;
         final int verLang = 211;
-        final int verFish = 200;
+        final int verFish = 212;
         String msg = locale.getString("old-file");
         ConsoleCommandSender console = getServer().getConsoleSender();
 

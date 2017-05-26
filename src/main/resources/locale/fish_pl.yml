@@ -7,7 +7,7 @@
 # - https://github.com/elsiff/MoreFish/wiki/Custom-Rarity-Tutorial
 #
 
-version: 200
+version: 212
 
 # %player% - Numer porządkowy pozycji gracza (angielski, np. 1st, 2nd, 3rd, 4th)
 # %rarity% - Klasa rzadkości ryby (wielkie litery)

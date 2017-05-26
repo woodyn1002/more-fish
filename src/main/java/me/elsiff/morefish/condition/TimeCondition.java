@@ -11,12 +11,12 @@ public class TimeCondition implements Condition {
 
     @Override
     public boolean isSatisfying(Player player) {
-        long tick = player.getWorld().getTime() % 24000;
+        long tick = player.getWorld().getTime();
         switch (time) {
             case "day":
                 return (1000 <= tick && tick < 13000);
             case "night":
-                return (13000 <= tick && tick < 1000);
+                return (13000 <= tick || tick < 1000);
             default:
                 return false;
         }

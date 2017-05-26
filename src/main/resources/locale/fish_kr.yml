@@ -7,7 +7,7 @@
 # - https://github.com/elsiff/MoreFish/wiki/Custom-Rarity-Tutorial
 #
 
-version: 200
+version: 212
 
 # %player% - 플레이어의 순위 기수 (예: 1st, 2nd, 3rd)
 # %rarity% - 물고기의 희귀 등급
