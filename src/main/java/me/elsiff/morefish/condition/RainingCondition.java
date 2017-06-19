@@ -3,7 +3,7 @@ package me.elsiff.morefish.condition;
 import org.bukkit.entity.Player;
 
 public class RainingCondition implements Condition {
-    public boolean raining;
+    private boolean raining;
 
     public RainingCondition(boolean raining) {
         this.raining = raining;

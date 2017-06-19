@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionEffectType;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -224,6 +225,20 @@ public class FishManager {
             case "level":
                 int level = Integer.parseInt(values[1]);
                 condition = new LevelCondition(level);
+                break;
+            case "contest":
+                boolean ongoing = Boolean.parseBoolean(values[1]);
+                condition = new ContestCondition(ongoing);
+                break;
+            case "potioneffect":
+                PotionEffectType effectType = IdentityUtils.getPotionEffectType(values[1]);
+                int amplfier = Integer.parseInt(values[2]) - 1; // amplifier starts with 0
+                condition = new PotionEffectCondition(effectType, amplfier);
+                break;
+            case "height":
+                int minHeight = Integer.parseInt(values[1]);
+                int maxHeight = Integer.parseInt(values[2]);
+                condition = new HeightCondition(minHeight, maxHeight);
                 break;
             default:
                 return null;
