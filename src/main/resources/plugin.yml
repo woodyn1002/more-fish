@@ -3,7 +3,7 @@ author: elsiff
 website: http://elsiff.me
 version: ${project.version}
 main: me.elsiff.morefish.MoreFish
-softdepend: [Vault, Citizens, PlaceholderAPI, ProtocolLib, mcMMO]
+softdepend: [Vault, Citizens, PlaceholderAPI, ProtocolLib, mcMMO, WorldGuard]
 commands:
   morefish:
     description: Main command for MoreFish.

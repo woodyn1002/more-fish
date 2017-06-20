@@ -245,6 +245,10 @@ public class FishManager {
                 level = Integer.parseInt(values[2]);
                 condition = new MCMMOSkillCondition(skillType, level);
                 break;
+            case "worldguard_region":
+                String regionId = values[1];
+                condition = new WGRegionCondtion(regionId);
+                break;
             default:
                 return null;
         }

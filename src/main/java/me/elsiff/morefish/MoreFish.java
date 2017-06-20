@@ -1,10 +1,7 @@
 package me.elsiff.morefish;
 
 import me.elsiff.morefish.command.GeneralCommands;
-import me.elsiff.morefish.hooker.CitizensHooker;
-import me.elsiff.morefish.hooker.MCMMOHooker;
-import me.elsiff.morefish.hooker.PlaceholderAPIHooker;
-import me.elsiff.morefish.hooker.VaultHooker;
+import me.elsiff.morefish.hooker.*;
 import me.elsiff.morefish.listener.*;
 import me.elsiff.morefish.manager.BossBarManager;
 import me.elsiff.morefish.manager.ContestManager;
@@ -36,6 +33,7 @@ public class MoreFish extends JavaPlugin {
     private CitizensHooker citizensHooker;
     private PlaceholderAPIHooker placeholderAPIHooker;
     private MCMMOHooker mcmmoHooker;
+    private WorldGuardHooker worldGuardHooker;
 
     public static MoreFish getInstance() {
         return instance;
@@ -91,6 +89,11 @@ public class MoreFish extends JavaPlugin {
         if (manager.getPlugin("mcMMO") != null && manager.getPlugin("mcMMO").isEnabled()) {
             mcmmoHooker = new MCMMOHooker();
             getLogger().info("Found mcMMO for MCMMO support.");
+        }
+
+        if (manager.getPlugin("WorldGuard") != null && manager.getPlugin("WorldGuard").isEnabled()) {
+            worldGuardHooker = new WorldGuardHooker();
+            getLogger().info("Found WorldGuard for regions support.");
         }
 
         loadFishShop();
@@ -253,5 +256,9 @@ public class MoreFish extends JavaPlugin {
 
     public MCMMOHooker getMCMMOHooker() {
         return mcmmoHooker;
+    }
+
+    public WorldGuardHooker getWorldGuardHooker() {
+        return worldGuardHooker;
     }
 }
