@@ -117,8 +117,8 @@ public class FishManager {
                 foodEffects.setSaturation((float) section.getDouble(path + ".food-effects.saturation"));
             }
 
-            if (section.contains(path + ".food-effects.command")) {
-                foodEffects.setCommands(section.getStringList(path + ".food-effects.command"));
+            if (section.contains(path + ".food-effects.commands")) {
+                foodEffects.setCommands(section.getStringList(path + ".food-effects.commands"));
             }
         }
 
