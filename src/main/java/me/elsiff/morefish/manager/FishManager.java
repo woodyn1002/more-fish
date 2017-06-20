@@ -232,7 +232,7 @@ public class FishManager {
                 break;
             case "potioneffect":
                 PotionEffectType effectType = IdentityUtils.getPotionEffectType(values[1]);
-                int amplfier = Integer.parseInt(values[2]) - 1; // amplifier starts with 0
+                int amplfier = Integer.parseInt(values[2]);
                 condition = new PotionEffectCondition(effectType, amplfier);
                 break;
             case "height":

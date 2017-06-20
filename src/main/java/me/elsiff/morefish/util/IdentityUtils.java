@@ -84,13 +84,16 @@ public class IdentityUtils {
             Object registry = field.get(null);
 
             Method get = registryMaterials.getMethod("get", Object.class);
-            Object type = get.invoke(registry, mk);
+            Object effect = get.invoke(registry, mk);
 
             for (PotionEffectType effectType : PotionEffectType.values()) {
+                if (effectType == null)
+                    continue;
+
                 Method getHandle = craftPotionEffectType.getMethod("getHandle");
                 Object handle = getHandle.invoke(effectType);
 
-                if (type.equals(handle)) {
+                if (effect.equals(handle)) {
                     return effectType;
                 }
             }
