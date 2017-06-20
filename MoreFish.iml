@@ -27,5 +27,6 @@
     <orderEntry type="library" name="Maven: com.comphenix.protocol:ProtocolLib-API:4.2.1" level="project" />
     <orderEntry type="library" name="Maven: cglib:cglib-nodep:2.2.2" level="project" />
     <orderEntry type="library" name="Maven: com.comphenix.executors:BukkitExecutors:1.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="mcMMO" level="project" />
   </component>
 </module>

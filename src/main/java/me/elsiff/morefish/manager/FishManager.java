@@ -240,6 +240,11 @@ public class FishManager {
                 int maxHeight = Integer.parseInt(values[2]);
                 condition = new HeightCondition(minHeight, maxHeight);
                 break;
+            case "mcmmo_skill":
+                String skillType = values[1];
+                level = Integer.parseInt(values[2]);
+                condition = new MCMMOSkillCondition(skillType, level);
+                break;
             default:
                 return null;
         }

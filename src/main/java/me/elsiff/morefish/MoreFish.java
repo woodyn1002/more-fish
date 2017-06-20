@@ -2,6 +2,7 @@ package me.elsiff.morefish;
 
 import me.elsiff.morefish.command.GeneralCommands;
 import me.elsiff.morefish.hooker.CitizensHooker;
+import me.elsiff.morefish.hooker.MCMMOHooker;
 import me.elsiff.morefish.hooker.PlaceholderAPIHooker;
 import me.elsiff.morefish.hooker.VaultHooker;
 import me.elsiff.morefish.listener.*;
@@ -34,6 +35,7 @@ public class MoreFish extends JavaPlugin {
     private VaultHooker vaultHooker;
     private CitizensHooker citizensHooker;
     private PlaceholderAPIHooker placeholderAPIHooker;
+    private MCMMOHooker mcmmoHooker;
 
     public static MoreFish getInstance() {
         return instance;
@@ -65,7 +67,7 @@ public class MoreFish extends JavaPlugin {
         manager.registerEvents(new PlayerListener(this), this);
         manager.registerEvents(rewardsGUI, this);
 
-        if (manager.getPlugin("Vault") != null) {
+        if (manager.getPlugin("Vault") != null && manager.getPlugin("Vault").isEnabled()) {
             vaultHooker = new VaultHooker(this);
 
             if (vaultHooker.setupEconomy()) {
@@ -81,9 +83,14 @@ public class MoreFish extends JavaPlugin {
             getLogger().info("Found Citizens for Fish Shop Trait.");
         }
 
-        if (manager.getPlugin("PlaceholderAPI") != null) {
+        if (manager.getPlugin("PlaceholderAPI") != null && manager.getPlugin("PlaceholderAPI").isEnabled()) {
             placeholderAPIHooker = new PlaceholderAPIHooker(this);
             getLogger().info("Found PlaceholderAPI for placeholders support.");
+        }
+
+        if (manager.getPlugin("mcMMO") != null && manager.getPlugin("mcMMO").isEnabled()) {
+            mcmmoHooker = new MCMMOHooker();
+            getLogger().info("Found mcMMO for MCMMO support.");
         }
 
         loadFishShop();
@@ -242,5 +249,9 @@ public class MoreFish extends JavaPlugin {
 
     public PlaceholderAPIHooker getPlaceholderAPIHooker() {
         return placeholderAPIHooker;
+    }
+
+    public MCMMOHooker getMCMMOHooker() {
+        return mcmmoHooker;
     }
 }
