@@ -8,8 +8,8 @@ import org.bukkit.entity.Player;
  * Created by elsiff on 2017-06-20.
  */
 public class MCMMOSkillCondition implements Condition {
-    private String skillType;
-    private int level;
+    private final String skillType;
+    private final int level;
 
     public MCMMOSkillCondition(String skillType, int level) {
         this.skillType = skillType;

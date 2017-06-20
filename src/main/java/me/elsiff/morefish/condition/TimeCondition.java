@@ -3,7 +3,7 @@ package me.elsiff.morefish.condition;
 import org.bukkit.entity.Player;
 
 public class TimeCondition implements Condition {
-    private String time;
+    private final String time;
 
     public TimeCondition(String time) {
         this.time = time;

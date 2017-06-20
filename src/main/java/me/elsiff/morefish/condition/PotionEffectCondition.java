@@ -4,8 +4,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
 public class PotionEffectCondition implements Condition {
-    private PotionEffectType effectType;
-    private int amplifier;
+    private final PotionEffectType effectType;
+    private final int amplifier;
 
     public PotionEffectCondition(PotionEffectType effectType, int amplifier) {
         this.effectType = effectType;

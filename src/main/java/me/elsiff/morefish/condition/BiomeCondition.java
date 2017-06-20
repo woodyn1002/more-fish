@@ -5,7 +5,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 
 public class BiomeCondition implements Condition {
-    private Biome biome;
+    private final Biome biome;
 
     public BiomeCondition(Biome biome) {
         this.biome = biome;

@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class EnchantmentCondition implements Condition {
-    private Enchantment enchantment;
-    private int level;
+    private final Enchantment enchantment;
+    private final int level;
 
     public EnchantmentCondition(Enchantment enchantment, int level) {
         this.enchantment = enchantment;
