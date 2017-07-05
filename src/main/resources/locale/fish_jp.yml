@@ -155,7 +155,8 @@ fish-list:
       length-min: 16
       length-max: 16
       icon:
-        id: "minecraft:fishing_rod|30"
+        id: "minecraft:fishing_rod"
+        durability: 30
       skip-item-format: true
     SpongeBob:
       display-name: "カニカーニバーガーの料理人"
@@ -230,19 +231,22 @@ fish-list:
       length-min: 10
       length-max: 18
       icon:
-        id: "minecraft:fish|2"
+        id: "minecraft:fish"
+        durability: 2
     Pufferfish:
       display-name: "ハリセンボン"
       length-min: 20
       length-max: 30
       icon:
-        id: "minecraft:fish|3"
+        id: "minecraft:fish"
+        durability: 3
     Salmon:
       display-name: "サケ"
       length-min: 100
       length-max: 130
       icon:
-        id: "minecraft:fish|1"
+        id: "minecraft:fish"
+        durability: 1
   legendary:
     Kuromaguro:
       display-name: "クロマグロ"

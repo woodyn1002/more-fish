@@ -127,7 +127,8 @@ fish-list:
       length-min: 16
       length-max: 16
       icon:
-        id: "minecraft:fishing_rod|30"
+        id: "minecraft:fishing_rod"
+        durability: 30
     SpongeBob:
       display-name: "집게리아의 성실한 요리사"
       length-min: 16
@@ -177,19 +178,22 @@ fish-list:
       length-min: 10
       length-max: 18
       icon:
-        id: "minecraft:fish|2"
+        id: "minecraft:fish"
+        durability: 2
     Pufferfish:
       display-name: "복어"
       length-min: 20
       length-max: 30
       icon:
-        id: "minecraft:fish|3"
+        id: "minecraft:fish"
+        durability: 3
     Salmon:
       display-name: "연어"
       length-min: 100
       length-max: 130
       icon:
-        id: "minecraft:fish|1"
+        id: "minecraft:fish"
+        durability: 1
     Tuna:
       display-name: "다랑어"
       length-min: 130
