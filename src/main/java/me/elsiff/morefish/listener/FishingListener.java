@@ -15,6 +15,9 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class FishingListener implements Listener {
     private final MoreFish plugin;
     private final ContestManager contest;
@@ -34,79 +37,75 @@ public class FishingListener implements Listener {
                 event.getPlayer().sendMessage(msg);
                 return;
             }
-
-            if (!hasEnabled(event)) {
+            if (!isFishingEnabled(event)) {
                 return;
             }
 
-            CaughtFish fish = plugin.getFishManager().generateRandomFish(event.getPlayer());
-
-
-            PlayerCatchCustomFishEvent customEvent = new PlayerCatchCustomFishEvent(event.getPlayer(), fish, event);
-            plugin.getServer().getPluginManager().callEvent(customEvent);
-
-            if (customEvent.isCancelled()) {
-                return;
-            }
-
-
-            String msgFish = getMessage("catch-fish", event.getPlayer(), fish);
-            int ancFish = plugin.getConfig().getInt("messages.announce-catch");
-
-            if (fish.getRarity().isNoBroadcast()) {
-                ancFish = 0;
-            }
-
-            announceMessage(event.getPlayer(), msgFish, ancFish);
-
-
-            if (fish.getRarity().hasFirework()) {
-                launchFirework(event.getPlayer().getLocation().add(0, 1, 0));
-            }
-
-
-            if (!fish.getCommands().isEmpty()) {
-                executeCommands(event.getPlayer(), fish);
-            }
-
-
-            if (contest.hasStarted()) {
-                if (contest.isNew1st(fish)) {
-                    String msgContest = getMessage("get-1st", event.getPlayer(), fish);
-                    int ancContest = plugin.getConfig().getInt("messages.announce-new-1st");
-
-                    announceMessage(event.getPlayer(), msgContest, ancContest);
-                }
-
-                contest.addRecord(event.getPlayer(), fish);
-            }
-
-
-            ItemStack itemStack = plugin.getFishManager().getItemStack(fish, event.getPlayer().getName());
-            Item caught = (Item) event.getCaught();
-            caught.setItemStack(itemStack);
+            executeFishingActions(event.getPlayer(), event);
         }
     }
 
-    private boolean hasEnabled(PlayerFishEvent event) {
-        boolean enabled = true;
-
+    private boolean isFishingEnabled(PlayerFishEvent event) {
         // Check if the world hasn't disabled
         if (plugin.getConfig().getStringList("general.contest-disabled-worlds")
                 .contains(event.getPlayer().getWorld().getName()))
-            enabled = false;
+            return false;
 
         // Check if the contest is ongoing
         if (plugin.getConfig().getBoolean("general.only-for-contest") &&
                 !contest.hasStarted())
-            enabled = false;
+            return false;
 
         // Check if the caught is fish
-        if (plugin.getConfig().getBoolean("general.replace-only-fish") &&
-                ((Item) event.getCaught()).getItemStack().getType() != Material.RAW_FISH)
-            enabled = false;
+        return (!plugin.getConfig().getBoolean("general.replace-only-fish") ||
+                ((Item) event.getCaught()).getItemStack().getType() == Material.RAW_FISH);
+    }
 
-        return enabled;
+    private void executeFishingActions(Player catcher, PlayerFishEvent event) {
+        CaughtFish fish = plugin.getFishManager().generateRandomFish(catcher);
+
+        PlayerCatchCustomFishEvent customEvent = new PlayerCatchCustomFishEvent(catcher, fish, event);
+        plugin.getServer().getPluginManager().callEvent(customEvent);
+
+        if (customEvent.isCancelled()) {
+            return;
+        }
+
+        boolean new1st = contest.hasStarted() && contest.isNew1st(fish);
+        announceMessages(catcher, fish, new1st);
+
+        if (fish.getRarity().hasFirework())
+            launchFirework(catcher.getLocation().add(0, 1, 0));
+        if (!fish.getCommands().isEmpty())
+            executeCommands(catcher, fish);
+
+        if (new1st) {
+            contest.addRecord(catcher, fish);
+        }
+
+        ItemStack itemStack = plugin.getFishManager().getItemStack(fish, event.getPlayer().getName());
+        Item caught = (Item) event.getCaught();
+        caught.setItemStack(itemStack);
+    }
+
+    private void announceMessages(Player catcher, CaughtFish fish, boolean new1st) {
+        String msgFish = getMessage("catch-fish", catcher, fish);
+        String msgContest = getMessage("get-1st", catcher, fish);
+        int ancFish = plugin.getConfig().getInt("messages.announce-catch");
+        int ancContest = plugin.getConfig().getInt("messages.announce-new-1st");
+
+        if (fish.getRarity().isNoBroadcast())
+            ancFish = 0;
+        if (new1st)
+            ancFish = ancContest;
+
+        getMessageReceivers(ancFish, catcher)
+                .forEach(player -> player.sendMessage(msgFish));
+
+        if (new1st) {
+            getMessageReceivers(ancContest, catcher)
+                    .forEach(player -> player.sendMessage(msgContest));
+        }
     }
 
     private String getMessage(String path, Player player, CaughtFish fish) {
@@ -117,33 +116,38 @@ public class FishingListener implements Listener {
                 .replaceAll("%rarity%", fish.getRarity().getDisplayName())
                 .replaceAll("%rarity_color%", fish.getRarity().getColor() + "")
                 .replaceAll("%fish%", fish.getName())
-                .replaceAll("%fish_with_rarity%", (((fish.getRarity().isNoDisplay()) ? "" : fish.getRarity().getDisplayName() + " ")) + fish.getName());
+                .replaceAll("%fish_with_rarity%", ((fish.getRarity().isNoDisplay()) ? "" : fish.getRarity().getDisplayName() + " ") + fish.getName());
 
         message = ChatColor.translateAlternateColorCodes('&', message);
 
         return message;
     }
 
-    private void announceMessage(Player player, String message, int announce) {
-        if (message.length() == 0)
-            return;
+    private Set<Player> getMessageReceivers(int announceValue, Player catcher) {
+        Set<Player> players = new HashSet<>();
 
-        switch (announce) {
+        switch (announceValue) {
             case -1:
-                plugin.getServer().broadcastMessage(message);
+                players.addAll(plugin.getServer().getOnlinePlayers());
                 break;
             case 0:
-                player.sendMessage(message);
+                players.add(catcher);
                 break;
             default:
-                Location loc = player.getLocation();
+                Location loc = catcher.getLocation();
 
-                for (Player other : player.getWorld().getPlayers()) {
-                    if (other.getLocation().distance(loc) <= announce) {
-                        other.sendMessage(message);
+                for (Player player : catcher.getWorld().getPlayers()) {
+                    if (player.getLocation().distance(loc) <= announceValue) {
+                        players.add(player);
                     }
                 }
         }
+
+        if (plugin.getConfig().getBoolean("messages.only-announce-fishing-rod")) {
+            players.removeIf(player -> player.getInventory().getItemInMainHand().getType() != Material.FISHING_ROD);
+        }
+
+        return players;
     }
 
     private void executeCommands(Player player, CaughtFish fish) {

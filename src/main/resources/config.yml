@@ -43,6 +43,7 @@ fish-shop:
 messages:
   announce-catch: -1
   announce-new-1st: -1
+  only-announce-fishing-rod: false
   broadcast-start: true
   broadcast-stop: true
   show-top-on-ending: true
