@@ -57,7 +57,7 @@ public class ContestManager {
                     plugin.getLogger().warning("Failed to create " + file.getName() + "!");
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                plugin.getLogger().severe(e.getMessage());
             }
         }
     }
@@ -66,7 +66,7 @@ public class ContestManager {
         try {
             configRewards.save(fileRewards);
         } catch (IOException e) {
-            e.printStackTrace();
+            plugin.getLogger().severe(e.getMessage());
         }
     }
 
@@ -99,7 +99,7 @@ public class ContestManager {
         try {
             configRecords.save(fileRecords);
         } catch (IOException e) {
-            e.printStackTrace();
+            plugin.getLogger().severe(e.getMessage());
         }
     }
 

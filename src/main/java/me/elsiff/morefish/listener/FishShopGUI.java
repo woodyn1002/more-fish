@@ -90,12 +90,7 @@ public class FishShopGUI implements Listener {
         if (users.contains(event.getWhoClicked().getUniqueId())) {
             event.getInventory().setItem(31, new ItemStack(Material.AIR));
             final Inventory inv = event.getInventory();
-            plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    updateEmeraldIcon(inv);
-                }
-            }, 1L);
+            plugin.getServer().getScheduler().runTaskLater(plugin, () -> updateEmeraldIcon(inv), 1L);
 
             if (27 <= event.getRawSlot() && event.getRawSlot() <= 35) {
                 event.setCancelled(true);
@@ -141,12 +136,7 @@ public class FishShopGUI implements Listener {
         if (users.contains(event.getWhoClicked().getUniqueId())) {
             event.getInventory().setItem(31, new ItemStack(Material.AIR));
             final Inventory inv = event.getInventory();
-            plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    updateEmeraldIcon(inv);
-                }
-            }, 1L);
+            plugin.getServer().getScheduler().runTaskLater(plugin, () -> updateEmeraldIcon(inv), 1L);
         }
     }
 

@@ -35,13 +35,17 @@ public class MoreFish extends JavaPlugin {
     private MCMMOHooker mcmmoHooker;
     private WorldGuardHooker worldGuardHooker;
 
+    public static void setInstance(MoreFish moreFish) {
+        instance = moreFish;
+    }
+
     public static MoreFish getInstance() {
         return instance;
     }
 
     @Override
     public void onEnable() {
-        instance = this;
+        setInstance(this);
 
         saveDefaultConfig();
         this.locale = new Locale(this);
@@ -146,13 +150,11 @@ public class MoreFish extends JavaPlugin {
             final List<String> startTime = getConfig().getStringList("auto-running.start-time");
             final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
 
-            taskId = getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-                public void run() {
-                    String now = dateFormat.format(new Date());
+            taskId = getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
+                String now = dateFormat.format(new Date());
 
-                    if (startTime.contains(now) && getServer().getOnlinePlayers().size() >= required) {
-                        getServer().dispatchCommand(getServer().getConsoleSender(), "morefish start " + timer);
-                    }
+                if (startTime.contains(now) && getServer().getOnlinePlayers().size() >= required) {
+                    getServer().dispatchCommand(getServer().getConsoleSender(), "morefish start " + timer);
                 }
             }, 0L, 1200L);
         }

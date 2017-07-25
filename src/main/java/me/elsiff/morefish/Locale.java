@@ -55,8 +55,8 @@ public class Locale {
             this.lang = loadConfiguration(folder, langPath);
             this.fish = loadConfiguration(folder, fishPath);
             return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (IOException | InvalidConfigurationException e) {
+            plugin.getLogger().severe(e.getMessage());
             return false;
         }
     }
