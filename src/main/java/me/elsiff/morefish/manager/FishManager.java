@@ -105,7 +105,10 @@ public class FishManager {
         List<Condition> conditions = new ArrayList<>();
 
         if (section.contains(path + ".command")) {
-            commands = section.getStringList(path + ".command");
+            commands.addAll(section.getStringList(path + ".command"));
+        }
+        if (section.contains(path + ".commands")) {
+            commands.addAll(section.getStringList(path + ".commands"));
         }
 
         if (section.contains(path + ".food-effects")) {
