@@ -1,0 +1,96 @@
+#
+# lang_zh_cn.yml for MoreFish
+# translated by hanbinmeizhi1 (2.1.0)
+#
+
+version: 211
+
+# %player% - 钓鱼者的名称
+# %length% - 鱼的长度
+# %rarity% - 鱼的稀有级别（大写）
+# %rarity_color% - 稀有级别的颜色
+# %fish% - 鱼的名称
+# %fish_with_rarity% - 文字提示的格式为 "[稀有级别] [鱼的名称]" (带上颜色代码)
+catch-fish: "&b[MoreFish]&r &e玩家 %player%&r 抓到了 %rarity_color%%length%厘米 &l%fish_with_rarity%"
+get-1st: "&b[MoreFish]&r &e玩家 %player%&r 现在成为了第一名!"
+no-fishing-allowed: "&b[MoreFish]&r 除非有比赛进行中,你不能钓鱼."
+
+# %time% - 竞赛所剩下的时间 (例如 1分 23秒)
+contest-start: "&b[MoreFish]&r 钓鱼比赛已经开始了!"
+contest-start-timer: "&b[MoreFish]&r 这场比赛将在 %time% 后结束."
+contest-stop: "&b[MoreFish]&r 钓鱼比赛已经结束了!"
+timer-boss-bar: "&b&l钓鱼比赛 &r[%time% left]"
+time-format-minutes: "分"
+time-format-seconds: "秒"
+
+# %ordinal% - 玩家的名次顺序 (例如. 1st, 2nd, 3rd, 4th)
+# %number% - 玩家名次的数字
+# %player% - 钓鱼者的名称
+# %length% - 鱼的长度
+# %fish% - 鱼的名称
+top-list: "&b[MoreFish]&r &e%ordinal%. &7: %player%, %length%厘米 %fish%"
+top-no-record: "&b[MoreFish]&r 还没任何人创下记录."
+top-mine: "&b[MoreFish]&r 你是 %ordinal%: %length%厘米 %fish%"
+top-mine-no-record: "&b[MoreFish]&r 你还没有获得任何记录."
+
+# %amount% - 给予金钱的数量
+# %ordinal% - 玩家的名次顺序 (例如. 1st, 2nd, 3rd, 4th)
+# %number% - 玩家名次的数字
+# %player% - 钓鱼者的名称
+reward: "&b[MoreFish]&r 你已经得到 &e%item%&r 当做 %ordinal% 的奖励!"
+reward-cash-prize: "&b[MoreFish]&r 你已经得到 &e%amount%&r 当做 %ordinal% 的奖励!"
+
+no-permission: "&b[MoreFish]&r 没有权限."
+already-ongoing: "&b[MoreFish]&r 这场比赛正在进行中."
+already-stopped: "&b[MoreFish]&r 这场比赛被关闭了."
+not-number: "&b[MoreFish]&r '%s' 是一个无效的数字."
+not-positive: "&b[MoreFish]&r 只能使用正数."
+not-ongoing: "&b[MoreFish]&r 这场比赛还没开始."
+clear-records: "&b[MoreFish]&r 已清除这些记录."
+reload-config: "&b[MoreFish]&r 重载完成."
+failed-to-reload: "&b[MoreFish]&r 重载失败，请检查控制台."
+in-game-command: "&b[MoreFish]&r 这个指令只能给玩家使用."
+shop-disabled: "&b[MoreFish]&r 鱼店现在被关闭."
+player-not-found: "&b[MoreFish]&r 没有一个玩家叫 '%s'."
+forced-player-to-shop: "&b[MoreFish]&r 你强迫了玩家 %s 去开放鱼店."
+invalid-command: "&b[MoreFish]&r 这是一个无效的数字."
+
+rewards-gui-title: "设置比赛奖励"
+rewards-guide-icon-name: "&b放置你的物品到空位中!"
+rewards-guide-icon-lore:
+- "&7第一个空位是"
+- "&7第一名的奖励,"
+- "&7和第二个空位是"
+- "&7第二名的奖励."
+- "&7第八个空位是安慰奖."
+- "&7空白的空位表示没奖励."
+rewards-sign-icon-name: "&b金钱奖励"
+rewards-sign-icon-lore:
+- "&7这二行是给予"
+- "&7金钱奖励的."
+- "&7点击这些绿宝石"
+- "&7来修改这些数字."
+rewards-consolation: "安慰奖"
+rewards-emerald-icon-name: "&a奖励给予 %ordinal%: $&2%amount%"
+rewards-emerald-icon-lore:
+- "&7点击并编辑"
+enter-cash-prize:
+- "&b[MoreFish]&r 在聊天框内输入一个数字."
+- "&b[MoreFish]&r 你也可以输入 'cancel' 来取消编辑."
+entered-cancel: "&b[MoreFish]&r 取消编辑模式."
+entered-not-number: "&b[MoreFish]&r '%s' 不是一个有效数字，请重新输入."
+entered-not-positive: "&b[MoreFish]&r 数字必须是正数. 请重新输入."
+entered-successfully: "&b[MoreFish]&r 输入成功."
+saved-changes: "&b[MoreFish]&r 更改已保存."
+
+# %price% - 鱼的贩卖价格
+shop-gui-title: "防止你的鱼来出售"
+shop-emerald-icon-name: "&a可以卖 $%price%"
+shop-sold: "&b[MoreFish]&r 你卖鱼获得了 &a$%price%&r."
+shop-no-fish: "&b[MoreFish]&r 没有任何鱼可以贩卖，请放置他们."
+created-sign-shop: "&b[MoreFish]&r 你已经建立了一个卖鱼的店!"
+
+old-file: "&c[MoreFish] 你的 %s 太旧了! 请更新."
+new-version:
+- "&b[MoreFish]&r 我们找到了一个新的版本: %s ，点击下面的链接下载最新的版本！"
+- "&b[MoreFish]&r https://www.spigotmc.org/resources/morefish.22926/"
