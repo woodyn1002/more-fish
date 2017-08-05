@@ -1,0 +1,243 @@
+#
+# fish_zh_cn.yml for MoreFish
+# translated by hanbinmeizhi1
+#
+# Wiki:
+# - https://github.com/elsiff/MoreFish/wiki/Custom-Fish-Tutorial
+# - https://github.com/elsiff/MoreFish/wiki/Custom-Rarity-Tutorial
+#
+
+version: 212
+
+# %player% - 玩家的名次排序 (例如 1st, 2nd, 3rd, 4th)
+# %rarity% - 鱼的稀有级别 (必须使用大写)
+# %rarity_color% - 稀有级别的颜色
+# %length% - 鱼的长度
+# %fish% - 鱼的名称
+# %date% - 鱼被钓上来的时间
+item-format:
+  display-name: "%rarity_color%%fish%"
+  lore:
+  - "&7%length%厘米"
+  - "&7被玩家 %player% 钓上来了"
+
+rarity-list:
+  common:
+    display-name: "一般"
+    default: true
+    color: "reset"
+    additional-price: 0.0
+    no-broadcast: true
+    no-display: true
+  junk:
+    display-name: "垃圾"
+    chance: 1
+    color: "gray"
+    additional-price: -999999
+    no-display: true
+  rare:
+    display-name: "稀有"
+    chance: 22
+    color: "aqua"
+    additional-price: 3.0
+  epic:
+    display-name: "史诗"
+    chance: 6.5
+    color: "light_purple"
+    additional-price: 4.0
+  legendary:
+    display-name: "传说"
+    chance: 0.5
+    color: "green"
+    additional-price: 5.0
+    firework: true
+
+fish-list:
+  common:
+    Shrimp:
+      display-name: "虾"
+      length-min: 3
+      length-max: 8
+      icon:
+        id: "minecraft:fish"
+    Anchovy:
+      display-name: "鳀鱼"
+      length-min: 7
+      length-max: 13
+      icon:
+        id: "minecraft:fish"
+    Croaker:
+      display-name: "黄花鱼"
+      length-min: 12
+      length-max: 15
+      icon:
+        id: "minecraft:fish"
+    Crab:
+      display-name: "螃蟹"
+      length-min: 10
+      length-max: 15
+      icon:
+        id: "minecraft:fish"
+    Mackerel:
+      display-name: "青花鱼"
+      length-min: 15
+      length-max: 30
+      icon:
+        id: "minecraft:fish"
+    Herring:
+      display-name: "鲱鱼"
+      length-min: 20
+      length-max: 30
+      icon:
+        id: "minecraft:fish"
+  junk:
+    Pie:
+      display-name: "馅饼"
+      length-min: 3.14
+      length-max: 3.14
+      icon:
+        id: "minecraft:pumpkin_pie"
+      skip-item-format: true
+    Magikarp:
+      display-name: "鲤鱼王"
+      length-min: 25
+      length-max: 35
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7鲤鱼王使用了弹跳!"
+      skip-item-format: false
+    Breadfish:
+      display-name: "面包鱼"
+      length-min: 10
+      length-max: 30
+      icon:
+        id: "minecraft:bread"
+        lore:
+        - "&7请问你看过"
+        - "&7这么奇怪的一条面包鱼吗?"
+      skip-item-format: false
+    WoodenAxe:
+      display-name: "管理员的木斧头"
+      length-min: 16
+      length-max: 16
+      icon:
+        id: "minecraft:wooden_axe"
+        lore:
+        - "&7//set 0!"
+      skip-item-format: false
+    FishingRod:
+      display-name: "别人手滑Q出去的钓鱼竿"
+      length-min: 16
+      length-max: 16
+      icon:
+        id: "minecraft:fishing_rod|30"
+      skip-item-format: true
+    SpongeBob:
+      display-name: "海绵宝宝"
+      length-min: 16
+      length-max: 16
+      icon:
+        id: "minecraft:sponge"
+      skip-item-format: true
+  rare:
+    Jellyfish:
+      display-name: "水母"
+      length-min: 20
+      length-max: 40
+      icon:
+        id: "minecraft:fish"
+      commands:
+      - "minecraft:effect @p minecraft:poison 3 1"
+      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" 你并不喜欢这条水母!\",\"color\":\"none\"}]"
+    Squid:
+      display-name: "乌贼"
+      length-min: 30
+      length-max: 50
+      icon:
+        id: "minecraft:dye"
+      commands:
+      - "minecraft:effect @p minecraft:blindness 5 1"
+      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" 这乌贼射了你一脸的墨汁!\",\"color\":\"none\"}]"
+    Flatfish:
+      display-name: "比目鱼"
+      length-min: 40
+      length-max: 75
+      icon:
+        id: "minecraft:fish"
+    SeaBream:
+      display-name: "海鲷"
+      length-min: 50
+      length-max: 70
+      icon:
+        id: "minecraft:fish"
+    SeaBass:
+      display-name: "黑鲈"
+      length-min: 60
+      length-max: 100
+      icon:
+        id: "minecraft:fish"
+  epic:
+    Clownfish:
+      display-name: "小丑鱼"
+      length-min: 10
+      length-max: 18
+      icon:
+        id: "minecraft:fish|2"
+    Pufferfish:
+      display-name: "河豚"
+      length-min: 20
+      length-max: 30
+      icon:
+        id: "minecraft:fish|3"
+    SeaTurtle:
+      display-name: "海龟"
+      length-min: 90
+      length-max: 130
+      icon:
+        id: "minecraft:fish"
+    Salmon:
+      display-name: "鲑鱼"
+      length-min: 100
+      length-max: 130
+      icon:
+        id: "minecraft:fish|1"
+    BlackDrum:
+      display-name: "多须石首鱼"
+      length-min: 100
+      length-max: 180
+      icon:
+        id: "minecraft:fish"
+    Tuna:
+      display-name: "金枪鱼"
+      length-min: 130
+      length-max: 180
+      icon:
+        id: "minecraft:fish"
+  legendary:
+    BlueShark:
+      display-name: "蓝鲨"
+      length-min: 160
+      length-max: 240
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7&o最棘手的鱼"
+        - "&7当你吃了这条鱼,你会获得 &9力量 I (2:00)&7."
+      food-effects:
+        commands:
+        - "minecraft:effect @p minecraft:strength 120 1"
+    PygmyWhale:
+      display-name: "抹香鲸"
+      length-min: 600
+      length-max: 650
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7&o最大的鱼"
+        - "&7吃了这条鱼你会补充 &9全部血量跟饥饿度&7"
+      food-effects:
+        points: 20
+        saturation: 14.4
+        commands:
+        - "minecraft:effect @p minecraft:regeneration 2 127"
