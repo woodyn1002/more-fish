@@ -1,7 +1,7 @@
 name: MoreFish
 author: elsiff
 website: http://elsiff.me
-version: @project.version@
+version: 2.2.0-SNAPSHOT
 main: me.elsiff.morefish.MoreFish
 softdepend: [Vault, Citizens, PlaceholderAPI, ProtocolLib, mcMMO, WorldGuard]
 commands:

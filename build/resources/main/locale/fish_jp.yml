@@ -1,0 +1,289 @@
+#
+# fish_jp.yml for MoreFish
+# translated by tanisou (2.1.0)
+#
+# Wiki:
+# - https://github.com/elsiff/MoreFish/wiki/Custom-Fish-Tutorial
+# - https://github.com/elsiff/MoreFish/wiki/Custom-Rarity-Tutorial
+#
+
+version: 212
+
+# %player% - ?ƒ—?ƒ¬?‚¤?ƒ¤?ƒ¼?®?ƒ©?ƒ³?‚¯ (ä¾? 1st, 2nd, 3rd, 4th)
+# %rarity% - é­šã®?ƒ¬?‚¢?ƒª?ƒ†?‚£
+# %rarity_color% - ?ƒ¬?‚¢?ƒª?ƒ†?‚£?®?‰²
+# %length% - é­šã®?‚µ?‚¤?‚º
+# %fish% - é­šã®??‰
+# %date% - ?‡£?£?Ÿ?—¥?™‚
+item-format:
+  display-name: "%rarity_color%%fish%"
+  lore:
+  - "&7%length%cm"
+  - "%player%&7?«?‚ˆ?£?¦?‡£?‚‰?‚Œ?¾?—?Ÿ"
+
+rarity-list:
+  common:
+    display-name: "?™®??"
+    default: true
+    color: "reset"
+    no-broadcast: true
+    no-display: true
+  junk:
+    display-name: "?‚´?ƒŸ"
+    chance: 1
+    color: "gray"
+    additional-price: -999999
+    no-display: true
+  rare:
+    display-name: "å¤§ç‰©"
+    chance: 22
+    color: "aqua"
+    additional-price: 3.0
+  epic:
+    display-name: "è¶…å¤§?‰©"
+    chance: 6.5
+    color: "light_purple"
+    additional-price: 4.0
+  legendary:
+    display-name: "?ƒŒ?‚·"
+    chance: 0.5
+    color: "green"
+    additional-price: 5.0
+
+fish-list:
+  common:
+    Redjellyfish:
+      display-name: "?‚¢?‚«?‚¯?ƒ©?‚²"
+      length-min: 4
+      length-max: 30
+      icon:
+        id: "minecraft:fish"
+      commands:
+      - "minecraft:effect @p minecraft:poison 3 2"
+      - "tellraw @p [{\"text\":\" ?‚¯?ƒ©?‚²?Œ?‚?ª?Ÿ?«å¥½æ„?‚’?Œ?£?¦?„?‚‹!\",\"color\":\"none\"}]"
+    Shrimp:
+      display-name: "?‚¨?ƒ“"
+      length-min: 3
+      length-max: 8
+      icon:
+        id: "minecraft:fish"
+    Anchovy:
+      display-name: "?ƒ?‚¤?ƒ¯?‚·"
+      length-min: 7
+      length-max: 27
+      icon:
+        id: "minecraft:fish"
+    Maazi:
+      display-name: "?ƒ?‚¢?‚¸"
+      length-min: 3
+      length-max: 43
+      icon:
+        id: "minecraft:record_13"
+    Mackerel:
+      display-name: "?‚´?ƒ?‚µ?ƒ"
+      length-min: 15
+      length-max: 30
+      icon:
+        id: "minecraft:fish"
+    Herring:
+      display-name: "?ƒ‹?‚·?ƒ³"
+      length-min: 20
+      length-max: 30
+      icon:
+        id: "minecraft:fish"
+    Kasago:
+      display-name: "?‚«?‚µ?‚´"
+      length-min: 5
+      length-max: 30
+      icon:
+        id: "minecraft:record_chirp"
+    Mahaze:
+      display-name: "?ƒ?ƒ?‚¼"
+      length-min: 3
+      length-max: 20
+      icon:
+        id: "minecraft:record_blocks"
+    Shirogisu:
+      display-name: "?‚·?ƒ­?‚®?‚¹"
+      length-min: 5
+      length-max: 30
+      icon:
+        id: "minecraft:record_stal"
+    Kawahagi:
+      display-name: "?‚«?ƒ¯?ƒ?‚®"
+      length-min: 5
+      length-max: 30
+      icon:
+        id: "minecraft:fish"
+  junk:
+    Pie:
+      display-name: "?ƒ‹?‚·?ƒ³?®?ƒ‘?‚¤"
+      length-min: 3.14
+      length-max: 3.14
+      icon:
+        id: "minecraft:pumpkin_pie"
+      skip-item-format: true
+    Magikarp:
+      display-name: "?‚³?‚¤?‚­?ƒ³?‚°"
+      length-min: 25
+      length-max: 35
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7?‚³?‚¤?‚­?ƒ³?‚°?®æ°´é‰„? ²!"
+      skip-item-format: false
+    Breadfish:
+      display-name: "é­šãƒ‘?ƒ³"
+      length-min: 10
+      length-max: 30
+      icon:
+        id: "minecraft:bread"
+        lore:
+        - "&7?•™?ˆ?¦?ã‚?ª?Ÿ?Œè¦‹ãŸ?‚‚?®?‚’"
+        - "&7ç´ æ™´?‚‰?—?„é­šãƒ‘?ƒ³"
+    WoodenAxe:
+      display-name: "ç®¡ç†äººã®?œ¨?®?–§"
+      length-min: 16
+      length-max: 16
+      icon:
+        id: "minecraft:wooden_axe"
+        lore:
+        - "&7//cut"
+      skip-item-format: false
+    FishingRod:
+      display-name: "èª°ã‹?Œ?–“?•?ˆ?¦Q?ƒœ?‚¿?ƒ³?§?¨?¦?¦?—?¾?£?Ÿ?‡£?‚Šç«?"
+      length-min: 16
+      length-max: 16
+      icon:
+        id: "minecraft:fishing_rod"
+        durability: 30
+      skip-item-format: true
+    SpongeBob:
+      display-name: "?‚«?ƒ‹?‚«?ƒ¼?ƒ‹?ƒ?ƒ¼?‚¬?ƒ¼?®?–™?†äº?"
+      length-min: 16
+      length-max: 16
+      icon:
+        id: "minecraft:sponge"
+      skip-item-format: true
+  rare:
+    Aoriika:
+      display-name: "?‚¢?‚ª?ƒª?‚¤?‚«"
+      length-min: 10
+      length-max: 50
+      icon:
+        id: "minecraft:fish"
+      commands:
+      - "minecraft:effect @p minecraft:blindness 5 1"
+      - "tellraw @p [{\"text\":\" ?‚¤?‚«?Œ?‚?ª?Ÿ?«?Šç¥ã„?®?‚¹?ƒŸ?‚’??„?Ÿ!\",\"color\":\"none\"}]"
+    MinoKasago:
+      display-name: "?ƒŸ?ƒ?‚«?‚µ?‚´"
+      length-min: 10
+      length-max: 30
+      icon:
+        id: "minecraft:record_chirp"
+      commands:
+      - "minecraft:effect @p minecraft:poison 3 2"
+    Flatfish:
+      display-name: "?ƒ?‚³?‚¬?ƒ¬?‚¤"
+      length-min: 40
+      length-max: 75
+      icon:
+        id: "minecraft:fish"
+    Madai:
+      display-name: "?ƒ???‚¤"
+      length-min: 14
+      length-max: 110
+      icon:
+        id: "minecraft:record_far"
+    Kurodai:
+      display-name: "?‚¯?ƒ­???‚¤"
+      length-min: 5
+      length-max: 48
+      icon:
+        id: "minecraft:record_mellohi"
+    SeaBass:
+      display-name: "?‚¹?‚º?‚­"
+      length-min: 60
+      length-max: 100
+      icon:
+        id: "minecraft:record_13"
+  epic:
+    ShimaAzi:
+      display-name: "?‚·?ƒ?‚¢?‚¸"
+      length-min: 12
+      length-max: 111
+      icon:
+        id: "minecraft:fish"
+    Rouninazi:
+      display-name: "?ƒ­?‚¦?ƒ‹?ƒ³?‚¢?‚¸"
+      length-min: 16
+      length-max: 168
+      icon:
+        id: "minecraft:fish"
+    Shira:
+      display-name: "?‚·?‚¤?ƒ©"
+      length-min: 38
+      length-max: 190
+      icon:
+        id: "minecraft:fish"
+    Clownfish:
+      display-name: "?‚«?‚¯?ƒ¬?‚¯?ƒ?ƒ?ƒŸ"
+      length-min: 10
+      length-max: 18
+      icon:
+        id: "minecraft:fish"
+        durability: 2
+    Pufferfish:
+      display-name: "?ƒ?ƒª?‚»?ƒ³?ƒœ?ƒ³"
+      length-min: 20
+      length-max: 30
+      icon:
+        id: "minecraft:fish"
+        durability: 3
+    Salmon:
+      display-name: "?‚µ?‚±"
+      length-min: 100
+      length-max: 130
+      icon:
+        id: "minecraft:fish"
+        durability: 1
+  legendary:
+    Kuromaguro:
+      display-name: "?‚¯?ƒ­?ƒ?‚°?ƒ­"
+      length-min: 50
+      length-max: 180
+      icon:
+        id: "minecraft:fish"
+    Shirokaziki:
+      display-name: "?‚«?‚¸?‚­"
+      length-min: 80
+      length-max: 450
+      icon:
+        id: "minecraft:fish"
+    BlueShark:
+      display-name: "?‚¢?‚ª?‚¶?ƒ¡"
+      length-min: 180
+      length-max: 260
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7&oThe Toughest Fish"
+        - "&7Get &9Strength I (2:00)&7 when you eat it."
+      food-effects:
+        commands:
+        - "minecraft:effect @p minecraft:strength 120 1"
+    PygmyWhale:
+      display-name: "?‚³?‚»?ƒŸ?‚¯?‚¸?ƒ©"
+      length-min: 600
+      length-max: 650
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7&oThe Biggest Fish"
+        - "&7Get &9full health and hunger&7"
+        - "when you eat it."
+      food-effects:
+        points: 20
+        saturation: 14.4
+        commands:
+        - "minecraft:effect @p minecraft:regeneration 2 127"

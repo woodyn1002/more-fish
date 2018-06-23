@@ -1,0 +1,36 @@
+import org.apache.tools.ant.filters.*
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'me.elsiff'
+version = '2.2.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+    maven { url "http://nexus.hc.to/content/repositories/pub_releases" }
+    maven { url "http://repo.citizensnpcs.co/" }
+    maven { url "http://repo.extendedclip.com/content/repositories/placeholderapi/" }
+    maven { url "http://repo.dmulloy2.net/nexus/repository/public/" }
+    maven { url "http://maven.sk89q.com/repo/" }
+}
+
+dependencies {
+    compile group: 'com.comphenix.protocol', name: 'ProtocolLib-API', version: '4.2.1'
+    compile group: 'com.sk89q', name: 'worldguard', version: '6.1'
+    compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.12-R0.1-SNAPSHOT'
+    compileOnly group: 'net.milkbowl.vault', name: 'VaultAPI', version: '1.6'
+    compileOnly group: 'net.citizensnpcs', name: 'citizensapi', version: '2.0.18-SNAPSHOT'
+    compileOnly group: 'me.clip', name: 'placeholderapi', version: '2.7.1'
+    compile files('libs/mcMMO.jar')
+}
+
+processResources {
+    filter ReplaceTokens, tokens: [
+            "project.version": project.property("version")
+    ]
+}

@@ -1,0 +1,229 @@
+#
+# fish_en.yml for MoreFish
+# by elsiff (?´?”„)
+#
+# Wiki:
+# - https://github.com/elsiff/MoreFish/wiki/Custom-Fish-Tutorial
+# - https://github.com/elsiff/MoreFish/wiki/Custom-Rarity-Tutorial
+#
+
+version: 212
+
+# %player% - ?”Œ? ˆ?´?–´?˜ ?ˆœ?œ„ ê¸°ìˆ˜ (?˜ˆ: 1st, 2nd, 3rd)
+# %rarity% - ë¬¼ê³ ê¸°ì˜ ?¬ê·? ?“±ê¸?
+# %rarity_color% - ?¬ê·? ?“±ê¸‰ì˜ ?ƒ‰ê¹?
+# %length% - ë¬¼ê³ ê¸°ì˜ ê¸¸ì´
+# %fish% - ë¬¼ê³ ê¸°ì˜ ?´ë¦?
+# %date% - ë¬¼ê³ ê¸°ê? ?¡?Œ ?‚ ì§? (?˜ˆ: 16/10/02 16:44)
+item-format:
+  display-name: "%rarity_color%%fish%"
+  lore:
+  - "&7%length%cm"
+  - "&7Caught by %player%"
+
+rarity-list:
+  common:
+    display-name: "?¼ë°?"
+    default: true
+    color: "reset"
+    additional-price: 0.0
+    no-broadcast: true
+    no-display: true
+  junk:
+    display-name: "?“°? ˆê¸?"
+    chance: 1
+    color: "gray"
+    additional-price: -999999
+    no-display: true
+  rare:
+    display-name: "? ˆ?–´"
+    chance: 22
+    color: "aqua"
+    additional-price: 3.0
+  epic:
+    display-name: "?—?”½"
+    chance: 7.5
+    color: "light_purple"
+    additional-price: 4.0
+  legendary:
+    display-name: "? ˆ? „?”ë¦?"
+    chance: 0.5
+    color: "green"
+    additional-price: 5.0
+    firework: true
+
+fish-list:
+  common:
+    Shrimp:
+      display-name: "?ƒˆ?š°"
+      length-min: 3
+      length-max: 8
+      icon:
+        id: "minecraft:fish"
+    Anchovy:
+      display-name: "ë©¸ì¹˜"
+      length-min: 7
+      length-max: 13
+      icon:
+        id: "minecraft:fish"
+    Croaker:
+      display-name: "ì¡°ê¸°"
+      length-min: 12
+      length-max: 15
+      icon:
+        id: "minecraft:fish"
+    Crab:
+      display-name: "ê²?"
+      length-min: 10
+      length-max: 15
+      icon:
+        id: "minecraft:fish"
+    Mackerel:
+      display-name: "ê³ ë“±?–´"
+      length-min: 15
+      length-max: 30
+      icon:
+        id: "minecraft:fish"
+    Herring:
+      display-name: "ì²??–´"
+      length-min: 20
+      length-max: 30
+      icon:
+        id: "minecraft:fish"
+  junk:
+    Pie:
+      display-name: "?ŒŒ?´"
+      length-min: 3.14
+      length-max: 3.14
+      icon:
+        id: "minecraft:pumpkin_pie"
+    Magikarp:
+      display-name: "?‰?–´?‚¹"
+      length-min: 25
+      length-max: 35
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7?‰?–´?‚¹?˜ ???–´?˜¤ë¥´ê¸°!"
+    Breadfish:
+      display-name: "ë¹µë¬¼ê³ ê¸°"
+      length-min: 10
+      length-max: 30
+      icon:
+        id: "minecraft:bread"
+        lore:
+        - "&7Tell me have you seen"
+        - "&7the marvellous breadfish"
+    WoodenAxe:
+      display-name: "ê´?ë¦¬ì?˜ ?‚˜ë¬? ?„?¼"
+      length-min: 16
+      length-max: 16
+      icon:
+        id: "minecraft:wooden_axe"
+        lore:
+        - "&7//cut"
+    FishingRod:
+      display-name: "?ˆ„êµ°ê? ?‹¤?ˆ˜ë¡? Q ?ˆŒ?Ÿ¬ ?ƒ?–´ë²„ë¦° ?‚š?‹¯??"
+      length-min: 16
+      length-max: 16
+      icon:
+        id: "minecraft:fishing_rod"
+        durability: 30
+    SpongeBob:
+      display-name: "ì§‘ê²Œë¦¬ì•„?˜ ?„±?‹¤?•œ ?š”ë¦¬ì‚¬"
+      length-min: 16
+      length-max: 16
+      icon:
+        id: "minecraft:sponge"
+  rare:
+    Jellyfish:
+      display-name: "?•´?ŒŒë¦?"
+      length-min: 20
+      length-max: 40
+      icon:
+        id: "minecraft:fish"
+      commands:
+      - "minecraft:effect @p minecraft:poison 3 1"
+      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" ?•´?ŒŒë¦¬ê? ?‹¹?‹ ?—ê²? ?—¤ë¡±í—¤ë¡±í•œ ê¸°ë¶„?„ ?„ ë¬¼í–ˆ?Šµ?‹ˆ?‹¤!\",\"color\":\"none\"}]"
+    Squid:
+      display-name: "?˜¤ì§•ì–´"
+      length-min: 30
+      length-max: 50
+      icon:
+        id: "minecraft:dye"
+      commands:
+      - "minecraft:effect @p minecraft:blindness 5 1"
+      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" ?˜¤ì§•ì–´ê°? ë°œì•…?•˜ë©? ?‹¹?‹ ?˜ ?–¼êµ´ì— ë¨¹ë¬¼?„ ?˜?•˜?Šµ?‹ˆ?‹¤!\",\"color\":\"none\"}]"
+    Flatfish:
+      display-name: "ê°??ë¯?"
+      length-min: 40
+      length-max: 75
+      icon:
+        id: "minecraft:fish"
+    SeaBream:
+      display-name: "?„ë¯?"
+      length-min: 50
+      length-max: 70
+      icon:
+        id: "minecraft:fish"
+    SeaBass:
+      display-name: "?†?–´"
+      length-min: 60
+      length-max: 100
+      icon:
+        id: "minecraft:fish"
+  epic:
+    Clownfish:
+      display-name: "?°?™ê°?ë¦?"
+      length-min: 10
+      length-max: 18
+      icon:
+        id: "minecraft:fish"
+        durability: 2
+    Pufferfish:
+      display-name: "ë³µì–´"
+      length-min: 20
+      length-max: 30
+      icon:
+        id: "minecraft:fish"
+        durability: 3
+    Salmon:
+      display-name: "?—°?–´"
+      length-min: 100
+      length-max: 130
+      icon:
+        id: "minecraft:fish"
+        durability: 1
+    Tuna:
+      display-name: "?‹¤?‘?–´"
+      length-min: 130
+      length-max: 180
+      icon:
+        id: "minecraft:fish"
+  legendary:
+    BlueShark:
+      display-name: "ì²??ƒˆë¦¬ìƒ?–´"
+      length-min: 180
+      length-max: 260
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7&oê°??¥ ?œ„?˜‘? ?¸ ë¬¼ê³ ê¸?"
+        - "&7?„­ì·¨ì‹œ &9?˜ I (2:00)&7?„ ë¶??—¬?•©?‹ˆ?‹¤."
+      food-effects:
+        commands:
+        - "minecraft:effect @p minecraft:strength 120 1"
+    PygmyWhale:
+      display-name: "ê¼¬ë§ˆ?–¥ê³ ë˜"
+      length-min: 600
+      length-max: 650
+      icon:
+        id: "minecraft:fish"
+        lore:
+        - "&7&oê°??¥ ê±°ë??•œ ë¬¼ê³ ê¸?"
+        - "&7?„­ì·¨ì‹œ &9ì²´ë ¥ê³? ?—ˆê¸°ë?? ëª¨ë‘ ?šŒë³?&7?•©?‹ˆ?‹¤."
+      food-effects:
+        points: 20
+        saturation: 14.4
+        commands:
+        - "minecraft:effect @p minecraft:regeneration 2 127"
