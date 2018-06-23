@@ -31,6 +31,10 @@ dependencies {
 
 processResources {
     filter ReplaceTokens, tokens: [
-            "project.version": project.property("version")
+            "pluginName": "MoreFish",
+            "project.version": project.property("version"),
+            "author": "elsiff",
+            "website": "https://elsiff.me",
+            "mainClass": "me.elsiff.morefish.MoreFish"
     ]
 }
