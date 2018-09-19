@@ -30,7 +30,7 @@ public class FishShopGUI implements Listener {
         String title = plugin.getLocale().getString("shop-gui-title");
         Inventory inv = plugin.getServer().createInventory(player, 36, title);
 
-        ItemStack iconGlass = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setDisplayName("§r").build();
+        ItemStack iconGlass = new ItemBuilder(Material.LIGHT_BLUE_STAINED_GLASS_PANE).setDisplayName("§r").build();
         for (int i = 0; i < 9; i ++) {
             inv.setItem(27 + i, iconGlass);
         }

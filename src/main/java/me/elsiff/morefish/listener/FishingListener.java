@@ -5,6 +5,7 @@ import me.elsiff.morefish.MoreFish;
 import me.elsiff.morefish.event.PlayerCatchCustomFishEvent;
 import me.elsiff.morefish.manager.ContestManager;
 import org.bukkit.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -57,8 +58,17 @@ public class FishingListener implements Listener {
             return false;
 
         // Check if the caught is fish
-        return (!plugin.getConfig().getBoolean("general.replace-only-fish") ||
-                ((Item) event.getCaught()).getItemStack().getType() == Material.RAW_FISH);
+        return (!plugin.getConfig().getBoolean("general.replace-only-fish") || isFishItem(event.getCaught()));
+    }
+
+    private boolean isFishItem(final Entity entity) {
+        if (!(entity instanceof Item)) return false;
+        final ItemStack item = ((Item) entity).getItemStack();
+        final Material type = item.getType();
+        return  type == Material.COD ||
+                type == Material.SALMON ||
+                type == Material.PUFFERFISH ||
+                type == Material.TROPICAL_FISH;
     }
 
     private void executeFishingActions(Player catcher, PlayerFishEvent event) {

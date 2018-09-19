@@ -4,6 +4,7 @@ website: http://elsiff.me
 version: ${project.version}
 main: me.elsiff.morefish.MoreFish
 softdepend: [Vault, Citizens, PlaceholderAPI, ProtocolLib, mcMMO, WorldGuard]
+api-version: 1.13
 commands:
   morefish:
     description: Main command for MoreFish.
