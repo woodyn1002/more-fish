@@ -59,37 +59,37 @@ fish-list:
       length-min: 3
       length-max: 8
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Anchovy:
       display-name: "鯷魚"
       length-min: 7
       length-max: 13
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Croaker:
       display-name: "黃花魚"
       length-min: 12
       length-max: 15
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Crab:
       display-name: "螃蟹"
       length-min: 10
       length-max: 15
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Mackerel:
       display-name: "青花魚"
       length-min: 15
       length-max: 30
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Herring:
       display-name: "鯡魚"
       length-min: 20
       length-max: 30
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
   junk:
     Pie:
       display-name: "派餅"
@@ -103,7 +103,7 @@ fish-list:
       length-min: 25
       length-max: 35
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
         lore:
         - "&7鯉魚王使用了彈跳!"
       skip-item-format: false
@@ -147,7 +147,7 @@ fish-list:
       length-min: 20
       length-max: 40
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
       commands:
       - "minecraft:effect @p minecraft:poison 3 1"
       - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" 這水母讓你感覺不是很好!\",\"color\":\"none\"}]"
@@ -156,7 +156,7 @@ fish-list:
       length-min: 30
       length-max: 50
       icon:
-        id: "minecraft:dye"
+        id: "minecraft:ink_sac"
       commands:
       - "minecraft:effect @p minecraft:blindness 5 1"
       - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" 這烏賊噴你一臉墨汁!\",\"color\":\"none\"}]"
@@ -165,66 +165,63 @@ fish-list:
       length-min: 40
       length-max: 75
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     SeaBream:
       display-name: "海鯛"
       length-min: 50
       length-max: 70
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     SeaBass:
       display-name: "黑鱸"
       length-min: 60
       length-max: 100
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
   epic:
     Clownfish:
       display-name: "小丑魚"
       length-min: 10
       length-max: 18
       icon:
-        id: "minecraft:fish"
-        durability: 2
+        id: "minecraft:tropical_fish"
     Pufferfish:
       display-name: "河豚"
       length-min: 20
       length-max: 30
       icon:
-        id: "minecraft:fish"
-        durability: 3
+        id: "minecraft:pufferfish"
     SeaTurtle:
       display-name: "海龜"
       length-min: 90
       length-max: 130
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Salmon:
       display-name: "鮭魚"
       length-min: 100
       length-max: 130
       icon:
-        id: "minecraft:fish"
-        durability: 1
+        id: "minecraft:salmon"
     BlackDrum:
       display-name: "多須石首魚"
       length-min: 100
       length-max: 180
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Tuna:
       display-name: "鮪魚"
       length-min: 130
       length-max: 180
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
   legendary:
     BlueShark:
       display-name: "藍鯊"
       length-min: 160
       length-max: 240
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
         lore:
         - "&7&o最棘手的魚"
         - "&7獲得 &9力量 I (2:00)&7 當你吃了牠."
@@ -236,7 +233,7 @@ fish-list:
       length-min: 600
       length-max: 650
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
         lore:
         - "&7&o最大的魚"
         - "&7獲得 &9全部血量和飢餓度&7"

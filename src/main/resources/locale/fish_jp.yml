@@ -57,7 +57,7 @@ fish-list:
       length-min: 4
       length-max: 30
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
       commands:
       - "minecraft:effect @p minecraft:poison 3 2"
       - "tellraw @p [{\"text\":\" クラゲがあなたに好意を持っている!\",\"color\":\"none\"}]"
@@ -66,13 +66,13 @@ fish-list:
       length-min: 3
       length-max: 8
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Anchovy:
       display-name: "マイワシ"
       length-min: 7
       length-max: 27
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Maazi:
       display-name: "マアジ"
       length-min: 3
@@ -84,13 +84,13 @@ fish-list:
       length-min: 15
       length-max: 30
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Herring:
       display-name: "ニシン"
       length-min: 20
       length-max: 30
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Kasago:
       display-name: "カサゴ"
       length-min: 5
@@ -114,7 +114,7 @@ fish-list:
       length-min: 5
       length-max: 30
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
   junk:
     Pie:
       display-name: "ニシンのパイ"
@@ -128,7 +128,7 @@ fish-list:
       length-min: 25
       length-max: 35
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
         lore:
         - "&7コイキングの水鉄砲!"
       skip-item-format: false
@@ -171,7 +171,7 @@ fish-list:
       length-min: 10
       length-max: 50
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
       commands:
       - "minecraft:effect @p minecraft:blindness 5 1"
       - "tellraw @p [{\"text\":\" イカがあなたにお祝いのスミを吐いた!\",\"color\":\"none\"}]"
@@ -188,7 +188,7 @@ fish-list:
       length-min: 40
       length-max: 75
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Madai:
       display-name: "マダイ"
       length-min: 14
@@ -213,59 +213,56 @@ fish-list:
       length-min: 12
       length-max: 111
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Rouninazi:
       display-name: "ロウニンアジ"
       length-min: 16
       length-max: 168
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Shira:
       display-name: "シイラ"
       length-min: 38
       length-max: 190
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Clownfish:
       display-name: "カクレクマノミ"
       length-min: 10
       length-max: 18
       icon:
-        id: "minecraft:fish"
-        durability: 2
+        id: "minecraft:tropical_fish"
     Pufferfish:
       display-name: "ハリセンボン"
       length-min: 20
       length-max: 30
       icon:
-        id: "minecraft:fish"
-        durability: 3
+        id: "minecraft:pufferfish"
     Salmon:
       display-name: "サケ"
       length-min: 100
       length-max: 130
       icon:
-        id: "minecraft:fish"
-        durability: 1
+        id: "minecraft:salmon"
   legendary:
     Kuromaguro:
       display-name: "クロマグロ"
       length-min: 50
       length-max: 180
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Shirokaziki:
       display-name: "カジキ"
       length-min: 80
       length-max: 450
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     BlueShark:
       display-name: "アオザメ"
       length-min: 180
       length-max: 260
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
         lore:
         - "&7&oThe Toughest Fish"
         - "&7Get &9Strength I (2:00)&7 when you eat it."
@@ -277,7 +274,7 @@ fish-list:
       length-min: 600
       length-max: 650
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
         lore:
         - "&7&oThe Biggest Fish"
         - "&7Get &9full health and hunger&7"

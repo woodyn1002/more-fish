@@ -59,37 +59,37 @@ fish-list:
       length-min: 3
       length-max: 8
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Anchovy:
       display-name: "Anchovy"
       length-min: 7
       length-max: 13
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Croaker:
       display-name: "Croaker"
       length-min: 12
       length-max: 15
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Crab:
       display-name: "Crab"
       length-min: 10
       length-max: 15
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Mackerel:
       display-name: "Mackerel"
       length-min: 15
       length-max: 30
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Herring:
       display-name: "Herring"
       length-min: 20
       length-max: 30
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
   junk:
     Pie:
       display-name: "Pie"
@@ -103,7 +103,7 @@ fish-list:
       length-min: 25
       length-max: 35
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
         lore:
         - "&7Magikarp used Splash!"
       skip-item-format: false
@@ -147,7 +147,7 @@ fish-list:
       length-min: 20
       length-max: 40
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
       commands:
       - "minecraft:effect @p minecraft:poison 3 1"
       - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" The jellyfish made you feel very bad!\",\"color\":\"none\"}]"
@@ -156,7 +156,7 @@ fish-list:
       length-min: 30
       length-max: 50
       icon:
-        id: "minecraft:dye"
+        id: "minecraft:ink_sac"
       commands:
       - "minecraft:effect @p minecraft:blindness 5 1"
       - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" The squid gifted you some darkness!\",\"color\":\"none\"}]"
@@ -165,66 +165,63 @@ fish-list:
       length-min: 40
       length-max: 75
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     SeaBream:
       display-name: "Sea Bream"
       length-min: 50
       length-max: 70
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     SeaBass:
       display-name: "Sea Bass"
       length-min: 60
       length-max: 100
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
   epic:
     Clownfish:
       display-name: "Clownfish"
       length-min: 10
       length-max: 18
       icon:
-        id: "minecraft:fish"
-        durability: 2
+        id: "minecraft:tropical_fish"
     Pufferfish:
       display-name: "Pufferfish"
       length-min: 20
       length-max: 30
       icon:
-        id: "minecraft:fish"
-        durability: 3
+        id: "minecraft:pufferfish"
     SeaTurtle:
       display-name: "Sea Turtle"
       length-min: 90
       length-max: 130
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Salmon:
       display-name: "Salmon"
       length-min: 100
       length-max: 130
       icon:
-        id: "minecraft:fish"
-        durability: 1
+        id: "minecraft:salmon"
     BlackDrum:
       display-name: "Black Drum"
       length-min: 100
       length-max: 180
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Tuna:
       display-name: "Tuna"
       length-min: 130
       length-max: 180
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
   legendary:
     BlueShark:
       display-name: "Blue Shark"
       length-min: 160
       length-max: 240
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
         lore:
         - "&7&oThe Toughest Fish"
         - "&7Get &9Strength I (2:00)&7 when you eat it."
@@ -236,7 +233,7 @@ fish-list:
       length-min: 600
       length-max: 650
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
         lore:
         - "&7&oThe Biggest Fish"
         - "&7Get &9full health and hunger&7"

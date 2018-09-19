@@ -59,37 +59,37 @@ fish-list:
       length-min: 3
       length-max: 8
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Anchovy:
       display-name: "Acciuga"
       length-min: 7
       length-max: 13
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Croaker:
       display-name: "Croaker"
       length-min: 12
       length-max: 15
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Crab:
       display-name: "Granchio"
       length-min: 10
       length-max: 15
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Mackerel:
       display-name: "Sgombro"
       length-min: 15
       length-max: 30
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Herring:
       display-name: "Aringa"
       length-min: 20
       length-max: 30
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
   junk:
     Pie:
       display-name: "Torta"
@@ -103,7 +103,7 @@ fish-list:
       length-min: 25
       length-max: 35
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
         lore:
         - "&7Magikarp usa Splash!"
       skip-item-format: false
@@ -147,7 +147,7 @@ fish-list:
       length-min: 20
       length-max: 40
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
       commands:
       - "minecraft:effect @p minecraft:poison 3 1"
       - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" La medusa ti fa sentire molto male!\",\"color\":\"none\"}]"
@@ -156,7 +156,7 @@ fish-list:
       length-min: 30
       length-max: 50
       icon:
-        id: "minecraft:dye"
+        id: "minecraft:ink_sac"
       commands:
       - "minecraft:effect @p minecraft:blindness 5 1"
       - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" Il polipo ti ha riempito di inchiostro!\",\"color\":\"none\"}]"
@@ -165,66 +165,63 @@ fish-list:
       length-min: 40
       length-max: 75
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     SeaBream:
       display-name: "Orata"
       length-min: 50
       length-max: 70
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     SeaBass:
       display-name: "Spigola"
       length-min: 60
       length-max: 100
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
   epic:
     Clownfish:
       display-name: "Pesce Pagliaccio"
       length-min: 10
       length-max: 18
       icon:
-        id: "minecraft:fish"
-        durability: 2
+        id: "minecraft:tropical_fish"
     Pufferfish:
       display-name: "Pesce Palla"
       length-min: 20
       length-max: 30
       icon:
-        id: "minecraft:fish"
-        durability: 3
+        id: "minecraft:pufferfish"
     SeaTurtle:
       display-name: "Tartaruga di mare"
       length-min: 90
       length-max: 130
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Salmon:
       display-name: "Salmone"
       length-min: 100
       length-max: 130
       icon:
-        id: "minecraft:fish"
-        durability: 1
+        id: "minecraft:salmon"
     BlackDrum:
       display-name: "Tamburello Nero"
       length-min: 100
       length-max: 180
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
     Tuna:
       display-name: "Tonno"
       length-min: 130
       length-max: 180
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
   legendary:
     BlueShark:
       display-name: "Squalo Blu"
       length-min: 160
       length-max: 240
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
         lore:
         - "&7&oIl pesce più resistente"
         - "&7Ricevi &9Forza I (2:00)&7 quando lo mangi."
@@ -236,7 +233,7 @@ fish-list:
       length-min: 600
       length-max: 650
       icon:
-        id: "minecraft:fish"
+        id: "minecraft:cod"
         lore:
         - "&7&oIl pesce più grande"
         - "&7Ricevi &9tutta la vita e la fame &7"
