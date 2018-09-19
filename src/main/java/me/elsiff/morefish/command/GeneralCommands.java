@@ -256,6 +256,11 @@ public class GeneralCommands implements CommandExecutor, TabCompleter {
                     return true;
                 }
 
+                if (plugin.getFishShopGUI() == null) {
+                    sender.sendMessage(plugin.getLocale().getString("shop-disabled"));
+                    return true;
+                }
+
                 Player player = getPlayer(args[1]);
 
                 if (player == null) {
