@@ -1,8 +1,5 @@
 package me.elsiff.morefish
 
-import me.elsiff.morefish.fishing.FishType
-import org.bukkit.Material
-import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
