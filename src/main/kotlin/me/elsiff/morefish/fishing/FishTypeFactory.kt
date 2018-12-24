@@ -1,6 +1,5 @@
 package me.elsiff.morefish.fishing
 
-import java.util.*
 
 /**
  * Created by elsiff on 2018-12-23.
@@ -33,9 +32,12 @@ class FishTypeFactory {
         return fishTypeMap[rarity]?.contains(fishType) ?: false
     }
 
-    fun pickRandomType(random: Random, rarity: FishRarity): FishType {
+    fun pickRandomRarity(): FishRarity = fishTypeMap.keys.random()
+
+    fun pickRandomType(): FishType = pickRandomType(pickRandomRarity())
+
+    fun pickRandomType(rarity: FishRarity): FishType {
         val fishTypes = fishTypeMap[rarity] ?: throw IllegalStateException("Rarity doesn't exist")
-        val index = random.nextInt(fishTypes.size)
-        return fishTypes[index]
+        return fishTypes.random()
     }
 }

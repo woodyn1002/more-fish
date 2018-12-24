@@ -13,9 +13,9 @@ data class FishRarity(
         val feature: Feature
 ) {
     data class Feature(
-            val additionalPrice: Double,
-            val noBroadcast: Boolean,
-            val noDisplay: Boolean,
-            val firework: Boolean
+            val additionalPrice: Double = 0.0,
+            val noBroadcast: Boolean = false,
+            val noDisplay: Boolean = false,
+            val firework: Boolean = false
     )
 }

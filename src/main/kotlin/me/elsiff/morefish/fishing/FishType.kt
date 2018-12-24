@@ -1,6 +1,8 @@
 package me.elsiff.morefish.fishing
 
 import org.bukkit.inventory.ItemStack
+import kotlin.math.floor
+import kotlin.random.Random
 
 /**
  * Created by elsiff on 2018-12-20.
@@ -17,4 +19,9 @@ data class FishType(
             val skipItemFormat: Boolean = false,
             val commands: List<String> = emptyList()
     )
+
+    fun generateFish(): Fish {
+        val length = lengthMin + Random.nextDouble() * (lengthMax - lengthMin)
+        return Fish(this, floor(length * 10) / 10)
+    }
 }
