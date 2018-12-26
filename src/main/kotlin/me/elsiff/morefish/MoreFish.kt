@@ -1,5 +1,7 @@
 package me.elsiff.morefish
 
+import co.aikar.commands.PaperCommandManager
+import me.elsiff.morefish.command.MainCommand
 import me.elsiff.morefish.fishing.FishTypeFactory
 import me.elsiff.morefish.fishing.catcheffect.BroadcastEffect
 import me.elsiff.morefish.fishing.catcheffect.CatchEffectFactory
@@ -11,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin
 /**
  * Created by elsiff on 2018-12-20.
  */
-object MoreFish : JavaPlugin() {
+class MoreFish : JavaPlugin() {
     private val fishTypes = FishTypeFactory()
     private val catchEffects = CatchEffectFactory()
     private val competition = FishingCompetition()
@@ -24,6 +26,9 @@ object MoreFish : JavaPlugin() {
             addEffect(BroadcastEffect())
             addEffect(CompetitionEffect(competition))
         }
+        val commands = PaperCommandManager(this)
+        commands.registerCommand(MainCommand())
+
         logger.info("Plugin has been enabled.")
     }
 
