@@ -27,7 +27,7 @@ class MoreFish : JavaPlugin() {
             addEffect(CompetitionEffect(competition))
         }
         val commands = PaperCommandManager(this)
-        commands.registerCommand(MainCommand())
+        commands.registerCommand(MainCommand(competition))
 
         logger.info("Plugin has been enabled.")
     }
