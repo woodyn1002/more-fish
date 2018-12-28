@@ -4,7 +4,7 @@ package me.elsiff.morefish.fishing
 /**
  * Created by elsiff on 2018-12-23.
  */
-class FishTypeFactory {
+class FishTypeTable {
     private val fishTypeMap = mutableMapOf<FishRarity, MutableList<FishType>>()
 
     fun addRarity(rarity: FishRarity) {

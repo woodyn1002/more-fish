@@ -3,9 +3,9 @@ package me.elsiff.morefish
 import co.aikar.commands.PaperCommandManager
 import me.elsiff.morefish.command.MainCommand
 import me.elsiff.morefish.configuration.FileConfigurationHandler
-import me.elsiff.morefish.fishing.FishTypeFactory
+import me.elsiff.morefish.fishing.FishTypeTable
 import me.elsiff.morefish.fishing.catcheffect.BroadcastEffect
-import me.elsiff.morefish.fishing.catcheffect.CatchEffectFactory
+import me.elsiff.morefish.fishing.catcheffect.CatchEffectCollection
 import me.elsiff.morefish.fishing.catcheffect.CompetitionEffect
 import me.elsiff.morefish.fishing.competition.FishingCompetition
 import me.elsiff.morefish.listener.FishingListener
@@ -51,8 +51,8 @@ class MoreFish : JavaPlugin() {
             val topNumber by IntValue("top-number")
         }
     }
-    private val fishTypes = FishTypeFactory()
-    private val catchEffects = CatchEffectFactory()
+    private val fishTypes = FishTypeTable()
+    private val catchEffects = CatchEffectCollection()
     private val competition = FishingCompetition()
 
     override fun onEnable() {

@@ -6,7 +6,7 @@ import org.bukkit.entity.Player
 /**
  * Created by elsiff on 2018-12-25.
  */
-class CatchEffectFactory {
+class CatchEffectCollection {
     val effects = mutableListOf<CatchEffect>()
 
     fun addEffect(effect: CatchEffect) = effects.add(effect)
