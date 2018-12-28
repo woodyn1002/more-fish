@@ -8,6 +8,7 @@ import me.elsiff.morefish.fishing.catcheffect.CatchEffectCollection
 import me.elsiff.morefish.fishing.catcheffect.CompetitionEffect
 import me.elsiff.morefish.fishing.competition.FishingCompetition
 import me.elsiff.morefish.listener.FishingListener
+import me.elsiff.morefish.resource.ResourceBundle
 import org.bukkit.plugin.java.JavaPlugin
 
 /**

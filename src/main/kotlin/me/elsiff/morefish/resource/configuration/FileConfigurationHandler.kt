@@ -1,4 +1,4 @@
-package me.elsiff.morefish.configuration
+package me.elsiff.morefish.resource.configuration
 
 import org.bukkit.configuration.Configuration
 import org.bukkit.configuration.file.FileConfiguration
@@ -36,5 +36,5 @@ abstract class FileConfigurationHandler : ConfigurationValueHandler.Root() {
     abstract inner class Section(
             parent: ConfigurationValueHandler,
             id: String
-    ) : ConfigurationValueHandler.Child(parent, parent.pathOf(id))
+    ) : Child(parent, parent.pathOf(id))
 }

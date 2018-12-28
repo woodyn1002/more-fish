@@ -1,4 +1,4 @@
-package me.elsiff.morefish.configuration
+package me.elsiff.morefish.resource.configuration
 
 import org.bukkit.Color
 import org.bukkit.OfflinePlayer
@@ -87,10 +87,16 @@ abstract class ConfigurationValueHandler {
 
     abstract fun pathOf(id: String): String
 
-    fun sections(): Set<ConfigurationSection> {
-        val cfg = getConfiguration()
-        return cfg.getKeys(false).map { cfg.getConfigurationSection(it) }.toSet()
+    fun childSections(id: String): Set<ConfigurationSection> {
+        val section = getConfiguration().getConfigurationSection(pathOf(id))
+        return section.getKeys(false).map {
+            section.getConfigurationSection(it)
+        }.toSet()
     }
 
     protected abstract fun getConfiguration(): Configuration
+
+    fun ConfigurationSection.childSections(): Set<ConfigurationSection> {
+        return getKeys(false).map { getConfigurationSection(it) }.toSet()
+    }
 }

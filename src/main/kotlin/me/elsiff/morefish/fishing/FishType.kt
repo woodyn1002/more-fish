@@ -1,5 +1,6 @@
 package me.elsiff.morefish.fishing
 
+import me.elsiff.morefish.fishing.condition.Condition
 import org.bukkit.inventory.ItemStack
 import kotlin.math.floor
 import kotlin.random.Random
@@ -17,7 +18,8 @@ data class FishType(
 ) {
     data class Feature(
             val skipItemFormat: Boolean = false,
-            val commands: List<String> = emptyList()
+            val commands: List<String> = emptyList(),
+            val conditions: List<Condition> = emptyList()
     )
 
     fun generateFish(): Fish {

@@ -8,6 +8,7 @@ import org.bukkit.ChatColor
 data class FishRarity(
         val name: String,
         val displayName: String,
+        val default: Boolean,
         val chance: Double,
         val color: ChatColor,
         val feature: Feature
