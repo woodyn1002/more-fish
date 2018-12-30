@@ -46,8 +46,8 @@ repositories {
     maven { url "http://repo.extendedclip.com/content/repositories/placeholderapi/" }
     maven { url "http://repo.dmulloy2.net/nexus/repository/public/" }
     maven { url "http://maven.sk89q.com/repo/" }
-    maven { url = "https://repo.aikar.co/content/groups/aikar/" }
-    maven { url = "https://hub.spigotmc.org/nexus/content/groups/public/" }
+    maven { url "https://repo.aikar.co/content/groups/aikar/" }
+    maven { url "https://hub.spigotmc.org/nexus/content/groups/public/" }
 }
 
 compileJava {
@@ -60,23 +60,23 @@ compileKotlin {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0"
 
-    compile "co.aikar:acf-core:0.5.0-SNAPSHOT"
-    compile "co.aikar:acf-paper:0.5.0-SNAPSHOT"
-    compileOnly group: 'com.comphenix.protocol', name: 'ProtocolLib-API', version: '4.2.1'
-    compileOnly group: 'com.sk89q', name: 'worldguard', version: '6.1'
-    compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.13-R0.1-SNAPSHOT'
-    compileOnly group: 'net.milkbowl.vault', name: 'VaultAPI', version: '1.6'
-    compileOnly group: 'net.citizensnpcs', name: 'citizensapi', version: '2.0.18-SNAPSHOT'
-    compileOnly group: 'me.clip', name: 'placeholderapi', version: '2.7.1'
-    compileOnly files('libs/mcMMO.jar')
-    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    implementation 'co.aikar:acf-core:0.5.0-SNAPSHOT'
+    implementation 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
     implementation 'com.beust:klaxon:5.0.1'
+    compileOnly 'com.comphenix.protocol:ProtocolLib-API:4.2.1'
+    compileOnly 'com.sk89q:worldguard:6.1'
+    compileOnly 'org.spigotmc:spigot:1.13-R0.1-SNAPSHOT'
+    compileOnly 'net.milkbowl.vault:VaultAPI:1.6'
+    compileOnly 'net.citizensnpcs:citizensapi:2.0.18-SNAPSHOT'
+    compileOnly 'me.clip:placeholderapi:2.7.1'
+    compileOnly files('libs/mcMMO.jar')
 }
 
 shadowJar {
