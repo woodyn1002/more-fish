@@ -10,6 +10,7 @@ import kotlin.random.Random
  */
 data class FishType(
         val name: String,
+        val rarity: FishRarity,
         val displayName: String,
         val lengthMin: Double,
         val lengthMax: Double,

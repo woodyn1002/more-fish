@@ -41,6 +41,7 @@ class FishResource : FileConfigurationHandler() {
                 FishType(
                         name = it.name,
                         displayName = ColorUtils.translate(it.getString("display-name")),
+                        rarity = rarity,
                         lengthMin = it.getDouble("length-min"),
                         lengthMax = it.getDouble("length-max"),
                         icon = it.getCustomItemStack("icon"),

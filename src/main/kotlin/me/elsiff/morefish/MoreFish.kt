@@ -7,6 +7,7 @@ import me.elsiff.morefish.fishing.catcheffect.BroadcastEffect
 import me.elsiff.morefish.fishing.catcheffect.CatchEffectCollection
 import me.elsiff.morefish.fishing.catcheffect.CompetitionEffect
 import me.elsiff.morefish.fishing.competition.FishingCompetition
+import me.elsiff.morefish.item.FishItemStackConverter
 import me.elsiff.morefish.listener.FishingListener
 import me.elsiff.morefish.resource.ResourceBundle
 import org.bukkit.plugin.java.JavaPlugin
@@ -19,12 +20,13 @@ class MoreFish : JavaPlugin() {
     private val fishTypes = FishTypeTable()
     private val catchEffects = CatchEffectCollection()
     private val competition = FishingCompetition()
+    private val converter = FishItemStackConverter(resources)
 
     override fun onEnable() {
         resources.loadAll()
 
         server.pluginManager.run {
-            registerEvents(FishingListener(fishTypes, catchEffects), this@MoreFish)
+            registerEvents(FishingListener(fishTypes, catchEffects, converter), this@MoreFish)
         }
         catchEffects.run {
             addEffect(BroadcastEffect())
