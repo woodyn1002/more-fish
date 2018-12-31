@@ -44,7 +44,8 @@ class FishItemStackConverter(
         return mapOf(
                 "%player%" to catcher.name,
                 "%rarity%" to fish.type.rarity.name.toUpperCase(),
-                "%raritycolor%" to fish.type.rarity.color.toString(),
+                "%rarity_color%" to fish.type.rarity.color.toString(),
+                "%length%" to fish.length.toString(),
                 "%fish%" to fish.type.displayName,
                 "%date%" to dateTimeFormatter.format(date)
         )
