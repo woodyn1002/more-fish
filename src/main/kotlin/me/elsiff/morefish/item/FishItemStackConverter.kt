@@ -1,6 +1,8 @@
 package me.elsiff.morefish.item
 
+import me.elsiff.morefish.PluginHooker
 import me.elsiff.morefish.fishing.Fish
+import me.elsiff.morefish.protocollib.ProtocolLibHooker
 import me.elsiff.morefish.resource.ResourceBundle
 import me.elsiff.morefish.util.StringUtils
 import org.bukkit.entity.Player
@@ -13,12 +15,14 @@ import java.time.format.DateTimeFormatter
  * Created by elsiff on 2018-12-28.
  */
 class FishItemStackConverter(
-        private val resources: ResourceBundle
+        private val resources: ResourceBundle,
+        private val protocolLib: ProtocolLibHooker
 ) {
     private val dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yy HH:mm")!!
 
     fun fish(itemStack: ItemStack): Fish {
-        return TODO("Not implemented")
+        PluginHooker.checkHooked(protocolLib)
+        return protocolLib.fishNbtHandler.readFishData(itemStack)
     }
 
     fun createItemStack(fish: Fish, catcher: Player, caughtDate: LocalDateTime): ItemStack {
@@ -29,6 +33,9 @@ class FishItemStackConverter(
                 displayName = StringUtils.format(itemFormat.displayName, replacement)
                 lore = itemFormat.lore.map { StringUtils.format(it, replacement) }
             }
+        }
+        if (protocolLib.hasHooked) {
+            protocolLib.fishNbtHandler.writeFishData(itemStack, fish)
         }
         return itemStack
     }

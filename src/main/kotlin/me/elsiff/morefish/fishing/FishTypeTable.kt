@@ -7,6 +7,24 @@ package me.elsiff.morefish.fishing
 class FishTypeTable {
     private val fishTypeMap = mutableMapOf<FishRarity, MutableList<FishType>>()
 
+    fun getRarity(name: String): FishRarity {
+        for (rarity in fishTypeMap.keys) {
+            if (rarity.name == name) {
+                return rarity
+            }
+        }
+        throw IllegalStateException("No such fish rarity found")
+    }
+
+    fun getType(name: String): FishType {
+        for (type in fishTypeMap.values.flatten()) {
+            if (type.name == name) {
+                return type
+            }
+        }
+        throw IllegalStateException("No such fish type found")
+    }
+
     fun addRarity(rarity: FishRarity) {
         fishTypeMap[rarity] = mutableListOf()
     }

@@ -2,6 +2,7 @@ package me.elsiff.morefish.resource.configuration
 
 import me.elsiff.morefish.item.edit
 import me.elsiff.morefish.item.editIfHas
+import me.elsiff.morefish.protocollib.ProtocolLibHooker
 import me.elsiff.morefish.util.ColorUtils
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -16,7 +17,7 @@ import java.util.*
 /**
  * Created by elsiff on 2018-12-28.
  */
-fun ConfigurationSection.getCustomItemStack(path: String): ItemStack {
+fun ConfigurationSection.getCustomItemStack(path: String, protocolLib: ProtocolLibHooker): ItemStack {
     val itemStack = ItemStack(
             Material.matchMaterial(getString("$path.id")),
             getInt("$path.amount", 1),
@@ -36,6 +37,8 @@ fun ConfigurationSection.getCustomItemStack(path: String): ItemStack {
         val uuid = UUID.fromString(getString("$path.skull-uuid"))
         owningPlayer = Bukkit.getOfflinePlayer(uuid)
     }
-    TODO("Apply skull-texture")
+    if (protocolLib.hasHooked && itemStack.itemMeta is SkullMeta) {
+        protocolLib.skullNbtHandler.writeTexture(itemStack, getString("$path.skull-texture"))
+    }
     return itemStack
 }

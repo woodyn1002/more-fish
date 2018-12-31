@@ -3,6 +3,7 @@ package me.elsiff.morefish.resource
 import me.elsiff.morefish.fishing.FishRarity
 import me.elsiff.morefish.fishing.FishType
 import me.elsiff.morefish.fishing.condition.Condition
+import me.elsiff.morefish.protocollib.ProtocolLibHooker
 import me.elsiff.morefish.resource.configuration.FileConfigurationHandler
 import me.elsiff.morefish.resource.configuration.getCustomItemStack
 import me.elsiff.morefish.util.ColorUtils
@@ -36,7 +37,7 @@ class FishResource : FileConfigurationHandler() {
     })
 
     inner class FishList : Section(this, "fish-list") {
-        fun getFromRarity(rarity: FishRarity): List<FishType> {
+        fun getFromRarity(rarity: FishRarity, protocolLib: ProtocolLibHooker): List<FishType> {
             return childSections(rarity.name).map {
                 FishType(
                         name = it.name,
@@ -44,7 +45,7 @@ class FishResource : FileConfigurationHandler() {
                         rarity = rarity,
                         lengthMin = it.getDouble("length-min"),
                         lengthMax = it.getDouble("length-max"),
-                        icon = it.getCustomItemStack("icon"),
+                        icon = it.getCustomItemStack("icon", protocolLib),
                         feature = FishType.Feature(
                                 skipItemFormat = it.getBoolean("skip-item-format", false),
                                 commands = it.getStringList("commands").map(ColorUtils::translate),

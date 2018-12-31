@@ -9,6 +9,7 @@ import me.elsiff.morefish.fishing.catcheffect.CompetitionEffect
 import me.elsiff.morefish.fishing.competition.FishingCompetition
 import me.elsiff.morefish.item.FishItemStackConverter
 import me.elsiff.morefish.listener.FishingListener
+import me.elsiff.morefish.protocollib.ProtocolLibHooker
 import me.elsiff.morefish.resource.ResourceBundle
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -20,7 +21,8 @@ class MoreFish : JavaPlugin() {
     private val fishTypes = FishTypeTable()
     private val catchEffects = CatchEffectCollection()
     private val competition = FishingCompetition()
-    private val converter = FishItemStackConverter(resources)
+    private val protocolLib = ProtocolLibHooker(fishTypes)
+    private val converter = FishItemStackConverter(resources, protocolLib)
 
     override fun onEnable() {
         resources.loadAll()
@@ -34,6 +36,8 @@ class MoreFish : JavaPlugin() {
         }
         val commands = PaperCommandManager(this)
         commands.registerCommand(MainCommand(competition))
+
+        protocolLib.hookIfEnabled(server.pluginManager)
 
         logger.info("Plugin has been enabled.")
     }
