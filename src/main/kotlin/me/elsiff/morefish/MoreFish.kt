@@ -38,6 +38,8 @@ class MoreFish : JavaPlugin() {
         commands.registerCommand(MainCommand(competition))
 
         protocolLib.hookIfEnabled(server.pluginManager)
+        fishTypes.load(resources.fish, protocolLib)
+        logger.info("Loaded ${fishTypes.rarities().size} rarities and ${fishTypes.types().size} fish types")
 
         logger.info("Plugin has been enabled.")
     }

@@ -1,11 +1,23 @@
 package me.elsiff.morefish.fishing
 
+import me.elsiff.morefish.protocollib.ProtocolLibHooker
+import me.elsiff.morefish.resource.FishResource
+
 
 /**
  * Created by elsiff on 2018-12-23.
  */
 class FishTypeTable {
     private val fishTypeMap = mutableMapOf<FishRarity, MutableList<FishType>>()
+
+    fun load(fishResource: FishResource, protocolLib: ProtocolLibHooker) {
+        fishResource.rarityList.forEach(this::addRarity)
+        fishTypeMap.keys.forEach { rarity ->
+            fishResource.fishList.getFromRarity(rarity, protocolLib).forEach { type ->
+                addType(type, rarity)
+            }
+        }
+    }
 
     fun getRarity(name: String): FishRarity {
         for (rarity in fishTypeMap.keys) {
@@ -24,6 +36,10 @@ class FishTypeTable {
         }
         throw IllegalStateException("No such fish type found")
     }
+
+    fun rarities(): Set<FishRarity> = fishTypeMap.keys.toSet()
+
+    fun types(): Set<FishType> = fishTypeMap.values.flatten().toSet()
 
     fun addRarity(rarity: FishRarity) {
         fishTypeMap[rarity] = mutableListOf()

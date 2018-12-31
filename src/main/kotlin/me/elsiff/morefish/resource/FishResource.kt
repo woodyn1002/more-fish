@@ -25,7 +25,7 @@ class FishResource : FileConfigurationHandler() {
                     displayName = ColorUtils.translate(it.getString("display-name")),
                     default = it.getBoolean("default", false),
                     chance = it.getDouble("chance", 0.0),
-                    color = ChatColor.valueOf(it.getString("color")),
+                    color = ChatColor.valueOf(it.getString("color").toUpperCase()),
                     feature = FishRarity.Feature(
                             additionalPrice = it.getDouble("additional-price", 0.0),
                             noBroadcast = it.getBoolean("no-broadcast", false),
@@ -58,6 +58,6 @@ class FishResource : FileConfigurationHandler() {
 
     val version by IntValue("version")
     val itemFormat = ItemFormat()
-    val rarityList = RarityList()
+    val rarityList by RarityList()
     val fishList = FishList()
 }
