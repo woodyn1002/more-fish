@@ -4,8 +4,8 @@ import me.elsiff.morefish.item.edit
 import me.elsiff.morefish.item.editIfHas
 import me.elsiff.morefish.protocollib.ProtocolLibHooker
 import me.elsiff.morefish.util.ColorUtils
+import me.elsiff.morefish.util.NamespacedKeyUtils
 import org.bukkit.Bukkit
-import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.enchantments.Enchantment
@@ -18,8 +18,9 @@ import java.util.*
  * Created by elsiff on 2018-12-28.
  */
 fun ConfigurationSection.getCustomItemStack(path: String, protocolLib: ProtocolLibHooker): ItemStack {
+    val material = NamespacedKeyUtils.material(getString("$path.id"))
     val itemStack = ItemStack(
-            Material.matchMaterial(getString("$path.id")),
+            material,
             getInt("$path.amount", 1),
             getInt("$path.durability", 0).toShort()
     )
