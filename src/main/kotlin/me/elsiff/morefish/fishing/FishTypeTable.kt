@@ -42,6 +42,13 @@ class FishTypeTable {
     fun types(): Set<FishType> = fishTypeMap.values.flatten().toSet()
 
     fun addRarity(rarity: FishRarity) {
+        require(!rarity.default || !::defaultRarity.isInitialized) { "Default rarity must be only one" }
+        val probabilitySum = fishTypeMap.keys
+                .plus(rarity)
+                .filter { !it.default }
+                .sumByDouble { it.probability }
+        check(probabilitySum <= 1.0) { "Sum of rarity probabilities must not be bigger than 1.0" }
+
         fishTypeMap[rarity] = mutableListOf()
     }
 
