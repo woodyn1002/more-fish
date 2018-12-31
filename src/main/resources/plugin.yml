@@ -3,6 +3,7 @@ author: @author@
 website: @website@
 version: @project.version@
 main: @mainClass@
+api-version: 1.13
 softdepend: [Vault, Citizens, PlaceholderAPI, ProtocolLib, mcMMO, WorldGuard]
 commands:
   morefish:
