@@ -7,11 +7,15 @@ import org.bukkit.entity.Player
  * Created by elsiff on 2018-12-25.
  */
 class CatchEffectCollection {
-    val effects = mutableListOf<CatchEffect>()
+    val effects: List<CatchEffect> = mutableListOf()
 
-    fun addEffect(effect: CatchEffect) = effects.add(effect)
+    fun addEffect(effect: CatchEffect) {
+        effects as MutableList
+        effects.add(effect)
+    }
 
     fun removeEffect(effect: CatchEffect) {
+        effects as MutableList
         if (effect !in effects)
             throw IllegalStateException("Catch Effect doesn't exist")
         else
