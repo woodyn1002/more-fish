@@ -72,7 +72,7 @@ dependencies {
     implementation 'com.beust:klaxon:5.0.1'
     compileOnly 'com.comphenix.protocol:ProtocolLib-API:4.2.1'
     compileOnly 'com.sk89q:worldguard:6.1'
-    compileOnly 'org.spigotmc:spigot:1.13-R0.1-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
     compileOnly 'net.milkbowl.vault:VaultAPI:1.6'
     compileOnly 'net.citizensnpcs:citizensapi:2.0.18-SNAPSHOT'
     compileOnly 'me.clip:placeholderapi:2.7.1'
