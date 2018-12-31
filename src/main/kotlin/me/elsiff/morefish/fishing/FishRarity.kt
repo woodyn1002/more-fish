@@ -9,7 +9,7 @@ data class FishRarity(
         val name: String,
         val displayName: String,
         val default: Boolean,
-        val chance: Double,
+        val probability: Double,
         val color: ChatColor,
         val feature: Feature
 ) {

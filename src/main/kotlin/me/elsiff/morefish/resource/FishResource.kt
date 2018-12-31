@@ -24,7 +24,7 @@ class FishResource : FileConfigurationHandler() {
                     name = it.name,
                     displayName = ColorUtils.translate(it.getString("display-name")),
                     default = it.getBoolean("default", false),
-                    chance = it.getDouble("chance", 0.0),
+                    probability = it.getDouble("chance", 0.0) / 100.0,
                     color = ChatColor.valueOf(it.getString("color").toUpperCase()),
                     feature = FishRarity.Feature(
                             additionalPrice = it.getDouble("additional-price", 0.0),
