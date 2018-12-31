@@ -5,10 +5,10 @@ package me.elsiff.morefish.util
  */
 object StringUtils {
     fun format(string: String, placeholders: Map<String, String>): String {
-        val builder = StringBuilder(string)
+        var replaced = string
         placeholders.forEach { placeholder, replacement ->
-            builder.replace(placeholder.toRegex(), replacement)
+            replaced = replaced.replace(placeholder, replacement)
         }
-        return ColorUtils.translate(builder.toString())
+        return ColorUtils.translate(replaced)
     }
 }
