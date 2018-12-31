@@ -10,18 +10,21 @@ class FishingCompetition {
     var state = State.DISABLED
 
     fun enable() {
+        checkStateDisabled()
+
         records.clear()
         state = State.ENABLED
     }
 
     fun disable() {
+        checkStateEnabled()
+
         state = State.DISABLED
     }
 
     fun putRecord(record: Record) {
-        if (state != State.ENABLED) {
-            throw IllegalStateException("Fishing competition hasn't enabled")
-        }
+        checkStateEnabled()
+
         records.removeIf { it.fisher == record.fisher && it.fish.length > record.fish.length }
         records.add(record)
     }
@@ -36,5 +39,13 @@ class FishingCompetition {
 
     fun clear() {
         records.clear()
+    }
+
+    private fun checkStateEnabled() {
+        check(state == State.ENABLED) { "Fishing competition hasn't enabled" }
+    }
+
+    private fun checkStateDisabled() {
+        check(state == State.DISABLED) { "Fishing competition hasn't disabled" }
     }
 }

@@ -24,6 +24,8 @@ data class FishType(
     )
 
     fun generateFish(): Fish {
+        check(lengthMin <= lengthMax) { "Max-length must not be smaller than min-length" }
+
         val length = lengthMin + Random.nextDouble() * (lengthMax - lengthMin)
         return Fish(this, floor(length * 10) / 10)
     }

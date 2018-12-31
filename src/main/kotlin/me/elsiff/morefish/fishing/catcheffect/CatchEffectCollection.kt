@@ -15,11 +15,10 @@ class CatchEffectCollection {
     }
 
     fun removeEffect(effect: CatchEffect) {
+        check(effect in effects) { "Catch Effect doesn't exist" }
+
         effects as MutableList
-        if (effect !in effects)
-            throw IllegalStateException("Catch Effect doesn't exist")
-        else
-            effects.remove(effect)
+        effects.remove(effect)
     }
 
     fun playAll(catcher: Player, fish: Fish) {

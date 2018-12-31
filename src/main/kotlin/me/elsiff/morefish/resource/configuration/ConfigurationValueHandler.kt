@@ -34,10 +34,8 @@ abstract class ConfigurationValueHandler {
             val path = pathOf(id)
             val cfg = getConfiguration()
 
-            if (!cfg.contains(path))
-                throw IllegalStateException("There's no path named '$path'")
-            else
-                return getter(cfg, path)
+            check(cfg.contains(path)) { "There's no path named '$path'" }
+            return getter(cfg, path)
         }
 
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
