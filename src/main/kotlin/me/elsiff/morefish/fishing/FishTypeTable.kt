@@ -2,6 +2,7 @@ package me.elsiff.morefish.fishing
 
 import me.elsiff.morefish.protocollib.ProtocolLibHooker
 import me.elsiff.morefish.resource.FishResource
+import kotlin.random.Random
 
 
 /**
@@ -9,6 +10,7 @@ import me.elsiff.morefish.resource.FishResource
  */
 class FishTypeTable {
     private val fishTypeMap = mutableMapOf<FishRarity, MutableList<FishType>>()
+    private lateinit var defaultRarity: FishRarity
 
     fun load(fishResource: FishResource, protocolLib: ProtocolLibHooker) {
         fishResource.rarityList.forEach(this::addRarity)
@@ -50,6 +52,8 @@ class FishTypeTable {
         check(probabilitySum <= 1.0) { "Sum of rarity probabilities must not be bigger than 1.0" }
 
         fishTypeMap[rarity] = mutableListOf()
+        if (rarity.default)
+            defaultRarity = rarity
     }
 
     fun removeRarity(rarity: FishRarity) = fishTypeMap.remove(rarity)
@@ -73,7 +77,20 @@ class FishTypeTable {
         return fishTypeMap[rarity]?.contains(fishType) ?: false
     }
 
-    fun pickRandomRarity(): FishRarity = fishTypeMap.keys.random()
+    fun pickRandomRarity(): FishRarity {
+        val rarities = fishTypeMap.keys
+        val randomVal = Random.nextDouble()
+        var chanceSum = 0.0
+        for (rarity in rarities) {
+            if (!rarity.default) {
+                chanceSum += rarity.probability
+                if (randomVal <= chanceSum) {
+                    return rarity
+                }
+            }
+        }
+        return defaultRarity
+    }
 
     fun pickRandomType(): FishType = pickRandomType(pickRandomRarity())
 
