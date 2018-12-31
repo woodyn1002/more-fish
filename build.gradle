@@ -79,6 +79,10 @@ dependencies {
     compileOnly files('libs/mcMMO.jar')
 }
 
+configurations {
+    testCompile.extendsFrom compileOnly
+}
+
 shadowJar {
     relocate 'co.aikar.commands', "${mainPackage}.acf"
 }
