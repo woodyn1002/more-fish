@@ -6,7 +6,7 @@ import co.aikar.commands.annotation.Default
 import co.aikar.commands.annotation.Subcommand
 import me.elsiff.morefish.MoreFish
 import me.elsiff.morefish.fishing.competition.FishingCompetition
-import org.bukkit.entity.Player
+import org.bukkit.command.CommandSender
 
 /**
  * Created by elsiff on 2018-12-26.
@@ -20,55 +20,55 @@ class MainCommand(
 
     @Default
     @Subcommand("help")
-    fun help(player: Player, args: Array<String>) {
-        player.sendMessage("Hello World!")
+    fun help(sender: CommandSender, args: Array<String>) {
+        sender.sendMessage("Hello World!")
     }
 
     @Subcommand("start")
-    fun start(player: Player, args: Array<String>) {
+    fun start(sender: CommandSender, args: Array<String>) {
         if (competition.state != FishingCompetition.State.ENABLED) {
             if (args.size > 1) {
                 val runningTime = args[1].toInt()
-                player.sendMessage("Fish competition has been enabled with $runningTime seconds")
+                sender.sendMessage("Fish competition has been enabled with $runningTime seconds")
             } else {
                 competition.enable()
-                player.sendMessage("Fish competition has been enabled")
+                sender.sendMessage("Fish competition has been enabled")
             }
         } else {
-            player.sendMessage("Fish competition is already enabled")
+            sender.sendMessage("Fish competition is already enabled")
         }
     }
 
     @Subcommand("stop|end")
-    fun stop(player: Player, args: Array<String>) {
+    fun stop(sender: CommandSender, args: Array<String>) {
         if (competition.state != FishingCompetition.State.DISABLED) {
             competition.disable()
-            player.sendMessage("Fish competition has been disabled")
+            sender.sendMessage("Fish competition has been disabled")
         } else {
-            player.sendMessage("Fish competition is already disabled")
+            sender.sendMessage("Fish competition is already disabled")
         }
     }
 
     @Subcommand("top|ranking")
-    fun top(player: Player, args: Array<String>) {
+    fun top(sender: CommandSender, args: Array<String>) {
         competition.top(5).forEachIndexed { index, record ->
-            player.sendMessage("[$index] ${record.fisher.name}, ${record.fish.length}cm")
+            sender.sendMessage("[$index] ${record.fisher.name}, ${record.fish.length}cm")
         }
     }
 
     @Subcommand("clear")
-    fun clear(player: Player, args: Array<String>) {
+    fun clear(sender: CommandSender, args: Array<String>) {
         if (competition.state != FishingCompetition.State.ENABLED) {
             competition.clear()
-            player.sendMessage("Fish competition has been cleared")
+            sender.sendMessage("Fish competition has been cleared")
         } else {
-            player.sendMessage("Fish competition isn't ongoing now")
+            sender.sendMessage("Fish competition isn't ongoing now")
         }
     }
 
     @Subcommand("reload")
-    fun reload(player: Player, args: Array<String>) {
+    fun reload(sender: CommandSender, args: Array<String>) {
         plugin.loadAndApplyResources()
-        player.sendMessage(resources.lang.reloadConfig)
+        sender.sendMessage(resources.lang.reloadConfig)
     }
 }
