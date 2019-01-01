@@ -21,6 +21,11 @@ class CatchEffectCollection {
         effects.remove(effect)
     }
 
+    fun clear() {
+        effects as MutableList
+        effects.clear()
+    }
+
     fun playAll(catcher: Player, fish: Fish) {
         effects.forEach { it.play(catcher, fish) }
     }

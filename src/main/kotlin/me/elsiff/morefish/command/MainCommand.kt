@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand
 import co.aikar.commands.annotation.CommandAlias
 import co.aikar.commands.annotation.Default
 import co.aikar.commands.annotation.Subcommand
+import me.elsiff.morefish.MoreFish
 import me.elsiff.morefish.fishing.competition.FishingCompetition
 import org.bukkit.entity.Player
 
@@ -12,8 +13,11 @@ import org.bukkit.entity.Player
  */
 @CommandAlias("morefish|mf|fish")
 class MainCommand(
-        private val competition: FishingCompetition
+        private val plugin: MoreFish
 ) : BaseCommand() {
+    private val competition = plugin.competition
+    private val resources = plugin.resources
+
     @Default
     @Subcommand("help")
     fun help(player: Player, args: Array<String>) {
@@ -64,6 +68,7 @@ class MainCommand(
 
     @Subcommand("reload")
     fun reload(player: Player, args: Array<String>) {
-        player.sendMessage("Configuration files have been reloaded")
+        plugin.loadAndApplyResources()
+        player.sendMessage(resources.lang.reloadConfig)
     }
 }

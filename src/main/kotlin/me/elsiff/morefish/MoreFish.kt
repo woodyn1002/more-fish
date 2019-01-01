@@ -25,26 +25,31 @@ class MoreFish : JavaPlugin() {
     val converter = FishItemStackConverter(resources, protocolLib)
 
     override fun onEnable() {
-        resources.loadAll()
-
         server.pluginManager.run {
             registerEvents(FishingListener(fishTypes, catchEffects, converter), this@MoreFish)
         }
-        catchEffects.run {
-            addEffect(BroadcastEffect())
-            addEffect(CompetitionEffect(competition))
-        }
-        val commands = PaperCommandManager(this)
-        commands.registerCommand(MainCommand(competition))
 
-        protocolLib.hookIfEnabled(server.pluginManager)
-        fishTypes.load(resources.fish, protocolLib)
-        logger.info("Loaded ${fishTypes.rarities().size} rarities and ${fishTypes.types().size} fish types")
+        val commands = PaperCommandManager(this)
+        commands.registerCommand(MainCommand(this))
+
+        loadAndApplyResources()
 
         logger.info("Plugin has been enabled.")
     }
 
     override fun onDisable() {
         logger.info("Plugin has been disabled.")
+    }
+
+    fun loadAndApplyResources() {
+        resources.loadAll()
+        catchEffects.run {
+            clear()
+            addEffect(BroadcastEffect())
+            addEffect(CompetitionEffect(competition))
+        }
+        protocolLib.hookIfEnabled(server.pluginManager)
+        fishTypes.load(resources.fish, protocolLib)
+        logger.info("Loaded ${fishTypes.rarities().size} rarities and ${fishTypes.types().size} fish types")
     }
 }
