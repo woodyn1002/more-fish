@@ -61,12 +61,12 @@ class FishTypeTable {
     fun containsRarity(rarity: FishRarity): Boolean = fishTypeMap.contains(rarity)
 
     fun addType(fishType: FishType, rarity: FishRarity) {
-        val fishTypes = fishTypeMap[rarity] ?: throw IllegalStateException("Rarity doesn't exist")
+        val fishTypes = fishTypesOf(rarity)
         fishTypes.add(fishType)
     }
 
     fun removeType(fishType: FishType, rarity: FishRarity) {
-        val fishTypes = fishTypeMap[rarity] ?: throw IllegalStateException("Rarity doesn't exist")
+        val fishTypes = fishTypesOf(rarity)
         if (fishType !in fishTypes)
             throw IllegalStateException("Fish Type doesn't exist")
         else
@@ -95,7 +95,11 @@ class FishTypeTable {
     fun pickRandomType(): FishType = pickRandomType(pickRandomRarity())
 
     fun pickRandomType(rarity: FishRarity): FishType {
-        val fishTypes = fishTypeMap[rarity] ?: throw IllegalStateException("Rarity doesn't exist")
+        val fishTypes = fishTypesOf(rarity)
         return fishTypes.random()
+    }
+
+    private fun fishTypesOf(rarity: FishRarity): MutableList<FishType> {
+        return fishTypeMap[rarity] ?: throw IllegalStateException("Rarity doesn't exist")
     }
 }
