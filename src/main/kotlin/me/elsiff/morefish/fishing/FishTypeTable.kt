@@ -10,9 +10,11 @@ import kotlin.random.Random
  */
 class FishTypeTable {
     private val fishTypeMap = mutableMapOf<FishRarity, MutableList<FishType>>()
-    private lateinit var defaultRarity: FishRarity
+    private var defaultRarity: FishRarity? = null
 
     fun load(fishResource: FishResource, protocolLib: ProtocolLibHooker) {
+        defaultRarity = null
+        fishTypeMap.clear()
         fishResource.rarityList.forEach(this::addRarity)
         fishTypeMap.keys.forEach { rarity ->
             fishResource.fishList.getFromRarity(rarity, protocolLib).forEach { type ->
@@ -44,7 +46,7 @@ class FishTypeTable {
     fun types(): Set<FishType> = fishTypeMap.values.flatten().toSet()
 
     fun addRarity(rarity: FishRarity) {
-        require(!rarity.default || !::defaultRarity.isInitialized) { "Default rarity must be only one" }
+        require(!rarity.default || defaultRarity == null) { "Default rarity must be only one" }
         val probabilitySum = fishTypeMap.keys
                 .plus(rarity)
                 .filter { !it.default }
@@ -89,7 +91,7 @@ class FishTypeTable {
                 }
             }
         }
-        return defaultRarity
+        return defaultRarity ?: throw IllegalStateException("Default rarity doesn't exist")
     }
 
     fun pickRandomType(): FishType = pickRandomType(pickRandomRarity())
