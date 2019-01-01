@@ -17,12 +17,12 @@ import org.bukkit.plugin.java.JavaPlugin
  * Created by elsiff on 2018-12-20.
  */
 class MoreFish : JavaPlugin() {
-    private val resources = ResourceBundle(this)
-    private val fishTypes = FishTypeTable()
-    private val catchEffects = CatchEffectCollection()
-    private val competition = FishingCompetition()
-    private val protocolLib = ProtocolLibHooker(fishTypes)
-    private val converter = FishItemStackConverter(resources, protocolLib)
+    val resources = ResourceBundle(this)
+    val fishTypes = FishTypeTable()
+    val catchEffects = CatchEffectCollection()
+    val competition = FishingCompetition()
+    val protocolLib = ProtocolLibHooker(fishTypes)
+    val converter = FishItemStackConverter(resources, protocolLib)
 
     override fun onEnable() {
         resources.loadAll()
