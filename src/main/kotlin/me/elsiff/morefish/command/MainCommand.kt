@@ -69,6 +69,6 @@ class MainCommand(
     @Subcommand("reload")
     fun reload(sender: CommandSender, args: Array<String>) {
         plugin.loadAndApplyResources()
-        sender.sendMessage(resources.lang.reloadConfig)
+        sender.sendMessage(resources.lang.reloadConfig.formattedEmpty())
     }
 }

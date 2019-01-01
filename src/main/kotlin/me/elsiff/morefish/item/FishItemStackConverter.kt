@@ -4,7 +4,8 @@ import me.elsiff.morefish.PluginHooker
 import me.elsiff.morefish.fishing.Fish
 import me.elsiff.morefish.protocollib.ProtocolLibHooker
 import me.elsiff.morefish.resource.ResourceBundle
-import me.elsiff.morefish.util.StringUtils
+import me.elsiff.morefish.resource.template.TextListTemplate
+import me.elsiff.morefish.resource.template.TextTemplate
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
@@ -30,8 +31,8 @@ class FishItemStackConverter(
         val replacement = getFormatReplacementMap(fish, catcher, caughtDate)
         resources.fish.itemFormat.let { itemFormat ->
             itemStack.edit<ItemMeta> {
-                displayName = StringUtils.format(itemFormat.displayName, replacement)
-                lore = itemFormat.lore.map { StringUtils.format(it, replacement) }
+                displayName = TextTemplate.format(itemFormat.displayName, replacement)
+                lore = TextListTemplate.format(itemFormat.lore, replacement)
             }
         }
         if (protocolLib.hasHooked) {
