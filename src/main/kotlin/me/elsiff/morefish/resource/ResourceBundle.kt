@@ -1,23 +1,16 @@
 package me.elsiff.morefish.resource
 
-import org.bukkit.plugin.java.JavaPlugin
-import java.nio.file.Paths
+import me.elsiff.morefish.protocollib.ProtocolLibHooker
+import me.elsiff.morefish.resource.template.TemplateBundle
+import org.bukkit.configuration.Configuration
 
 /**
- * Created by elsiff on 2018-12-28.
+ * Created by elsiff on 2019-01-02.
  */
-class ResourceBundle(
-        private val plugin: JavaPlugin
-) {
-    val config = ConfigResource()
-    val fish = FishResource()
-    val lang = LangResource()
-
-    fun loadAll() {
-        config.load(plugin, Paths.get("config.yml"))
-        config.general.locale.let { locale ->
-            fish.load(plugin, Paths.get("locale", "fish_$locale.yml"))
-            lang.load(plugin, Paths.get("locale", "lang_$locale.yml"))
-        }
-    }
+class ResourceBundle {
+    lateinit var config: Configuration
+    lateinit var fish: Configuration
+    lateinit var lang: Configuration
+    lateinit var templates: TemplateBundle
+    var protocolLib = ProtocolLibHooker()
 }

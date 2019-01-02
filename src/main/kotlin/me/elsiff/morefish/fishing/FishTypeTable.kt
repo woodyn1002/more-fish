@@ -1,23 +1,28 @@
 package me.elsiff.morefish.fishing
 
-import me.elsiff.morefish.protocollib.ProtocolLibHooker
-import me.elsiff.morefish.resource.FishResource
+import me.elsiff.morefish.resource.ResourceBundle
+import me.elsiff.morefish.resource.ResourceReceiver
+import me.elsiff.morefish.resource.configuration.getFishRarityList
+import me.elsiff.morefish.resource.configuration.getFishTypeList
 import kotlin.random.Random
 
 
 /**
  * Created by elsiff on 2018-12-23.
  */
-class FishTypeTable {
+class FishTypeTable : ResourceReceiver {
     private val fishTypeMap = mutableMapOf<FishRarity, MutableList<FishType>>()
     private var defaultRarity: FishRarity? = null
 
-    fun load(fishResource: FishResource, protocolLib: ProtocolLibHooker) {
+    override fun receiveResource(resources: ResourceBundle) {
         defaultRarity = null
         fishTypeMap.clear()
-        fishResource.rarityList.forEach(this::addRarity)
+        resources.fish.getFishRarityList("rarity-list").forEach(this::addRarity)
         fishTypeMap.keys.forEach { rarity ->
-            fishResource.fishList.getFromRarity(rarity, protocolLib).forEach { type ->
+            val skullNbtHandler = with(resources.protocolLib) {
+                if (hasHooked) skullNbtHandler else null
+            }
+            resources.fish.getFishTypeList("fish-list", rarity, skullNbtHandler).forEach { type ->
                 addType(type, rarity)
             }
         }

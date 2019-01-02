@@ -5,13 +5,17 @@ import co.aikar.commands.annotation.CommandAlias
 import co.aikar.commands.annotation.CommandPermission
 import co.aikar.commands.annotation.Default
 import co.aikar.commands.annotation.Subcommand
-import me.elsiff.morefish.MoreFish
 import me.elsiff.morefish.fishing.competition.FishingCompetition
 import me.elsiff.morefish.fishing.competition.Record
+import me.elsiff.morefish.resource.ResourceBundle
+import me.elsiff.morefish.resource.ResourceProvider
+import me.elsiff.morefish.resource.ResourceReceiver
+import me.elsiff.morefish.resource.template.TemplateBundle
 import me.elsiff.morefish.util.NumberUtils
 import org.bukkit.ChatColor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import org.bukkit.plugin.PluginDescriptionFile
 
 
 /**
@@ -19,20 +23,25 @@ import org.bukkit.entity.Player
  */
 @CommandAlias("morefish|mf|fish")
 class MainCommand(
-        private val plugin: MoreFish
-) : BaseCommand() {
-    private val competition = plugin.competition
-    private val resources = plugin.resources
+        private val pluginInfo: PluginDescriptionFile,
+        private val competition: FishingCompetition,
+        private val resourceProvider: ResourceProvider
+) : BaseCommand(), ResourceReceiver {
+    private lateinit var templates: TemplateBundle
+
+    override fun receiveResource(resources: ResourceBundle) {
+        templates = resources.templates
+    }
 
     @Default
     @Subcommand("help")
     @CommandPermission("morefish.help")
     fun help(sender: CommandSender) {
-        val pluginName = plugin.description.name
+        val pluginName = pluginInfo.name
         val prefix = "${ChatColor.AQUA}[$pluginName]${ChatColor.RESET} "
         sender.sendMessage(prefix +
                 "${ChatColor.DARK_AQUA}> ===== " +
-                "${ChatColor.AQUA}${ChatColor.BOLD}$pluginName ${ChatColor.AQUA}v${plugin.description.version}" +
+                "${ChatColor.AQUA}${ChatColor.BOLD}$pluginName ${ChatColor.AQUA}v${pluginInfo.version}" +
                 "${ChatColor.DARK_AQUA} ===== <")
         val label = execCommandLabel
         sender.sendMessage("$prefix/$label help")
@@ -53,22 +62,22 @@ class MainCommand(
                 try {
                     val runningTime = args[0].toLong()
                     if (runningTime < 0) {
-                        sender.sendMessage(resources.lang.notPositive.formattedEmpty())
+                        sender.sendMessage(templates.notPositive.formattedEmpty())
                     } else {
                         competition.enableWithTimer(runningTime * 20)
-                        sender.sendMessage(resources.lang.contestStartTimer.formatted(mapOf(
-                                "%time%" to resources.lang.formatTime(runningTime)
+                        sender.sendMessage(templates.contestStartTimer.formatted(mapOf(
+                                "%time%" to templates.formatTime(runningTime)
                         )))
                     }
                 } catch (e: NumberFormatException) {
-                    sender.sendMessage(resources.lang.notNumber.formatted(mapOf("%s" to args[0])))
+                    sender.sendMessage(templates.notNumber.formatted(mapOf("%s" to args[0])))
                 }
             } else {
                 competition.enable()
-                sender.sendMessage(resources.lang.contestStart.formattedEmpty())
+                sender.sendMessage(templates.contestStart.formattedEmpty())
             }
         } else {
-            sender.sendMessage(resources.lang.alreadyOngoing.formattedEmpty())
+            sender.sendMessage(templates.alreadyOngoing.formattedEmpty())
         }
     }
 
@@ -77,9 +86,9 @@ class MainCommand(
     fun stop(sender: CommandSender) {
         if (competition.state != FishingCompetition.State.DISABLED) {
             competition.disable()
-            sender.sendMessage(resources.lang.contestStop.formattedEmpty())
+            sender.sendMessage(templates.contestStop.formattedEmpty())
         } else {
-            sender.sendMessage(resources.lang.alreadyStopped.formattedEmpty())
+            sender.sendMessage(templates.alreadyStopped.formattedEmpty())
         }
     }
 
@@ -87,18 +96,18 @@ class MainCommand(
     @CommandPermission("morefish.top")
     fun top(sender: CommandSender) {
         if (competition.ranking().isEmpty()) {
-            sender.sendMessage(resources.lang.topNoRecord.formattedEmpty())
+            sender.sendMessage(templates.topNoRecord.formattedEmpty())
         } else {
             competition.top(5).forEachIndexed { index, record ->
                 val number = index + 1
-                sender.sendMessage(resources.lang.topList.formatted(topReplacementOf(number, record)))
+                sender.sendMessage(templates.topList.formatted(topReplacementOf(number, record)))
             }
         }
 
         if (sender is Player) {
             competition.getRecordRanked(sender).let {
                 val placeholders = topReplacementOf(it.first, it.second)
-                sender.sendMessage(resources.lang.topMine.formatted(placeholders))
+                sender.sendMessage(templates.topMine.formatted(placeholders))
             }
         }
     }
@@ -117,17 +126,18 @@ class MainCommand(
     @CommandPermission("morefish.admin")
     fun clear(sender: CommandSender) {
         competition.clear()
-        sender.sendMessage(resources.lang.clearRecords.formattedEmpty())
+        sender.sendMessage(templates.clearRecords.formattedEmpty())
     }
 
     @Subcommand("reload")
     @CommandPermission("morefish.admin")
     fun reload(sender: CommandSender) {
         try {
-            plugin.loadAndApplyResources()
-            sender.sendMessage(resources.lang.reloadConfig.formattedEmpty())
+            resourceProvider.provideAll()
+            sender.sendMessage(templates.reloadConfig.formattedEmpty())
         } catch (e: Exception) {
-            sender.sendMessage(resources.lang.failedToReload.formattedEmpty())
+            e.printStackTrace()
+            sender.sendMessage(templates.failedToReload.formattedEmpty())
         }
     }
 }

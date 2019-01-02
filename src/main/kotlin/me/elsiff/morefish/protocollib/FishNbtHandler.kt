@@ -9,9 +9,7 @@ import org.bukkit.inventory.ItemStack
 /**
  * Created by elsiff on 2018-12-31.
  */
-class FishNbtHandler(
-        private val fishTypes: FishTypeTable
-) : ItemStackNbtHandler {
+class FishNbtHandler : ItemStackNbtHandler {
     fun writeFishData(itemStack: ItemStack, fish: Fish) {
         requireCraftItemStack(itemStack)
 
@@ -27,7 +25,7 @@ class FishNbtHandler(
         NbtFactory.setItemTag(itemStack, tag)
     }
 
-    fun readFishData(itemStack: ItemStack): Fish {
+    fun readFishData(itemStack: ItemStack, fishTypes: FishTypeTable): Fish {
         requireCraftItemStack(itemStack)
 
         val tag = NbtFactory.fromItemTag(itemStack) as NbtCompound

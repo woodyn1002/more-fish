@@ -1,9 +1,12 @@
 package me.elsiff.morefish.item
 
-import me.elsiff.morefish.PluginHooker
 import me.elsiff.morefish.fishing.Fish
-import me.elsiff.morefish.protocollib.ProtocolLibHooker
+import me.elsiff.morefish.fishing.FishTypeTable
+import me.elsiff.morefish.protocollib.FishNbtHandler
 import me.elsiff.morefish.resource.ResourceBundle
+import me.elsiff.morefish.resource.ResourceReceiver
+import me.elsiff.morefish.resource.configuration.getTextListTemplate
+import me.elsiff.morefish.resource.configuration.getTextTemplate
 import me.elsiff.morefish.resource.template.TextListTemplate
 import me.elsiff.morefish.resource.template.TextTemplate
 import org.bukkit.entity.Player
@@ -16,28 +19,36 @@ import java.time.format.DateTimeFormatter
  * Created by elsiff on 2018-12-28.
  */
 class FishItemStackConverter(
-        private val resources: ResourceBundle,
-        private val protocolLib: ProtocolLibHooker
-) {
+        private val fishTypes: FishTypeTable
+) : ResourceReceiver {
     private val dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yy HH:mm")!!
+    private lateinit var displayNameFormat: TextTemplate
+    private lateinit var loreFormat: TextListTemplate
+    private var fishNbtHandler: FishNbtHandler? = null
+
+    override fun receiveResource(resources: ResourceBundle) {
+        resources.fish.getConfigurationSection("item-format").let {
+            displayNameFormat = it.getTextTemplate("display-name")
+            loreFormat = it.getTextListTemplate("lore")
+        }
+        fishNbtHandler = with(resources.protocolLib) {
+            if (hasHooked) fishNbtHandler else null
+        }
+    }
 
     fun fish(itemStack: ItemStack): Fish {
-        PluginHooker.checkHooked(protocolLib)
-        return protocolLib.fishNbtHandler.readFishData(itemStack)
+        return fishNbtHandler?.readFishData(itemStack, fishTypes)
+                ?: throw IllegalStateException("Couldn't find Fish Nbt Handler")
     }
 
     fun createItemStack(fish: Fish, catcher: Player, caughtDate: LocalDateTime): ItemStack {
         val itemStack = fish.type.icon.clone()
         val replacement = getFormatReplacementMap(fish, catcher, caughtDate)
-        resources.fish.itemFormat.let { itemFormat ->
-            itemStack.edit<ItemMeta> {
-                displayName = TextTemplate.format(itemFormat.displayName, replacement)
-                lore = TextListTemplate.format(itemFormat.lore, replacement)
-            }
+        itemStack.edit<ItemMeta> {
+            displayName = displayNameFormat.formatted(replacement)
+            lore = loreFormat.formatted(replacement)
         }
-        if (protocolLib.hasHooked) {
-            protocolLib.fishNbtHandler.writeFishData(itemStack, fish)
-        }
+        fishNbtHandler?.writeFishData(itemStack, fish)
         return itemStack
     }
 
