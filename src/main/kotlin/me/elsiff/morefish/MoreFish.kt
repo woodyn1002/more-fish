@@ -20,7 +20,7 @@ class MoreFish : JavaPlugin() {
     val resources = ResourceBundle(this)
     val fishTypes = FishTypeTable()
     val catchEffects = CatchEffectCollection()
-    val competition = FishingCompetition()
+    val competition = FishingCompetition(this)
     val protocolLib = ProtocolLibHooker(fishTypes)
     val converter = FishItemStackConverter(resources, protocolLib)
 

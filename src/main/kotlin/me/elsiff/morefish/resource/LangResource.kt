@@ -3,6 +3,9 @@ package me.elsiff.morefish.resource
 import me.elsiff.morefish.resource.configuration.FileConfigurationHandler
 import me.elsiff.morefish.resource.template.TextListTemplate
 import me.elsiff.morefish.resource.template.TextTemplate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatterBuilder
+import java.time.temporal.ChronoField
 
 /**
  * Created by elsiff on 2018-12-28.
@@ -66,4 +69,16 @@ class LangResource : FileConfigurationHandler() {
     val createdSignShop by TextTemplateValue("created-sign-shop")
     val oldFile by TextTemplateValue("old-file")
     val newVersion by TextListTemplateValue("new-version")
+
+    fun formatTime(second: Long): String {
+        val builder = DateTimeFormatterBuilder()
+        if (second / 60 > 0) {
+            builder.appendValue(ChronoField.MINUTE_OF_HOUR)
+                    .appendLiteral(timeFormatMinutes)
+                    .appendLiteral(" ")
+        }
+        builder.appendValue(ChronoField.SECOND_OF_MINUTE)
+                .appendLiteral(timeFormatSeconds)
+        return LocalTime.ofSecondOfDay(second).format(builder.toFormatter())
+    }
 }
