@@ -105,9 +105,13 @@ class MainCommand(
         }
 
         if (sender is Player) {
-            competition.getRecordRanked(sender).let {
-                val placeholders = topReplacementOf(it.first, it.second)
-                sender.sendMessage(templates.topMine.formatted(placeholders))
+            if (!competition.containsRecord(sender)) {
+                sender.sendMessage(templates.topMineNoRecord.formattedEmpty())
+            } else {
+                competition.getRecordRanked(sender).let {
+                    val placeholders = topReplacementOf(it.first, it.second)
+                    sender.sendMessage(templates.topMine.formatted(placeholders))
+                }
             }
         }
     }

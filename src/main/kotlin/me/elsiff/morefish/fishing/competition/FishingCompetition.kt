@@ -5,6 +5,7 @@ import me.elsiff.morefish.resource.ResourceReceiver
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import org.bukkit.scheduler.BukkitTask
+import kotlin.math.min
 
 /**
  * Created by elsiff on 2018-12-25.
@@ -47,8 +48,19 @@ class FishingCompetition(
     fun putRecord(record: Record) {
         checkStateEnabled()
 
-        records.removeIf { it.fisher == record.fisher && it.fish.length > record.fish.length }
-        records.add(record)
+        if (containsRecord(record.fisher)) {
+            val oldRecord = getRecord(record.fisher)
+            if (record.fish.length > oldRecord.fish.length) {
+                records.remove(oldRecord)
+                records.add(record)
+            }
+        } else {
+            records.add(record)
+        }
+    }
+
+    fun containsRecord(fisher: Player): Boolean {
+        return records.any { it.fisher == fisher }
     }
 
     fun getRecord(fisher: Player): Record {
@@ -79,7 +91,7 @@ class FishingCompetition(
     }
 
     fun top(size: Int): List<Record> {
-        return records.toList().subList(0, size)
+        return records.toList().subList(0, min(size, records.size))
     }
 
     fun clear() {
