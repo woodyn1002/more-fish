@@ -7,7 +7,9 @@ import me.elsiff.morefish.fishing.catcheffect.CatchEffectCollection
 import me.elsiff.morefish.fishing.competition.FishingCompetition
 import me.elsiff.morefish.item.FishItemStackConverter
 import me.elsiff.morefish.listener.FishingListener
+import me.elsiff.morefish.listener.UpdateNotifierListener
 import me.elsiff.morefish.resource.ResourceProvider
+import me.elsiff.morefish.util.UpdateChecker
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
@@ -19,6 +21,7 @@ class MoreFish : JavaPlugin() {
     val competition = FishingCompetition(this)
     val catchEffects = CatchEffectCollection(competition)
     val converter = FishItemStackConverter(fishTypes)
+    val updateChecker = UpdateChecker(22926, this.description.version)
 
     override fun onEnable() {
         server.pluginManager.run {
@@ -28,6 +31,15 @@ class MoreFish : JavaPlugin() {
         val commands = PaperCommandManager(this)
         val mainCommand = MainCommand(description, competition, resourceProvider)
         commands.registerCommand(mainCommand)
+
+        if (!isSnapshotVersion()) {
+            updateChecker.check()
+            if (updateChecker.hasNewVersion()) {
+                val notifier = UpdateNotifierListener(updateChecker.newVersion)
+                server.pluginManager.registerEvents(notifier, this)
+                resourceProvider.addReceiver(notifier)
+            }
+        }
 
         resourceProvider.run {
             addReceiver(fishTypes)
@@ -44,5 +56,9 @@ class MoreFish : JavaPlugin() {
 
     override fun onDisable() {
         logger.info("Plugin has been disabled.")
+    }
+
+    private fun isSnapshotVersion(): Boolean {
+        return this.description.version.contains("SNAPSHOT", true)
     }
 }
