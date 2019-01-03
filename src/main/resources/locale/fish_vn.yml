@@ -18,8 +18,8 @@ version: 212
 item-format:
   display-name: "%rarity_color%%fish%"
   lore:
-  - "&7%length%cm"
-  - "&7Bắt bởi %player%"
+    - "&7%length%cm"
+    - "&7Bắt bởi %player%"
 
 rarity-list:
   common:
@@ -105,7 +105,7 @@ fish-list:
       icon:
         id: "minecraft:cod"
         lore:
-        - "&7Magikarp sử dụng Splash!"
+          - "&7Magikarp sử dụng Splash!"
       skip-item-format: false
     Breadfish:
       display-name: "Cá bánh mì"
@@ -114,8 +114,8 @@ fish-list:
       icon:
         id: "minecraft:bread"
         lore:
-        - "&7Nói cho tui biết bạn đã nhìn thấy"
-        - "&7Một con cá bánh mì tuyệt vời"
+          - "&7Nói cho tui biết bạn đã nhìn thấy"
+          - "&7Một con cá bánh mì tuyệt vời"
       skip-item-format: false
     WoodenAxe:
       display-name: "Rìu gỗ của Admin"
@@ -124,7 +124,7 @@ fish-list:
       icon:
         id: "minecraft:wooden_axe"
         lore:
-        - "&7//cut"
+          - "&7//cut"
       skip-item-format: false
     FishingRod:
       display-name: "Cần câu của ai đó bấm nhầm nút Q"
@@ -149,8 +149,8 @@ fish-list:
       icon:
         id: "minecraft:cod"
       commands:
-      - "minecraft:effect @p minecraft:poison 3 1"
-      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" Con sứa làm bạn cảm thấy rất tệ!\",\"color\":\"none\"}]"
+        - "minecraft:effect @p minecraft:poison 3 1"
+        - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" Con sứa làm bạn cảm thấy rất tệ!\",\"color\":\"none\"}]"
     Squid:
       display-name: "Mực"
       length-min: 30
@@ -158,8 +158,8 @@ fish-list:
       icon:
         id: "minecraft:ink_sac"
       commands:
-      - "minecraft:effect @p minecraft:blindness 5 1"
-      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" Con mực đã phun vào bạn!\",\"color\":\"none\"}]"
+        - "minecraft:effect @p minecraft:blindness 5 1"
+        - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" Con mực đã phun vào bạn!\",\"color\":\"none\"}]"
     Flatfish:
       display-name: "Cá bẹt"
       length-min: 40
@@ -184,14 +184,14 @@ fish-list:
       length-min: 10
       length-max: 18
       icon:
-        id: "minecraft:cod"
+        id: "minecraft:tropical_fish"
         durability: 2
     Pufferfish:
       display-name: "Cá nóc"
       length-min: 20
       length-max: 30
       icon:
-        id: "minecraft:cod"
+        id: "minecraft:pufferfish"
         durability: 3
     SeaTurtle:
       display-name: "Rùa biển"
@@ -204,7 +204,7 @@ fish-list:
       length-min: 100
       length-max: 130
       icon:
-        id: "minecraft:cod"
+        id: "minecraft:salmon"
         durability: 1
     BlackDrum:
       display-name: "Black Drum"
@@ -226,11 +226,11 @@ fish-list:
       icon:
         id: "minecraft:cod"
         lore:
-        - "&7&oCon cá mạnh nhất"
-        - "&7Cho &9Sức mạnh I (2:00)&7 khi bạn ăn."
+          - "&7&oCon cá mạnh nhất"
+          - "&7Cho &9Sức mạnh I (2:00)&7 khi bạn ăn."
       food-effects:
         commands:
-        - "minecraft:effect @p minecraft:strength 120 1"
+          - "minecraft:effect @p minecraft:strength 120 1"
     PygmyWhale:
       display-name: "Cá voi xanh lùn"
       length-min: 600
@@ -238,11 +238,11 @@ fish-list:
       icon:
         id: "minecraft:cod"
         lore:
-        - "&7&oCon cá to nhất"
-        - "&7Làm &9đầy máu và thức ăn&7"
-        - "khi bạn ăn."
+          - "&7&oCon cá to nhất"
+          - "&7Làm &9đầy máu và thức ăn&7"
+          - "khi bạn ăn."
       food-effects:
         points: 20
         saturation: 14.4
         commands:
-        - "minecraft:effect @p minecraft:regeneration 2 127"
+          - "minecraft:effect @p minecraft:regeneration 2 127"

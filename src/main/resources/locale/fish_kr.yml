@@ -18,8 +18,8 @@ version: 212
 item-format:
   display-name: "%rarity_color%%fish%"
   lore:
-  - "&7%length%cm"
-  - "&7Caught by %player%"
+    - "&7%length%cm"
+    - "&7Caught by %player%"
 
 rarity-list:
   common:
@@ -104,7 +104,7 @@ fish-list:
       icon:
         id: "minecraft:cod"
         lore:
-        - "&7잉어킹의 튀어오르기!"
+          - "&7잉어킹의 튀어오르기!"
     Breadfish:
       display-name: "빵물고기"
       length-min: 10
@@ -112,8 +112,8 @@ fish-list:
       icon:
         id: "minecraft:bread"
         lore:
-        - "&7Tell me have you seen"
-        - "&7the marvellous breadfish"
+          - "&7Tell me have you seen"
+          - "&7the marvellous breadfish"
     WoodenAxe:
       display-name: "관리자의 나무 도끼"
       length-min: 16
@@ -121,7 +121,7 @@ fish-list:
       icon:
         id: "minecraft:wooden_axe"
         lore:
-        - "&7//cut"
+          - "&7//cut"
     FishingRod:
       display-name: "누군가 실수로 Q 눌러 잃어버린 낚싯대"
       length-min: 16
@@ -143,8 +143,8 @@ fish-list:
       icon:
         id: "minecraft:cod"
       commands:
-      - "minecraft:effect @p minecraft:poison 3 1"
-      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" 해파리가 당신에게 헤롱헤롱한 기분을 선물했습니다!\",\"color\":\"none\"}]"
+        - "minecraft:effect @p minecraft:poison 3 1"
+        - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" 해파리가 당신에게 헤롱헤롱한 기분을 선물했습니다!\",\"color\":\"none\"}]"
     Squid:
       display-name: "오징어"
       length-min: 30
@@ -152,8 +152,8 @@ fish-list:
       icon:
         id: "minecraft:ink_sac"
       commands:
-      - "minecraft:effect @p minecraft:blindness 5 1"
-      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" 오징어가 발악하며 당신의 얼굴에 먹물을 쏘았습니다!\",\"color\":\"none\"}]"
+        - "minecraft:effect @p minecraft:blindness 5 1"
+        - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" 오징어가 발악하며 당신의 얼굴에 먹물을 쏘았습니다!\",\"color\":\"none\"}]"
     Flatfish:
       display-name: "가자미"
       length-min: 40
@@ -178,7 +178,7 @@ fish-list:
       length-min: 10
       length-max: 18
       icon:
-        id: "minecraft:cod"
+        id: "minecraft:tropical_fish"
         durability: 2
     Pufferfish:
       display-name: "복어"
@@ -187,6 +187,12 @@ fish-list:
       icon:
         id: "minecraft:cod"
         durability: 3
+    SeaTurtle:
+      display-name: "바다거북"
+      length-min: 90
+      length-max: 130
+        icon:
+        id: "minecraft:cod"
     Salmon:
       display-name: "연어"
       length-min: 100
@@ -194,6 +200,12 @@ fish-list:
       icon:
         id: "minecraft:cod"
         durability: 1
+    BlackDrum:
+      display-name: "흑돔"
+      length-min: 100
+      length-max: 180
+      icon:
+        id: "minecraft:cod"
     Tuna:
       display-name: "다랑어"
       length-min: 130
@@ -208,11 +220,11 @@ fish-list:
       icon:
         id: "minecraft:cod"
         lore:
-        - "&7&o가장 위협적인 물고기"
-        - "&7섭취시 &9힘 I (2:00)&7을 부여합니다."
+          - "&7&o가장 위협적인 물고기"
+          - "&7섭취시 &9힘 I (2:00)&7을 부여합니다."
       food-effects:
         commands:
-        - "minecraft:effect @p minecraft:strength 120 1"
+          - "minecraft:effect @p minecraft:strength 120 1"
     PygmyWhale:
       display-name: "꼬마향고래"
       length-min: 600
@@ -220,10 +232,10 @@ fish-list:
       icon:
         id: "minecraft:cod"
         lore:
-        - "&7&o가장 거대한 물고기"
-        - "&7섭취시 &9체력과 허기를 모두 회복&7합니다."
+          - "&7&o가장 거대한 물고기"
+          - "&7섭취시 &9체력과 허기를 모두 회복&7합니다."
       food-effects:
         points: 20
         saturation: 14.4
         commands:
-        - "minecraft:effect @p minecraft:regeneration 2 127"
+          - "minecraft:effect @p minecraft:regeneration 2 127"

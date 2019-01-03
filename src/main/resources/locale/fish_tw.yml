@@ -18,8 +18,8 @@ version: 212
 item-format:
   display-name: "%rarity_color%%fish%"
   lore:
-  - "&7%length%公分"
-  - "&7由 %player% 釣到"
+    - "&7%length%公分"
+    - "&7由 %player% 釣到"
 
 rarity-list:
   common:
@@ -105,7 +105,7 @@ fish-list:
       icon:
         id: "minecraft:cod"
         lore:
-        - "&7鯉魚王使用了彈跳!"
+          - "&7鯉魚王使用了彈跳!"
       skip-item-format: false
     Breadfish:
       display-name: "麵包魚"
@@ -114,8 +114,8 @@ fish-list:
       icon:
         id: "minecraft:bread"
         lore:
-        - "&7告訴我你看過"
-        - "&7這奇異的麵包魚嗎?"
+          - "&7告訴我你看過"
+          - "&7這奇異的麵包魚嗎?"
       skip-item-format: false
     WoodenAxe:
       display-name: "管理員的木斧"
@@ -124,7 +124,7 @@ fish-list:
       icon:
         id: "minecraft:wooden_axe"
         lore:
-        - "&7//cut"
+          - "&7//cut"
       skip-item-format: false
     FishingRod:
       display-name: "別人不小心按Q丟出去的釣魚竿"
@@ -149,8 +149,8 @@ fish-list:
       icon:
         id: "minecraft:cod"
       commands:
-      - "minecraft:effect @p minecraft:poison 3 1"
-      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" 這水母讓你感覺不是很好!\",\"color\":\"none\"}]"
+        - "minecraft:effect @p minecraft:poison 3 1"
+        - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" 這水母讓你感覺不是很好!\",\"color\":\"none\"}]"
     Squid:
       display-name: "烏賊"
       length-min: 30
@@ -158,8 +158,8 @@ fish-list:
       icon:
         id: "minecraft:ink_sac"
       commands:
-      - "minecraft:effect @p minecraft:blindness 5 1"
-      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" 這烏賊噴你一臉墨汁!\",\"color\":\"none\"}]"
+        - "minecraft:effect @p minecraft:blindness 5 1"
+        - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" 這烏賊噴你一臉墨汁!\",\"color\":\"none\"}]"
     Flatfish:
       display-name: "比目魚"
       length-min: 40
@@ -184,14 +184,14 @@ fish-list:
       length-min: 10
       length-max: 18
       icon:
-        id: "minecraft:cod"
+        id: "minecraft:tropical_fish"
         durability: 2
     Pufferfish:
       display-name: "河豚"
       length-min: 20
       length-max: 30
       icon:
-        id: "minecraft:cod"
+        id: "minecraft:pufferfish"
         durability: 3
     SeaTurtle:
       display-name: "海龜"
@@ -204,7 +204,7 @@ fish-list:
       length-min: 100
       length-max: 130
       icon:
-        id: "minecraft:cod"
+        id: "minecraft:salmon"
         durability: 1
     BlackDrum:
       display-name: "多須石首魚"
@@ -226,11 +226,11 @@ fish-list:
       icon:
         id: "minecraft:cod"
         lore:
-        - "&7&o最棘手的魚"
-        - "&7獲得 &9力量 I (2:00)&7 當你吃了牠."
+          - "&7&o最棘手的魚"
+          - "&7獲得 &9力量 I (2:00)&7 當你吃了牠."
       food-effects:
         commands:
-        - "minecraft:effect @p minecraft:strength 120 1"
+          - "minecraft:effect @p minecraft:strength 120 1"
     PygmyWhale:
       display-name: "抹香鯨"
       length-min: 600
@@ -238,11 +238,11 @@ fish-list:
       icon:
         id: "minecraft:cod"
         lore:
-        - "&7&o最大的魚"
-        - "&7獲得 &9全部血量和飢餓度&7"
-        - "&7當你吃了牠."
+          - "&7&o最大的魚"
+          - "&7獲得 &9全部血量和飢餓度&7"
+          - "&7當你吃了牠."
       food-effects:
         points: 20
         saturation: 14.4
         commands:
-        - "minecraft:effect @p minecraft:regeneration 2 127"
+          - "minecraft:effect @p minecraft:regeneration 2 127"

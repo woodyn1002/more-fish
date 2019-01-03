@@ -18,8 +18,8 @@ version: 212
 item-format:
   display-name: "%rarity_color%%fish%"
   lore:
-  - "&7%length%cm"
-  - "&7Catturato da %player%"
+    - "&7%length%cm"
+    - "&7Catturato da %player%"
 
 rarity-list:
   common:
@@ -105,7 +105,7 @@ fish-list:
       icon:
         id: "minecraft:cod"
         lore:
-        - "&7Magikarp usa Splash!"
+          - "&7Magikarp usa Splash!"
       skip-item-format: false
     Breadfish:
       display-name: "Pesce Pane"
@@ -114,8 +114,8 @@ fish-list:
       icon:
         id: "minecraft:bread"
         lore:
-        - "&7Ammettilo che hai visto"
-        - "&7il bellissimo Pesce Pane"
+          - "&7Ammettilo che hai visto"
+          - "&7il bellissimo Pesce Pane"
       skip-item-format: false
     WoodenAxe:
       display-name: "Ascia Di Legno Dell'Admin"
@@ -124,7 +124,7 @@ fish-list:
       icon:
         id: "minecraft:wooden_axe"
         lore:
-        - "&7//taglia"
+          - "&7//taglia"
       skip-item-format: false
     FishingRod:
       display-name: "Canna da pesca lanciata da qualcuno per sbaglio"
@@ -149,8 +149,8 @@ fish-list:
       icon:
         id: "minecraft:cod"
       commands:
-      - "minecraft:effect @p minecraft:poison 3 1"
-      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" La medusa ti fa sentire molto male!\",\"color\":\"none\"}]"
+        - "minecraft:effect @p minecraft:poison 3 1"
+        - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" La medusa ti fa sentire molto male!\",\"color\":\"none\"}]"
     Squid:
       display-name: "Polipo"
       length-min: 30
@@ -158,8 +158,8 @@ fish-list:
       icon:
         id: "minecraft:ink_sac"
       commands:
-      - "minecraft:effect @p minecraft:blindness 5 1"
-      - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" Il polipo ti ha riempito di inchiostro!\",\"color\":\"none\"}]"
+        - "minecraft:effect @p minecraft:blindness 5 1"
+        - "tellraw @p [\"\",{\"text\":\"[MoreFish]\",\"color\":\"aqua\"},{\"text\":\" Il polipo ti ha riempito di inchiostro!\",\"color\":\"none\"}]"
     Flatfish:
       display-name: "Pesce Piatto"
       length-min: 40
@@ -184,14 +184,14 @@ fish-list:
       length-min: 10
       length-max: 18
       icon:
-        id: "minecraft:cod"
+        id: "minecraft:tropical_fish"
         durability: 2
     Pufferfish:
       display-name: "Pesce Palla"
       length-min: 20
       length-max: 30
       icon:
-        id: "minecraft:cod"
+        id: "minecraft:pufferfish"
         durability: 3
     SeaTurtle:
       display-name: "Tartaruga di mare"
@@ -204,7 +204,7 @@ fish-list:
       length-min: 100
       length-max: 130
       icon:
-        id: "minecraft:cod"
+        id: "minecraft:salmon"
         durability: 1
     BlackDrum:
       display-name: "Tamburello Nero"
@@ -226,11 +226,11 @@ fish-list:
       icon:
         id: "minecraft:cod"
         lore:
-        - "&7&oIl pesce più resistente"
-        - "&7Ricevi &9Forza I (2:00)&7 quando lo mangi."
+          - "&7&oIl pesce più resistente"
+          - "&7Ricevi &9Forza I (2:00)&7 quando lo mangi."
       food-effects:
         commands:
-        - "minecraft:effect @p minecraft:strength 120 1"
+          - "minecraft:effect @p minecraft:strength 120 1"
     PygmyWhale:
       display-name: "Balena"
       length-min: 600
@@ -238,11 +238,11 @@ fish-list:
       icon:
         id: "minecraft:cod"
         lore:
-        - "&7&oIl pesce più grande"
-        - "&7Ricevi &9tutta la vita e la fame &7"
-        - "quando lo mangi."
+          - "&7&oIl pesce più grande"
+          - "&7Ricevi &9tutta la vita e la fame &7"
+          - "quando lo mangi."
       food-effects:
         points: 20
         saturation: 14.4
         commands:
-        - "minecraft:effect @p minecraft:regeneration 2 127"
+          - "minecraft:effect @p minecraft:regeneration 2 127"

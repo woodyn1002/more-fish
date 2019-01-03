@@ -18,8 +18,8 @@ version: 212
 item-format:
   display-name: "%rarity_color%%fish%"
   lore:
-  - "&7%length%cm"
-  - "%player%&7によって釣られました"
+    - "&7%length%cm"
+    - "%player%&7によって釣られました"
 
 rarity-list:
   common:
@@ -59,8 +59,8 @@ fish-list:
       icon:
         id: "minecraft:cod"
       commands:
-      - "minecraft:effect @p minecraft:poison 3 2"
-      - "tellraw @p [{\"text\":\" クラゲがあなたに好意を持っている!\",\"color\":\"none\"}]"
+        - "minecraft:effect @p minecraft:poison 3 2"
+        - "tellraw @p [{\"text\":\" クラゲがあなたに好意を持っている!\",\"color\":\"none\"}]"
     Shrimp:
       display-name: "エビ"
       length-min: 3
@@ -130,7 +130,7 @@ fish-list:
       icon:
         id: "minecraft:cod"
         lore:
-        - "&7コイキングの水鉄砲!"
+          - "&7コイキングの水鉄砲!"
       skip-item-format: false
     Breadfish:
       display-name: "魚パン"
@@ -139,8 +139,8 @@ fish-list:
       icon:
         id: "minecraft:bread"
         lore:
-        - "&7教えて、あなたが見たものを"
-        - "&7素晴らしい魚パン"
+          - "&7教えて、あなたが見たものを"
+          - "&7素晴らしい魚パン"
     WoodenAxe:
       display-name: "管理人の木の斧"
       length-min: 16
@@ -148,7 +148,7 @@ fish-list:
       icon:
         id: "minecraft:wooden_axe"
         lore:
-        - "&7//cut"
+          - "&7//cut"
       skip-item-format: false
     FishingRod:
       display-name: "誰かが間違えてQボタンで捨ててしまった釣り竿"
@@ -173,8 +173,8 @@ fish-list:
       icon:
         id: "minecraft:cod"
       commands:
-      - "minecraft:effect @p minecraft:blindness 5 1"
-      - "tellraw @p [{\"text\":\" イカがあなたにお祝いのスミを吐いた!\",\"color\":\"none\"}]"
+        - "minecraft:effect @p minecraft:blindness 5 1"
+        - "tellraw @p [{\"text\":\" イカがあなたにお祝いのスミを吐いた!\",\"color\":\"none\"}]"
     MinoKasago:
       display-name: "ミノカサゴ"
       length-min: 10
@@ -182,7 +182,7 @@ fish-list:
       icon:
         id: "minecraft:record_chirp"
       commands:
-      - "minecraft:effect @p minecraft:poison 3 2"
+        - "minecraft:effect @p minecraft:poison 3 2"
     Flatfish:
       display-name: "マコガレイ"
       length-min: 40
@@ -231,21 +231,21 @@ fish-list:
       length-min: 10
       length-max: 18
       icon:
-        id: "minecraft:cod"
+        id: "minecraft:tropical_fish"
         durability: 2
     Pufferfish:
       display-name: "ハリセンボン"
       length-min: 20
       length-max: 30
       icon:
-        id: "minecraft:cod"
+        id: "minecraft:pufferfish"
         durability: 3
     Salmon:
       display-name: "サケ"
       length-min: 100
       length-max: 130
       icon:
-        id: "minecraft:cod"
+        id: "minecraft:salmon"
         durability: 1
   legendary:
     Kuromaguro:
@@ -267,11 +267,11 @@ fish-list:
       icon:
         id: "minecraft:cod"
         lore:
-        - "&7&oThe Toughest Fish"
-        - "&7Get &9Strength I (2:00)&7 when you eat it."
+          - "&7&oThe Toughest Fish"
+          - "&7Get &9Strength I (2:00)&7 when you eat it."
       food-effects:
         commands:
-        - "minecraft:effect @p minecraft:strength 120 1"
+          - "minecraft:effect @p minecraft:strength 120 1"
     PygmyWhale:
       display-name: "コセミクジラ"
       length-min: 600
@@ -279,11 +279,11 @@ fish-list:
       icon:
         id: "minecraft:cod"
         lore:
-        - "&7&oThe Biggest Fish"
-        - "&7Get &9full health and hunger&7"
-        - "when you eat it."
+          - "&7&oThe Biggest Fish"
+          - "&7Get &9full health and hunger&7"
+          - "when you eat it."
       food-effects:
         points: 20
         saturation: 14.4
         commands:
-        - "minecraft:effect @p minecraft:regeneration 2 127"
+          - "minecraft:effect @p minecraft:regeneration 2 127"
