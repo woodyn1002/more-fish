@@ -5,6 +5,7 @@ import me.elsiff.morefish.fishing.FishType
 import me.elsiff.morefish.fishing.condition.Condition
 import me.elsiff.morefish.item.edit
 import me.elsiff.morefish.item.editIfHas
+import me.elsiff.morefish.item.editIfIs
 import me.elsiff.morefish.protocollib.SkullNbtHandler
 import me.elsiff.morefish.resource.template.TextListTemplate
 import me.elsiff.morefish.resource.template.TextTemplate
@@ -16,6 +17,7 @@ import org.bukkit.NamespacedKey
 import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.Damageable
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.inventory.meta.SkullMeta
 import java.util.*
@@ -78,11 +80,8 @@ fun ConfigurationSection.getFishTypeList(
 
 fun ConfigurationSection.getFishItemStack(path: String, skullNbtHandler: SkullNbtHandler?): ItemStack {
     val material = NamespacedKeyUtils.material(getString("$path.id"))
-    val itemStack = ItemStack(
-            material,
-            getInt("$path.amount", 1),
-            getInt("$path.durability", 0).toShort()
-    )
+    val amount = getInt("$path.amount", 1)
+    val itemStack = ItemStack(material, amount)
 
     itemStack.edit<ItemMeta> {
         lore = getStringList("$path.lore").map(ColorUtils::translate)
@@ -93,6 +92,10 @@ fun ConfigurationSection.getFishItemStack(path: String, skullNbtHandler: SkullNb
             addEnchant(it.first, it.second, true)
         }
         isUnbreakable = getBoolean("$path.unbreakable", false)
+    }
+
+    itemStack.editIfIs<Damageable> {
+        damage = getInt("$path.durability", 0)
     }
 
     itemStack.editIfHas<SkullMeta> {
