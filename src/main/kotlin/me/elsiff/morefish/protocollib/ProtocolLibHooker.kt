@@ -8,13 +8,11 @@ import org.bukkit.plugin.PluginManager
  */
 class ProtocolLibHooker: PluginHooker {
     lateinit var skullNbtHandler: SkullNbtHandler
-    lateinit var fishNbtHandler: FishNbtHandler
     override val pluginName = "ProtocolLib"
     override var hasHooked = false
 
     override fun hook(pluginManager: PluginManager) {
         skullNbtHandler = SkullNbtHandler()
-        fishNbtHandler = FishNbtHandler()
         hasHooked = true
     }
 }

@@ -20,7 +20,7 @@ class MoreFish : JavaPlugin() {
     val fishTypes = FishTypeTable()
     val competition = FishingCompetition(this)
     val catchEffects = CatchEffectCollection(competition)
-    val converter = FishItemStackConverter(fishTypes)
+    val converter = FishItemStackConverter(this, fishTypes)
     val updateChecker = UpdateChecker(22926, this.description.version)
 
     override fun onEnable() {
