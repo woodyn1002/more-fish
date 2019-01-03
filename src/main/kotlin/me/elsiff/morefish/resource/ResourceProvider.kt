@@ -6,6 +6,7 @@ import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Created by elsiff on 2018-12-28.
@@ -31,8 +32,8 @@ class ResourceProvider(
 
     private fun readyResourceBundle() {
         resources.apply {
-            val configPath = dataPath.resolve("config.yml")
-            val localePath = dataPath.resolve("locale")
+            val configPath = Paths.get("config.yml")
+            val localePath = Paths.get("locale")
 
             config = loadYamlConfiguration(configPath)
             config.getString("general.locale").let { locale ->
@@ -45,10 +46,10 @@ class ResourceProvider(
         }
     }
 
-    private fun loadYamlConfiguration(filePath: Path): YamlConfiguration {
-        val configurationFile = filePath.toFile()
+    private fun loadYamlConfiguration(resourcePath: Path): YamlConfiguration {
+        val configurationFile = dataPath.resolve(resourcePath).toFile()
         if (!configurationFile.exists()) {
-            plugin.saveResource(filePath.toString(), false)
+            plugin.saveResource(resourcePath.toString(), false)
         }
 
         val configuration = YamlConfiguration().apply { load(configurationFile) }
