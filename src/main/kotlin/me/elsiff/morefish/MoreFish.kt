@@ -5,6 +5,8 @@ import me.elsiff.morefish.command.MainCommand
 import me.elsiff.morefish.fishing.FishTypeTable
 import me.elsiff.morefish.fishing.catcheffect.CatchEffectCollection
 import me.elsiff.morefish.fishing.competition.FishingCompetition
+import me.elsiff.morefish.gui.GuiOpener
+import me.elsiff.morefish.gui.GuiRegistry
 import me.elsiff.morefish.item.FishItemStackConverter
 import me.elsiff.morefish.listener.FishingListener
 import me.elsiff.morefish.listener.UpdateNotifierListener
@@ -17,6 +19,8 @@ import org.bukkit.plugin.java.JavaPlugin
  */
 class MoreFish : JavaPlugin() {
     private val resourceProvider = ResourceProvider(this)
+    val guiRegistry = GuiRegistry(this)
+    val guiOpener = GuiOpener(guiRegistry)
     val fishTypes = FishTypeTable()
     val competition = FishingCompetition(this)
     val catchEffects = CatchEffectCollection(competition)
@@ -55,6 +59,7 @@ class MoreFish : JavaPlugin() {
     }
 
     override fun onDisable() {
+        guiRegistry.clear(true)
         logger.info("Plugin has been disabled.")
     }
 
