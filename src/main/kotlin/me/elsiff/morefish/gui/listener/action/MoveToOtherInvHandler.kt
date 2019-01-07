@@ -10,7 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
  * Created by elsiff on 2018-08-22.
  */
 class MoveToOtherInvHandler : InventoryActionHandler {
-    override val handlingActions = setOf(InventoryAction.MOVE_TO_OTHER_INVENTORY)
+    override val handlingActions: Set<InventoryAction> = setOf(InventoryAction.MOVE_TO_OTHER_INVENTORY)
 
     override fun handle(event: InventoryClickEvent, gui: InventoryGui) {
 

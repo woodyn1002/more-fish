@@ -9,18 +9,18 @@ import kotlin.random.Random
  * Created by elsiff on 2018-12-20.
  */
 data class FishType(
-        val name: String,
-        val rarity: FishRarity,
-        val displayName: String,
-        val lengthMin: Double,
-        val lengthMax: Double,
-        val icon: ItemStack,
-        val feature: Feature
+    val name: String,
+    val rarity: FishRarity,
+    val displayName: String,
+    val lengthMin: Double,
+    val lengthMax: Double,
+    val icon: ItemStack,
+    val feature: Feature
 ) {
     data class Feature(
-            val skipItemFormat: Boolean = false,
-            val commands: List<String> = emptyList(),
-            val conditions: List<Condition> = emptyList()
+        val skipItemFormat: Boolean = false,
+        val commands: List<String> = emptyList(),
+        val conditions: List<Condition> = emptyList()
     )
 
     fun generateFish(): Fish {

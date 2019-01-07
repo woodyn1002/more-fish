@@ -13,16 +13,17 @@ import org.bukkit.inventory.Inventory
  */
 abstract class InventoryGui : Gui {
     protected abstract val inventory: Inventory
-    protected val controllableSlots = mutableSetOf<Int>()
-    private val viewers = mutableSetOf<Player>()
+    protected val controllableSlots: MutableSet<Int> = mutableSetOf()
+    private val _viewers: MutableSet<Player> = mutableSetOf()
+    override val viewers: Collection<Player>
+        get() = _viewers
+    abstract val slots: List<Int>
 
     override fun showTo(player: Player) {
-        require(!viewers.contains(player)) { "Player is already a viewer of this gui" }
+        require(!_viewers.contains(player)) { "Player is already a viewer of this gui" }
         player.openInventory(inventory)
-        viewers.add(player)
+        _viewers.add(player)
     }
-
-    abstract fun slots(): List<Int>
 
     fun controllableSlots(): List<Int> {
         return controllableSlots.toList().sorted()
@@ -34,12 +35,8 @@ abstract class InventoryGui : Gui {
     }
 
     override fun removeViewer(player: Player) {
-        require(viewers.contains(player)) { "Player isn't a viewer of this gui" }
-        viewers.remove(player)
-    }
-
-    override fun viewers(): Collection<Player> {
-        return viewers
+        require(_viewers.contains(player)) { "Player isn't a viewer of this gui" }
+        _viewers.remove(player)
     }
 
     override fun createListener(guiRegistry: GuiRegistry): Listener {

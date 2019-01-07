@@ -10,9 +10,9 @@ import org.bukkit.inventory.meta.tags.ItemTagType
  * Created by elsiff on 2019-01-03.
  */
 class FishItemTagReader(
-        private val fishTypes: FishTypeTable,
-        private val fishTypeKey: NamespacedKey,
-        private val fishLengthKey: NamespacedKey
+    private val fishTypes: FishTypeTable,
+    private val fishTypeKey: NamespacedKey,
+    private val fishLengthKey: NamespacedKey
 ) {
     fun canRead(itemMeta: ItemMeta): Boolean {
         return itemMeta.customTagContainer.let { tags ->
@@ -25,8 +25,8 @@ class FishItemTagReader(
             require(tags.hasCustomTag(fishTypeKey, ItemTagType.STRING)) { "Item meta must have fish type tag" }
             require(tags.hasCustomTag(fishLengthKey, ItemTagType.DOUBLE)) { "Item meta must have fish length tag" }
             Fish(
-                    fishTypes.getType(tags.getCustomTag(fishTypeKey, ItemTagType.STRING)),
-                    tags.getCustomTag(fishLengthKey, ItemTagType.DOUBLE)
+                fishTypes.getType(tags.getCustomTag(fishTypeKey, ItemTagType.STRING)),
+                tags.getCustomTag(fishLengthKey, ItemTagType.DOUBLE)
             )
         }
     }

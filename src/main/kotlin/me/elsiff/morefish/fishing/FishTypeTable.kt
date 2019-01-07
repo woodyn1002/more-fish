@@ -11,14 +11,18 @@ import kotlin.random.Random
  * Created by elsiff on 2018-12-23.
  */
 class FishTypeTable : ResourceReceiver {
-    private val fishTypeMap = mutableMapOf<FishRarity, MutableList<FishType>>()
+    private val fishTypeMap: MutableMap<FishRarity, MutableList<FishType>> = mutableMapOf()
+    val rarities: Set<FishRarity>
+        get() = fishTypeMap.keys.toSet()
+    val types: Set<FishType>
+        get() = fishTypeMap.values.flatten().toSet()
     private var defaultRarity: FishRarity? = null
 
     override fun receiveResource(resources: ResourceBundle) {
         defaultRarity = null
         fishTypeMap.clear()
         resources.fish.getFishRarityList("rarity-list").forEach(this::addRarity)
-        fishTypeMap.keys.forEach { rarity ->
+        for (rarity in fishTypeMap.keys) {
             val skullNbtHandler = with(resources.protocolLib) {
                 if (hasHooked) skullNbtHandler else null
             }
@@ -46,16 +50,12 @@ class FishTypeTable : ResourceReceiver {
         throw IllegalStateException("No such fish type found")
     }
 
-    fun rarities(): Set<FishRarity> = fishTypeMap.keys.toSet()
-
-    fun types(): Set<FishType> = fishTypeMap.values.flatten().toSet()
-
     fun addRarity(rarity: FishRarity) {
         require(!rarity.default || defaultRarity == null) { "Default rarity must be only one" }
         val probabilitySum = fishTypeMap.keys
-                .plus(rarity)
-                .filter { !it.default }
-                .sumByDouble { it.probability }
+            .plus(rarity)
+            .filter { !it.default }
+            .sumByDouble { it.probability }
         check(probabilitySum <= 1.0) { "Sum of rarity probabilities must not be bigger than 1.0" }
 
         fishTypeMap[rarity] = mutableListOf()

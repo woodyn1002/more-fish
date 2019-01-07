@@ -11,7 +11,7 @@ import java.time.temporal.ChronoField
  * Created by elsiff on 2019-01-02.
  */
 class TemplateBundle(
-        lang: Configuration
+    lang: Configuration
 ) {
     val catchFish = lang.getTextTemplate("catch-fish")
     val get1st = lang.getTextTemplate("get-1st")
@@ -68,11 +68,11 @@ class TemplateBundle(
         val builder = DateTimeFormatterBuilder()
         if (second / 60 > 0) {
             builder.appendValue(ChronoField.MINUTE_OF_HOUR)
-                    .appendLiteral(timeFormatMinutes)
-                    .appendLiteral(" ")
+                .appendLiteral(timeFormatMinutes)
+                .appendLiteral(" ")
         }
         builder.appendValue(ChronoField.SECOND_OF_MINUTE)
-                .appendLiteral(timeFormatSeconds)
+            .appendLiteral(timeFormatSeconds)
         return LocalTime.ofSecondOfDay(second).format(builder.toFormatter())
     }
 }

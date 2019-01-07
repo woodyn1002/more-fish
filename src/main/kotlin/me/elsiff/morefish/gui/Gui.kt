@@ -9,13 +9,13 @@ import org.bukkit.event.Listener
  * Created by elsiff on 2019-01-05.
  */
 interface Gui {
+    val viewers: Collection<Player>
+
     fun showTo(player: Player)
 
     fun removeViewer(player: Player)
 
-    fun viewers(): Collection<Player>
-
-    fun containsViewer(player: Player): Boolean = viewers().contains(player)
+    fun containsViewer(player: Player): Boolean = viewers.contains(player)
 
     fun createListener(guiRegistry: GuiRegistry): Listener
 

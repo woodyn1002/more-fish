@@ -16,10 +16,10 @@ import kotlin.math.floor
  * Created by elsiff on 2019-01-03.
  */
 class FishShop(
-        private val guiRegistry: GuiRegistry,
-        private val guiOpener: GuiOpener,
-        private val oneTickScheduler: OneTickScheduler,
-        private val converter: FishItemStackConverter
+    private val guiRegistry: GuiRegistry,
+    private val guiOpener: GuiOpener,
+    private val oneTickScheduler: OneTickScheduler,
+    private val converter: FishItemStackConverter
 ) : ResourceReceiver {
     var enabled = false
     private var priceMultiplier = 0.0
@@ -28,7 +28,9 @@ class FishShop(
     private lateinit var templates: TemplateBundle
 
     override fun receiveResource(resources: ResourceBundle) {
-        guiRegistry.guis().filter { it is FishShopGui }.map { it.viewers() }.flatten().forEach { it.closeInventory() }
+        for (viewer in guiRegistry.guis.filter { it is FishShopGui }.map { it.viewers }.flatten()) {
+            viewer.closeInventory()
+        }
         if (resources.config.getBoolean("fish-shop.enable")) {
             check(resources.vault.hasHooked) { "Vault must be hooked for fish shop feature" }
             check(resources.vault.hasEconomy()) { "Vault doesn't have economy plugin" }

@@ -10,17 +10,17 @@ import org.bukkit.event.inventory.InventoryClickEvent
  * Created by elsiff on 2018-08-22.
  */
 class StandardClickHandler : InventoryActionHandler {
-    override val handlingActions = setOf(
-            InventoryAction.CLONE_STACK,
-            InventoryAction.DROP_ALL_SLOT,
-            InventoryAction.DROP_ALL_CURSOR,
-            InventoryAction.PICKUP_ALL,
-            InventoryAction.PICKUP_HALF,
-            InventoryAction.PICKUP_ONE,
-            InventoryAction.PICKUP_SOME,
-            InventoryAction.PLACE_ALL,
-            InventoryAction.PLACE_ONE,
-            InventoryAction.PLACE_SOME
+    override val handlingActions: Set<InventoryAction> = setOf(
+        InventoryAction.CLONE_STACK,
+        InventoryAction.DROP_ALL_SLOT,
+        InventoryAction.DROP_ALL_CURSOR,
+        InventoryAction.PICKUP_ALL,
+        InventoryAction.PICKUP_HALF,
+        InventoryAction.PICKUP_ONE,
+        InventoryAction.PICKUP_SOME,
+        InventoryAction.PLACE_ALL,
+        InventoryAction.PLACE_ONE,
+        InventoryAction.PLACE_SOME
     )
 
     override fun handle(event: InventoryClickEvent, gui: InventoryGui) {

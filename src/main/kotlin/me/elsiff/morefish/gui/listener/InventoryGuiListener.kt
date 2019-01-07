@@ -2,10 +2,7 @@ package me.elsiff.morefish.gui.listener
 
 import me.elsiff.morefish.gui.GuiRegistry
 import me.elsiff.morefish.gui.InventoryGui
-import me.elsiff.morefish.gui.listener.action.CollectToCursorHandler
-import me.elsiff.morefish.gui.listener.action.HotbarSwapHandler
-import me.elsiff.morefish.gui.listener.action.MoveToOtherInvHandler
-import me.elsiff.morefish.gui.listener.action.StandardClickHandler
+import me.elsiff.morefish.gui.listener.action.*
 import me.elsiff.morefish.gui.state.GuiCloseState
 import me.elsiff.morefish.gui.state.GuiDragState
 import org.bukkit.entity.HumanEntity
@@ -20,18 +17,9 @@ import org.bukkit.event.inventory.InventoryDragEvent
  * Created by elsiff on 2019-01-05.
  */
 class InventoryGuiListener(
-        private val gui: InventoryGui,
-        private val guiRegistry: GuiRegistry
+    private val gui: InventoryGui,
+    private val guiRegistry: GuiRegistry
 ) : Listener {
-    companion object {
-        private val actionHandlers = setOf(
-                CollectToCursorHandler(),
-                HotbarSwapHandler(),
-                MoveToOtherInvHandler(),
-                StandardClickHandler()
-        )
-    }
-
     @EventHandler
     fun onClickInventory(event: InventoryClickEvent) {
         if (gui.match(event.inventory)) {
@@ -64,7 +52,7 @@ class InventoryGuiListener(
             gui.handleClose(GuiCloseState.of(event))
             gui.removeViewer(player)
 
-            if (gui.viewers().isEmpty()) {
+            if (gui.viewers.isEmpty()) {
                 guiRegistry.unregister(gui)
             }
         }
@@ -72,5 +60,14 @@ class InventoryGuiListener(
 
     private fun checkIsPlayer(humanEntity: HumanEntity) {
         check(humanEntity is Player) { "Human entity who handles a gui must be a player" }
+    }
+
+    companion object {
+        private val actionHandlers: Set<InventoryActionHandler> = setOf(
+            CollectToCursorHandler(),
+            HotbarSwapHandler(),
+            MoveToOtherInvHandler(),
+            StandardClickHandler()
+        )
     }
 }

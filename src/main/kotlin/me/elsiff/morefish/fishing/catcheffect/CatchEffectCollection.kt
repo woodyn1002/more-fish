@@ -10,9 +10,11 @@ import org.bukkit.entity.Player
  * Created by elsiff on 2018-12-25.
  */
 class CatchEffectCollection(
-        private val competition: FishingCompetition
+    private val competition: FishingCompetition
 ) : ResourceReceiver {
-    val effects: List<CatchEffect> = mutableListOf()
+    private val _effects: MutableList<CatchEffect> = mutableListOf()
+    val effects: List<CatchEffect>
+        get() = _effects
 
     override fun receiveResource(resources: ResourceBundle) {
         clear()
@@ -21,23 +23,22 @@ class CatchEffectCollection(
     }
 
     fun addEffect(effect: CatchEffect) {
-        effects as MutableList
-        effects.add(effect)
+        _effects.add(effect)
     }
 
     fun removeEffect(effect: CatchEffect) {
-        check(effect in effects) { "Catch Effect doesn't exist" }
+        check(effect in _effects) { "Catch Effect doesn't exist" }
 
-        effects as MutableList
-        effects.remove(effect)
+        _effects.remove(effect)
     }
 
     fun clear() {
-        effects as MutableList
-        effects.clear()
+        _effects.clear()
     }
 
     fun playAll(catcher: Player, fish: Fish) {
-        effects.forEach { it.play(catcher, fish) }
+        for (effect in _effects) {
+            effect.play(catcher, fish)
+        }
     }
 }

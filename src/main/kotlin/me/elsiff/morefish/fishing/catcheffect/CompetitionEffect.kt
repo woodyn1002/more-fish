@@ -9,7 +9,7 @@ import org.bukkit.entity.Player
  * Created by elsiff on 2018-12-25.
  */
 class CompetitionEffect(
-        private val competition: FishingCompetition
+    private val competition: FishingCompetition
 ) : CatchEffect {
     override fun play(catcher: Player, fish: Fish) {
         if (competition.state == FishingCompetition.State.ENABLED) {

@@ -20,10 +20,10 @@ import java.time.format.DateTimeFormatter
  * Created by elsiff on 2018-12-28.
  */
 class FishItemStackConverter(
-        plugin: Plugin,
-        fishTypes: FishTypeTable
+    plugin: Plugin,
+    fishTypes: FishTypeTable
 ) : ResourceReceiver {
-    private val dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yy HH:mm")!!
+    private val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yy HH:mm")!!
     private lateinit var displayNameFormat: TextTemplate
     private lateinit var loreFormat: TextListTemplate
     private val fishReader: FishItemTagReader
@@ -64,12 +64,12 @@ class FishItemStackConverter(
 
     private fun getFormatReplacementMap(fish: Fish, catcher: Player, date: LocalDateTime): Map<String, String> {
         return mapOf(
-                "%player%" to catcher.name,
-                "%rarity%" to fish.type.rarity.name.toUpperCase(),
-                "%rarity_color%" to fish.type.rarity.color.toString(),
-                "%length%" to fish.length.toString(),
-                "%fish%" to fish.type.displayName,
-                "%date%" to dateTimeFormatter.format(date)
+            "%player%" to catcher.name,
+            "%rarity%" to fish.type.rarity.name.toUpperCase(),
+            "%rarity_color%" to fish.type.rarity.color.toString(),
+            "%length%" to fish.length.toString(),
+            "%fish%" to fish.type.displayName,
+            "%date%" to dateTimeFormatter.format(date)
         )
     }
 }

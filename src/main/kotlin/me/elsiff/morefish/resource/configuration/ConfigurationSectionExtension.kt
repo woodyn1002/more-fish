@@ -25,60 +25,60 @@ import java.util.*
 /**
  * Created by elsiff on 2018-12-28.
  */
-fun ConfigurationSection.getTextTemplate(path: String): TextTemplate {
+internal fun ConfigurationSection.getTextTemplate(path: String): TextTemplate {
     return TextTemplate(getString(path))
 }
 
-fun ConfigurationSection.getTextListTemplate(path: String): TextListTemplate {
+internal fun ConfigurationSection.getTextListTemplate(path: String): TextListTemplate {
     return TextListTemplate(getStringList(path))
 }
 
-fun ConfigurationSection.getChildSections(path: String): List<ConfigurationSection> {
+internal fun ConfigurationSection.getChildSections(path: String): List<ConfigurationSection> {
     val section = getConfigurationSection(path)
     return section.getKeys(false).map { section.getConfigurationSection(it) }
 }
 
-fun ConfigurationSection.getFishRarityList(path: String): List<FishRarity> {
+internal fun ConfigurationSection.getFishRarityList(path: String): List<FishRarity> {
     return getChildSections(path).map {
         FishRarity(
-                name = it.name,
-                displayName = ColorUtils.translate(it.getString("display-name")),
-                default = it.getBoolean("default", false),
-                probability = it.getDouble("chance", 0.0) / 100.0,
-                color = ChatColor.valueOf(it.getString("color").toUpperCase()),
-                feature = FishRarity.Feature(
-                        additionalPrice = it.getDouble("additional-price", 0.0),
-                        noBroadcast = it.getBoolean("no-broadcast", false),
-                        noDisplay = it.getBoolean("no-display", false),
-                        firework = it.getBoolean("firework", false)
-                )
+            name = it.name,
+            displayName = ColorUtils.translate(it.getString("display-name")),
+            default = it.getBoolean("default", false),
+            probability = it.getDouble("chance", 0.0) / 100.0,
+            color = ChatColor.valueOf(it.getString("color").toUpperCase()),
+            feature = FishRarity.Feature(
+                additionalPrice = it.getDouble("additional-price", 0.0),
+                noBroadcast = it.getBoolean("no-broadcast", false),
+                noDisplay = it.getBoolean("no-display", false),
+                firework = it.getBoolean("firework", false)
+            )
         )
     }
 }
 
-fun ConfigurationSection.getFishTypeList(
-        path: String,
-        rarity: FishRarity,
-        skullNbtHandler: SkullNbtHandler?
+internal fun ConfigurationSection.getFishTypeList(
+    path: String,
+    rarity: FishRarity,
+    skullNbtHandler: SkullNbtHandler?
 ): List<FishType> {
     return getConfigurationSection(path).getChildSections(rarity.name).map {
         FishType(
-                name = it.name,
-                displayName = ColorUtils.translate(it.getString("display-name")),
-                rarity = rarity,
-                lengthMin = it.getDouble("length-min"),
-                lengthMax = it.getDouble("length-max"),
-                icon = it.getFishItemStack("icon", skullNbtHandler),
-                feature = FishType.Feature(
-                        skipItemFormat = it.getBoolean("skip-item-format", false),
-                        commands = it.getStringList("commands").map(ColorUtils::translate),
-                        conditions = it.getStringList("conditions").map(Condition.Companion::valueOf)
-                )
+            name = it.name,
+            displayName = ColorUtils.translate(it.getString("display-name")),
+            rarity = rarity,
+            lengthMin = it.getDouble("length-min"),
+            lengthMax = it.getDouble("length-max"),
+            icon = it.getFishItemStack("icon", skullNbtHandler),
+            feature = FishType.Feature(
+                skipItemFormat = it.getBoolean("skip-item-format", false),
+                commands = it.getStringList("commands").map(ColorUtils::translate),
+                conditions = it.getStringList("conditions").map(Condition.Companion::valueOf)
+            )
         )
     }
 }
 
-fun ConfigurationSection.getFishItemStack(path: String, skullNbtHandler: SkullNbtHandler?): ItemStack {
+internal fun ConfigurationSection.getFishItemStack(path: String, skullNbtHandler: SkullNbtHandler?): ItemStack {
     val material = NamespacedKeyUtils.material(getString("$path.id"))
     val amount = getInt("$path.amount", 1)
     val itemStack = ItemStack(material, amount)
@@ -88,9 +88,10 @@ fun ConfigurationSection.getFishItemStack(path: String, skullNbtHandler: SkullNb
         getStringList("$path.enchantments").map {
             val tokens = it.split('|')
             Pair<Enchantment, Int>(Enchantment.getByKey(NamespacedKey.minecraft(tokens[0])), tokens[1].toInt())
-        }.forEach {
-            addEnchant(it.first, it.second, true)
-        }
+        }.toMap()
+            .forEach { enchantment, level ->
+                addEnchant(enchantment, level, true)
+            }
         isUnbreakable = getBoolean("$path.unbreakable", false)
     }
 

@@ -17,6 +17,6 @@ object NamespacedKeyUtils {
 
     fun material(namespacedKey: NamespacedKey): Material {
         return Material.matchMaterial(namespacedKey.key)
-                ?: throw IllegalStateException("There's no material whose id is '$namespacedKey'")
+            ?: throw IllegalStateException("There's no material whose id is '$namespacedKey'")
     }
 }

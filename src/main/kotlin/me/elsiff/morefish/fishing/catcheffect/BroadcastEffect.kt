@@ -8,8 +8,8 @@ import org.bukkit.entity.Player
  */
 class BroadcastEffect : CatchEffect {
     override fun play(catcher: Player, fish: Fish) {
-        catcher.world.players.forEach {
-            it.sendMessage("${catcher.name} has caught ${fish.length}cm ${fish.type.name}")
+        for (player in catcher.world.players) {
+            player.sendMessage("${catcher.name} has caught ${fish.length}cm ${fish.type.name}")
         }
     }
 }

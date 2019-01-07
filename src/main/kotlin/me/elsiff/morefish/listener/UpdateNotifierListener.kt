@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerJoinEvent
  * Created by elsiff on 2019-01-03.
  */
 class UpdateNotifierListener(
-        val newVersion: String
+    private val newVersion: String
 ) : Listener, ResourceReceiver {
     private lateinit var templates: TemplateBundle
 
@@ -22,7 +22,7 @@ class UpdateNotifierListener(
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
         if (event.player.isOp) {
-            templates.newVersion.formatted(mapOf("%s" to newVersion)).forEach { msg ->
+            for (msg in templates.newVersion.formatted(mapOf("%s" to newVersion))) {
                 event.player.sendMessage(msg)
             }
         }

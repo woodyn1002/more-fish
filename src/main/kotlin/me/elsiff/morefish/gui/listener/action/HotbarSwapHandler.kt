@@ -9,9 +9,9 @@ import org.bukkit.event.inventory.InventoryClickEvent
  * Created by elsiff on 2018-08-22.
  */
 class HotbarSwapHandler : InventoryActionHandler {
-    override val handlingActions = setOf(
-            InventoryAction.HOTBAR_SWAP,
-            InventoryAction.HOTBAR_MOVE_AND_READD
+    override val handlingActions: Set<InventoryAction> = setOf(
+        InventoryAction.HOTBAR_SWAP,
+        InventoryAction.HOTBAR_MOVE_AND_READD
     )
 
     override fun handle(event: InventoryClickEvent, gui: InventoryGui) {

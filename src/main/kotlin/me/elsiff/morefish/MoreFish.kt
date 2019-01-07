@@ -58,7 +58,7 @@ class MoreFish : JavaPlugin() {
             addReceiver(mainCommand)
             provideAll()
         }
-        logger.info("Loaded ${fishTypes.rarities().size} rarities and ${fishTypes.types().size} fish types")
+        logger.info("Loaded ${fishTypes.rarities.size} rarities and ${fishTypes.types.size} fish types")
 
         logger.info("Plugin has been enabled.")
     }

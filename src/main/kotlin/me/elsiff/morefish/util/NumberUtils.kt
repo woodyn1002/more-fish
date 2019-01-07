@@ -4,7 +4,7 @@ package me.elsiff.morefish.util
  * Created by elsiff on 2019-01-02.
  */
 object NumberUtils {
-    fun getOrdinalSuffix(number: Int): String {
+    fun ordinalSuffixOf(number: Int): String {
         if (number % 100 !in 11..13) {
             when (number % 10) {
                 1 -> return "st"
@@ -15,5 +15,5 @@ object NumberUtils {
         return "th"
     }
 
-    fun getOrdinal(number: Int): String = "$number${getOrdinalSuffix(number)}"
+    fun ordinalOf(number: Int): String = "$number${ordinalSuffixOf(number)}"
 }

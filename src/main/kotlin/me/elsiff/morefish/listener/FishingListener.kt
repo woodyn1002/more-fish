@@ -14,9 +14,9 @@ import java.time.LocalDateTime
  * Created by elsiff on 2018-12-24.
  */
 class FishingListener(
-        private val fishTypes: FishTypeTable,
-        private val catchEffects: CatchEffectCollection,
-        private val converter: FishItemStackConverter
+    private val fishTypes: FishTypeTable,
+    private val catchEffects: CatchEffectCollection,
+    private val converter: FishItemStackConverter
 ) : Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onPlayerFish(event: PlayerFishEvent) {

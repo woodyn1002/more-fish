@@ -9,8 +9,8 @@ import java.net.URL
  * Created by elsiff on 2019-01-03.
  */
 class UpdateChecker(
-        projectId: Int,
-        private val currentVersion: String
+    projectId: Int,
+    private val currentVersion: String
 ) {
     private val checkUrl = URL("https://api.spigotmc.org/legacy/update.php?resource=$projectId")
     lateinit var newVersion: String

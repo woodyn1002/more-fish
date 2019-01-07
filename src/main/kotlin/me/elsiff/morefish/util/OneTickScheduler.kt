@@ -7,9 +7,9 @@ import org.bukkit.scheduler.BukkitRunnable
  * Created by elsiff on 2019-01-06.
  */
 class OneTickScheduler(
-        private val plugin: Plugin
+    private val plugin: Plugin
 ) {
-    private val runnableMap = mutableMapOf<Any, MutableSet<OneTickRunnable>>()
+    private val runnableMap: MutableMap<Any, MutableSet<OneTickRunnable>> = mutableMapOf()
 
     fun scheduleLater(client: Any, action: () -> Unit) {
         val runnable = OneTickRunnable(client, action)
@@ -28,8 +28,8 @@ class OneTickScheduler(
     }
 
     private inner class OneTickRunnable(
-            private val client: Any,
-            private val action: () -> Unit
+        private val client: Any,
+        private val action: () -> Unit
     ) : BukkitRunnable() {
         override fun run() {
             action()

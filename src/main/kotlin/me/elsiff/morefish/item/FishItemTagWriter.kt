@@ -9,8 +9,8 @@ import org.bukkit.inventory.meta.tags.ItemTagType
  * Created by elsiff on 2019-01-03.
  */
 class FishItemTagWriter(
-        private val fishTypeKey: NamespacedKey,
-        private val fishLengthKey: NamespacedKey
+    private val fishTypeKey: NamespacedKey,
+    private val fishLengthKey: NamespacedKey
 ) {
     fun write(itemMeta: ItemMeta, fish: Fish) {
         itemMeta.customTagContainer.run {

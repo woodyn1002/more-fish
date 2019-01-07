@@ -12,12 +12,12 @@ import java.nio.file.Paths
  * Created by elsiff on 2018-12-28.
  */
 class ResourceProvider(
-        private val plugin: JavaPlugin
+    private val plugin: JavaPlugin
 ) {
     private val resources = ResourceBundle()
-    private val configurationFiles = mutableMapOf<FileConfiguration, File>()
-    private val dataPath = plugin.dataFolder.toPath()
-    private val resourceDependents = mutableSetOf<ResourceReceiver>()
+    private val configurationFiles: MutableMap<FileConfiguration, File> = mutableMapOf()
+    private val dataPath: Path = plugin.dataFolder.toPath()
+    private val resourceDependents: MutableSet<ResourceReceiver> = mutableSetOf()
 
     fun addReceiver(resourceDependent: ResourceReceiver) {
         resourceDependents.add(resourceDependent)
@@ -25,8 +25,8 @@ class ResourceProvider(
 
     fun provideAll() {
         readyResourceBundle()
-        resourceDependents.forEach {
-            it.receiveResource(resources)
+        for (dependent in resourceDependents) {
+            dependent.receiveResource(resources)
         }
     }
 

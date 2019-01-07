@@ -24,10 +24,10 @@ import org.bukkit.plugin.PluginDescriptionFile
  */
 @CommandAlias("morefish|mf|fish")
 class MainCommand(
-        private val pluginInfo: PluginDescriptionFile,
-        private val competition: FishingCompetition,
-        private val resourceProvider: ResourceProvider,
-        private val fishShop: FishShop
+    private val pluginInfo: PluginDescriptionFile,
+    private val competition: FishingCompetition,
+    private val resourceProvider: ResourceProvider,
+    private val fishShop: FishShop
 ) : BaseCommand(), ResourceReceiver {
     private lateinit var templates: TemplateBundle
 
@@ -41,10 +41,12 @@ class MainCommand(
     fun help(sender: CommandSender) {
         val pluginName = pluginInfo.name
         val prefix = "${ChatColor.AQUA}[$pluginName]${ChatColor.RESET} "
-        sender.sendMessage(prefix +
-                "${ChatColor.DARK_AQUA}> ===== " +
-                "${ChatColor.AQUA}${ChatColor.BOLD}$pluginName ${ChatColor.AQUA}v${pluginInfo.version}" +
-                "${ChatColor.DARK_AQUA} ===== <")
+        sender.sendMessage(
+            prefix +
+                    "${ChatColor.DARK_AQUA}> ===== " +
+                    "${ChatColor.AQUA}${ChatColor.BOLD}$pluginName ${ChatColor.AQUA}v${pluginInfo.version}" +
+                    "${ChatColor.DARK_AQUA} ===== <"
+        )
         val label = execCommandLabel
         sender.sendMessage("$prefix/$label help")
         sender.sendMessage("$prefix/$label start [runningTime(sec)]")
@@ -67,9 +69,13 @@ class MainCommand(
                         sender.sendMessage(templates.notPositive.formattedEmpty())
                     } else {
                         competition.enableWithTimer(runningTime * 20)
-                        sender.sendMessage(templates.contestStartTimer.formatted(mapOf(
-                                "%time%" to templates.formatTime(runningTime)
-                        )))
+                        sender.sendMessage(
+                            templates.contestStartTimer.formatted(
+                                mapOf(
+                                    "%time%" to templates.formatTime(runningTime)
+                                )
+                            )
+                        )
                     }
                 } catch (e: NumberFormatException) {
                     sender.sendMessage(templates.notNumber.formatted(mapOf("%s" to args[0])))
@@ -97,7 +103,7 @@ class MainCommand(
     @Subcommand("top|ranking")
     @CommandPermission("morefish.top")
     fun top(sender: CommandSender) {
-        if (competition.ranking().isEmpty()) {
+        if (competition.ranking.isEmpty()) {
             sender.sendMessage(templates.topNoRecord.formattedEmpty())
         } else {
             competition.top(5).forEachIndexed { index, record ->
@@ -110,7 +116,7 @@ class MainCommand(
             if (!competition.containsRecord(sender)) {
                 sender.sendMessage(templates.topMineNoRecord.formattedEmpty())
             } else {
-                competition.getRecordRanked(sender).let {
+                competition.rankedRecordOf(sender).let {
                     val placeholders = topReplacementOf(it.first, it.second)
                     sender.sendMessage(templates.topMine.formatted(placeholders))
                 }
@@ -120,11 +126,11 @@ class MainCommand(
 
     private fun topReplacementOf(number: Int, record: Record): Map<String, String> {
         return mapOf(
-                "%ordinal%" to NumberUtils.getOrdinal(number),
-                "%number%" to number.toString(),
-                "%player%" to record.fisher.name,
-                "%length%" to record.fish.length.toString(),
-                "%fish%" to record.fish.type.name
+            "%ordinal%" to NumberUtils.ordinalOf(number),
+            "%number%" to number.toString(),
+            "%player%" to record.fisher.name,
+            "%length%" to record.fish.length.toString(),
+            "%fish%" to record.fish.type.name
         )
     }
 
@@ -158,9 +164,13 @@ class MainCommand(
 
             val target = sender.server.getPlayerExact(args[0]) ?: null
             if (target == null) {
-                sender.sendMessage(templates.playerNotFound.formatted(mapOf(
-                        "%s" to args[0]
-                )))
+                sender.sendMessage(
+                    templates.playerNotFound.formatted(
+                        mapOf(
+                            "%s" to args[0]
+                        )
+                    )
+                )
                 return
             } else {
                 target
@@ -179,9 +189,13 @@ class MainCommand(
             fishShop.openGuiTo(guiUser)
 
             if (guiUser != sender) {
-                sender.sendMessage(templates.forcedPlayerToShop.formatted(mapOf(
-                        "%s" to guiUser.name
-                )))
+                sender.sendMessage(
+                    templates.forcedPlayerToShop.formatted(
+                        mapOf(
+                            "%s" to guiUser.name
+                        )
+                    )
+                )
             }
         }
     }

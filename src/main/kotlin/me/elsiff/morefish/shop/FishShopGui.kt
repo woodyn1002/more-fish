@@ -9,6 +9,7 @@ import me.elsiff.morefish.gui.state.GuiItemChangeState
 import me.elsiff.morefish.item.FishItemStackConverter
 import me.elsiff.morefish.item.edit
 import me.elsiff.morefish.resource.template.TemplateBundle
+import me.elsiff.morefish.util.InventoryUtils
 import me.elsiff.morefish.util.OneTickScheduler
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -19,15 +20,25 @@ import org.bukkit.inventory.meta.ItemMeta
  * Created by elsiff on 2019-01-03.
  */
 class FishShopGui(
-        private val shop: FishShop,
-        private val converter: FishItemStackConverter,
-        private val oneTickScheduler: OneTickScheduler,
-        private val templates: TemplateBundle,
-        private val user: Player
+    private val shop: FishShop,
+    private val converter: FishItemStackConverter,
+    private val oneTickScheduler: OneTickScheduler,
+    private val templates: TemplateBundle,
+    private val user: Player
 ) : ChestInventoryGui(user.server, 4, templates.shopGuiTitle.formattedEmpty()) {
-    private val bottomBarSlots = slotsOf(minX..maxX, maxY)
-    private val priceIconSlot = slotOf(centerX, maxY)
-    private val fishSlots = slotsOf(minX..maxX, minY until maxY)
+    private val bottomBarSlots: List<Int> = slotsOf(minX..maxX, maxY)
+    private val priceIconSlot: Int = slotOf(centerX, maxY)
+    private val fishSlots: List<Int> = slotsOf(minX..maxX, minY until maxY)
+    private val totalPrice: Double
+        get() {
+            var sum = 0.0
+            allFish().forEach { fish, itemStack ->
+                repeat(itemStack.amount) {
+                    sum += shop.priceOf(fish)
+                }
+            }
+            return sum
+        }
 
     init {
         val bottomBarIcon = ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE)
@@ -50,11 +61,8 @@ class FishShopGui(
             if (allFish.isEmpty()) {
                 user.sendMessage(templates.shopNoFish.formattedEmpty())
             } else {
-                val totalPrice = getTotalPrice()
-                allFish.forEach {
-                    val fish = it.first
-                    val itemStack = it.second
-
+                val totalPrice = totalPrice
+                allFish.forEach { fish, itemStack ->
                     repeat(itemStack.amount) {
                         shop.sell(user, fish)
                     }
@@ -67,7 +75,7 @@ class FishShopGui(
     }
 
     override fun handleDrag(state: GuiDragState) {
-        inventory.setItem(priceIconSlot, ItemStack(Material.AIR))
+        inventory.setItem(priceIconSlot, InventoryUtils.emptyStack())
         oneTickScheduler.scheduleLater(this) { updatePriceIcon() }
     }
 
@@ -77,38 +85,27 @@ class FishShopGui(
     }
 
     private fun dropAllFish() {
-        allFish().forEach {
-            val itemStack = it.second
+        allFish().forEach { _, itemStack ->
             user.world.dropItem(user.location, itemStack.clone())
         }
     }
 
-    private fun getTotalPrice(): Double {
-        var sum = 0.0
-        allFish().forEach {
-            val fish = it.first
-            val itemStack = it.second
-
-            repeat(itemStack.amount) {
-                sum += shop.priceOf(fish)
-            }
-        }
-        return sum
-    }
-
-    private fun allFish(): List<Pair<Fish, ItemStack>> {
+    private fun allFish(): Map<Fish, ItemStack> {
         return fishSlots
-                .mapNotNull { slot -> inventory.getItem(slot) ?: null }
-                .filter { itemStack -> converter.isFish(itemStack) }
-                .map { itemStack -> Pair(converter.fish(itemStack), itemStack) }
+            .mapNotNull { slot -> inventory.getItem(slot) ?: null }
+            .filter { itemStack -> converter.isFish(itemStack) }
+            .map { itemStack -> Pair(converter.fish(itemStack), itemStack) }
+            .toMap()
     }
 
-    private fun updatePriceIcon(price: Double = getTotalPrice()) {
+    private fun updatePriceIcon(price: Double = totalPrice) {
         val emeraldIcon = ItemStack(Material.EMERALD)
         emeraldIcon.edit<ItemMeta> {
-            displayName = templates.shopEmeraldIconName.formatted(mapOf(
+            displayName = templates.shopEmeraldIconName.formatted(
+                mapOf(
                     "%price%" to price.toString()
-            ))
+                )
+            )
         }
         inventory.setItem(priceIconSlot, emeraldIcon)
     }
