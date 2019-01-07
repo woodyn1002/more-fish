@@ -1,5 +1,6 @@
 package me.elsiff.morefish.resource
 
+import me.elsiff.morefish.VaultHooker
 import me.elsiff.morefish.protocollib.ProtocolLibHooker
 import me.elsiff.morefish.resource.template.TemplateBundle
 import org.bukkit.configuration.Configuration
@@ -13,4 +14,5 @@ class ResourceBundle {
     lateinit var lang: Configuration
     lateinit var templates: TemplateBundle
     var protocolLib = ProtocolLibHooker()
+    var vault = VaultHooker()
 }

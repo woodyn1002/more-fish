@@ -43,6 +43,10 @@ class FishItemStackConverter(
         }
     }
 
+    fun isFish(itemStack: ItemStack): Boolean {
+        return fishReader.canRead(itemStack.itemMeta)
+    }
+
     fun fish(itemStack: ItemStack): Fish {
         return fishReader.read(itemStack.itemMeta)
     }

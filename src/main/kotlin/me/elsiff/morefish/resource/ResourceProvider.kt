@@ -42,7 +42,8 @@ class ResourceProvider(
             }
             templates = TemplateBundle(lang)
 
-            protocolLib.hookIfEnabled(plugin.server.pluginManager)
+            protocolLib.hookIfEnabled(plugin.server)
+            vault.hookIfEnabled(plugin.server)
         }
     }
 

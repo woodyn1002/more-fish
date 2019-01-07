@@ -14,6 +14,12 @@ class FishItemTagReader(
         private val fishTypeKey: NamespacedKey,
         private val fishLengthKey: NamespacedKey
 ) {
+    fun canRead(itemMeta: ItemMeta): Boolean {
+        return itemMeta.customTagContainer.let { tags ->
+            tags.hasCustomTag(fishTypeKey, ItemTagType.STRING) && tags.hasCustomTag(fishLengthKey, ItemTagType.DOUBLE)
+        }
+    }
+
     fun read(itemMeta: ItemMeta): Fish {
         return itemMeta.customTagContainer.let { tags ->
             require(tags.hasCustomTag(fishTypeKey, ItemTagType.STRING)) { "Item meta must have fish type tag" }

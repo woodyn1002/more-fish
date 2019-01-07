@@ -1,5 +1,6 @@
 package me.elsiff.morefish
 
+import org.bukkit.Server
 import org.bukkit.plugin.PluginManager
 
 /**
@@ -11,11 +12,11 @@ interface PluginHooker {
 
     fun canHook(pluginManager: PluginManager) = pluginManager.isPluginEnabled(pluginName)
 
-    fun hook(pluginManager: PluginManager)
+    fun hook(server: Server)
 
-    fun hookIfEnabled(pluginManager: PluginManager) {
-        if (canHook(pluginManager)) {
-            hook(pluginManager)
+    fun hookIfEnabled(server: Server) {
+        if (canHook(server.pluginManager)) {
+            hook(server)
         }
     }
 

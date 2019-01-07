@@ -11,6 +11,7 @@ import me.elsiff.morefish.resource.ResourceBundle
 import me.elsiff.morefish.resource.ResourceProvider
 import me.elsiff.morefish.resource.ResourceReceiver
 import me.elsiff.morefish.resource.template.TemplateBundle
+import me.elsiff.morefish.shop.FishShop
 import me.elsiff.morefish.util.NumberUtils
 import org.bukkit.ChatColor
 import org.bukkit.command.CommandSender
@@ -25,7 +26,8 @@ import org.bukkit.plugin.PluginDescriptionFile
 class MainCommand(
         private val pluginInfo: PluginDescriptionFile,
         private val competition: FishingCompetition,
-        private val resourceProvider: ResourceProvider
+        private val resourceProvider: ResourceProvider,
+        private val fishShop: FishShop
 ) : BaseCommand(), ResourceReceiver {
     private lateinit var templates: TemplateBundle
 
@@ -142,6 +144,45 @@ class MainCommand(
         } catch (e: Exception) {
             e.printStackTrace()
             sender.sendMessage(templates.failedToReload.formattedEmpty())
+        }
+    }
+
+    @Subcommand("shop")
+    @CommandPermission("morefish.shop")
+    fun shop(sender: CommandSender, args: Array<String>) {
+        val guiUser: Player = if (args.size == 1) {
+            if (sender.hasPermission("morefish.admin")) {
+                sender.sendMessage(templates.noPermission.formattedEmpty())
+                return
+            }
+
+            val target = sender.server.getPlayerExact(args[0]) ?: null
+            if (target == null) {
+                sender.sendMessage(templates.playerNotFound.formatted(mapOf(
+                        "%s" to args[0]
+                )))
+                return
+            } else {
+                target
+            }
+        } else {
+            if (sender !is Player) {
+                sender.sendMessage(templates.inGameCommand.formattedEmpty())
+                return
+            }
+            sender
+        }
+
+        if (!fishShop.enabled) {
+            sender.sendMessage(templates.shopDisabled.formattedEmpty())
+        } else {
+            fishShop.openGuiTo(guiUser)
+
+            if (guiUser != sender) {
+                sender.sendMessage(templates.forcedPlayerToShop.formatted(mapOf(
+                        "%s" to guiUser.name
+                )))
+            }
         }
     }
 }

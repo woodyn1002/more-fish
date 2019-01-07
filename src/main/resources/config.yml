@@ -32,7 +32,7 @@ auto-running:
   - "21:00"
 
 fish-shop:
-  enable: true
+  enable: false
   multiplier: 0.1
   round-decimal-points: true
 

@@ -11,6 +11,8 @@ import me.elsiff.morefish.item.FishItemStackConverter
 import me.elsiff.morefish.listener.FishingListener
 import me.elsiff.morefish.listener.UpdateNotifierListener
 import me.elsiff.morefish.resource.ResourceProvider
+import me.elsiff.morefish.shop.FishShop
+import me.elsiff.morefish.util.OneTickScheduler
 import me.elsiff.morefish.util.UpdateChecker
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -21,10 +23,12 @@ class MoreFish : JavaPlugin() {
     private val resourceProvider = ResourceProvider(this)
     val guiRegistry = GuiRegistry(this)
     val guiOpener = GuiOpener(guiRegistry)
+    val oneTickScheduler = OneTickScheduler(this)
     val fishTypes = FishTypeTable()
     val competition = FishingCompetition(this)
     val catchEffects = CatchEffectCollection(competition)
     val converter = FishItemStackConverter(this, fishTypes)
+    val fishShop = FishShop(guiRegistry, guiOpener, oneTickScheduler, converter)
     val updateChecker = UpdateChecker(22926, this.description.version)
 
     override fun onEnable() {
@@ -33,7 +37,7 @@ class MoreFish : JavaPlugin() {
         }
 
         val commands = PaperCommandManager(this)
-        val mainCommand = MainCommand(description, competition, resourceProvider)
+        val mainCommand = MainCommand(description, competition, resourceProvider, fishShop)
         commands.registerCommand(mainCommand)
 
         if (!isSnapshotVersion()) {
@@ -50,6 +54,7 @@ class MoreFish : JavaPlugin() {
             addReceiver(competition)
             addReceiver(catchEffects)
             addReceiver(converter)
+            addReceiver(fishShop)
             addReceiver(mainCommand)
             provideAll()
         }
