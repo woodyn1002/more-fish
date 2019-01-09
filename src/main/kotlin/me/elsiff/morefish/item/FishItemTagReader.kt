@@ -10,7 +10,7 @@ import org.bukkit.inventory.meta.tags.ItemTagType
  * Created by elsiff on 2019-01-03.
  */
 class FishItemTagReader(
-    private val fishTypes: FishTypeTable,
+    private val fishTypeTable: FishTypeTable,
     private val fishTypeKey: NamespacedKey,
     private val fishLengthKey: NamespacedKey
 ) {
@@ -24,10 +24,12 @@ class FishItemTagReader(
         return itemMeta.customTagContainer.let { tags ->
             require(tags.hasCustomTag(fishTypeKey, ItemTagType.STRING)) { "Item meta must have fish type tag" }
             require(tags.hasCustomTag(fishLengthKey, ItemTagType.DOUBLE)) { "Item meta must have fish length tag" }
-            Fish(
-                fishTypes.getType(tags.getCustomTag(fishTypeKey, ItemTagType.STRING)),
-                tags.getCustomTag(fishLengthKey, ItemTagType.DOUBLE)
-            )
+
+            val typeName = tags.getCustomTag(fishTypeKey, ItemTagType.STRING)
+            val type = fishTypeTable.types.find { it.name == typeName }
+                ?: throw IllegalStateException("Fish type doesn't exist")
+            val length = tags.getCustomTag(fishLengthKey, ItemTagType.DOUBLE)
+            Fish(type, length)
         }
     }
 }

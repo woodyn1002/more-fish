@@ -5,12 +5,11 @@ import co.aikar.commands.annotation.CommandAlias
 import co.aikar.commands.annotation.CommandPermission
 import co.aikar.commands.annotation.Default
 import co.aikar.commands.annotation.Subcommand
+import me.elsiff.morefish.MoreFish
+import me.elsiff.morefish.configuration.Config
+import me.elsiff.morefish.configuration.Lang
 import me.elsiff.morefish.fishing.competition.FishingCompetition
 import me.elsiff.morefish.fishing.competition.Record
-import me.elsiff.morefish.resource.ResourceBundle
-import me.elsiff.morefish.resource.ResourceProvider
-import me.elsiff.morefish.resource.ResourceReceiver
-import me.elsiff.morefish.resource.template.TemplateBundle
 import me.elsiff.morefish.shop.FishShop
 import me.elsiff.morefish.util.NumberUtils
 import org.bukkit.ChatColor
@@ -24,16 +23,11 @@ import org.bukkit.plugin.PluginDescriptionFile
  */
 @CommandAlias("morefish|mf|fish")
 class MainCommand(
-    private val pluginInfo: PluginDescriptionFile,
+    private val moreFish: MoreFish,
     private val competition: FishingCompetition,
-    private val resourceProvider: ResourceProvider,
     private val fishShop: FishShop
-) : BaseCommand(), ResourceReceiver {
-    private lateinit var templates: TemplateBundle
-
-    override fun receiveResource(resources: ResourceBundle) {
-        templates = resources.templates
-    }
+) : BaseCommand() {
+    private val pluginInfo: PluginDescriptionFile = moreFish.description
 
     @Default
     @Subcommand("help")
@@ -66,26 +60,24 @@ class MainCommand(
                 try {
                     val runningTime = args[0].toLong()
                     if (runningTime < 0) {
-                        sender.sendMessage(templates.notPositive.formattedEmpty())
+                        sender.sendMessage(Lang.text("not-positive"))
                     } else {
                         competition.enableWithTimer(runningTime * 20)
-                        sender.sendMessage(
-                            templates.contestStartTimer.formatted(
-                                mapOf(
-                                    "%time%" to templates.formatTime(runningTime)
-                                )
-                            )
-                        )
+
+                        val msg = Lang.format("contest-start-timer")
+                            .replace("%time%" to Lang.time(runningTime)).output
+                        sender.sendMessage(msg)
                     }
                 } catch (e: NumberFormatException) {
-                    sender.sendMessage(templates.notNumber.formatted(mapOf("%s" to args[0])))
+                    val msg = Lang.format("not-number").replace("%s" to args[0]).output
+                    sender.sendMessage(msg)
                 }
             } else {
                 competition.enable()
-                sender.sendMessage(templates.contestStart.formattedEmpty())
+                sender.sendMessage(Lang.text("contest-start"))
             }
         } else {
-            sender.sendMessage(templates.alreadyOngoing.formattedEmpty())
+            sender.sendMessage(Lang.text("already-ongoing"))
         }
     }
 
@@ -94,9 +86,9 @@ class MainCommand(
     fun stop(sender: CommandSender) {
         if (competition.state != FishingCompetition.State.DISABLED) {
             competition.disable()
-            sender.sendMessage(templates.contestStop.formattedEmpty())
+            sender.sendMessage(Lang.text("contest-shop"))
         } else {
-            sender.sendMessage(templates.alreadyStopped.formattedEmpty())
+            sender.sendMessage(Lang.text("already-stopped"))
         }
     }
 
@@ -104,21 +96,22 @@ class MainCommand(
     @CommandPermission("morefish.top")
     fun top(sender: CommandSender) {
         if (competition.ranking.isEmpty()) {
-            sender.sendMessage(templates.topNoRecord.formattedEmpty())
+            sender.sendMessage(Lang.text("top-no-record"))
         } else {
             competition.top(5).forEachIndexed { index, record ->
                 val number = index + 1
-                sender.sendMessage(templates.topList.formatted(topReplacementOf(number, record)))
+                val msg = Lang.format("top-list").replace(topReplacementOf(number, record)).output
+                sender.sendMessage(msg)
             }
         }
 
         if (sender is Player) {
             if (!competition.containsRecord(sender)) {
-                sender.sendMessage(templates.topMineNoRecord.formattedEmpty())
+                sender.sendMessage(Lang.text("top-mine-no-record"))
             } else {
                 competition.rankedRecordOf(sender).let {
-                    val placeholders = topReplacementOf(it.first, it.second)
-                    sender.sendMessage(templates.topMine.formatted(placeholders))
+                    val msg = Lang.format("top-mine").replace(topReplacementOf(it.first, it.second)).output
+                    sender.sendMessage(msg)
                 }
             }
         }
@@ -138,18 +131,18 @@ class MainCommand(
     @CommandPermission("morefish.admin")
     fun clear(sender: CommandSender) {
         competition.clear()
-        sender.sendMessage(templates.clearRecords.formattedEmpty())
+        sender.sendMessage(Lang.text("clear-records"))
     }
 
     @Subcommand("reload")
     @CommandPermission("morefish.admin")
     fun reload(sender: CommandSender) {
         try {
-            resourceProvider.provideAll()
-            sender.sendMessage(templates.reloadConfig.formattedEmpty())
+            moreFish.applyConfig()
+            sender.sendMessage(Lang.text("reload-config"))
         } catch (e: Exception) {
             e.printStackTrace()
-            sender.sendMessage(templates.failedToReload.formattedEmpty())
+            sender.sendMessage(Lang.text("failed-to-reload"))
         }
     }
 
@@ -158,44 +151,34 @@ class MainCommand(
     fun shop(sender: CommandSender, args: Array<String>) {
         val guiUser: Player = if (args.size == 1) {
             if (sender.hasPermission("morefish.admin")) {
-                sender.sendMessage(templates.noPermission.formattedEmpty())
+                sender.sendMessage(Lang.text("no-permission"))
                 return
             }
 
             val target = sender.server.getPlayerExact(args[0]) ?: null
             if (target == null) {
-                sender.sendMessage(
-                    templates.playerNotFound.formatted(
-                        mapOf(
-                            "%s" to args[0]
-                        )
-                    )
-                )
+                val msg = Lang.format("player-not-found").replace("%s" to args[0]).output
+                sender.sendMessage(msg)
                 return
             } else {
                 target
             }
         } else {
             if (sender !is Player) {
-                sender.sendMessage(templates.inGameCommand.formattedEmpty())
+                sender.sendMessage(Lang.text("in-game-command"))
                 return
             }
             sender
         }
 
         if (!fishShop.enabled) {
-            sender.sendMessage(templates.shopDisabled.formattedEmpty())
+            sender.sendMessage(Lang.text("shop-disabled"))
         } else {
             fishShop.openGuiTo(guiUser)
 
             if (guiUser != sender) {
-                sender.sendMessage(
-                    templates.forcedPlayerToShop.formatted(
-                        mapOf(
-                            "%s" to guiUser.name
-                        )
-                    )
-                )
+                val msg = Lang.format("forced-player-to-shop").replace("%s" to guiUser.name).output
+                sender.sendMessage(msg)
             }
         }
     }

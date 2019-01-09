@@ -1,7 +1,5 @@
 package me.elsiff.morefish.fishing.competition
 
-import me.elsiff.morefish.resource.ResourceBundle
-import me.elsiff.morefish.resource.ResourceReceiver
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import org.bukkit.scheduler.BukkitTask
@@ -13,16 +11,12 @@ import kotlin.math.min
  */
 class FishingCompetition(
     private val plugin: Plugin
-) : ResourceReceiver {
+) {
     private val records: TreeSet<Record> = sortedSetOf(Comparator.reverseOrder())
     val ranking: List<Record>
         get() = records.toList()
     var state: State = State.DISABLED
-    var timerTask: BukkitTask? = null
-
-    override fun receiveResource(resources: ResourceBundle) {
-
-    }
+    private var timerTask: BukkitTask? = null
 
     fun enable() {
         checkStateDisabled()

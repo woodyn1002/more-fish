@@ -1,4 +1,4 @@
-package me.elsiff.morefish
+package me.elsiff.morefish.hooker
 
 import net.milkbowl.vault.economy.Economy
 import org.bukkit.Server
@@ -12,6 +12,8 @@ class VaultHooker : PluginHooker {
     lateinit var economy: Economy
 
     override fun hook(server: Server) {
+        PluginHooker.checkEnabled(this, server.pluginManager)
+
         val registration = server.servicesManager.getRegistration(Economy::class.java) ?: null
         if (registration != null) {
             economy = registration.provider

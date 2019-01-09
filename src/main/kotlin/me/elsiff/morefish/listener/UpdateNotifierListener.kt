@@ -1,8 +1,6 @@
 package me.elsiff.morefish.listener
 
-import me.elsiff.morefish.resource.ResourceBundle
-import me.elsiff.morefish.resource.ResourceReceiver
-import me.elsiff.morefish.resource.template.TemplateBundle
+import me.elsiff.morefish.configuration.Lang
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
@@ -12,17 +10,11 @@ import org.bukkit.event.player.PlayerJoinEvent
  */
 class UpdateNotifierListener(
     private val newVersion: String
-) : Listener, ResourceReceiver {
-    private lateinit var templates: TemplateBundle
-
-    override fun receiveResource(resources: ResourceBundle) {
-        templates = resources.templates
-    }
-
+) : Listener {
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
         if (event.player.isOp) {
-            for (msg in templates.newVersion.formatted(mapOf("%s" to newVersion))) {
+            for (msg in Lang.formats("new-version").replace("%s" to newVersion).output) {
                 event.player.sendMessage(msg)
             }
         }

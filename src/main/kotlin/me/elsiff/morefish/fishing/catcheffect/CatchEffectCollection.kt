@@ -2,8 +2,6 @@ package me.elsiff.morefish.fishing.catcheffect
 
 import me.elsiff.morefish.fishing.Fish
 import me.elsiff.morefish.fishing.competition.FishingCompetition
-import me.elsiff.morefish.resource.ResourceBundle
-import me.elsiff.morefish.resource.ResourceReceiver
 import org.bukkit.entity.Player
 
 /**
@@ -11,12 +9,12 @@ import org.bukkit.entity.Player
  */
 class CatchEffectCollection(
     private val competition: FishingCompetition
-) : ResourceReceiver {
+) {
     private val _effects: MutableList<CatchEffect> = mutableListOf()
     val effects: List<CatchEffect>
         get() = _effects
 
-    override fun receiveResource(resources: ResourceBundle) {
+    init {
         clear()
         addEffect(BroadcastEffect())
         addEffect(CompetitionEffect(competition))

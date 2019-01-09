@@ -1,5 +1,6 @@
 package me.elsiff.morefish.shop
 
+import me.elsiff.morefish.configuration.Lang
 import me.elsiff.morefish.fishing.Fish
 import me.elsiff.morefish.gui.ChestInventoryGui
 import me.elsiff.morefish.gui.state.ComponentClickState
@@ -8,7 +9,6 @@ import me.elsiff.morefish.gui.state.GuiDragState
 import me.elsiff.morefish.gui.state.GuiItemChangeState
 import me.elsiff.morefish.item.FishItemStackConverter
 import me.elsiff.morefish.item.edit
-import me.elsiff.morefish.resource.template.TemplateBundle
 import me.elsiff.morefish.util.InventoryUtils
 import me.elsiff.morefish.util.OneTickScheduler
 import org.bukkit.Material
@@ -23,9 +23,8 @@ class FishShopGui(
     private val shop: FishShop,
     private val converter: FishItemStackConverter,
     private val oneTickScheduler: OneTickScheduler,
-    private val templates: TemplateBundle,
     private val user: Player
-) : ChestInventoryGui(user.server, 4, templates.shopGuiTitle.formattedEmpty()) {
+) : ChestInventoryGui(user.server, 4, Lang.text("shop-gui-title")) {
     private val bottomBarSlots: List<Int> = slotsOf(minX..maxX, maxY)
     private val priceIconSlot: Int = slotOf(centerX, maxY)
     private val fishSlots: List<Int> = slotsOf(minX..maxX, minY until maxY)
@@ -59,7 +58,7 @@ class FishShopGui(
         if (state.slot == priceIconSlot) {
             val allFish = allFish()
             if (allFish.isEmpty()) {
-                user.sendMessage(templates.shopNoFish.formattedEmpty())
+                user.sendMessage(Lang.text("shop-no-fish"))
             } else {
                 val totalPrice = totalPrice
                 allFish.forEach { fish, itemStack ->
@@ -69,7 +68,8 @@ class FishShopGui(
                     itemStack.amount = 0
                 }
                 updatePriceIcon(0.0)
-                user.sendMessage(templates.shopSold.formatted(mapOf("%price%" to totalPrice.toString())))
+                val msg = Lang.format("shop-sold").replace("%price%" to totalPrice.toString()).output
+                user.sendMessage(msg)
             }
         }
     }
@@ -101,11 +101,9 @@ class FishShopGui(
     private fun updatePriceIcon(price: Double = totalPrice) {
         val emeraldIcon = ItemStack(Material.EMERALD)
         emeraldIcon.edit<ItemMeta> {
-            displayName = templates.shopEmeraldIconName.formatted(
-                mapOf(
-                    "%price%" to price.toString()
-                )
-            )
+            displayName = Lang.format("shop-emerald-icon-name")
+                .replace("%price%" to price.toString())
+                .output
         }
         inventory.setItem(priceIconSlot, emeraldIcon)
     }

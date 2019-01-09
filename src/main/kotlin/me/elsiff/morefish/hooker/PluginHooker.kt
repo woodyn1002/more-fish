@@ -1,4 +1,4 @@
-package me.elsiff.morefish
+package me.elsiff.morefish.hooker
 
 import org.bukkit.Server
 import org.bukkit.plugin.PluginManager
@@ -21,6 +21,10 @@ interface PluginHooker {
     }
 
     companion object {
+        fun checkEnabled(hooker: PluginHooker, pluginManager: PluginManager) {
+            check(hooker.canHook(pluginManager)) { "${hooker.pluginName} must be enabled" }
+        }
+
         fun checkHooked(hooker: PluginHooker) {
             check(hooker.hasHooked) { "${hooker.pluginName} must be hooked" }
         }
