@@ -42,7 +42,7 @@ class MoreFish : JavaPlugin() {
         applyConfig()
 
         server.pluginManager.run {
-            registerEvents(FishingListener(fishTypeTable, catchEffects, converter), this@MoreFish)
+            registerEvents(FishingListener(fishTypeTable, catchEffects, converter, competition), this@MoreFish)
         }
 
         val commands = PaperCommandManager(this)

@@ -6,7 +6,6 @@ import co.aikar.commands.annotation.CommandPermission
 import co.aikar.commands.annotation.Default
 import co.aikar.commands.annotation.Subcommand
 import me.elsiff.morefish.MoreFish
-import me.elsiff.morefish.configuration.Config
 import me.elsiff.morefish.configuration.Lang
 import me.elsiff.morefish.fishing.competition.FishingCompetition
 import me.elsiff.morefish.fishing.competition.Record

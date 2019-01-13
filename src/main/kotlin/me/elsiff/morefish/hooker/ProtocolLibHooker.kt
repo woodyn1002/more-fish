@@ -1,6 +1,5 @@
 package me.elsiff.morefish.hooker
 
-import me.elsiff.morefish.configuration.Config
 import org.bukkit.Server
 
 /**

@@ -4,14 +4,14 @@ import me.elsiff.morefish.configuration.ConfigurationValueAccessor
 import me.elsiff.morefish.configuration.translated
 import me.elsiff.morefish.fishing.FishRarity
 import me.elsiff.morefish.fishing.FishType
-import me.elsiff.morefish.fishing.condition.Condition
 
 /**
  * Created by elsiff on 2019-01-09.
  */
 class FishTypeMapLoader(
     private val fishRaritySetLoader: FishRaritySetLoader,
-    private val customItemStackLoader: CustomItemStackLoader
+    private val customItemStackLoader: CustomItemStackLoader,
+    private val fishConditionSetLoader: FishConditionSetLoader
 ) : CustomLoader<Map<FishRarity, Set<FishType>>> {
     override fun loadFrom(section: ConfigurationValueAccessor, path: String): Map<FishRarity, Set<FishType>> {
         section[path].let { root ->
@@ -29,7 +29,7 @@ class FishTypeMapLoader(
                         feature = FishType.Feature(
                             skipItemFormat = it.boolean("skip-item-format", false),
                             commands = it.strings("commands", emptyList()).map(String::translated),
-                            conditions = it.strings("conditions", emptyList()).map(Condition.Companion::valueOf)
+                            conditions = fishConditionSetLoader.loadFrom(it, "conditions")
                         )
                     )
                 }.toSet()

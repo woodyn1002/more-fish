@@ -1,5 +1,8 @@
 package me.elsiff.morefish.fishing
 
+import me.elsiff.morefish.fishing.competition.FishingCompetition
+import org.bukkit.entity.Item
+import org.bukkit.entity.Player
 import kotlin.random.Random
 
 /**
@@ -46,5 +49,21 @@ class MutableFishTypeTable : HashMap<FishRarity, Set<FishType>>(), FishTypeTable
     override fun pickRandomType(rarity: FishRarity): FishType {
         check(contains(rarity)) { "Rarity must be contained in the table" }
         return this[rarity]!!.random()
+    }
+
+    override fun pickRandomType(
+        caught: Item,
+        fisher: Player,
+        competition: FishingCompetition,
+        rarity: FishRarity
+    ): FishType {
+        check(contains(rarity)) { "Rarity must be contained in the table" }
+        val types = this[rarity]!!.filter { type ->
+            type.feature.conditions.all { condition ->
+                condition.check(caught, fisher, competition)
+            }
+        }
+        check(types.isNotEmpty()) { "No fish type matches given condition" }
+        return types.random()
     }
 }

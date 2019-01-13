@@ -16,7 +16,9 @@ object Config {
     val enchantmentMapLoader: EnchantmentMapLoader = EnchantmentMapLoader()
     val customItemStackLoader: CustomItemStackLoader = CustomItemStackLoader(enchantmentMapLoader)
     val fishRaritySetLoader: FishRaritySetLoader = FishRaritySetLoader(chatColorLoader)
-    val fishTypeMapLoader: FishTypeMapLoader = FishTypeMapLoader(fishRaritySetLoader, customItemStackLoader)
+    val fishConditionSetLoader: FishConditionSetLoader = FishConditionSetLoader()
+    val fishTypeMapLoader: FishTypeMapLoader =
+        FishTypeMapLoader(fishRaritySetLoader, customItemStackLoader, fishConditionSetLoader)
 
     fun load(plugin: Plugin) {
         val configPath = Paths.get("config.yml")
