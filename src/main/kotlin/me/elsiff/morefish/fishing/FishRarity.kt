@@ -1,5 +1,6 @@
 package me.elsiff.morefish.fishing
 
+import me.elsiff.morefish.fishing.catcheffect.CatchHandler
 import org.bukkit.ChatColor
 
 /**
@@ -11,12 +12,6 @@ data class FishRarity(
     val default: Boolean,
     val probability: Double,
     val color: ChatColor,
-    val feature: Feature
-) {
-    data class Feature(
-        val additionalPrice: Double = 0.0,
-        val noBroadcast: Boolean = false,
-        val noDisplay: Boolean = false,
-        val firework: Boolean = false
-    )
-}
+    val additionalPrice: Double = 0.0,
+    val catchHandlers: Set<CatchHandler>
+)

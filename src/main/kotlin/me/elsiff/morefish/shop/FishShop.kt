@@ -53,7 +53,7 @@ class FishShop(
     }
 
     fun priceOf(fish: Fish): Double {
-        val rarityPrice = fish.type.rarity.feature.additionalPrice
+        val rarityPrice = fish.type.rarity.additionalPrice
         val price = (priceMultiplier * fish.length) + rarityPrice
 
         return if (roundDecimalPoints) {

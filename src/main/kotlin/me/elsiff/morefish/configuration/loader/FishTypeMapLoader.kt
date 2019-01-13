@@ -19,6 +19,7 @@ class FishTypeMapLoader(
             return root["fish-list"].children.map { groupByRarity ->
                 val rarity = findRarity(rarities, groupByRarity.name)
                 val fishTypes = groupByRarity.children.map {
+                    val commands = it.strings("commands", emptyList()).map(String::translated)
                     FishType(
                         name = it.name,
                         displayName = it.string("display-name").translated(),
@@ -26,11 +27,9 @@ class FishTypeMapLoader(
                         lengthMin = it.double("length-min"),
                         lengthMax = it.double("length-max"),
                         icon = customItemStackLoader.loadFrom(it, "icon"),
-                        feature = FishType.Feature(
-                            skipItemFormat = it.boolean("skip-item-format", false),
-                            commands = it.strings("commands", emptyList()).map(String::translated),
-                            conditions = fishConditionSetLoader.loadFrom(it, "conditions")
-                        )
+                        catchHandlers = emptySet(),
+                        conditions = fishConditionSetLoader.loadFrom(it, "conditions"),
+                        skipItemFormat = it.boolean("skip-item-format", false)
                     )
                 }.toSet()
                 Pair(rarity, fishTypes)

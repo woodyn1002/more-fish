@@ -6,6 +6,6 @@ import org.bukkit.entity.Player
 /**
  * Created by elsiff on 2018-12-25.
  */
-interface CatchEffect {
+interface CatchHandler {
     fun play(catcher: Player, fish: Fish)
 }

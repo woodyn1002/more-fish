@@ -10,7 +10,7 @@ import org.bukkit.entity.Player
  */
 class CompetitionEffect(
     private val competition: FishingCompetition
-) : CatchEffect {
+) : CatchHandler {
     override fun play(catcher: Player, fish: Fish) {
         if (competition.state == FishingCompetition.State.ENABLED) {
             competition.putRecord(Record(catcher, fish))

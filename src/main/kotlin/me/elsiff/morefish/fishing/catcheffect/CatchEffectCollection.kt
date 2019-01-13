@@ -10,8 +10,8 @@ import org.bukkit.entity.Player
 class CatchEffectCollection(
     private val competition: FishingCompetition
 ) {
-    private val _effects: MutableList<CatchEffect> = mutableListOf()
-    val effects: List<CatchEffect>
+    private val _effects: MutableList<CatchHandler> = mutableListOf()
+    val effects: List<CatchHandler>
         get() = _effects
 
     init {
@@ -20,11 +20,11 @@ class CatchEffectCollection(
         addEffect(CompetitionEffect(competition))
     }
 
-    fun addEffect(effect: CatchEffect) {
+    fun addEffect(effect: CatchHandler) {
         _effects.add(effect)
     }
 
-    fun removeEffect(effect: CatchEffect) {
+    fun removeEffect(effect: CatchHandler) {
         check(effect in _effects) { "Catch Effect doesn't exist" }
 
         _effects.remove(effect)

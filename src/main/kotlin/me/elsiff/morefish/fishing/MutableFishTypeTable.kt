@@ -59,7 +59,7 @@ class MutableFishTypeTable : HashMap<FishRarity, Set<FishType>>(), FishTypeTable
     ): FishType {
         check(contains(rarity)) { "Rarity must be contained in the table" }
         val types = this[rarity]!!.filter { type ->
-            type.feature.conditions.all { condition ->
+            type.conditions.all { condition ->
                 condition.check(caught, fisher, competition)
             }
         }
