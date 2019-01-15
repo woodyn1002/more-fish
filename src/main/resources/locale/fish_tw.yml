@@ -14,7 +14,6 @@ version: 212
 # %rarity_color% - 稀有級別的顏色
 # %length% - 魚的長度
 # %fish% - 魚的名稱
-# %date% - 魚被釣到的時間
 item-format:
   display-name: "%rarity_color%%fish%"
   lore:

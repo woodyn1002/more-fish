@@ -14,7 +14,6 @@ version: 212
 # %rarity_color% - レアリティの色
 # %length% - 魚のサイズ
 # %fish% - 魚の名前
-# %date% - 釣った日時
 item-format:
   display-name: "%rarity_color%%fish%"
   lore:

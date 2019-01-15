@@ -14,7 +14,6 @@ version: 212
 # %rarity_color% - The color of rarity
 # %length% - The length of fish
 # %fish% - The name of fish
-# %date% - The date when the fish was caught
 item-format:
   display-name: "%rarity_color%%fish%"
   lore:

@@ -9,7 +9,6 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerFishEvent
-import java.time.LocalDateTime
 
 /**
  * Created by elsiff on 2018-12-24.
@@ -29,7 +28,7 @@ class FishingListener(
             for (handler in catchHandlers) {
                 handler.handle(event.player, fish)
             }
-            caught.itemStack = converter.createItemStack(fish, event.player, LocalDateTime.now())
+            caught.itemStack = converter.createItemStack(fish, event.player)
         }
     }
 }

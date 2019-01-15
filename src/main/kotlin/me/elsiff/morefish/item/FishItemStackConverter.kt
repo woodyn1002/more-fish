@@ -9,8 +9,6 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.plugin.Plugin
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 /**
  * Created by elsiff on 2018-12-28.
@@ -19,7 +17,6 @@ class FishItemStackConverter(
     plugin: Plugin,
     fishTypeTable: FishTypeTable
 ) {
-    private val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yy HH:mm")!!
     private val fishReader: FishItemTagReader
     private val fishWriter: FishItemTagWriter
 
@@ -41,10 +38,10 @@ class FishItemStackConverter(
         return fishReader.read(itemStack.itemMeta)
     }
 
-    fun createItemStack(fish: Fish, catcher: Player, caughtDate: LocalDateTime): ItemStack {
+    fun createItemStack(fish: Fish, catcher: Player): ItemStack {
         val itemStack = fish.type.icon.clone()
         if (!fish.type.hasNotFishItemFormat) {
-            val replacement = getFormatReplacementMap(fish, catcher, caughtDate)
+            val replacement = getFormatReplacementMap(fish, catcher)
             itemStack.edit<ItemMeta> {
                 displayName = formatConfig.format("display-name").replace(replacement).output
                 lore = formatConfig.formats("lore").replace(replacement).output
@@ -54,14 +51,13 @@ class FishItemStackConverter(
         return itemStack
     }
 
-    private fun getFormatReplacementMap(fish: Fish, catcher: Player, date: LocalDateTime): Map<String, String> {
+    private fun getFormatReplacementMap(fish: Fish, catcher: Player): Map<String, String> {
         return mapOf(
             "%player%" to catcher.name,
             "%rarity%" to fish.type.rarity.name.toUpperCase(),
             "%rarity_color%" to fish.type.rarity.color.toString(),
             "%length%" to fish.length.toString(),
-            "%fish%" to fish.type.displayName,
-            "%date%" to dateTimeFormatter.format(date)
+            "%fish%" to fish.type.displayName
         )
     }
 }

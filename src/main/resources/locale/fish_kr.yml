@@ -14,7 +14,6 @@ version: 212
 # %rarity_color% - 희귀 등급의 색깔
 # %length% - 물고기의 길이
 # %fish% - 물고기의 이름
-# %date% - 물고기가 잡힌 날짜 (예: 16/10/02 16:44)
 item-format:
   display-name: "%rarity_color%%fish%"
   lore:

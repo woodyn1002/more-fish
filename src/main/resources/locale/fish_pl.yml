@@ -14,7 +14,6 @@ version: 212
 # %rarity_color% - Kolor klasy
 # %length% - Długosc ryby
 # %fish% - Nazwa ryby
-# %date% - Data złowenia ryby
 item-format:
   display-name: "%rarity_color%%fish%"
   lore:
