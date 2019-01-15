@@ -4,7 +4,10 @@ import co.aikar.commands.PaperCommandManager
 import me.elsiff.morefish.command.MainCommand
 import me.elsiff.morefish.configuration.Config
 import me.elsiff.morefish.fishing.MutableFishTypeTable
-import me.elsiff.morefish.fishing.catcheffect.CatchEffectCollection
+import me.elsiff.morefish.fishing.catchhandler.CatchBroadcaster
+import me.elsiff.morefish.fishing.catchhandler.CatchHandler
+import me.elsiff.morefish.fishing.catchhandler.CompetitionRecordAdder
+import me.elsiff.morefish.fishing.catchhandler.NewFirstBroadcaster
 import me.elsiff.morefish.fishing.competition.FishingCompetition
 import me.elsiff.morefish.gui.GuiOpener
 import me.elsiff.morefish.gui.GuiRegistry
@@ -30,9 +33,13 @@ class MoreFish : JavaPlugin() {
     val oneTickScheduler = OneTickScheduler(this)
     val fishTypeTable = MutableFishTypeTable()
     val competition = FishingCompetition(this)
-    val catchEffects = CatchEffectCollection(competition)
     val converter = FishItemStackConverter(this, fishTypeTable)
     val fishShop = FishShop(guiRegistry, guiOpener, oneTickScheduler, converter, vault)
+    val globalCatchHandlers: List<CatchHandler> = listOf(
+        CatchBroadcaster(),
+        NewFirstBroadcaster(competition),
+        CompetitionRecordAdder(competition)
+    )
     val updateChecker = UpdateChecker(22926, this.description.version)
 
     override fun onEnable() {
@@ -42,7 +49,8 @@ class MoreFish : JavaPlugin() {
         applyConfig()
 
         server.pluginManager.run {
-            registerEvents(FishingListener(fishTypeTable, catchEffects, converter, competition), this@MoreFish)
+            val fishingListener = FishingListener(fishTypeTable, converter, competition, globalCatchHandlers)
+            registerEvents(fishingListener, this@MoreFish)
         }
 
         val commands = PaperCommandManager(this)

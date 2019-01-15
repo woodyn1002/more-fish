@@ -1,4 +1,4 @@
-package me.elsiff.morefish.fishing.catcheffect
+package me.elsiff.morefish.fishing.catchhandler
 
 import me.elsiff.morefish.fishing.Fish
 import me.elsiff.morefish.fishing.competition.FishingCompetition
@@ -8,10 +8,10 @@ import org.bukkit.entity.Player
 /**
  * Created by elsiff on 2018-12-25.
  */
-class CompetitionEffect(
+class CompetitionRecordAdder(
     private val competition: FishingCompetition
 ) : CatchHandler {
-    override fun play(catcher: Player, fish: Fish) {
+    override fun handle(catcher: Player, fish: Fish) {
         if (competition.state == FishingCompetition.State.ENABLED) {
             competition.putRecord(Record(catcher, fish))
         }

@@ -1,5 +1,6 @@
 package me.elsiff.morefish.fishing.competition
 
+import me.elsiff.morefish.fishing.Fish
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import org.bukkit.scheduler.BukkitTask
@@ -38,6 +39,10 @@ class FishingCompetition(
             timerTask = null
         }
         state = State.DISABLED
+    }
+
+    fun willBeNewFirst(catcher: Player, fish: Fish): Boolean {
+        return records.isEmpty() || records.first().let { fish.length > it.fish.length && it.fisher != catcher }
     }
 
     fun putRecord(record: Record) {

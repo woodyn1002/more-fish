@@ -1,6 +1,6 @@
 package me.elsiff.morefish.fishing
 
-import me.elsiff.morefish.fishing.catcheffect.CatchHandler
+import me.elsiff.morefish.fishing.catchhandler.CatchHandler
 import me.elsiff.morefish.fishing.condition.FishCondition
 import org.bukkit.inventory.ItemStack
 import kotlin.math.floor
@@ -16,9 +16,13 @@ data class FishType(
     val lengthMin: Double,
     val lengthMax: Double,
     val icon: ItemStack,
-    val catchHandlers: Set<CatchHandler>,
+    val catchHandlers: List<CatchHandler>,
     val conditions: Set<FishCondition> = emptySet(),
-    val skipItemFormat: Boolean = false
+    val hasNotFishItemFormat: Boolean = false,
+    val noBroadcast: Boolean = false,
+    val noDisplay: Boolean = false,
+    val hasCatchFirework: Boolean = false,
+    val additionalPrice: Double = 0.0
 ) {
     fun generateFish(): Fish {
         check(lengthMin <= lengthMax) { "Max-length must not be smaller than min-length" }

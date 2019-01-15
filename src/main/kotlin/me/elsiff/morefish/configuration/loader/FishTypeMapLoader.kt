@@ -4,6 +4,8 @@ import me.elsiff.morefish.configuration.ConfigurationValueAccessor
 import me.elsiff.morefish.configuration.translated
 import me.elsiff.morefish.fishing.FishRarity
 import me.elsiff.morefish.fishing.FishType
+import me.elsiff.morefish.fishing.catchhandler.CatchCommandExecutor
+import me.elsiff.morefish.fishing.catchhandler.CatchHandler
 
 /**
  * Created by elsiff on 2019-01-09.
@@ -19,7 +21,13 @@ class FishTypeMapLoader(
             return root["fish-list"].children.map { groupByRarity ->
                 val rarity = findRarity(rarities, groupByRarity.name)
                 val fishTypes = groupByRarity.children.map {
-                    val commands = it.strings("commands", emptyList()).map(String::translated)
+                    val catchHandlers = mutableListOf<CatchHandler>()
+
+                    catchHandlers.addAll(rarity.catchHandlers)
+                    if (it.contains("commands")) {
+                        val handler = CatchCommandExecutor(it.strings("commands").translated())
+                        catchHandlers.add(handler)
+                    }
                     FishType(
                         name = it.name,
                         displayName = it.string("display-name").translated(),
@@ -27,9 +35,13 @@ class FishTypeMapLoader(
                         lengthMin = it.double("length-min"),
                         lengthMax = it.double("length-max"),
                         icon = customItemStackLoader.loadFrom(it, "icon"),
-                        catchHandlers = emptySet(),
+                        catchHandlers = catchHandlers,
                         conditions = fishConditionSetLoader.loadFrom(it, "conditions"),
-                        skipItemFormat = it.boolean("skip-item-format", false)
+                        hasNotFishItemFormat = it.boolean("skip-item-format", rarity.hasNotFishItemFormat),
+                        noBroadcast = it.boolean("no-broadcast", rarity.noBroadcast),
+                        noDisplay = it.boolean("no-display", rarity.noDisplay),
+                        hasCatchFirework = it.boolean("firework", rarity.hasCatchFirework),
+                        additionalPrice = rarity.additionalPrice + it.double("additional-price", 0.0)
                     )
                 }.toSet()
                 Pair(rarity, fishTypes)

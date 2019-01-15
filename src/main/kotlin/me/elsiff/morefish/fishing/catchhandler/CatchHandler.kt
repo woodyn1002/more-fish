@@ -1,4 +1,4 @@
-package me.elsiff.morefish.fishing.catcheffect
+package me.elsiff.morefish.fishing.catchhandler
 
 import me.elsiff.morefish.fishing.Fish
 import org.bukkit.entity.Player
@@ -7,5 +7,5 @@ import org.bukkit.entity.Player
  * Created by elsiff on 2018-12-25.
  */
 interface CatchHandler {
-    fun play(catcher: Player, fish: Fish)
+    fun handle(catcher: Player, fish: Fish)
 }

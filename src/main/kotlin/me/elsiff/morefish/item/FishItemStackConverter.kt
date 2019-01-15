@@ -43,11 +43,13 @@ class FishItemStackConverter(
 
     fun createItemStack(fish: Fish, catcher: Player, caughtDate: LocalDateTime): ItemStack {
         val itemStack = fish.type.icon.clone()
-        val replacement = getFormatReplacementMap(fish, catcher, caughtDate)
-        itemStack.edit<ItemMeta> {
-            displayName = formatConfig.format("display-name").replace(replacement).output
-            lore = formatConfig.formats("lore").replace(replacement).output
-            fishWriter.write(this, fish)
+        if (!fish.type.hasNotFishItemFormat) {
+            val replacement = getFormatReplacementMap(fish, catcher, caughtDate)
+            itemStack.edit<ItemMeta> {
+                displayName = formatConfig.format("display-name").replace(replacement).output
+                lore = formatConfig.formats("lore").replace(replacement).output
+                fishWriter.write(this, fish)
+            }
         }
         return itemStack
     }
