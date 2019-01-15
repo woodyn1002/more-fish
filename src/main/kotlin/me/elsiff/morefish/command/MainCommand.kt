@@ -54,7 +54,7 @@ class MainCommand(
     @Subcommand("start")
     @CommandPermission("morefish.admin")
     fun start(sender: CommandSender, args: Array<String>) {
-        if (competition.state != FishingCompetition.State.ENABLED) {
+        if (!competition.isEnabled()) {
             if (args.size == 1) {
                 try {
                     val runningTime = args[0].toLong()
@@ -83,7 +83,7 @@ class MainCommand(
     @Subcommand("stop|end")
     @CommandPermission("morefish.admin")
     fun stop(sender: CommandSender) {
-        if (competition.state != FishingCompetition.State.DISABLED) {
+        if (!competition.isDisabled()) {
             competition.disable()
             sender.sendMessage(Lang.text("contest-shop"))
         } else {
@@ -105,7 +105,7 @@ class MainCommand(
         }
 
         if (sender is Player) {
-            if (!competition.containsRecord(sender)) {
+            if (!competition.containsContestant(sender)) {
                 sender.sendMessage(Lang.text("top-mine-no-record"))
             } else {
                 competition.rankedRecordOf(sender).let {

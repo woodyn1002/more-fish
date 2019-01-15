@@ -13,11 +13,12 @@ import kotlin.math.min
 class FishingCompetition(
     private val plugin: Plugin
 ) {
+    var state: State = State.DISABLED
     private val records: TreeSet<Record> = sortedSetOf(Comparator.reverseOrder())
+    private var timerTask: BukkitTask? = null
+
     val ranking: List<Record>
         get() = records.toList()
-    var state: State = State.DISABLED
-    private var timerTask: BukkitTask? = null
 
     fun enable() {
         checkStateDisabled()
@@ -41,6 +42,12 @@ class FishingCompetition(
         state = State.DISABLED
     }
 
+    fun isEnabled(): Boolean =
+        state == State.ENABLED
+
+    fun isDisabled(): Boolean =
+        state == State.DISABLED
+
     fun willBeNewFirst(catcher: Player, fish: Fish): Boolean {
         return records.isEmpty() || records.first().let { fish.length > it.fish.length && it.fisher != catcher }
     }
@@ -48,7 +55,7 @@ class FishingCompetition(
     fun putRecord(record: Record) {
         checkStateEnabled()
 
-        if (containsRecord(record.fisher)) {
+        if (containsContestant(record.fisher)) {
             val oldRecord = recordOf(record.fisher)
             if (record.fish.length > oldRecord.fish.length) {
                 records.remove(oldRecord)
@@ -59,22 +66,21 @@ class FishingCompetition(
         }
     }
 
-    fun containsRecord(fisher: Player): Boolean {
-        return records.any { it.fisher == fisher }
-    }
+    fun containsContestant(contestant: Player): Boolean =
+        records.any { it.fisher == contestant }
 
-    fun recordOf(fisher: Player): Record {
+    fun recordOf(contestant: Player): Record {
         for (record in records) {
-            if (record.fisher == fisher) {
+            if (record.fisher == contestant) {
                 return record
             }
         }
         throw IllegalStateException("Record not found")
     }
 
-    fun rankedRecordOf(fisher: Player): Pair<Int, Record> {
+    fun rankedRecordOf(contestant: Player): Pair<Int, Record> {
         for ((index, record) in records.withIndex()) {
-            if (record.fisher == fisher) {
+            if (record.fisher == contestant) {
                 return Pair(index + 1, record)
             }
         }
@@ -86,21 +92,17 @@ class FishingCompetition(
         return records.elementAt(rankNumber - 1)
     }
 
-    fun top(size: Int): List<Record> {
-        return records.toList().subList(0, min(size, records.size))
-    }
+    fun top(size: Int): List<Record> =
+        records.toList().subList(0, min(size, records.size))
 
-    fun clear() {
+    fun clear() =
         records.clear()
-    }
 
-    private fun checkStateEnabled() {
+    private fun checkStateEnabled() =
         check(state == State.ENABLED) { "Fishing competition hasn't enabled" }
-    }
 
-    private fun checkStateDisabled() {
+    private fun checkStateDisabled() =
         check(state == State.DISABLED) { "Fishing competition hasn't disabled" }
-    }
 
     enum class State { ENABLED, DISABLED }
 }

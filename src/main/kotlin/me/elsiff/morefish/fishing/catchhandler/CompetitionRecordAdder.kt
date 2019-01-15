@@ -12,7 +12,7 @@ class CompetitionRecordAdder(
     private val competition: FishingCompetition
 ) : CatchHandler {
     override fun handle(catcher: Player, fish: Fish) {
-        if (competition.state == FishingCompetition.State.ENABLED) {
+        if (competition.isEnabled()) {
             competition.putRecord(Record(catcher, fish))
         }
     }

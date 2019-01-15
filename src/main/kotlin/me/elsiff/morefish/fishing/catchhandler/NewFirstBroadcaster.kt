@@ -14,6 +14,6 @@ class NewFirstBroadcaster(
     "messages.announce-new-1st"
 ) {
     override fun hasBroadcastCondition(catcher: Player, fish: Fish): Boolean {
-        return competition.state == FishingCompetition.State.ENABLED && competition.willBeNewFirst(catcher, fish)
+        return competition.isEnabled() && competition.willBeNewFirst(catcher, fish)
     }
 }
