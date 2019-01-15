@@ -191,7 +191,7 @@ fish-list:
       display-name: "바다거북"
       length-min: 90
       length-max: 130
-        icon:
+      icon:
         id: "minecraft:cod"
     Salmon:
       display-name: "연어"
