@@ -90,6 +90,7 @@ shadowJar {
 build { dependsOn shadowJar }
 
 processResources {
+    filteringCharset = 'UTF-8'
     filter ReplaceTokens, tokens: [
             "pluginName"     : pluginName,
             "project.version": project.property("version"),
