@@ -72,6 +72,10 @@ class MoreFish : JavaPlugin() {
         }
 
         logger.info("Plugin has been enabled.")
+
+        if (Config.standard.boolean("general.auto-start")) {
+            competitionHost.openCompetition()
+        }
     }
 
     override fun onDisable() {
