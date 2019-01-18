@@ -1,19 +1,21 @@
 package me.elsiff.morefish.fishing.competition
 
+import me.elsiff.morefish.dao.DaoFactory
+import me.elsiff.morefish.dao.RecordDao
 import me.elsiff.morefish.fishing.Fish
 import org.bukkit.entity.Player
-import java.util.*
-import kotlin.math.min
 
 /**
  * Created by elsiff on 2018-12-25.
  */
 class FishingCompetition {
     var state: State = State.DISABLED
-    private val records: TreeSet<Record> = sortedSetOf(Comparator.reverseOrder())
 
     val ranking: List<Record>
-        get() = records.toList()
+        get() = records.all()
+
+    private val records: RecordDao
+        get() = DaoFactory.records
 
     fun enable() {
         checkStateDisabled()
@@ -34,7 +36,7 @@ class FishingCompetition {
         state == State.DISABLED
 
     fun willBeNewFirst(catcher: Player, fish: Fish): Boolean {
-        return records.isEmpty() || records.first().let { fish.length > it.fish.length && it.fisher != catcher }
+        return ranking.isEmpty() || ranking.first().let { fish.length > it.fish.length && it.fisher != catcher }
     }
 
     fun putRecord(record: Record) {
@@ -43,19 +45,18 @@ class FishingCompetition {
         if (containsContestant(record.fisher)) {
             val oldRecord = recordOf(record.fisher)
             if (record.fish.length > oldRecord.fish.length) {
-                records.remove(oldRecord)
-                records.add(record)
+                records.update(record)
             }
         } else {
-            records.add(record)
+            records.insert(record)
         }
     }
 
     fun containsContestant(contestant: Player): Boolean =
-        records.any { it.fisher == contestant }
+        ranking.any { it.fisher == contestant }
 
     fun recordOf(contestant: Player): Record {
-        for (record in records) {
+        for (record in ranking) {
             if (record.fisher == contestant) {
                 return record
             }
@@ -64,7 +65,7 @@ class FishingCompetition {
     }
 
     fun rankedRecordOf(contestant: Player): Pair<Int, Record> {
-        for ((index, record) in records.withIndex()) {
+        for ((index, record) in ranking.withIndex()) {
             if (record.fisher == contestant) {
                 return Pair(index + 1, record)
             }
@@ -73,12 +74,12 @@ class FishingCompetition {
     }
 
     fun recordOf(rankNumber: Int): Record {
-        require(rankNumber >= 1 && rankNumber <= records.size) { "Rank number is out of records size" }
-        return records.elementAt(rankNumber - 1)
+        require(rankNumber >= 1 && rankNumber <= ranking.size) { "Rank number is out of records size" }
+        return ranking.elementAt(rankNumber - 1)
     }
 
     fun top(size: Int): List<Record> =
-        records.toList().subList(0, min(size, records.size))
+        records.top(size)
 
     fun clearRecords() =
         records.clear()

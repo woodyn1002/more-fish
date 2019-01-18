@@ -3,6 +3,7 @@ package me.elsiff.morefish
 import co.aikar.commands.PaperCommandManager
 import me.elsiff.morefish.command.MainCommand
 import me.elsiff.morefish.configuration.Config
+import me.elsiff.morefish.dao.DaoFactory
 import me.elsiff.morefish.fishing.FishingListener
 import me.elsiff.morefish.fishing.MutableFishTypeTable
 import me.elsiff.morefish.fishing.catchhandler.CatchBroadcaster
@@ -45,6 +46,8 @@ class MoreFish : JavaPlugin() {
     val updateChecker = UpdateChecker(22926, this.description.version)
 
     override fun onEnable() {
+        DaoFactory.init(this)
+
         protocolLib.hookIfEnabled(server)
         vault.hookIfEnabled(server)
 
