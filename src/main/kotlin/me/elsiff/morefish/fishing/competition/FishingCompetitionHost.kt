@@ -23,7 +23,6 @@ class FishingCompetitionHost(
 
     fun openCompetition() {
         competition.enable()
-        competition.clearRecords()
 
         if (msgConfig.boolean("broadcast-start")) {
             plugin.server.broadcastMessage(Lang.text("contest-start"))
@@ -32,7 +31,6 @@ class FishingCompetitionHost(
 
     fun openCompetitionFor(tick: Long) {
         competition.enable()
-        competition.clearRecords()
         timerTask = plugin.server.scheduler.runTaskLater(plugin, competition::disable, tick)
 
         if (msgConfig.boolean("broadcast-start")) {
@@ -59,6 +57,7 @@ class FishingCompetitionHost(
                 }
             }
         }
+        competition.clearRecords()
     }
 
     fun informAboutRanking(receiver: CommandSender) {
