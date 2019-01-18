@@ -57,7 +57,9 @@ class FishingCompetitionHost(
                 }
             }
         }
-        competition.clearRecords()
+        if (!Config.standard.boolean("general.save-records")) {
+            competition.clearRecords()
+        }
     }
 
     fun informAboutRanking(receiver: CommandSender) {
