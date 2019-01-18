@@ -8,6 +8,7 @@ import co.aikar.commands.annotation.Subcommand
 import me.elsiff.morefish.MoreFish
 import me.elsiff.morefish.configuration.Config
 import me.elsiff.morefish.configuration.Lang
+import me.elsiff.morefish.fishing.competition.FishingCompetition
 import me.elsiff.morefish.fishing.competition.FishingCompetitionHost
 import me.elsiff.morefish.shop.FishShop
 import org.bukkit.ChatColor
@@ -26,7 +27,7 @@ class MainCommand(
     private val fishShop: FishShop
 ) : BaseCommand() {
     private val pluginInfo: PluginDescriptionFile = moreFish.description
-    private val competition = competitionHost.competition
+    private val competition: FishingCompetition = competitionHost.competition
 
     @Default
     @Subcommand("help")
