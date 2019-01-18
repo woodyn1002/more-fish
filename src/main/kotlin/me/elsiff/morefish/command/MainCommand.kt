@@ -6,11 +6,10 @@ import co.aikar.commands.annotation.CommandPermission
 import co.aikar.commands.annotation.Default
 import co.aikar.commands.annotation.Subcommand
 import me.elsiff.morefish.MoreFish
+import me.elsiff.morefish.configuration.Config
 import me.elsiff.morefish.configuration.Lang
-import me.elsiff.morefish.fishing.competition.FishingCompetition
-import me.elsiff.morefish.fishing.competition.Record
+import me.elsiff.morefish.fishing.competition.FishingCompetitionHost
 import me.elsiff.morefish.shop.FishShop
-import me.elsiff.morefish.util.NumberUtils
 import org.bukkit.ChatColor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -23,10 +22,11 @@ import org.bukkit.plugin.PluginDescriptionFile
 @CommandAlias("morefish|mf|fish")
 class MainCommand(
     private val moreFish: MoreFish,
-    private val competition: FishingCompetition,
+    private val competitionHost: FishingCompetitionHost,
     private val fishShop: FishShop
 ) : BaseCommand() {
     private val pluginInfo: PluginDescriptionFile = moreFish.description
+    private val competition = competitionHost.competition
 
     @Default
     @Subcommand("help")
@@ -61,7 +61,7 @@ class MainCommand(
                     if (runningTime < 0) {
                         sender.sendMessage(Lang.text("not-positive"))
                     } else {
-                        competition.enableWithTimer(runningTime * 20)
+                        competitionHost.openCompetitionFor(runningTime * 20)
 
                         val msg = Lang.format("contest-start-timer")
                             .replace("%time%" to Lang.time(runningTime)).output
@@ -72,7 +72,7 @@ class MainCommand(
                     sender.sendMessage(msg)
                 }
             } else {
-                competition.enable()
+                competitionHost.openCompetition()
                 sender.sendMessage(Lang.text("contest-start"))
             }
         } else {
@@ -84,8 +84,11 @@ class MainCommand(
     @CommandPermission("morefish.admin")
     fun stop(sender: CommandSender) {
         if (!competition.isDisabled()) {
-            competition.disable()
-            sender.sendMessage(Lang.text("contest-shop"))
+            competitionHost.closeCompetition()
+
+            if (!Config.standard.boolean("messages.broadcast-stop")) {
+                sender.sendMessage(Lang.text("contest-stop"))
+            }
         } else {
             sender.sendMessage(Lang.text("already-stopped"))
         }
@@ -94,42 +97,13 @@ class MainCommand(
     @Subcommand("top|ranking")
     @CommandPermission("morefish.top")
     fun top(sender: CommandSender) {
-        if (competition.ranking.isEmpty()) {
-            sender.sendMessage(Lang.text("top-no-record"))
-        } else {
-            competition.top(5).forEachIndexed { index, record ->
-                val number = index + 1
-                val msg = Lang.format("top-list").replace(topReplacementOf(number, record)).output
-                sender.sendMessage(msg)
-            }
-        }
-
-        if (sender is Player) {
-            if (!competition.containsContestant(sender)) {
-                sender.sendMessage(Lang.text("top-mine-no-record"))
-            } else {
-                competition.rankedRecordOf(sender).let {
-                    val msg = Lang.format("top-mine").replace(topReplacementOf(it.first, it.second)).output
-                    sender.sendMessage(msg)
-                }
-            }
-        }
-    }
-
-    private fun topReplacementOf(number: Int, record: Record): Map<String, String> {
-        return mapOf(
-            "%ordinal%" to NumberUtils.ordinalOf(number),
-            "%number%" to number.toString(),
-            "%player%" to record.fisher.name,
-            "%length%" to record.fish.length.toString(),
-            "%fish%" to record.fish.type.name
-        )
+        competitionHost.informAboutRanking(sender)
     }
 
     @Subcommand("clear")
     @CommandPermission("morefish.admin")
     fun clear(sender: CommandSender) {
-        competition.clear()
+        competition.clearRecords()
         sender.sendMessage(Lang.text("clear-records"))
     }
 

@@ -3,22 +3,23 @@ package me.elsiff.morefish
 import co.aikar.commands.PaperCommandManager
 import me.elsiff.morefish.command.MainCommand
 import me.elsiff.morefish.configuration.Config
+import me.elsiff.morefish.fishing.FishingListener
 import me.elsiff.morefish.fishing.MutableFishTypeTable
 import me.elsiff.morefish.fishing.catchhandler.CatchBroadcaster
 import me.elsiff.morefish.fishing.catchhandler.CatchHandler
 import me.elsiff.morefish.fishing.catchhandler.CompetitionRecordAdder
 import me.elsiff.morefish.fishing.catchhandler.NewFirstBroadcaster
 import me.elsiff.morefish.fishing.competition.FishingCompetition
+import me.elsiff.morefish.fishing.competition.FishingCompetitionHost
 import me.elsiff.morefish.gui.GuiOpener
 import me.elsiff.morefish.gui.GuiRegistry
 import me.elsiff.morefish.hooker.ProtocolLibHooker
 import me.elsiff.morefish.hooker.VaultHooker
 import me.elsiff.morefish.item.FishItemStackConverter
-import me.elsiff.morefish.fishing.FishingListener
-import me.elsiff.morefish.update.UpdateNotifierListener
 import me.elsiff.morefish.shop.FishShop
-import me.elsiff.morefish.util.OneTickScheduler
 import me.elsiff.morefish.update.UpdateChecker
+import me.elsiff.morefish.update.UpdateNotifierListener
+import me.elsiff.morefish.util.OneTickScheduler
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
@@ -32,7 +33,8 @@ class MoreFish : JavaPlugin() {
     val guiOpener = GuiOpener(guiRegistry)
     val oneTickScheduler = OneTickScheduler(this)
     val fishTypeTable = MutableFishTypeTable()
-    val competition = FishingCompetition(this)
+    val competition = FishingCompetition()
+    val competitionHost = FishingCompetitionHost(this, competition)
     val converter = FishItemStackConverter(this, fishTypeTable)
     val fishShop = FishShop(guiRegistry, guiOpener, oneTickScheduler, converter, vault)
     val globalCatchHandlers: List<CatchHandler> = listOf(
@@ -55,7 +57,7 @@ class MoreFish : JavaPlugin() {
         }
 
         val commands = PaperCommandManager(this)
-        val mainCommand = MainCommand(this, competition, fishShop)
+        val mainCommand = MainCommand(this, competitionHost, fishShop)
         commands.registerCommand(mainCommand)
 
         if (!isSnapshotVersion()) {

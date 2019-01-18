@@ -2,20 +2,15 @@ package me.elsiff.morefish.fishing.competition
 
 import me.elsiff.morefish.fishing.Fish
 import org.bukkit.entity.Player
-import org.bukkit.plugin.Plugin
-import org.bukkit.scheduler.BukkitTask
 import java.util.*
 import kotlin.math.min
 
 /**
  * Created by elsiff on 2018-12-25.
  */
-class FishingCompetition(
-    private val plugin: Plugin
-) {
+class FishingCompetition {
     var state: State = State.DISABLED
     private val records: TreeSet<Record> = sortedSetOf(Comparator.reverseOrder())
-    private var timerTask: BukkitTask? = null
 
     val ranking: List<Record>
         get() = records.toList()
@@ -23,22 +18,12 @@ class FishingCompetition(
     fun enable() {
         checkStateDisabled()
 
-        records.clear()
         state = State.ENABLED
-    }
-
-    fun enableWithTimer(tick: Long) {
-        timerTask = plugin.server.scheduler.runTaskLater(plugin, this::disable, tick)
-        enable()
     }
 
     fun disable() {
         checkStateEnabled()
 
-        if (timerTask != null) {
-            timerTask!!.cancel()
-            timerTask = null
-        }
         state = State.DISABLED
     }
 
@@ -95,7 +80,7 @@ class FishingCompetition(
     fun top(size: Int): List<Record> =
         records.toList().subList(0, min(size, records.size))
 
-    fun clear() =
+    fun clearRecords() =
         records.clear()
 
     private fun checkStateEnabled() =
