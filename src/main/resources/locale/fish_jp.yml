@@ -7,7 +7,7 @@
 # - https://github.com/elsiff/MoreFish/wiki/Custom-Rarity-Tutorial
 #
 
-version: 212
+version: 220
 
 # %player% - プレイヤーのランク (例 1st, 2nd, 3rd, 4th)
 # %rarity% - 魚のレアリティ
@@ -25,7 +25,7 @@ rarity-list:
     display-name: "普通"
     default: true
     color: "reset"
-    no-broadcast: true
+    announcement: 0
     no-display: true
   junk:
     display-name: "ゴミ"

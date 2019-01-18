@@ -7,7 +7,7 @@
 # - https://github.com/elsiff/MoreFish/wiki/Custom-Rarity-Tutorial
 #
 
-version: 212
+version: 220
 
 # %player% - 玩家的名次順序 (e.g. 1st, 2nd, 3rd, 4th)
 # %rarity% - 魚的稀有級別 (大寫)
@@ -26,7 +26,7 @@ rarity-list:
     default: true
     color: "reset"
     additional-price: 0.0
-    no-broadcast: true
+    announcement: 0
     no-display: true
   junk:
     display-name: "垃圾"

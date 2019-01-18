@@ -7,7 +7,7 @@
 # - https://github.com/elsiff/MoreFish/wiki/Custom-Rarity-Tutorial
 #
 
-version: 212
+version: 220
 
 # %player% - The ordinal of player's rank (e.g. 1st, 2nd, 3rd, 4th)
 # %rarity% - The rarity of fish (upper case)
@@ -26,7 +26,7 @@ rarity-list:
     chance: 70
     color: "reset"
     additional-price: 0.0
-    no-broadcast: true
+    announcement: 0
     no-display: true
   junk:
     display-name: "SPAZZATURA"
