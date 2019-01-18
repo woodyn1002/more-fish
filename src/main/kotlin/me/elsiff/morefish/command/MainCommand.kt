@@ -63,9 +63,11 @@ class MainCommand(
                     } else {
                         competitionHost.openCompetitionFor(runningTime * 20)
 
-                        val msg = Lang.format("contest-start-timer")
-                            .replace("%time%" to Lang.time(runningTime)).output
-                        sender.sendMessage(msg)
+                        if (!Config.standard.boolean("messages.broadcast-start")) {
+                            val msg = Lang.format("contest-start-timer")
+                                .replace("%time%" to Lang.time(runningTime)).output
+                            sender.sendMessage(msg)
+                        }
                     }
                 } catch (e: NumberFormatException) {
                     val msg = Lang.format("not-number").replace("%s" to args[0]).output
@@ -73,7 +75,10 @@ class MainCommand(
                 }
             } else {
                 competitionHost.openCompetition()
-                sender.sendMessage(Lang.text("contest-start"))
+
+                if (!Config.standard.boolean("messages.broadcast-start")) {
+                    sender.sendMessage(Lang.text("contest-start"))
+                }
             }
         } else {
             sender.sendMessage(Lang.text("already-ongoing"))
