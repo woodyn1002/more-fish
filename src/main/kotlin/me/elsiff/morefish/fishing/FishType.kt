@@ -1,5 +1,6 @@
 package me.elsiff.morefish.fishing
 
+import me.elsiff.morefish.announcement.PlayerAnnouncement
 import me.elsiff.morefish.fishing.catchhandler.CatchHandler
 import me.elsiff.morefish.fishing.condition.FishCondition
 import org.bukkit.inventory.ItemStack
@@ -17,9 +18,9 @@ data class FishType(
     val lengthMax: Double,
     val icon: ItemStack,
     val catchHandlers: List<CatchHandler>,
+    val catchAnnouncement: PlayerAnnouncement,
     val conditions: Set<FishCondition> = emptySet(),
     val hasNotFishItemFormat: Boolean = false,
-    val noBroadcast: Boolean = false,
     val noDisplay: Boolean = false,
     val hasCatchFirework: Boolean = false,
     val additionalPrice: Double = 0.0

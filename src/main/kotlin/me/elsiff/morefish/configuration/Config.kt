@@ -1,5 +1,6 @@
 package me.elsiff.morefish.configuration
 
+import me.elsiff.morefish.announcement.PlayerAnnouncement
 import me.elsiff.morefish.configuration.loader.*
 import org.bukkit.plugin.Plugin
 import java.nio.file.Paths
@@ -15,10 +16,16 @@ object Config {
     val chatColorLoader: ChatColorLoader = ChatColorLoader()
     val enchantmentMapLoader: EnchantmentMapLoader = EnchantmentMapLoader()
     val customItemStackLoader: CustomItemStackLoader = CustomItemStackLoader(enchantmentMapLoader)
-    val fishRaritySetLoader: FishRaritySetLoader = FishRaritySetLoader(chatColorLoader)
+    val playerAnnouncementLoader: PlayerAnnouncementLoader = PlayerAnnouncementLoader()
+    val fishRaritySetLoader: FishRaritySetLoader = FishRaritySetLoader(chatColorLoader, playerAnnouncementLoader)
     val fishConditionSetLoader: FishConditionSetLoader = FishConditionSetLoader()
     val fishTypeMapLoader: FishTypeMapLoader =
-        FishTypeMapLoader(fishRaritySetLoader, customItemStackLoader, fishConditionSetLoader)
+        FishTypeMapLoader(fishRaritySetLoader, customItemStackLoader, fishConditionSetLoader, playerAnnouncementLoader)
+
+    val defaultCatchAnnouncement: PlayerAnnouncement
+        get() = playerAnnouncementLoader.loadFrom(standard["messages"], "announce-catch")
+    val newFirstAnnouncement: PlayerAnnouncement
+        get() = playerAnnouncementLoader.loadFrom(standard["messages"], "announce-new-1st")
 
     fun load(plugin: Plugin) {
         val configPath = Paths.get("config.yml")

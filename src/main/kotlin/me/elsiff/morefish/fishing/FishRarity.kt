@@ -1,5 +1,6 @@
 package me.elsiff.morefish.fishing
 
+import me.elsiff.morefish.announcement.PlayerAnnouncement
 import me.elsiff.morefish.fishing.catchhandler.CatchHandler
 import org.bukkit.ChatColor
 
@@ -13,8 +14,8 @@ data class FishRarity(
     val probability: Double,
     val color: ChatColor,
     val catchHandlers: List<CatchHandler>,
+    val catchAnnouncement: PlayerAnnouncement,
     val hasNotFishItemFormat: Boolean = false,
-    val noBroadcast: Boolean = false,
     val noDisplay: Boolean = false,
     val hasCatchFirework: Boolean = false,
     val additionalPrice: Double = 0.0

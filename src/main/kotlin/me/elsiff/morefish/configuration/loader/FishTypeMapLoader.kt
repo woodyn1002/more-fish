@@ -13,7 +13,8 @@ import me.elsiff.morefish.fishing.catchhandler.CatchHandler
 class FishTypeMapLoader(
     private val fishRaritySetLoader: FishRaritySetLoader,
     private val customItemStackLoader: CustomItemStackLoader,
-    private val fishConditionSetLoader: FishConditionSetLoader
+    private val fishConditionSetLoader: FishConditionSetLoader,
+    private val playerAnnouncementLoader: PlayerAnnouncementLoader
 ) : CustomLoader<Map<FishRarity, Set<FishType>>> {
     override fun loadFrom(section: ConfigurationValueAccessor, path: String): Map<FishRarity, Set<FishType>> {
         section[path].let { root ->
@@ -36,9 +37,10 @@ class FishTypeMapLoader(
                         lengthMax = it.double("length-max"),
                         icon = customItemStackLoader.loadFrom(it, "icon"),
                         catchHandlers = catchHandlers,
+                        catchAnnouncement = playerAnnouncementLoader.loadIfExists(it, "catch-announce")
+                            ?: rarity.catchAnnouncement,
                         conditions = fishConditionSetLoader.loadFrom(it, "conditions"),
                         hasNotFishItemFormat = it.boolean("skip-item-format", rarity.hasNotFishItemFormat),
-                        noBroadcast = it.boolean("no-broadcast", rarity.noBroadcast),
                         noDisplay = it.boolean("no-display", rarity.noDisplay),
                         hasCatchFirework = it.boolean("firework", rarity.hasCatchFirework),
                         additionalPrice = rarity.additionalPrice + it.double("additional-price", 0.0)
