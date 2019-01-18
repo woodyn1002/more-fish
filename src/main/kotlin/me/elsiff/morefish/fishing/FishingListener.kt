@@ -1,6 +1,5 @@
-package me.elsiff.morefish.listener
+package me.elsiff.morefish.fishing
 
-import me.elsiff.morefish.fishing.FishTypeTable
 import me.elsiff.morefish.fishing.catchhandler.CatchHandler
 import me.elsiff.morefish.fishing.competition.FishingCompetition
 import me.elsiff.morefish.item.FishItemStackConverter

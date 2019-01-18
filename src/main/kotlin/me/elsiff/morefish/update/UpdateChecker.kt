@@ -1,4 +1,4 @@
-package me.elsiff.morefish.util
+package me.elsiff.morefish.update
 
 import java.io.BufferedReader
 import java.io.InputStreamReader

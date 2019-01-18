@@ -14,11 +14,11 @@ import me.elsiff.morefish.gui.GuiRegistry
 import me.elsiff.morefish.hooker.ProtocolLibHooker
 import me.elsiff.morefish.hooker.VaultHooker
 import me.elsiff.morefish.item.FishItemStackConverter
-import me.elsiff.morefish.listener.FishingListener
-import me.elsiff.morefish.listener.UpdateNotifierListener
+import me.elsiff.morefish.fishing.FishingListener
+import me.elsiff.morefish.update.UpdateNotifierListener
 import me.elsiff.morefish.shop.FishShop
 import me.elsiff.morefish.util.OneTickScheduler
-import me.elsiff.morefish.util.UpdateChecker
+import me.elsiff.morefish.update.UpdateChecker
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
@@ -49,7 +49,8 @@ class MoreFish : JavaPlugin() {
         applyConfig()
 
         server.pluginManager.run {
-            val fishingListener = FishingListener(fishTypeTable, converter, competition, globalCatchHandlers)
+            val fishingListener =
+                FishingListener(fishTypeTable, converter, competition, globalCatchHandlers)
             registerEvents(fishingListener, this@MoreFish)
         }
 

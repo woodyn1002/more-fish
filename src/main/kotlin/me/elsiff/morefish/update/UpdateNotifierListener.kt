@@ -1,4 +1,4 @@
-package me.elsiff.morefish.listener
+package me.elsiff.morefish.update
 
 import me.elsiff.morefish.configuration.Lang
 import org.bukkit.event.EventHandler
