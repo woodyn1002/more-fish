@@ -11,6 +11,7 @@ import me.elsiff.morefish.fishing.catchhandler.CatchHandler
 import me.elsiff.morefish.fishing.catchhandler.CompetitionRecordAdder
 import me.elsiff.morefish.fishing.catchhandler.NewFirstBroadcaster
 import me.elsiff.morefish.fishing.competition.FishingCompetition
+import me.elsiff.morefish.fishing.competition.FishingCompetitionAutoRunner
 import me.elsiff.morefish.fishing.competition.FishingCompetitionHost
 import me.elsiff.morefish.gui.GuiOpener
 import me.elsiff.morefish.gui.GuiRegistry
@@ -36,6 +37,7 @@ class MoreFish : JavaPlugin() {
     val fishTypeTable = MutableFishTypeTable()
     val competition = FishingCompetition()
     val competitionHost = FishingCompetitionHost(this, competition)
+    val autoRunner = FishingCompetitionAutoRunner(this, competitionHost)
     val converter = FishItemStackConverter(this, fishTypeTable)
     val fishShop = FishShop(guiRegistry, guiOpener, oneTickScheduler, converter, vault)
     val globalCatchHandlers: List<CatchHandler> = listOf(
@@ -80,6 +82,9 @@ class MoreFish : JavaPlugin() {
 
     override fun onDisable() {
         guiRegistry.clear(true)
+        if (autoRunner.isEnabled) {
+            autoRunner.disable()
+        }
         logger.info("Plugin has been disabled.")
     }
 
@@ -94,5 +99,11 @@ class MoreFish : JavaPlugin() {
         fishTypeTable.clear()
         fishTypeTable.putAll(Config.fishTypeMapLoader.loadFrom(Config.fish))
         logger.info("Loaded ${fishTypeTable.rarities.size} rarities and ${fishTypeTable.types.size} fish types")
+
+        if (Config.standard.boolean("auto-running.enable") && !autoRunner.isEnabled) {
+            val scheduledTimes = Config.localTimeListLoader.loadFrom(Config.standard, "auto-running.start-time")
+            autoRunner.setScheduledTimes(scheduledTimes)
+            autoRunner.enable()
+        }
     }
 }

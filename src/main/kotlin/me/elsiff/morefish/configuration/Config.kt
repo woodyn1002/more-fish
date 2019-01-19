@@ -21,6 +21,7 @@ object Config {
     val fishConditionSetLoader: FishConditionSetLoader = FishConditionSetLoader()
     val fishTypeMapLoader: FishTypeMapLoader =
         FishTypeMapLoader(fishRaritySetLoader, customItemStackLoader, fishConditionSetLoader, playerAnnouncementLoader)
+    val localTimeListLoader: LocalTimeListLoader = LocalTimeListLoader()
 
     val defaultCatchAnnouncement: PlayerAnnouncement
         get() = playerAnnouncementLoader.loadFrom(standard["messages"], "announce-catch")
