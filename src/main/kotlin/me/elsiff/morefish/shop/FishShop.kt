@@ -52,6 +52,11 @@ class FishShop(
         economy.depositPlayer(player, price)
     }
 
+    fun sell(player: Player, fish: Collection<Fish>) {
+        val price = fish.map(this::priceOf).sum()
+        economy.depositPlayer(player, price)
+    }
+
     fun priceOf(fish: Fish): Double {
         val rarityPrice = fish.type.rarity.additionalPrice
         val price = (priceMultiplier * fish.length) + rarityPrice

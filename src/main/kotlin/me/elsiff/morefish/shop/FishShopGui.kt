@@ -32,9 +32,7 @@ class FishShopGui(
         get() {
             var sum = 0.0
             allFish().forEach { fish, itemStack ->
-                repeat(itemStack.amount) {
-                    sum += shop.priceOf(fish)
-                }
+                sum += (shop.priceOf(fish) * itemStack.amount)
             }
             return sum
         }
@@ -61,12 +59,14 @@ class FishShopGui(
                 user.sendMessage(Lang.text("shop-no-fish"))
             } else {
                 val totalPrice = totalPrice
+                val fishList = mutableListOf<Fish>()
                 allFish.forEach { fish, itemStack ->
                     repeat(itemStack.amount) {
-                        shop.sell(user, fish)
+                        fishList.add(fish)
                     }
                     itemStack.amount = 0
                 }
+                shop.sell(user, fishList)
                 updatePriceIcon(0.0)
                 val msg = Lang.format("shop-sold").replace("%price%" to totalPrice.toString()).output
                 user.sendMessage(msg)
