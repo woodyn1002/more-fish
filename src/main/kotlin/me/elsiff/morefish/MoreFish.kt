@@ -19,6 +19,7 @@ import me.elsiff.morefish.hooker.ProtocolLibHooker
 import me.elsiff.morefish.hooker.VaultHooker
 import me.elsiff.morefish.item.FishItemStackConverter
 import me.elsiff.morefish.shop.FishShop
+import me.elsiff.morefish.shop.FishShopSignListener
 import me.elsiff.morefish.update.UpdateChecker
 import me.elsiff.morefish.update.UpdateNotifierListener
 import me.elsiff.morefish.util.OneTickScheduler
@@ -59,6 +60,7 @@ class MoreFish : JavaPlugin() {
             val fishingListener =
                 FishingListener(fishTypeTable, converter, competition, globalCatchHandlers)
             registerEvents(fishingListener, this@MoreFish)
+            registerEvents(FishShopSignListener(fishShop), this@MoreFish)
         }
 
         val commands = PaperCommandManager(this)

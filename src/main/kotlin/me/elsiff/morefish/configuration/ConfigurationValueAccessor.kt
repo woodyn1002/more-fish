@@ -33,6 +33,12 @@ abstract class ConfigurationValueAccessor {
     fun formats(id: String): TextListFormat =
         TextListFormat(strings(id))
 
+    fun text(path: String, default: String? = null): String =
+        string(path, default).translated()
+
+    fun texts(path: String, default: List<String>? = null): List<String> =
+        strings(path, default).translated()
+
     fun boolean(path: String, default: Boolean? = null): Boolean =
         findValue(path, currentSection::getBoolean, currentSection::isBoolean, default)
 

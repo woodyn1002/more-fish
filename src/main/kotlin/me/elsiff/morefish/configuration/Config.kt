@@ -29,7 +29,7 @@ object Config {
         get() = playerAnnouncementLoader.loadFrom(standard["messages"], "announce-new-1st")
 
     private val configurationVersionMap: Map<ConfigurationAccessor, Int> = mapOf(
-        standard to 210,
+        standard to 220,
         fish to 220,
         lang to 211
     )

@@ -6,7 +6,7 @@
 # Warning: DO NOT edit rewards.yml with your file editor, instead use in-game command '/mf rewards'.
 #
 
-version: 210
+version: 220
 
 general:
   locale: 'en'
@@ -35,6 +35,9 @@ fish-shop:
   enable: false
   multiplier: 0.1
   round-decimal-points: true
+  sign:
+    title: "&b&l[FishShop]"
+    creation: "[FishShop]"
 
 # -- Announcement Value --
 # '-1' means server broadcast
