@@ -31,7 +31,7 @@ class FishingCompetitionHost(
 
     fun openCompetitionFor(tick: Long) {
         competition.enable()
-        timerTask = plugin.server.scheduler.runTaskLater(plugin, competition::disable, tick)
+        timerTask = plugin.server.scheduler.runTaskLater(plugin, this::closeCompetition, tick)
 
         if (msgConfig.boolean("broadcast-start")) {
             val msg = Lang.format("contest-start-timer")
