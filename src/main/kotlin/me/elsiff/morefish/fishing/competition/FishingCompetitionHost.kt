@@ -78,7 +78,8 @@ class FishingCompetitionHost(
         if (competition.ranking.isEmpty()) {
             receiver.sendMessage(Lang.text("top-no-record"))
         } else {
-            competition.top(5).forEachIndexed { index, record ->
+            val topSize = msgConfig.int("top-number")
+            competition.top(topSize).forEachIndexed { index, record ->
                 val number = index + 1
                 val msg = Lang.format("top-list").replace(topReplacementOf(number, record)).output
                 receiver.sendMessage(msg)
