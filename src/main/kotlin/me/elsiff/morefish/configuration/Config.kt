@@ -28,6 +28,12 @@ object Config {
     val newFirstAnnouncement: PlayerAnnouncement
         get() = playerAnnouncementLoader.loadFrom(standard["messages"], "announce-new-1st")
 
+    private val configurationVersionMap: Map<ConfigurationAccessor, Int> = mapOf(
+        standard to 210,
+        fish to 220,
+        lang to 211
+    )
+
     fun load(plugin: Plugin) {
         val configPath = Paths.get("config.yml")
         val localePath = Paths.get("locale")
@@ -36,6 +42,15 @@ object Config {
         standard.string("general.locale").let { locale ->
             fish.loadFromYaml(plugin, localePath.resolve("fish_$locale.yml"))
             lang.loadFromYaml(plugin, localePath.resolve("lang_$locale.yml"))
+        }
+
+        for ((cfg, requiredVersion) in configurationVersionMap) {
+            if (cfg.int("version") < requiredVersion) {
+                val msg = Lang.format("old-file")
+                    .replace("%s" to cfg.filePath.fileName)
+                    .output
+                plugin.server.consoleSender.sendMessage(msg)
+            }
         }
     }
 }

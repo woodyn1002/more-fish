@@ -11,6 +11,10 @@ import java.nio.file.Path
  */
 class ConfigurationAccessor : ConfigurationValueAccessor() {
     private lateinit var configuration: Configuration
+    private lateinit var _filePath: Path
+
+    val filePath: Path
+        get() = _filePath
 
     override val currentSection: ConfigurationSection
         get() {
@@ -19,6 +23,7 @@ class ConfigurationAccessor : ConfigurationValueAccessor() {
         }
 
     fun loadFromYaml(plugin: Plugin, resourcePath: Path) {
+        _filePath = resourcePath
         val dataPath = plugin.dataFolder.toPath()
         val configurationFile = dataPath.resolve(resourcePath).toFile()
 
