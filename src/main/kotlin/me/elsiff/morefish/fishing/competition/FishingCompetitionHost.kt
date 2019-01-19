@@ -35,7 +35,7 @@ class FishingCompetitionHost(
 
         if (msgConfig.boolean("broadcast-start")) {
             val msg = Lang.format("contest-start-timer")
-                .replace("%time%" to Lang.time(tick * 20))
+                .replace("%time%" to Lang.time(tick / 20))
                 .output
             plugin.server.broadcastMessage(msg)
         }

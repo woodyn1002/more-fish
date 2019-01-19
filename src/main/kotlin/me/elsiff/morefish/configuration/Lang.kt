@@ -2,9 +2,7 @@ package me.elsiff.morefish.configuration
 
 import me.elsiff.morefish.configuration.format.TextFormat
 import me.elsiff.morefish.configuration.format.TextListFormat
-import java.time.LocalTime
-import java.time.format.DateTimeFormatterBuilder
-import java.time.temporal.ChronoField
+import java.time.Duration
 
 /**
  * Created by elsiff on 2019-01-09.
@@ -26,14 +24,16 @@ object Lang {
         TextListFormat(langConfig.strings(id))
 
     fun time(second: Long): String {
-        val builder = DateTimeFormatterBuilder()
-        if (second / 60 > 0) {
-            builder.appendValue(ChronoField.MINUTE_OF_HOUR)
-                .appendLiteral(text("time-format-minutes"))
-                .appendLiteral(" ")
+        val builder = StringBuilder()
+        val duration = Duration.ofSeconds(second)
+
+        if (duration.toMinutes() > 0) {
+            builder.append(duration.toMinutes())
+                .append(text("time-format-minutes"))
+                .append(" ")
         }
-        builder.appendValue(ChronoField.SECOND_OF_MINUTE)
-            .appendLiteral(text("time-format-seconds"))
-        return LocalTime.ofSecondOfDay(second).format(builder.toFormatter())
+        builder.append(duration.seconds % 60)
+            .append(text("time-format-seconds"))
+        return builder.toString()
     }
 }
