@@ -16,6 +16,7 @@ class FishingCompetitionHost(
     private val plugin: Plugin,
     val competition: FishingCompetition
 ) {
+    private val timerBarHandler: FishingCompetitionTimerBarHandler = FishingCompetitionTimerBarHandler(plugin)
     private var timerTask: BukkitTask? = null
 
     private val msgConfig: ConfigurationSectionAccessor
@@ -30,14 +31,19 @@ class FishingCompetitionHost(
     }
 
     fun openCompetitionFor(tick: Long) {
+        val duration = tick / 20
         competition.enable()
         timerTask = plugin.server.scheduler.runTaskLater(plugin, this::closeCompetition, tick)
+
+        if (Config.standard.boolean("general.use-boss-bar")) {
+            timerBarHandler.enableTimer(duration)
+        }
 
         if (msgConfig.boolean("broadcast-start")) {
             plugin.server.broadcastMessage(Lang.text("contest-start"))
 
             val msg = Lang.format("contest-start-timer")
-                .replace("%time%" to Lang.time(tick / 20))
+                .replace("%time%" to Lang.time(duration))
                 .output
             plugin.server.broadcastMessage(msg)
         }
@@ -48,6 +54,10 @@ class FishingCompetitionHost(
         if (timerTask != null) {
             timerTask!!.cancel()
             timerTask = null
+
+            if (timerBarHandler.hasTimerEnabled) {
+                timerBarHandler.disableTimer()
+            }
         }
 
         if (msgConfig.boolean("broadcast-stop")) {
