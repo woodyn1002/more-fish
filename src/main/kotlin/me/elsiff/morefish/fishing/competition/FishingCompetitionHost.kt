@@ -34,6 +34,8 @@ class FishingCompetitionHost(
         timerTask = plugin.server.scheduler.runTaskLater(plugin, this::closeCompetition, tick)
 
         if (msgConfig.boolean("broadcast-start")) {
+            plugin.server.broadcastMessage(Lang.text("contest-start"))
+
             val msg = Lang.format("contest-start-timer")
                 .replace("%time%" to Lang.time(tick / 20))
                 .output
