@@ -1,5 +1,7 @@
 package me.elsiff.morefish.fishing
 
+import me.elsiff.morefish.configuration.Config
+import me.elsiff.morefish.configuration.Lang
 import me.elsiff.morefish.fishing.catchhandler.CatchHandler
 import me.elsiff.morefish.fishing.competition.FishingCompetition
 import me.elsiff.morefish.item.FishItemStackConverter
@@ -21,13 +23,18 @@ class FishingListener(
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onPlayerFish(event: PlayerFishEvent) {
         if (event.state == PlayerFishEvent.State.CAUGHT_FISH && event.caught is Item) {
-            val caught = event.caught as Item
-            val fish = fishTypeTable.pickRandomType(caught, event.player, competition).generateFish()
-            val catchHandlers = globalCatchHandlers + fish.type.catchHandlers
-            for (handler in catchHandlers) {
-                handler.handle(event.player, fish)
+            if (Config.standard.boolean("general.no-fishing-unless-contest") && !competition.isEnabled()) {
+                event.isCancelled = true
+                event.player.sendMessage(Lang.text("no-fishing-allowed"))
+            } else {
+                val caught = event.caught as Item
+                val fish = fishTypeTable.pickRandomType(caught, event.player, competition).generateFish()
+                val catchHandlers = globalCatchHandlers + fish.type.catchHandlers
+                for (handler in catchHandlers) {
+                    handler.handle(event.player, fish)
+                }
+                caught.itemStack = converter.createItemStack(fish, event.player)
             }
-            caught.itemStack = converter.createItemStack(fish, event.player)
         }
     }
 }
