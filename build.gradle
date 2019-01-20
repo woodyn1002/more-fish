@@ -48,6 +48,7 @@ repositories {
     maven { url "http://maven.sk89q.com/repo/" }
     maven { url "https://repo.aikar.co/content/groups/aikar/" }
     maven { url "https://hub.spigotmc.org/nexus/content/groups/public/" }
+    maven { url 'https://jitpack.io' }
 }
 
 compileJava {
@@ -77,7 +78,7 @@ dependencies {
     compileOnly 'net.milkbowl.vault:VaultAPI:1.6'
     compileOnly 'net.citizensnpcs:citizensapi:2.0.18-SNAPSHOT'
     compileOnly 'me.clip:placeholderapi:2.7.1'
-    compileOnly files('libs/mcMMO.jar')
+    compileOnly 'com.github.mcMMO-Dev:mcMMO:fa1bbd2'
 }
 
 configurations {
