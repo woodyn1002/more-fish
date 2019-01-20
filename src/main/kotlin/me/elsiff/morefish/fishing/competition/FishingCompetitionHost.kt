@@ -37,7 +37,8 @@ class FishingCompetitionHost(
     fun openCompetitionFor(tick: Long) {
         val duration = tick / 20
         competition.enable()
-        timerTask = plugin.server.scheduler.runTaskLater(plugin, this::closeCompetition, tick)
+        val closingWork = { closeCompetition() }
+        timerTask = plugin.server.scheduler.runTaskLater(plugin, closingWork, tick)
 
         if (Config.standard.boolean("general.use-boss-bar")) {
             timerBarHandler.enableTimer(duration)
@@ -53,7 +54,7 @@ class FishingCompetitionHost(
         }
     }
 
-    fun closeCompetition() {
+    fun closeCompetition(suspend: Boolean = false) {
         competition.disable()
         if (timerTask != null) {
             timerTask!!.cancel()
@@ -64,24 +65,26 @@ class FishingCompetitionHost(
             }
         }
 
-        if (prizes.isNotEmpty()) {
-            val ranking = competition.ranking
-            for ((range, prize) in prizes) {
-                val rangeInIndex = IntRange(
-                    start = range.start - 1,
-                    endInclusive = min(range.endInclusive - 1, ranking.lastIndex)
-                )
-                for (record in ranking.slice(rangeInIndex)) {
-                    val rankNumber = competition.rankNumberOf(record)
-                    prize.giveTo(record.fisher, rankNumber, plugin)
+        val broadcast = msgConfig.boolean("broadcast-stop")
+        if (broadcast) {
+            plugin.server.broadcastMessage(Lang.text("contest-stop"))
+        }
+        if (!suspend) {
+            if (prizes.isNotEmpty()) {
+                val ranking = competition.ranking
+                for ((range, prize) in prizes) {
+                    val rangeInIndex = IntRange(
+                        start = range.start - 1,
+                        endInclusive = min(range.endInclusive - 1, ranking.lastIndex)
+                    )
+                    for (record in ranking.slice(rangeInIndex)) {
+                        val rankNumber = competition.rankNumberOf(record)
+                        prize.giveTo(record.fisher, rankNumber, plugin)
+                    }
                 }
             }
-        }
 
-        if (msgConfig.boolean("broadcast-stop")) {
-            plugin.server.broadcastMessage(Lang.text("contest-stop"))
-
-            if (msgConfig.boolean("show-top-on-ending")) {
+            if (broadcast && msgConfig.boolean("show-top-on-ending")) {
                 for (player in plugin.server.onlinePlayers) {
                     informAboutRanking(player)
                 }

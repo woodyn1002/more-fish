@@ -44,6 +44,7 @@ class MainCommand(
         val label = execCommandLabel
         sender.sendMessage("$prefix/$label help")
         sender.sendMessage("$prefix/$label begin [runningTime(sec)]")
+        sender.sendMessage("$prefix/$label suspend")
         sender.sendMessage("$prefix/$label end")
         sender.sendMessage("$prefix/$label rewards")
         sender.sendMessage("$prefix/$label clear")
@@ -86,7 +87,21 @@ class MainCommand(
         }
     }
 
-    @Subcommand("end|stop")
+    @Subcommand("suspend")
+    @CommandPermission("morefish.admin")
+    fun suspend(sender: CommandSender) {
+        if (!competition.isDisabled()) {
+            competitionHost.closeCompetition(suspend = true)
+
+            if (!Config.standard.boolean("messages.broadcast-stop")) {
+                sender.sendMessage(Lang.text("contest-stop"))
+            }
+        } else {
+            sender.sendMessage(Lang.text("already-stopped"))
+        }
+    }
+
+    @Subcommand("end")
     @CommandPermission("morefish.admin")
     fun end(sender: CommandSender) {
         if (!competition.isDisabled()) {
