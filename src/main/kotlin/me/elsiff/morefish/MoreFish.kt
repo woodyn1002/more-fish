@@ -15,6 +15,7 @@ import me.elsiff.morefish.fishing.competition.FishingCompetitionAutoRunner
 import me.elsiff.morefish.fishing.competition.FishingCompetitionHost
 import me.elsiff.morefish.gui.GuiOpener
 import me.elsiff.morefish.gui.GuiRegistry
+import me.elsiff.morefish.hooker.McmmoHooker
 import me.elsiff.morefish.hooker.ProtocolLibHooker
 import me.elsiff.morefish.hooker.VaultHooker
 import me.elsiff.morefish.item.FishItemStackConverter
@@ -31,6 +32,7 @@ import org.bukkit.plugin.java.JavaPlugin
 class MoreFish : JavaPlugin() {
     val protocolLib = ProtocolLibHooker()
     val vault = VaultHooker()
+    val mcmmoHooker = McmmoHooker()
 
     val guiRegistry = GuiRegistry(this)
     val guiOpener = GuiOpener(guiRegistry)
@@ -53,6 +55,7 @@ class MoreFish : JavaPlugin() {
 
         protocolLib.hookIfEnabled(server)
         vault.hookIfEnabled(server)
+        mcmmoHooker.hookIfEnabled(server)
 
         applyConfig()
 
@@ -97,6 +100,7 @@ class MoreFish : JavaPlugin() {
     fun applyConfig() {
         Config.load(this)
         Config.customItemStackLoader.protocolLib = protocolLib
+        Config.fishConditionSetLoader.init(mcmmoHooker)
 
         fishTypeTable.clear()
         fishTypeTable.putAll(Config.fishTypeMapLoader.loadFrom(Config.fish))

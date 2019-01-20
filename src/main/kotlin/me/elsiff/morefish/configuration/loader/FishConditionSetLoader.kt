@@ -3,6 +3,7 @@ package me.elsiff.morefish.configuration.loader
 import me.elsiff.morefish.configuration.ConfigurationValueAccessor
 import me.elsiff.morefish.fishing.competition.FishingCompetition
 import me.elsiff.morefish.fishing.condition.*
+import me.elsiff.morefish.hooker.McmmoHooker
 import me.elsiff.morefish.util.NamespacedKeyUtils
 import org.apache.commons.lang.math.DoubleRange
 import org.bukkit.NamespacedKey
@@ -13,6 +14,12 @@ import org.bukkit.enchantments.Enchantment
  * Created by elsiff on 2019-01-09.
  */
 class FishConditionSetLoader : CustomLoader<Set<FishCondition>> {
+    private lateinit var mcmmoHooker: McmmoHooker
+
+    fun init(mcmmoHooker: McmmoHooker) {
+        this.mcmmoHooker = mcmmoHooker
+    }
+
     override fun loadFrom(section: ConfigurationValueAccessor, path: String): Set<FishCondition> {
         return if (section.contains(path)) {
             section.strings(path).map {
@@ -51,6 +58,8 @@ class FishConditionSetLoader : CustomLoader<Set<FishCondition>> {
                 PotionEffectCondition(NamespacedKeyUtils.potionEffectType(args[0]), args[1].toInt())
             "location-y" ->
                 LocationYCondition(DoubleRange(args[0].toDouble(), args[1].toDouble()))
+            "mcmmo-skill" ->
+                McmmoSkillCondition(mcmmoHooker, args[0], args[1].toInt())
             else ->
                 throw IllegalStateException("There's no fish condition whose id is '$id'")
         }
