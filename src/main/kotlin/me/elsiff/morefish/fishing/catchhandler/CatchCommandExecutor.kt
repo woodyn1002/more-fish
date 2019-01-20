@@ -12,7 +12,7 @@ class CatchCommandExecutor(
     override fun handle(catcher: Player, fish: Fish) {
         val server = catcher.server
         for (command in commands) {
-            server.dispatchCommand(server.consoleSender, command)
+            server.dispatchCommand(server.consoleSender, command.replace("@p", catcher.name))
         }
     }
 }
