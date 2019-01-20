@@ -4,7 +4,6 @@ import me.elsiff.morefish.configuration.Config
 import me.elsiff.morefish.configuration.ConfigurationSectionAccessor
 import me.elsiff.morefish.fishing.Fish
 import me.elsiff.morefish.gui.GuiOpener
-import me.elsiff.morefish.gui.GuiRegistry
 import me.elsiff.morefish.hooker.VaultHooker
 import me.elsiff.morefish.item.FishItemStackConverter
 import me.elsiff.morefish.util.OneTickScheduler
@@ -16,7 +15,6 @@ import kotlin.math.floor
  * Created by elsiff on 2019-01-03.
  */
 class FishShop(
-    private val guiRegistry: GuiRegistry,
     private val guiOpener: GuiOpener,
     private val oneTickScheduler: OneTickScheduler,
     private val converter: FishItemStackConverter,
@@ -40,12 +38,6 @@ class FishShop(
 
     private val roundDecimalPoints: Boolean
         get () = shopConfig.boolean("round-decimal-points")
-
-    fun closeAllShopGuis() {
-        for (viewer in guiRegistry.guis.filter { it is FishShopGui }.map { it.viewers }.flatten()) {
-            viewer.closeInventory()
-        }
-    }
 
     fun sell(player: Player, fish: Fish) {
         val price = priceOf(fish)

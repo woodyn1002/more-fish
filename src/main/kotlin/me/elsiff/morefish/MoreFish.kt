@@ -40,7 +40,7 @@ class MoreFish : JavaPlugin() {
     val competitionHost = FishingCompetitionHost(this, competition)
     val autoRunner = FishingCompetitionAutoRunner(this, competitionHost)
     val converter = FishItemStackConverter(this, fishTypeTable)
-    val fishShop = FishShop(guiRegistry, guiOpener, oneTickScheduler, converter, vault)
+    val fishShop = FishShop(guiOpener, oneTickScheduler, converter, vault)
     val globalCatchHandlers: List<CatchHandler> = listOf(
         CatchBroadcaster(),
         NewFirstBroadcaster(competition),
