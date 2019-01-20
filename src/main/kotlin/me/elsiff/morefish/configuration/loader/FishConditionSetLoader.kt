@@ -4,6 +4,7 @@ import me.elsiff.morefish.configuration.ConfigurationValueAccessor
 import me.elsiff.morefish.fishing.competition.FishingCompetition
 import me.elsiff.morefish.fishing.condition.*
 import me.elsiff.morefish.hooker.McmmoHooker
+import me.elsiff.morefish.hooker.WorldGuardHooker
 import me.elsiff.morefish.util.NamespacedKeyUtils
 import org.apache.commons.lang.math.DoubleRange
 import org.bukkit.NamespacedKey
@@ -15,9 +16,11 @@ import org.bukkit.enchantments.Enchantment
  */
 class FishConditionSetLoader : CustomLoader<Set<FishCondition>> {
     private lateinit var mcmmoHooker: McmmoHooker
+    private lateinit var worldGuardHooker: WorldGuardHooker
 
-    fun init(mcmmoHooker: McmmoHooker) {
+    fun init(mcmmoHooker: McmmoHooker, worldGuardHooker: WorldGuardHooker) {
         this.mcmmoHooker = mcmmoHooker
+        this.worldGuardHooker = worldGuardHooker
     }
 
     override fun loadFrom(section: ConfigurationValueAccessor, path: String): Set<FishCondition> {
@@ -60,6 +63,8 @@ class FishConditionSetLoader : CustomLoader<Set<FishCondition>> {
                 LocationYCondition(DoubleRange(args[0].toDouble(), args[1].toDouble()))
             "mcmmo-skill" ->
                 McmmoSkillCondition(mcmmoHooker, args[0], args[1].toInt())
+            "worldguard-region" ->
+                WorldGuardRegionCondition(worldGuardHooker, args[0])
             else ->
                 throw IllegalStateException("There's no fish condition whose id is '$id'")
         }

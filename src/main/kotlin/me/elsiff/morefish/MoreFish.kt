@@ -18,6 +18,7 @@ import me.elsiff.morefish.gui.GuiRegistry
 import me.elsiff.morefish.hooker.McmmoHooker
 import me.elsiff.morefish.hooker.ProtocolLibHooker
 import me.elsiff.morefish.hooker.VaultHooker
+import me.elsiff.morefish.hooker.WorldGuardHooker
 import me.elsiff.morefish.item.FishItemStackConverter
 import me.elsiff.morefish.shop.FishShop
 import me.elsiff.morefish.shop.FishShopSignListener
@@ -33,6 +34,7 @@ class MoreFish : JavaPlugin() {
     val protocolLib = ProtocolLibHooker()
     val vault = VaultHooker()
     val mcmmoHooker = McmmoHooker()
+    val worldGuardHooker = WorldGuardHooker()
 
     val guiRegistry = GuiRegistry(this)
     val guiOpener = GuiOpener(guiRegistry)
@@ -56,6 +58,7 @@ class MoreFish : JavaPlugin() {
         protocolLib.hookIfEnabled(server)
         vault.hookIfEnabled(server)
         mcmmoHooker.hookIfEnabled(server)
+        worldGuardHooker.hookIfEnabled(server)
 
         applyConfig()
 
@@ -100,7 +103,7 @@ class MoreFish : JavaPlugin() {
     fun applyConfig() {
         Config.load(this)
         Config.customItemStackLoader.protocolLib = protocolLib
-        Config.fishConditionSetLoader.init(mcmmoHooker)
+        Config.fishConditionSetLoader.init(mcmmoHooker, worldGuardHooker)
 
         fishTypeTable.clear()
         fishTypeTable.putAll(Config.fishTypeMapLoader.loadFrom(Config.fish))
