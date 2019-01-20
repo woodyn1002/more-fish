@@ -7,7 +7,7 @@
 # - https://github.com/elsiff/MoreFish/wiki/Custom-Rarity-Tutorial
 #
 
-version: 220
+version: 300
 
 # %player% - プレイヤーのランク (例 1st, 2nd, 3rd, 4th)
 # %rarity% - 魚のレアリティ
