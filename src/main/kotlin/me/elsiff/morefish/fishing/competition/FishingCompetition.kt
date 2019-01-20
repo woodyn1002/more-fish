@@ -55,6 +55,9 @@ class FishingCompetition {
     fun containsContestant(contestant: OfflinePlayer): Boolean =
         ranking.any { it.fisher == contestant }
 
+    fun rankNumberOf(record: Record): Int =
+        ranking.indexOf(record) + 1
+
     fun recordOf(contestant: OfflinePlayer): Record {
         for (record in ranking) {
             if (record.fisher == contestant) {
