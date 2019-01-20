@@ -19,6 +19,8 @@ general:
   replace-only-fish: false
   save-records: false
 
+contest-prizes: {}
+
 auto-running:
   enable: false
   required-players: 5

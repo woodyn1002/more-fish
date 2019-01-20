@@ -22,6 +22,7 @@ object Config {
     val fishTypeMapLoader: FishTypeMapLoader =
         FishTypeMapLoader(fishRaritySetLoader, customItemStackLoader, fishConditionSetLoader, playerAnnouncementLoader)
     val localTimeListLoader: LocalTimeListLoader = LocalTimeListLoader()
+    val prizeMapLoader: PrizeMapLoader = PrizeMapLoader()
 
     val defaultCatchAnnouncement: PlayerAnnouncement
         get() = playerAnnouncementLoader.loadFrom(standard["messages"], "announce-catch")

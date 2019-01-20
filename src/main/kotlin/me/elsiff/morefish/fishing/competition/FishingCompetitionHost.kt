@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import org.bukkit.scheduler.BukkitTask
+import kotlin.math.min
 
 /**
  * Created by elsiff on 2019-01-18.
@@ -21,6 +22,9 @@ class FishingCompetitionHost(
 
     private val msgConfig: ConfigurationSectionAccessor
         get() = Config.standard["messages"]
+
+    val prizes: Map<IntRange, Prize>
+        get() = Config.prizeMapLoader.loadFrom(Config.standard, "contest-prizes")
 
     fun openCompetition() {
         competition.enable()
@@ -57,6 +61,19 @@ class FishingCompetitionHost(
 
             if (timerBarHandler.hasTimerEnabled) {
                 timerBarHandler.disableTimer()
+            }
+        }
+
+        if (prizes.isNotEmpty()) {
+            val ranking = competition.ranking
+            for ((range, prize) in prizes) {
+                val rangeInIndex = IntRange(
+                    start = range.start - 1,
+                    endInclusive = min(range.endInclusive - 1, ranking.lastIndex)
+                )
+                for (record in ranking.slice(rangeInIndex)) {
+                    prize.giveTo(record.fisher)
+                }
             }
         }
 
