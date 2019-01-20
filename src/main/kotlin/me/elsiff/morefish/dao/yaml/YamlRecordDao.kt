@@ -67,7 +67,7 @@ class YamlRecordDao(
         val records = mutableListOf<Record>()
         for (section in yaml.getKeys(false).map(yaml::getConfigurationSection)) {
             val id = UUID.fromString(section.name)
-            val player = plugin.server.getPlayer(id)
+            val player = plugin.server.getOfflinePlayer(id)
 
             val fishTypeName = section.getString("fish-type")
             val fishType = fishTypeTable.types.find { it.name == fishTypeName }

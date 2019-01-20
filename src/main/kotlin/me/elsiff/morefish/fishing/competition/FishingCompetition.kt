@@ -3,7 +3,7 @@ package me.elsiff.morefish.fishing.competition
 import me.elsiff.morefish.dao.DaoFactory
 import me.elsiff.morefish.dao.RecordDao
 import me.elsiff.morefish.fishing.Fish
-import org.bukkit.entity.Player
+import org.bukkit.OfflinePlayer
 
 /**
  * Created by elsiff on 2018-12-25.
@@ -35,7 +35,7 @@ class FishingCompetition {
     fun isDisabled(): Boolean =
         state == State.DISABLED
 
-    fun willBeNewFirst(catcher: Player, fish: Fish): Boolean {
+    fun willBeNewFirst(catcher: OfflinePlayer, fish: Fish): Boolean {
         return ranking.isEmpty() || ranking.first().let { fish.length > it.fish.length && it.fisher != catcher }
     }
 
@@ -52,10 +52,10 @@ class FishingCompetition {
         }
     }
 
-    fun containsContestant(contestant: Player): Boolean =
+    fun containsContestant(contestant: OfflinePlayer): Boolean =
         ranking.any { it.fisher == contestant }
 
-    fun recordOf(contestant: Player): Record {
+    fun recordOf(contestant: OfflinePlayer): Record {
         for (record in ranking) {
             if (record.fisher == contestant) {
                 return record
@@ -64,7 +64,7 @@ class FishingCompetition {
         throw IllegalStateException("Record not found")
     }
 
-    fun rankedRecordOf(contestant: Player): Pair<Int, Record> {
+    fun rankedRecordOf(contestant: OfflinePlayer): Pair<Int, Record> {
         for ((index, record) in ranking.withIndex()) {
             if (record.fisher == contestant) {
                 return Pair(index + 1, record)

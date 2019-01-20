@@ -72,7 +72,7 @@ class FishingCompetitionHost(
                     endInclusive = min(range.endInclusive - 1, ranking.lastIndex)
                 )
                 for (record in ranking.slice(rangeInIndex)) {
-                    prize.giveTo(record.fisher)
+                    prize.giveTo(record.fisher, plugin.server)
                 }
             }
         }
