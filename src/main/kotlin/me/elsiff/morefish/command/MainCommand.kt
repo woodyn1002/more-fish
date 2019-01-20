@@ -43,8 +43,8 @@ class MainCommand(
         )
         val label = execCommandLabel
         sender.sendMessage("$prefix/$label help")
-        sender.sendMessage("$prefix/$label start [runningTime(sec)]")
-        sender.sendMessage("$prefix/$label stop")
+        sender.sendMessage("$prefix/$label begin [runningTime(sec)]")
+        sender.sendMessage("$prefix/$label end")
         sender.sendMessage("$prefix/$label rewards")
         sender.sendMessage("$prefix/$label clear")
         sender.sendMessage("$prefix/$label reload")
@@ -52,9 +52,9 @@ class MainCommand(
         sender.sendMessage("$prefix/$label shop [player]")
     }
 
-    @Subcommand("start")
+    @Subcommand("begin|start")
     @CommandPermission("morefish.admin")
-    fun start(sender: CommandSender, args: Array<String>) {
+    fun begin(sender: CommandSender, args: Array<String>) {
         if (!competition.isEnabled()) {
             if (args.size == 1) {
                 try {
@@ -86,9 +86,9 @@ class MainCommand(
         }
     }
 
-    @Subcommand("stop|end")
+    @Subcommand("end|stop")
     @CommandPermission("morefish.admin")
-    fun stop(sender: CommandSender) {
+    fun end(sender: CommandSender) {
         if (!competition.isDisabled()) {
             competitionHost.closeCompetition()
 
