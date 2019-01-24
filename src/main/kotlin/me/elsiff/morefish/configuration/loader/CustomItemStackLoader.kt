@@ -40,9 +40,11 @@ class CustomItemStackLoader(
                 damage = it.int("durability", 0)
             }
 
-            itemStack.editIfHas<SkullMeta> {
-                val uuid = UUID.fromString(it.string("skull-uuid"))
-                owningPlayer = Bukkit.getOfflinePlayer(uuid)
+            if (it.contains("skull-uuid")) {
+                itemStack.editIfHas<SkullMeta> {
+                    val uuid = UUID.fromString(it.string("skull-uuid"))
+                    owningPlayer = Bukkit.getOfflinePlayer(uuid)
+                }
             }
 
             if (protocolLib.hasHooked) {
