@@ -53,6 +53,7 @@ class MoreFish : JavaPlugin() {
     val updateChecker = UpdateChecker(22926, this.description.version)
 
     override fun onEnable() {
+        INSTANCE = this
         DaoFactory.init(this)
 
         protocolLib.hookIfEnabled(this)
@@ -114,5 +115,11 @@ class MoreFish : JavaPlugin() {
             autoRunner.setScheduledTimes(scheduledTimes)
             autoRunner.enable()
         }
+    }
+
+    companion object {
+        private lateinit var INSTANCE: MoreFish
+        val instance: MoreFish
+            get() = INSTANCE
     }
 }
