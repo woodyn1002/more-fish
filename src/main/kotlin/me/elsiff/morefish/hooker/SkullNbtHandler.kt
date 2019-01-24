@@ -11,10 +11,13 @@ import java.util.*
  * Created by elsiff on 2018-12-31.
  */
 class SkullNbtHandler {
-    fun writeTexture(itemStack: ItemStack, textureValue: String) {
-        require(MinecraftReflection.isCraftItemStack(itemStack)) { "Item stack must be a CraftItemStack instance" }
+    fun writeTexture(itemStack: ItemStack, textureValue: String): ItemStack {
+        val editingStack = if (MinecraftReflection.isCraftItemStack(itemStack))
+            itemStack
+        else
+            MinecraftReflection.getBukkitItemStack(itemStack)
 
-        val tag = NbtFactory.fromItemTag(itemStack) as NbtCompound
+        val tag = NbtFactory.fromItemTag(editingStack) as NbtCompound
         val skullOwner = NbtFactory.ofCompound("SkullOwner")
         val properties = NbtFactory.ofCompound("Properties")
 
@@ -27,6 +30,7 @@ class SkullNbtHandler {
         skullOwner.put(properties)
         tag.put(skullOwner)
 
-        NbtFactory.setItemTag(itemStack, tag)
+        NbtFactory.setItemTag(editingStack, tag)
+        return editingStack
     }
 }

@@ -2,6 +2,7 @@ package me.elsiff.morefish.configuration.loader
 
 import me.elsiff.morefish.configuration.ConfigurationValueAccessor
 import me.elsiff.morefish.configuration.translated
+import me.elsiff.morefish.hooker.PluginHooker
 import me.elsiff.morefish.hooker.ProtocolLibHooker
 import me.elsiff.morefish.item.edit
 import me.elsiff.morefish.item.editIfHas
@@ -26,7 +27,7 @@ class CustomItemStackLoader(
         section[path].let {
             val material = NamespacedKeyUtils.material(it.string("id"))
             val amount = it.int("amount", 1)
-            val itemStack = ItemStack(material, amount)
+            var itemStack = ItemStack(material, amount)
 
             itemStack.edit<ItemMeta> {
                 lore = it.strings("lore", emptyList()).translated()
@@ -47,8 +48,9 @@ class CustomItemStackLoader(
                 }
             }
 
-            if (protocolLib.hasHooked) {
-                protocolLib.skullNbtHandler.writeTexture(itemStack, it.string("skull-texture"))
+            if (it.contains("skull-texture")) {
+                PluginHooker.checkHooked(protocolLib)
+                itemStack = protocolLib.skullNbtHandler.writeTexture(itemStack, it.string("skull-texture"))
             }
             return itemStack
         }
