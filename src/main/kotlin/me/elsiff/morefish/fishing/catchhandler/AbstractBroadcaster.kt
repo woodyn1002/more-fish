@@ -33,7 +33,7 @@ abstract class AbstractBroadcaster : CatchHandler {
                 "%rarity_color%" to fish.type.rarity.color,
                 "%fish%" to fish.type.name,
                 "%fish_with_rarity%" to fishNameWithRarity(fish.type)
-            ).output
+            ).output(catcher)
             for (receiver in receivers) {
                 receiver.sendMessage(msg)
             }

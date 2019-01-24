@@ -33,6 +33,7 @@ class MoreFish : JavaPlugin() {
     val mcmmoHooker = McmmoHooker()
     val worldGuardHooker = WorldGuardHooker()
     val citizensHooker = CitizensHooker()
+    val placeholderApiHooker = PlaceholderApiHooker()
 
     val guiRegistry = GuiRegistry(this)
     val guiOpener = GuiOpener(guiRegistry)
@@ -59,6 +60,7 @@ class MoreFish : JavaPlugin() {
         mcmmoHooker.hookIfEnabled(this)
         worldGuardHooker.hookIfEnabled(this)
         citizensHooker.hookIfEnabled(this)
+        placeholderApiHooker.hookIfEnabled(this)
 
         applyConfig()
 

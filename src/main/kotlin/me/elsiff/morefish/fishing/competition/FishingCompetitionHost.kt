@@ -49,7 +49,7 @@ class FishingCompetitionHost(
 
             val msg = Lang.format("contest-start-timer")
                 .replace("%time%" to Lang.time(duration))
-                .output
+                .output()
             plugin.server.broadcastMessage(msg)
         }
     }
@@ -102,7 +102,8 @@ class FishingCompetitionHost(
             val topSize = msgConfig.int("top-number")
             competition.top(topSize).forEachIndexed { index, record ->
                 val number = index + 1
-                val msg = Lang.format("top-list").replace(topReplacementOf(number, record)).output
+                val msg = Lang.format("top-list")
+                    .replace(topReplacementOf(number, record)).output()
                 receiver.sendMessage(msg)
             }
 
@@ -111,7 +112,8 @@ class FishingCompetitionHost(
                     receiver.sendMessage(Lang.text("top-mine-no-record"))
                 } else {
                     competition.rankedRecordOf(receiver).let {
-                        val msg = Lang.format("top-mine").replace(topReplacementOf(it.first, it.second)).output
+                        val msg = Lang.format("top-mine")
+                            .replace(topReplacementOf(it.first, it.second)).output(receiver)
                         receiver.sendMessage(msg)
                     }
                 }

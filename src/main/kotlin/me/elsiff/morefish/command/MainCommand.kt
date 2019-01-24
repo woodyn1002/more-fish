@@ -67,12 +67,12 @@ class MainCommand(
 
                         if (!Config.standard.boolean("messages.broadcast-start")) {
                             val msg = Lang.format("contest-start-timer")
-                                .replace("%time%" to Lang.time(runningTime)).output
+                                .replace("%time%" to Lang.time(runningTime)).output()
                             sender.sendMessage(msg)
                         }
                     }
                 } catch (e: NumberFormatException) {
-                    val msg = Lang.format("not-number").replace("%s" to args[0]).output
+                    val msg = Lang.format("not-number").replace("%s" to args[0]).output()
                     sender.sendMessage(msg)
                 }
             } else {
@@ -151,7 +151,7 @@ class MainCommand(
 
             val target = sender.server.getPlayerExact(args[0]) ?: null
             if (target == null) {
-                val msg = Lang.format("player-not-found").replace("%s" to args[0]).output
+                val msg = Lang.format("player-not-found").replace("%s" to args[0]).output()
                 sender.sendMessage(msg)
                 return
             } else {
@@ -171,7 +171,7 @@ class MainCommand(
             fishShop.openGuiTo(guiUser)
 
             if (guiUser != sender) {
-                val msg = Lang.format("forced-player-to-shop").replace("%s" to guiUser.name).output
+                val msg = Lang.format("forced-player-to-shop").replace("%s" to guiUser.name).output()
                 sender.sendMessage(msg)
             }
         }

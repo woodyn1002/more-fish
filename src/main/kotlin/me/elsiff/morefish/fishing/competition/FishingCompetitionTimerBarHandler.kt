@@ -64,7 +64,7 @@ class FishingCompetitionTimerBarHandler(
     private fun timerBarTitle(remainingSeconds: Long): String =
         Lang.format("timer-boss-bar")
             .replace("%time%" to Lang.time(remainingSeconds))
-            .output
+            .output()
 
     private inner class TimerBarUpdater(
         private val duration: Long

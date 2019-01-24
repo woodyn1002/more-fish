@@ -68,7 +68,7 @@ class FishShopGui(
                 }
                 shop.sell(user, fishList)
                 updatePriceIcon(0.0)
-                val msg = Lang.format("shop-sold").replace("%price%" to totalPrice.toString()).output
+                val msg = Lang.format("shop-sold").replace("%price%" to totalPrice.toString()).output()
                 user.sendMessage(msg)
             }
         }
@@ -103,7 +103,7 @@ class FishShopGui(
         emeraldIcon.edit<ItemMeta> {
             displayName = Lang.format("shop-emerald-icon-name")
                 .replace("%price%" to price.toString())
-                .output
+                .output()
         }
         inventory.setItem(priceIconSlot, emeraldIcon)
     }

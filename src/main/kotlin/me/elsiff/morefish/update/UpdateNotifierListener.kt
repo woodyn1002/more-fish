@@ -14,7 +14,7 @@ class UpdateNotifierListener(
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
         if (event.player.isOp) {
-            for (msg in Lang.formats("new-version").replace("%s" to newVersion).output) {
+            for (msg in Lang.formats("new-version").replace("%s" to newVersion).output(event.player)) {
                 event.player.sendMessage(msg)
             }
         }

@@ -49,7 +49,7 @@ object Config {
             if (cfg.int("version") < requiredVersion) {
                 val msg = Lang.format("old-file")
                     .replace("%s" to cfg.filePath.fileName)
-                    .output
+                    .output()
                 plugin.server.consoleSender.sendMessage(msg)
             }
         }
