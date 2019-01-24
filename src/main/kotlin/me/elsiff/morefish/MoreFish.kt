@@ -15,10 +15,7 @@ import me.elsiff.morefish.fishing.competition.FishingCompetitionAutoRunner
 import me.elsiff.morefish.fishing.competition.FishingCompetitionHost
 import me.elsiff.morefish.gui.GuiOpener
 import me.elsiff.morefish.gui.GuiRegistry
-import me.elsiff.morefish.hooker.McmmoHooker
-import me.elsiff.morefish.hooker.ProtocolLibHooker
-import me.elsiff.morefish.hooker.VaultHooker
-import me.elsiff.morefish.hooker.WorldGuardHooker
+import me.elsiff.morefish.hooker.*
 import me.elsiff.morefish.item.FishItemStackConverter
 import me.elsiff.morefish.shop.FishShop
 import me.elsiff.morefish.shop.FishShopSignListener
@@ -35,6 +32,7 @@ class MoreFish : JavaPlugin() {
     val vault = VaultHooker()
     val mcmmoHooker = McmmoHooker()
     val worldGuardHooker = WorldGuardHooker()
+    val citizensHooker = CitizensHooker()
 
     val guiRegistry = GuiRegistry(this)
     val guiOpener = GuiOpener(guiRegistry)
@@ -60,6 +58,7 @@ class MoreFish : JavaPlugin() {
         vault.hookIfEnabled(this)
         mcmmoHooker.hookIfEnabled(this)
         worldGuardHooker.hookIfEnabled(this)
+        citizensHooker.hookIfEnabled(this)
 
         applyConfig()
 
@@ -93,6 +92,9 @@ class MoreFish : JavaPlugin() {
         guiRegistry.clear(true)
         if (autoRunner.isEnabled) {
             autoRunner.disable()
+        }
+        if (citizensHooker.hasHooked) {
+            citizensHooker.dispose()
         }
         logger.info("Plugin has been disabled.")
     }
