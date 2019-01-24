@@ -1,8 +1,8 @@
 package me.elsiff.morefish.hooker
 
 import org.bukkit.Location
-import org.bukkit.Server
 import com.sk89q.worldguard.bukkit.WGBukkit
+import me.elsiff.morefish.MoreFish
 
 
 /**
@@ -12,7 +12,7 @@ class WorldGuardHooker : PluginHooker {
     override val pluginName = "WorldGuard"
     override var hasHooked: Boolean = false
 
-    override fun hook(server: Server) {
+    override fun hook(plugin: MoreFish) {
         hasHooked = true
     }
 

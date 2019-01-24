@@ -1,6 +1,6 @@
 package me.elsiff.morefish.hooker
 
-import org.bukkit.Server
+import me.elsiff.morefish.MoreFish
 
 /**
  * Created by elsiff on 2018-12-31.
@@ -10,8 +10,8 @@ class ProtocolLibHooker : PluginHooker {
     override var hasHooked = false
     lateinit var skullNbtHandler: SkullNbtHandler
 
-    override fun hook(server: Server) {
-        PluginHooker.checkEnabled(this, server.pluginManager)
+    override fun hook(plugin: MoreFish) {
+        PluginHooker.checkEnabled(this, plugin.server.pluginManager)
 
         skullNbtHandler = SkullNbtHandler()
         hasHooked = true

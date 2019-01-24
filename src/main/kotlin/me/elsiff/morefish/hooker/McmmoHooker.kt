@@ -1,7 +1,7 @@
 package me.elsiff.morefish.hooker
 
 import com.gmail.nossr50.api.ExperienceAPI
-import org.bukkit.Server
+import me.elsiff.morefish.MoreFish
 import org.bukkit.entity.Player
 
 /**
@@ -11,7 +11,7 @@ class McmmoHooker : PluginHooker {
     override val pluginName = "mcMMO"
     override var hasHooked: Boolean = false
 
-    override fun hook(server: Server) {
+    override fun hook(plugin: MoreFish) {
         hasHooked = true
     }
 

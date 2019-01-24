@@ -55,10 +55,10 @@ class MoreFish : JavaPlugin() {
     override fun onEnable() {
         DaoFactory.init(this)
 
-        protocolLib.hookIfEnabled(server)
-        vault.hookIfEnabled(server)
-        mcmmoHooker.hookIfEnabled(server)
-        worldGuardHooker.hookIfEnabled(server)
+        protocolLib.hookIfEnabled(this)
+        vault.hookIfEnabled(this)
+        mcmmoHooker.hookIfEnabled(this)
+        worldGuardHooker.hookIfEnabled(this)
 
         applyConfig()
 
