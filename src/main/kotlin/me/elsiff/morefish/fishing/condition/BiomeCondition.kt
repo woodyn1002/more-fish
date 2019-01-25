@@ -6,7 +6,7 @@ import org.bukkit.entity.Item
 import org.bukkit.entity.Player
 
 class BiomeCondition(
-    private val biome: Biome
+    private val biomes: Collection<Biome>
 ) : FishCondition {
     override fun check(
         caught: Item,
@@ -15,6 +15,6 @@ class BiomeCondition(
     ): Boolean {
         val x = caught.location.x.toInt()
         val z = caught.location.z.toInt()
-        return caught.world.getBiome(x, z) == biome
+        return caught.world.getBiome(x, z) in biomes
     }
 }

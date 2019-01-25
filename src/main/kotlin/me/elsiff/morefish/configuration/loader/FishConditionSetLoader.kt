@@ -47,7 +47,7 @@ class FishConditionSetLoader : CustomLoader<Set<FishCondition>> {
             "time" ->
                 TimeCondition(TimeCondition.TimeState.valueOf(args[0].toUpperCase()))
             "biome" ->
-                BiomeCondition(Biome.valueOf(args[0].toUpperCase()))
+                BiomeCondition(args.map { Biome.valueOf(it.toUpperCase()) })
             "enchantment" ->
                 EnchantmentCondition(
                     Enchantment.getByKey(NamespacedKey.minecraft(args[0])),
