@@ -5,6 +5,8 @@ import me.elsiff.morefish.fishing.catchhandler.CatchHandler
 import me.elsiff.morefish.fishing.condition.FishCondition
 import org.bukkit.inventory.ItemStack
 import kotlin.math.floor
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.random.Random
 
 /**
@@ -28,7 +30,14 @@ data class FishType(
     fun generateFish(): Fish {
         check(lengthMin <= lengthMax) { "Max-length must not be smaller than min-length" }
 
-        val length = lengthMin + Random.nextDouble() * (lengthMax - lengthMin)
-        return Fish(this, floor(length * 10) / 10)
+        val rawLength = lengthMin + Random.nextDouble() * (lengthMax - lengthMin)
+        val length = clamp(floorToTwoDecimalPlaces(rawLength), lengthMin, lengthMax)
+        return Fish(this, length)
     }
+
+    private fun clamp(value: Double, min: Double, max: Double): Double =
+        max(min(value, max), min)
+
+    private fun floorToTwoDecimalPlaces(value: Double): Double =
+        floor(value * 10) / 10
 }
