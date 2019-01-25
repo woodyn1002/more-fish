@@ -1,38 +1,37 @@
 # MoreFish
-Have you enjoyed vanilla fishing?  
-If you feel boring with that, try this plugin! It would make your fishing more fun.
+Feeling boring with the vanilla fishing?  
+Try this plugin! It would make your fishing more fun.
 
 
 ### Features
 
-##### Additional Fish:
-You can catch 15+ additional fish!  
-If you think it's too little, you can add your own fish by editing config.yml.
+#### Additional Fish:
+You can catch 20+ additional fish!  
+If it's not enough to you, feel free to add your own fish by editing configuration.
 
-##### Legendary Fish:
+#### Legendary Fish:
 There're 4 default rarity levels: Common, Rare, Epic, Legendary.  
-Try to get legendary fish through just 1% chance and prove that you're the mastered angler!
+Try to get legendary fish through just 1% chance and prove that you're a mastered angler!
 
-##### Message with the length of fish:
+#### Message with the length of fish:
 Show how long your fish is!  
 You can laugh at your friend's score.
 
-##### Fishing Contest:
+#### Fishing Contest:
 Compete with your friends for first prize of the fishing contest!  
-It's the key feature of this plugin. You must love it, I promise.
+It's the key feature of this plugin. I'm sure that you will love it.
 
-#### Giving Reward for Contest Winner:
-On the end of contest, the rewards you set can be given to specific ranker!  
-Even it's very easy to edit rewards, as using GUI system.  
-(requires Vault for economy support)
+#### Giving Prizes for Contest Winner:
+On the end of competition, prizes you set may be given to specific ranker!  
+You can configure it via config.yml really simplely.
 
 #### Schedule Contest Automatically:
 Use auto-running feature: start the contest periodically with timer!  
 You don't have to be always in your server to schedule contest.  
 
-##### Customizable Features:
+#### Customizable Features:
 You can edit any messages sent by this plugin!  
-Moreover, a lot of features can be toggled, so it's possible to customize the features as you want.
+Moreover, a lot of features can be toggled, so there's no difficulty in customizing the features as you want.
 
 
 ### Wiki
