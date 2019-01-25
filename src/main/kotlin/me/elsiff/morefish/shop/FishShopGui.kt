@@ -31,7 +31,8 @@ class FishShopGui(
     private val totalPrice: Double
         get() {
             var sum = 0.0
-            allFish().forEach { fish, itemStack ->
+            for (itemStack in allFishItemStacks()) {
+                val fish = converter.fish(itemStack)
                 sum += (shop.priceOf(fish) * itemStack.amount)
             }
             return sum
@@ -54,13 +55,14 @@ class FishShopGui(
 
     override fun handleComponentClick(state: ComponentClickState) {
         if (state.slot == priceIconSlot) {
-            val allFish = allFish()
-            if (allFish.isEmpty()) {
+            val allFishItemStacks = allFishItemStacks()
+            if (allFishItemStacks.isEmpty()) {
                 user.sendMessage(Lang.text("shop-no-fish"))
             } else {
                 val totalPrice = totalPrice
                 val fishList = mutableListOf<Fish>()
-                allFish.forEach { fish, itemStack ->
+                for (itemStack in allFishItemStacks) {
+                    val fish = converter.fish(itemStack)
                     repeat(itemStack.amount) {
                         fishList.add(fish)
                     }
@@ -85,17 +87,15 @@ class FishShopGui(
     }
 
     private fun dropAllFish() {
-        allFish().forEach { _, itemStack ->
+        for (itemStack in allFishItemStacks()) {
             user.world.dropItem(user.location, itemStack.clone())
         }
     }
 
-    private fun allFish(): Map<Fish, ItemStack> {
+    private fun allFishItemStacks(): List<ItemStack> {
         return fishSlots
             .mapNotNull { slot -> inventory.getItem(slot) ?: null }
             .filter { itemStack -> converter.isFish(itemStack) }
-            .map { itemStack -> Pair(converter.fish(itemStack), itemStack) }
-            .toMap()
     }
 
     private fun updatePriceIcon(price: Double = totalPrice) {
