@@ -141,10 +141,9 @@ class MainCommand(
     }
 
     @Subcommand("shop")
-    @CommandPermission("morefish.shop")
     fun shop(sender: CommandSender, args: Array<String>) {
         val guiUser: Player = if (args.size == 1) {
-            if (sender.hasPermission("morefish.admin")) {
+            if (!sender.hasPermission("morefish.admin")) {
                 sender.sendMessage(Lang.text("no-permission"))
                 return
             }
@@ -158,6 +157,10 @@ class MainCommand(
                 target
             }
         } else {
+            if (!sender.hasPermission("morefish.shop")) {
+                sender.sendMessage(Lang.text("no-permission"))
+                return
+            }
             if (sender !is Player) {
                 sender.sendMessage(Lang.text("in-game-command"))
                 return
