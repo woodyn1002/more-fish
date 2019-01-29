@@ -71,6 +71,7 @@ dependencies {
 
     implementation 'co.aikar:acf-core:0.5.0-SNAPSHOT'
     implementation 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
+    implementation 'com.github.elsiff:egui:1.0.0-SNAPSHOT'
     compileOnly 'com.comphenix.protocol:ProtocolLib-API:4.2.1'
     compileOnly 'com.sk89q:worldguard:6.1'
     compileOnly 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'

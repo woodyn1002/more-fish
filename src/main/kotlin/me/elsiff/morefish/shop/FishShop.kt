@@ -1,9 +1,9 @@
 package me.elsiff.morefish.shop
 
+import me.elsiff.egui.GuiOpener
 import me.elsiff.morefish.configuration.Config
 import me.elsiff.morefish.configuration.ConfigurationSectionAccessor
 import me.elsiff.morefish.fishing.Fish
-import me.elsiff.morefish.gui.GuiOpener
 import me.elsiff.morefish.hooker.VaultHooker
 import me.elsiff.morefish.item.FishItemStackConverter
 import me.elsiff.morefish.util.OneTickScheduler

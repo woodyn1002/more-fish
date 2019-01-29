@@ -1,6 +1,8 @@
 package me.elsiff.morefish
 
 import co.aikar.commands.PaperCommandManager
+import me.elsiff.egui.GuiOpener
+import me.elsiff.egui.GuiRegistry
 import me.elsiff.morefish.command.MainCommand
 import me.elsiff.morefish.configuration.Config
 import me.elsiff.morefish.dao.DaoFactory
@@ -13,8 +15,6 @@ import me.elsiff.morefish.fishing.catchhandler.NewFirstBroadcaster
 import me.elsiff.morefish.fishing.competition.FishingCompetition
 import me.elsiff.morefish.fishing.competition.FishingCompetitionAutoRunner
 import me.elsiff.morefish.fishing.competition.FishingCompetitionHost
-import me.elsiff.morefish.gui.GuiOpener
-import me.elsiff.morefish.gui.GuiRegistry
 import me.elsiff.morefish.hooker.*
 import me.elsiff.morefish.item.FishItemStackConverter
 import me.elsiff.morefish.shop.FishShop

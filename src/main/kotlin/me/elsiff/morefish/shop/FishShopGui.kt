@@ -1,12 +1,12 @@
 package me.elsiff.morefish.shop
 
+import me.elsiff.egui.inventory.ChestInventoryGui
+import me.elsiff.egui.state.ComponentClickState
+import me.elsiff.egui.state.GuiCloseState
+import me.elsiff.egui.state.GuiDragState
+import me.elsiff.egui.state.GuiItemChangeState
 import me.elsiff.morefish.configuration.Lang
 import me.elsiff.morefish.fishing.Fish
-import me.elsiff.morefish.gui.ChestInventoryGui
-import me.elsiff.morefish.gui.state.ComponentClickState
-import me.elsiff.morefish.gui.state.GuiCloseState
-import me.elsiff.morefish.gui.state.GuiDragState
-import me.elsiff.morefish.gui.state.GuiItemChangeState
 import me.elsiff.morefish.item.FishItemStackConverter
 import me.elsiff.morefish.item.edit
 import me.elsiff.morefish.util.InventoryUtils

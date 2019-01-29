@@ -1,8 +1,8 @@
 package me.elsiff.morefish.hooker
 
-import org.bukkit.Location
 import com.sk89q.worldguard.bukkit.WGBukkit
 import me.elsiff.morefish.MoreFish
+import org.bukkit.Location
 
 
 /**
