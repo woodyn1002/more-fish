@@ -6,7 +6,7 @@ apply plugin: 'maven'
 apply plugin: "com.github.johnrengelman.shadow"
 
 group = 'me.elsiff'
-version = '3.0.2-SNAPSHOT'
+version = '3.0.2'
 
 ext.pluginName = 'MoreFish'
 ext.author = 'elsiff'
