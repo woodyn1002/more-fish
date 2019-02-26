@@ -6,7 +6,7 @@ apply plugin: 'maven'
 apply plugin: "com.github.johnrengelman.shadow"
 
 group = 'me.elsiff'
-version = '3.0.3-SNAPSHOT'
+version = '3.1.0-SNAPSHOT'
 
 ext.pluginName = 'MoreFish'
 ext.author = 'elsiff'
@@ -49,6 +49,9 @@ repositories {
     maven { url "https://repo.aikar.co/content/groups/aikar/" }
     maven { url "https://hub.spigotmc.org/nexus/content/groups/public/" }
     maven { url 'https://jitpack.io' }
+    maven { url 'https://raw.github.com/FabioZumbi12/RedProtect/mvn-repo/' }
+    maven { url 'https://nexus.keyle.de/content/groups/public/' }
+    maven { url 'https://ci.ender.zone/plugin/repository/everything/' }
 }
 
 compileJava {
@@ -79,6 +82,7 @@ dependencies {
     compileOnly 'net.citizensnpcs:citizensapi:2.0.18-SNAPSHOT'
     compileOnly 'me.clip:placeholderapi:2.7.1'
     compileOnly 'com.github.mcMMO-Dev:mcMMO:fa1bbd2'
+    compileOnly 'br.net.fabiozumbi12.RedProtect:RedProtect-Spigot:7.5.5'
 }
 
 configurations {

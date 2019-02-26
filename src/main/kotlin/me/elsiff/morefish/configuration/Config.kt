@@ -1,9 +1,15 @@
 package me.elsiff.morefish.configuration
 
+import br.net.fabiozumbi12.RedProtect.Bukkit.API.RedProtectAPI
+import br.net.fabiozumbi12.RedProtect.Bukkit.RedProtect
 import me.elsiff.morefish.announcement.PlayerAnnouncement
 import me.elsiff.morefish.configuration.loader.*
+import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
 import java.nio.file.Paths
+import org.bukkit.Bukkit.getPluginManager
+
+
 
 /**
  * Created by elsiff on 2019-01-09.
@@ -30,10 +36,12 @@ object Config {
         get() = playerAnnouncementLoader.loadFrom(standard["messages"], "announce-new-1st")
 
     private val configurationVersionMap: Map<ConfigurationAccessor, Int> = mapOf(
-        standard to 300,
+        standard to 310,
         fish to 300,
         lang to 211
     )
+
+    var redProtectApi: RedProtectAPI? = null
 
     fun load(plugin: Plugin) {
         val configPath = Paths.get("config.yml")
@@ -52,6 +60,11 @@ object Config {
                     .output()
                 plugin.server.consoleSender.sendMessage(msg)
             }
+        }
+
+        val redProtect = Bukkit.getPluginManager().getPlugin("RedProtect")
+        if (redProtect != null && redProtect.isEnabled) {
+            redProtectApi = RedProtect.get().api
         }
     }
 }

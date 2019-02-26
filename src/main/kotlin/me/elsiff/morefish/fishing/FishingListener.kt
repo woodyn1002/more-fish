@@ -38,6 +38,16 @@ class FishingListener(
                 (it.caught as Item).itemStack.type in fishMaterials
             else
                 true
+        },
+        {
+            val event = it
+            val disabledWorlds = Config.standard.strings("general.disabled-worlds", listOf()).map{ event.player.server.getWorld(it) }
+            disabledWorlds.isEmpty() || event.player.world !in disabledWorlds
+        },
+        {
+            Config.redProtectApi == null
+                    || Config.standard.strings("general.restrict-to-regions").isEmpty()
+                    || (Config.redProtectApi?.getRegion(it.player.location) != null && Config.redProtectApi?.getRegion(it.player.location)?.name in Config.standard.strings("general.restrict-to-regions"))
         }
     )
 
