@@ -77,7 +77,7 @@ dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
     compileOnly 'net.milkbowl.vault:VaultAPI:1.6'
     compileOnly 'net.citizensnpcs:citizensapi:2.0.18-SNAPSHOT'
-    compileOnly 'me.clip:placeholderapi:2.7.1'
+    compileOnly 'me.clip:placeholderapi:2.10.9'
     compileOnly 'com.github.mcMMO-Dev:mcMMO:fa1bbd2'
 }
 
