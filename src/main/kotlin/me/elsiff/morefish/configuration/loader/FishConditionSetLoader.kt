@@ -10,6 +10,7 @@ import org.apache.commons.lang.math.DoubleRange
 import org.bukkit.NamespacedKey
 import org.bukkit.block.Biome
 import org.bukkit.enchantments.Enchantment
+import java.lang.IllegalArgumentException
 
 /**
  * Created by elsiff on 2019-01-09.
@@ -50,7 +51,7 @@ class FishConditionSetLoader : CustomLoader<Set<FishCondition>> {
                 BiomeCondition(args.map { Biome.valueOf(it.toUpperCase()) })
             "enchantment" ->
                 EnchantmentCondition(
-                    Enchantment.getByKey(NamespacedKey.minecraft(args[0])),
+                    NamespacedKeyUtils.enchantment(args[0]),
                     args[1].toInt()
                 )
             "level" ->

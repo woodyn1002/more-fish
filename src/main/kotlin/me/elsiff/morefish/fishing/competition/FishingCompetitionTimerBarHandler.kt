@@ -49,12 +49,12 @@ class FishingCompetitionTimerBarHandler(
         barUpdatingTask = null
 
         timerBar!!.apply {
-            title = timerBarTitle(0)
+            setTitle(timerBarTitle(0))
             progress = 0.0
             removeAll()
         }
 
-        HandlerList.unregisterAll(barDisplayer)
+        barDisplayer?.let { HandlerList.unregisterAll(it) }
         barDisplayer = null
 
         plugin.server.removeBossBar(timerBarKey)
@@ -74,7 +74,7 @@ class FishingCompetitionTimerBarHandler(
         override fun run() {
             remainingSeconds--
             timerBar!!.run {
-                title = timerBarTitle(remainingSeconds)
+                setTitle(timerBarTitle(remainingSeconds))
                 progress = remainingSeconds.toDouble() / duration
             }
         }
