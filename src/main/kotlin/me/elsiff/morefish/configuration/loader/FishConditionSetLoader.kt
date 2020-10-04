@@ -51,7 +51,7 @@ class FishConditionSetLoader : CustomLoader<Set<FishCondition>> {
                 BiomeCondition(args.map { Biome.valueOf(it.toUpperCase()) })
             "enchantment" ->
                 EnchantmentCondition(
-                    NamespacedKeyUtils.enchantment(args[0])
+                    NamespacedKeyUtils.enchantment(args[0]),
                     args[1].toInt()
                 )
             "level" ->
