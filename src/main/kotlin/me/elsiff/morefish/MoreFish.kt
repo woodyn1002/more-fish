@@ -75,7 +75,7 @@ class MoreFish : JavaPlugin() {
         val mainCommand = MainCommand(this, competitionHost, fishShop)
         commands.registerCommand(mainCommand)
 
-        if (!isSnapshotVersion()) {
+        if (!isSnapshotVersion() && Config.standard.boolean("general.check-update")) {
             updateChecker.check()
             if (updateChecker.hasNewVersion()) {
                 val notifier = UpdateNotifierListener(updateChecker.newVersion)
