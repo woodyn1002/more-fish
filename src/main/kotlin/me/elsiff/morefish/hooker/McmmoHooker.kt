@@ -1,6 +1,7 @@
 package me.elsiff.morefish.hooker
 
 import com.gmail.nossr50.api.ExperienceAPI
+import com.gmail.nossr50.datatypes.skills.PrimarySkillType
 import me.elsiff.morefish.MoreFish
 import org.bukkit.entity.Player
 
@@ -15,6 +16,8 @@ class McmmoHooker : PluginHooker {
         hasHooked = true
     }
 
-    fun skillLevelOf(player: Player, skillType: String): Int =
-        ExperienceAPI.getLevel(player, skillType)
+    fun skillLevelOf(player: Player, skillType: String): Int {
+        val skill = PrimarySkillType.getSkill(skillType) ?: return 0
+        return ExperienceAPI.getLevel(player, skill)
+    }
 }
