@@ -12,7 +12,7 @@ object InventoryUtils {
     fun emptyStack(): ItemStack = ItemStack(Material.AIR)
 
     fun deliverTo(inventory: Inventory, delivery: ItemStack, acceptableSlots: List<Int> = inventory.slots()) {
-        val contents = acceptableSlots.mapNotNull { slot -> inventory.getItem(slot) ?: null }
+        val contents = acceptableSlots.mapNotNull { slot -> inventory.getItem(slot) }
         for (invItem in contents.filter { it.isSimilar(delivery) }) {
             val givingAmount = min(delivery.amount, invItem.maxStackSize - invItem.amount)
             invItem.amount = invItem.amount + givingAmount
