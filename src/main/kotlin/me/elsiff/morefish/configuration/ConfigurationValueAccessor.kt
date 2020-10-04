@@ -63,13 +63,14 @@ abstract class ConfigurationValueAccessor {
 
     private inline fun <reified T> findValue(
         path: String,
-        getter: (String) -> T,
+        getter: (String) -> T?,
         typeChecker: (String) -> Boolean,
         default: T?
     ): T {
         return if (currentSection.contains(path)) {
             require(typeChecker(path)) { "Value of '$path' in configuration is not a ${T::class.simpleName}" }
-            getter(path)
+            // typeChecker also checks nullability
+            getter(path)!!
         } else {
             require(default != null) { "Path '$path' must exist or have a default value" }
             default
