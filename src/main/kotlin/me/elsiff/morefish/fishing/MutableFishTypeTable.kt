@@ -27,8 +27,13 @@ class MutableFishTypeTable : HashMap<FishRarity, Set<FishType>>(), FishTypeTable
                 return rarity
             }
         }
-        // Only when there is no rarity.
-        throw IllegalStateException("Add rarity at least 1")
+
+        if (rarities.isEmpty()) {
+            throw IllegalStateException("Add rarity at least 1")
+        }
+
+        // return biggest chance rarity.
+        return rarities[rarities.size - 1]
     }
 
     override fun pickRandomType(rarity: FishRarity): FishType {
