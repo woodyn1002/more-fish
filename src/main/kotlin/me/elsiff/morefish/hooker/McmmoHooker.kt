@@ -4,6 +4,7 @@ import com.gmail.nossr50.api.ExperienceAPI
 import com.gmail.nossr50.events.skills.fishing.McMMOPlayerFishingTreasureEvent
 import com.gmail.nossr50.events.skills.fishing.McMMOPlayerMagicHunterEvent
 import me.elsiff.morefish.MoreFish
+import me.elsiff.morefish.configuration.Config
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -27,15 +28,13 @@ class McmmoHooker : PluginHooker {
     class McmmoFishingFixer(val plugin: MoreFish): Listener {
 
         @EventHandler(ignoreCancelled = true)
-        fun onMcmmoFishOnFishContest(event: McMMOPlayerFishingTreasureEvent) {
-            if (plugin.competition.isEnabled()) {
-                event.isCancelled = true
-            }
-        }
+        fun onMcmmoFishOnFishContest(event: McMMOPlayerFishingTreasureEvent) = cancelMcmmoFishOnFishContest(event)
 
         @EventHandler(ignoreCancelled = true)
-        fun onMcmmoFishOnFishContest(event: McMMOPlayerMagicHunterEvent) {
-            if (plugin.competition.isEnabled()) {
+        fun onMcmmoFishOnFishContest(event: McMMOPlayerMagicHunterEvent) = cancelMcmmoFishOnFishContest(event)
+
+        private fun cancelMcmmoFishOnFishContest(event: McMMOPlayerFishingTreasureEvent) {
+            if (Config.standard.boolean("general.no-fishing-unless-contest") || plugin.competition.isEnabled()) {
                 event.isCancelled = true
             }
         }
