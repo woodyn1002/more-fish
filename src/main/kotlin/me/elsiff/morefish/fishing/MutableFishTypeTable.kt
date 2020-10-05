@@ -30,19 +30,16 @@ class MutableFishTypeTable : HashMap<FishRarity, Set<FishType>>(), FishTypeTable
         val probabilitySum = rarities
             .filter { !it.default }
             .sumByDouble { it.probability }
-        check(probabilitySum <= 1.0) { "Sum of rarity probabilities must not be bigger than 1.0" }
 
-        val rarities = keys
+        val rarities = keys.toList().filter { !it.default }.sortedBy { it.probability }
         val randomVal = Random.nextDouble()
-        var chanceSum = 0.0
         for (rarity in rarities) {
-            if (!rarity.default) {
-                chanceSum += rarity.probability
-                if (randomVal <= chanceSum) {
-                    return rarity
-                }
+            // Weighted selection (probability / probabilitySum <= 1.0)
+            if (randomVal <= rarity.probability / probabilitySum) {
+                return rarity
             }
         }
+        // Only when all rarity chance is 0
         return defaultRarity ?: throw IllegalStateException("Default rarity doesn't exist")
     }
 
