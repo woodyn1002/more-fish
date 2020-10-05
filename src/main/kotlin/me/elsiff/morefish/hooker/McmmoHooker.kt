@@ -34,7 +34,7 @@ class McmmoHooker : PluginHooker {
         fun onMcmmoFishOnFishContest(event: McMMOPlayerMagicHunterEvent) = cancelMcmmoFishOnFishContest(event)
 
         private fun cancelMcmmoFishOnFishContest(event: McMMOPlayerFishingTreasureEvent) {
-            if (Config.standard.boolean("general.no-fishing-unless-contest") || plugin.competition.isEnabled()) {
+            if (!Config.standard.boolean("general.only-for-contest") || plugin.competition.isEnabled()) {
                 event.isCancelled = true
             }
         }
