@@ -1,6 +1,6 @@
 #
 # lang_jp.yml for MoreFish
-# translated by tanisou (2.1.0)
+# translated by tanisou, LazyGon (2.1.0)
 #
 
 version: 211
@@ -33,6 +33,13 @@ top-no-record: "&b[MoreFish]&r 誰もまだ記録を持っていません"
 top-mine: "&b[MoreFish]&r あなたは %ordinal%: %length%cm %fish%"
 top-mine-no-record: "&b[MoreFish]&r あなたは賞を獲得していません"
 
+# %amount% - 与えるお金の額
+# %ordinal% - プレイヤーのランク (例 1st, 2nd, 3rd, 4th)
+# %number% - プレイヤーのランクの値
+# %player% - 釣り人の名前
+reward: "&b[MoreFish]&r You've got &e%item%&r as the %ordinal% reward of contest!"
+reward-cash-prize: "&b[MoreFish]&r You've got &e%amount%&r as the %ordinal% reward of contest!"
+
 no-permission: "&b[MoreFish]&r あなたには許可がありません"
 already-ongoing: "&b[MoreFish]&r そのコンテストはすでに行われています"
 already-stopped: "&b[MoreFish]&r そのコンテストはすでに終了しました"
@@ -40,8 +47,18 @@ not-number: "&b[MoreFish]&r '%s' 不正な数値です"
 not-positive: "&b[MoreFish]&r 整数のみが使用可能です"
 clear-records: "&b[MoreFish]&r 記録の消去に成功しました"
 reload-config: "&b[MoreFish]&r コンフィグの再読み込みに成功しました"
-failed-to-reload: "&b[MoreFish]&r Failed to reload: Please check your console."
+failed-to-reload: "&b[MoreFish]&r リロードに失敗しました: コンソールを確認してください"
 in-game-command: "&b[MoreFish]&r それはゲーム内のコマンドです"
+shop-disabled: "&b[MoreFish]&r Fish Shop は無効化されています"
+player-not-found: "&b[MoreFish]&r '%s' という名前のプレイヤーはいません"
+forced-player-to-shop: "&b[MoreFish]&r %s に Shop GUI を開かせました"
+
+# %price% - 魚の売却額
+shop-gui-title: "魚を配置して売却します"
+shop-emerald-icon-name: "&a $%price% で売却"
+shop-sold: "&b[MoreFish]&r &a$%price%&r で魚を売却しました"
+shop-no-fish: "&b[MoreFish]&r 売却する魚が選択されていません。魚をスロットに配置してください"
+created-sign-shop: "&b[MoreFish]&r Fish Shopを作成しました！"
 
 old-file: "§c[MoreFish] あなたの%s は古すぎます! アップデートしてください"
 new-version:
