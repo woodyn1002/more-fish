@@ -23,6 +23,7 @@ item-format:
 rarity-list:
   common:
     display-name: "Thường"
+    chance: 70
     color: "reset"
     additional-price: 0.0
     announcement: 0
