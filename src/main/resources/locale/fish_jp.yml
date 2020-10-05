@@ -77,7 +77,7 @@ fish-list:
       length-min: 3
       length-max: 43
       icon:
-        id: "minecraft:record_13"
+        id: "minecraft:music_disc_13"
     Mackerel:
       display-name: "ゴマサバ"
       length-min: 15
@@ -95,19 +95,19 @@ fish-list:
       length-min: 5
       length-max: 30
       icon:
-        id: "minecraft:record_chirp"
+        id: "minecraft:music_disc_chirp"
     Mahaze:
       display-name: "マハゼ"
       length-min: 3
       length-max: 20
       icon:
-        id: "minecraft:record_blocks"
+        id: "minecraft:music_disc_blocks"
     Shirogisu:
       display-name: "シロギス"
       length-min: 5
       length-max: 30
       icon:
-        id: "minecraft:record_stal"
+        id: "minecraft:music_disc_stal"
     Kawahagi:
       display-name: "カワハギ"
       length-min: 5
@@ -179,7 +179,7 @@ fish-list:
       length-min: 10
       length-max: 30
       icon:
-        id: "minecraft:record_chirp"
+        id: "minecraft:music_disc_chirp"
       commands:
         - "minecraft:effect @p minecraft:poison 3 2"
     Flatfish:
@@ -193,19 +193,19 @@ fish-list:
       length-min: 14
       length-max: 110
       icon:
-        id: "minecraft:record_far"
+        id: "minecraft:music_disc_far"
     Kurodai:
       display-name: "クロダイ"
       length-min: 5
       length-max: 48
       icon:
-        id: "minecraft:record_mellohi"
+        id: "minecraft:music_disc_mellohi"
     SeaBass:
       display-name: "スズキ"
       length-min: 60
       length-max: 100
       icon:
-        id: "minecraft:record_13"
+        id: "minecraft:music_disc_13"
   epic:
     ShimaAzi:
       display-name: "シマアジ"
