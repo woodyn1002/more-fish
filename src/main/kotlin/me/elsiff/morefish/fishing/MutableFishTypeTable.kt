@@ -9,16 +9,6 @@ import kotlin.random.Random
  * Created by elsiff on 2018-12-23.
  */
 class MutableFishTypeTable : HashMap<FishRarity, Set<FishType>>(), FishTypeTable {
-    override val defaultRarity: FishRarity?
-        get() {
-            val defaultRarities = rarities.filter { it.default }
-            check(defaultRarities.size <= 1) { "Default rarity must be only one" }
-
-            return if (!defaultRarities.isEmpty())
-                return defaultRarities[0]
-            else
-                null
-        }
 
     override val rarities: Set<FishRarity>
         get() = keys.toSet()
@@ -27,9 +17,7 @@ class MutableFishTypeTable : HashMap<FishRarity, Set<FishType>>(), FishTypeTable
         get() = values.flatten().toSet()
 
     override fun pickRandomRarity(): FishRarity {
-        val probabilitySum = rarities
-            .filter { !it.default }
-            .sumByDouble { it.probability }
+        val probabilitySum = rarities.sumByDouble { it.probability }
 
         val rarities = keys.toList().filter { !it.default }.sortedBy { it.probability }
         val randomVal = Random.nextDouble()
@@ -39,8 +27,8 @@ class MutableFishTypeTable : HashMap<FishRarity, Set<FishType>>(), FishTypeTable
                 return rarity
             }
         }
-        // Only when all rarity chance is 0
-        return defaultRarity ?: throw IllegalStateException("Default rarity doesn't exist")
+        // Only when there is no rarity.
+        throw IllegalStateException("Add rarity at least 1")
     }
 
     override fun pickRandomType(rarity: FishRarity): FishType {

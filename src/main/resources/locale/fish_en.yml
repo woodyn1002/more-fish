@@ -23,7 +23,6 @@ item-format:
 rarity-list:
   common:
     display-name: "COMMON"
-    default: true
     color: "reset"
     additional-price: 0.0
     announcement: 0
