@@ -31,11 +31,13 @@ class FishItemStackConverter(
     }
 
     fun isFish(itemStack: ItemStack): Boolean {
-        return fishReader.canRead(itemStack.itemMeta)
+        val itemMeta = itemStack.itemMeta ?: return false
+        return fishReader.canRead(itemMeta)
     }
 
     fun fish(itemStack: ItemStack): Fish {
-        return fishReader.read(itemStack.itemMeta)
+        require(isFish(itemStack)) { "The itemStack is not fish" }
+        return fishReader.read(itemStack.itemMeta!!)
     }
 
     fun createItemStack(fish: Fish, catcher: Player): ItemStack {
@@ -43,7 +45,7 @@ class FishItemStackConverter(
         if (!fish.type.hasNotFishItemFormat) {
             val replacement = getFormatReplacementMap(fish, catcher)
             itemStack.edit<ItemMeta> {
-                displayName = formatConfig.format("display-name").replace(replacement).output(catcher)
+                setDisplayName(formatConfig.format("display-name").replace(replacement).output(catcher))
                 lore = formatConfig.formats("lore").replace(replacement).output(catcher)
                 fishWriter.write(this, fish)
             }

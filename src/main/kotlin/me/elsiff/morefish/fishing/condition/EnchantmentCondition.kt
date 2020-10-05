@@ -14,7 +14,7 @@ class EnchantmentCondition(
         fisher: Player,
         competition: FishingCompetition
     ): Boolean {
-        val fishingRod = fisher.inventory.itemInMainHand ?: return false
+        val fishingRod = fisher.inventory.itemInMainHand
         return fishingRod.containsEnchantment(enchantment) && fishingRod.getEnchantmentLevel(enchantment) >= minLevel
     }
 }

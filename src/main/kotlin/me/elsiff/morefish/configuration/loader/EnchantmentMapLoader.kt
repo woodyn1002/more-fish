@@ -1,6 +1,7 @@
 package me.elsiff.morefish.configuration.loader
 
 import me.elsiff.morefish.configuration.ConfigurationValueAccessor
+import me.elsiff.morefish.util.NamespacedKeyUtils
 import org.bukkit.NamespacedKey
 import org.bukkit.enchantments.Enchantment
 
@@ -12,9 +13,9 @@ class EnchantmentMapLoader : CustomLoader<Map<Enchantment, Int>> {
         return if (section.contains(path)) {
             section.strings(path).map {
                 val tokens = it.split(DELIMITER)
-                val enchantment = Enchantment.getByKey(NamespacedKey.minecraft(tokens[0]))
+                val enchantment = NamespacedKeyUtils.enchantment(tokens[0])
                 val level = tokens[1].toInt()
-                Pair<Enchantment, Int>(enchantment, level)
+                Pair(enchantment, level)
             }.toMap()
         } else {
             emptyMap()

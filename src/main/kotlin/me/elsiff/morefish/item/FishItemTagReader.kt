@@ -28,7 +28,7 @@ class FishItemTagReader(
             val typeName = tags.getCustomTag(fishTypeKey, ItemTagType.STRING)
             val type = fishTypeTable.types.find { it.name == typeName }
                 ?: throw IllegalStateException("Fish type doesn't exist")
-            val length = tags.getCustomTag(fishLengthKey, ItemTagType.DOUBLE)
+            val length = tags.getCustomTag(fishLengthKey, ItemTagType.DOUBLE) ?: 0.0
             Fish(type, length)
         }
     }

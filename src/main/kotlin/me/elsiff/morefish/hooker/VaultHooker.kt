@@ -14,7 +14,7 @@ class VaultHooker : PluginHooker {
     override fun hook(plugin: MoreFish) {
         PluginHooker.checkEnabled(this, plugin.server.pluginManager)
 
-        val registration = plugin.server.servicesManager.getRegistration(Economy::class.java) ?: null
+        val registration = plugin.server.servicesManager.getRegistration(Economy::class.java)
         if (registration != null) {
             economy = registration.provider
         }
