@@ -17,23 +17,16 @@ class MutableFishTypeTable : HashMap<FishRarity, Set<FishType>>(), FishTypeTable
         get() = values.flatten().toSet()
 
     override fun pickRandomRarity(): FishRarity {
-        val probabilitySum = rarities.sumByDouble { it.probability }
-
-        val rarities = keys.toList().filter { !it.default }.sortedBy { it.probability }
-        val randomVal = Random.nextDouble()
-        for (rarity in rarities) {
-            // Weighted selection (probability / probabilitySum <= 1.0)
-            if (randomVal <= rarity.probability / probabilitySum) {
-                return rarity
-            }
+        val completeWeight = rarities.sumByDouble { it.probability }
+        val random = Random.nextDouble() * completeWeight
+        var countWeight = 0.0
+        for (rarity in keys) {
+            countWeight += rarity.probability
+            if (countWeight >= random) return rarity
         }
 
-        if (rarities.isEmpty()) {
-            throw IllegalStateException("Add rarity at least 1")
-        }
-
-        // return biggest chance rarity.
-        return rarities[rarities.size - 1]
+        // Should never be shown. If by any chance reached here, returns biggest chance rarity.
+        return rarities.maxByOrNull { it.probability } ?: throw IllegalStateException("Add rarity at least 1")
     }
 
     override fun pickRandomType(rarity: FishRarity): FishType {
@@ -42,10 +35,10 @@ class MutableFishTypeTable : HashMap<FishRarity, Set<FishType>>(), FishTypeTable
     }
 
     override fun pickRandomType(
-        caught: Item,
-        fisher: Player,
-        competition: FishingCompetition,
-        rarity: FishRarity
+            caught: Item,
+            fisher: Player,
+            competition: FishingCompetition,
+            rarity: FishRarity
     ): FishType {
         check(contains(rarity)) { "Rarity must be contained in the table" }
         val types = this[rarity]!!.filter { type ->
