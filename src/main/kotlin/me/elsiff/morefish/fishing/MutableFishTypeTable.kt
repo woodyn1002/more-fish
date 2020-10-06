@@ -9,16 +9,6 @@ import kotlin.random.Random
  * Created by elsiff on 2018-12-23.
  */
 class MutableFishTypeTable : HashMap<FishRarity, Set<FishType>>(), FishTypeTable {
-    override val defaultRarity: FishRarity?
-        get() {
-            val defaultRarities = rarities.filter { it.default }
-            check(defaultRarities.size <= 1) { "Default rarity must be only one" }
-
-            return if (!defaultRarities.isEmpty())
-                return defaultRarities[0]
-            else
-                null
-        }
 
     override val rarities: Set<FishRarity>
         get() = keys.toSet()
@@ -27,23 +17,16 @@ class MutableFishTypeTable : HashMap<FishRarity, Set<FishType>>(), FishTypeTable
         get() = values.flatten().toSet()
 
     override fun pickRandomRarity(): FishRarity {
-        val probabilitySum = rarities
-            .filter { !it.default }
-            .sumByDouble { it.probability }
-        check(probabilitySum <= 1.0) { "Sum of rarity probabilities must not be bigger than 1.0" }
-
-        val rarities = keys
-        val randomVal = Random.nextDouble()
-        var chanceSum = 0.0
-        for (rarity in rarities) {
-            if (!rarity.default) {
-                chanceSum += rarity.probability
-                if (randomVal <= chanceSum) {
-                    return rarity
-                }
-            }
+        val completeWeight = rarities.sumByDouble { it.probability }
+        val random = Random.nextDouble() * completeWeight
+        var countWeight = 0.0
+        for (rarity in keys) {
+            countWeight += rarity.probability
+            if (countWeight >= random) return rarity
         }
-        return defaultRarity ?: throw IllegalStateException("Default rarity doesn't exist")
+
+        // Should never be shown. If by any chance reached here, returns biggest chance rarity.
+        return rarities.maxByOrNull { it.probability } ?: throw IllegalStateException("Add rarity at least 1")
     }
 
     override fun pickRandomType(rarity: FishRarity): FishType {
@@ -52,10 +35,10 @@ class MutableFishTypeTable : HashMap<FishRarity, Set<FishType>>(), FishTypeTable
     }
 
     override fun pickRandomType(
-        caught: Item,
-        fisher: Player,
-        competition: FishingCompetition,
-        rarity: FishRarity
+            caught: Item,
+            fisher: Player,
+            competition: FishingCompetition,
+            rarity: FishRarity
     ): FishType {
         check(contains(rarity)) { "Rarity must be contained in the table" }
         val types = this[rarity]!!.filter { type ->

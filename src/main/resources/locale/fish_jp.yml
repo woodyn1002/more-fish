@@ -23,7 +23,7 @@ item-format:
 rarity-list:
   common:
     display-name: "普通"
-    default: true
+    chance: 70
     color: "reset"
     announcement: 0
     no-display: true
