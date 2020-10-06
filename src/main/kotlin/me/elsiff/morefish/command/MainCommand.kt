@@ -46,7 +46,6 @@ class MainCommand(
         sender.sendMessage("$prefix/$label begin [runningTime(sec)]")
         sender.sendMessage("$prefix/$label suspend")
         sender.sendMessage("$prefix/$label end")
-        sender.sendMessage("$prefix/$label rewards")
         sender.sendMessage("$prefix/$label clear")
         sender.sendMessage("$prefix/$label reload")
         sender.sendMessage("$prefix/$label top")
