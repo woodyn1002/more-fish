@@ -15,7 +15,11 @@ import me.elsiff.morefish.fishing.catchhandler.NewFirstBroadcaster
 import me.elsiff.morefish.fishing.competition.FishingCompetition
 import me.elsiff.morefish.fishing.competition.FishingCompetitionAutoRunner
 import me.elsiff.morefish.fishing.competition.FishingCompetitionHost
-import me.elsiff.morefish.hooker.*
+import me.elsiff.morefish.hooker.CitizensHooker
+import me.elsiff.morefish.hooker.McmmoHooker
+import me.elsiff.morefish.hooker.PlaceholderApiHooker
+import me.elsiff.morefish.hooker.VaultHooker
+import me.elsiff.morefish.hooker.WorldGuardHooker
 import me.elsiff.morefish.item.FishItemStackConverter
 import me.elsiff.morefish.shop.FishShop
 import me.elsiff.morefish.shop.FishShopSignListener
@@ -28,7 +32,6 @@ import org.bukkit.plugin.java.JavaPlugin
  * Created by elsiff on 2018-12-20.
  */
 class MoreFish : JavaPlugin() {
-    val protocolLib = ProtocolLibHooker()
     val vault = VaultHooker()
     val mcmmoHooker = McmmoHooker()
     val worldGuardHooker = WorldGuardHooker()
@@ -55,7 +58,6 @@ class MoreFish : JavaPlugin() {
         INSTANCE = this
         DaoFactory.init(this)
 
-        protocolLib.hookIfEnabled(this)
         vault.hookIfEnabled(this)
         mcmmoHooker.hookIfEnabled(this)
         worldGuardHooker.hookIfEnabled(this)
@@ -77,7 +79,7 @@ class MoreFish : JavaPlugin() {
 
         if (!isSnapshotVersion()) {
             updateChecker.check()
-            if (updateChecker.hasNewVersion()) {
+            if (updateChecker.hasNewVersion() && Config.standard.boolean("general.check-update")) {
                 val notifier = UpdateNotifierListener(updateChecker.newVersion)
                 server.pluginManager.registerEvents(notifier, this)
             }
@@ -107,7 +109,6 @@ class MoreFish : JavaPlugin() {
 
     fun applyConfig() {
         Config.load(this)
-        Config.customItemStackLoader.protocolLib = protocolLib
         Config.fishConditionSetLoader.init(mcmmoHooker, worldGuardHooker)
 
         fishTypeTable.clear()

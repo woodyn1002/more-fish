@@ -1,9 +1,9 @@
 package me.elsiff.morefish.hooker
 
-import com.sk89q.worldguard.bukkit.WGBukkit
+import com.sk89q.worldedit.bukkit.BukkitAdapter
+import com.sk89q.worldguard.WorldGuard
 import me.elsiff.morefish.MoreFish
 import org.bukkit.Location
-
 
 /**
  * Created by elsiff on 2019-01-20.
@@ -17,12 +17,9 @@ class WorldGuardHooker : PluginHooker {
     }
 
     fun containsLocation(regionId: String, location: Location): Boolean {
-        val x = location.blockX
-        val y = location.blockY
-        val z = location.blockZ
-        val region = WGBukkit.getRegionManager(location.world).getRegion(regionId)
-            ?: throw IllegalStateException("Region '$regionId' doesn't exist")
-
-        return region.contains(x, y, z)
+        val bukkitWorld: org.bukkit.World = location.world ?: return false
+        val world = BukkitAdapter.adapt(bukkitWorld)
+        val regions = WorldGuard.getInstance().platform.regionContainer.get(world) ?: return false
+        return regions.getRegion(regionId)?.contains(location.blockX, location.blockY, location.blockZ) ?: false
     }
 }

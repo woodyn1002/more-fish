@@ -16,7 +16,6 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.plugin.PluginDescriptionFile
 
-
 /**
  * Created by elsiff on 2018-12-26.
  */
@@ -37,9 +36,9 @@ class MainCommand(
         val prefix = "${ChatColor.AQUA}[$pluginName]${ChatColor.RESET} "
         sender.sendMessage(
             prefix +
-                    "${ChatColor.DARK_AQUA}> ===== " +
-                    "${ChatColor.AQUA}${ChatColor.BOLD}$pluginName ${ChatColor.AQUA}v${pluginInfo.version}" +
-                    "${ChatColor.DARK_AQUA} ===== <"
+                "${ChatColor.DARK_AQUA}> ===== " +
+                "${ChatColor.AQUA}${ChatColor.BOLD}$pluginName ${ChatColor.AQUA}v${pluginInfo.version}" +
+                "${ChatColor.DARK_AQUA} ===== <"
         )
         val label = execCommandLabel
         sender.sendMessage("$prefix/$label help")
@@ -148,7 +147,7 @@ class MainCommand(
                 return
             }
 
-            val target = sender.server.getPlayerExact(args[0]) ?: null
+            val target = sender.server.getPlayerExact(args[0])
             if (target == null) {
                 val msg = Lang.format("player-not-found").replace("%s" to args[0]).output()
                 sender.sendMessage(msg)

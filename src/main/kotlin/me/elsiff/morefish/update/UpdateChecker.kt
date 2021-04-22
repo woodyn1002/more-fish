@@ -4,7 +4,6 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
 
-
 /**
  * Created by elsiff on 2019-01-03.
  */

@@ -37,7 +37,7 @@ class FishShop(
         get() = shopConfig.double("multiplier")
 
     private val roundDecimalPoints: Boolean
-        get () = shopConfig.boolean("round-decimal-points")
+        get() = shopConfig.boolean("round-decimal-points")
 
     fun sell(player: Player, fish: Fish) {
         val price = priceOf(fish)

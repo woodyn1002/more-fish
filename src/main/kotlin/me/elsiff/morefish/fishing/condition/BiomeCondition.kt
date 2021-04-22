@@ -13,8 +13,9 @@ class BiomeCondition(
         fisher: Player,
         competition: FishingCompetition
     ): Boolean {
-        val x = caught.location.x.toInt()
-        val z = caught.location.z.toInt()
-        return caught.world.getBiome(x, z) in biomes
+        val x = caught.location.blockX
+        val y = caught.location.blockY
+        val z = caught.location.blockZ
+        return caught.world.getBiome(x, y, z) in biomes
     }
 }

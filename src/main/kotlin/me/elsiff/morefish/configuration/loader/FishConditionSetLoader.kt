@@ -50,7 +50,8 @@ class FishConditionSetLoader : CustomLoader<Set<FishCondition>> {
                 BiomeCondition(args.map { Biome.valueOf(it.toUpperCase()) })
             "enchantment" ->
                 EnchantmentCondition(
-                    Enchantment.getByKey(NamespacedKey.minecraft(args[0])),
+                    Enchantment.getByKey(NamespacedKey.minecraft(args[0]))
+                        ?: throw IllegalStateException("Couldn't get value of enchantment"),
                     args[1].toInt()
                 )
             "level" ->

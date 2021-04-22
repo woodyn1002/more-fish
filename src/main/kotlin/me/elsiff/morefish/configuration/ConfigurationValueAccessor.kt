@@ -43,17 +43,25 @@ abstract class ConfigurationValueAccessor {
         findValue(path, currentSection::getBoolean, currentSection::isBoolean, default)
 
     fun double(path: String, default: Double? = null): Double =
-        findValue(path, currentSection::getDouble, {
-            currentSection.isDouble(it) || currentSection.isInt(it)
-        }, default)
+        findValue(
+            path, currentSection::getDouble,
+            {
+                currentSection.isDouble(it) || currentSection.isInt(it)
+            },
+            default
+        )
 
     fun int(path: String, default: Int? = null): Int =
         findValue(path, currentSection::getInt, currentSection::isInt, default)
 
     fun long(path: String, default: Long? = null): Long =
-        findValue(path, currentSection::getLong, {
-            currentSection.isLong(it) || currentSection.isInt(it)
-        }, default)
+        findValue(
+            path, currentSection::getLong,
+            {
+                currentSection.isLong(it) || currentSection.isInt(it)
+            },
+            default
+        )
 
     fun string(path: String, default: String? = null): String =
         findValue(path, currentSection::getString, currentSection::isString, default)
@@ -63,13 +71,13 @@ abstract class ConfigurationValueAccessor {
 
     private inline fun <reified T> findValue(
         path: String,
-        getter: (String) -> T,
+        getter: (String) -> T?,
         typeChecker: (String) -> Boolean,
         default: T?
     ): T {
         return if (currentSection.contains(path)) {
             require(typeChecker(path)) { "Value of '$path' in configuration is not a ${T::class.simpleName}" }
-            getter(path)
+            getter(path) ?: throw IllegalStateException()
         } else {
             require(default != null) { "Path '$path' must exist or have a default value" }
             default

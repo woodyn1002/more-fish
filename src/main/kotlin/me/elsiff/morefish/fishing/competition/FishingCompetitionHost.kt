@@ -122,10 +122,12 @@ class FishingCompetitionHost(
     }
 
     private fun topReplacementOf(number: Int, record: Record): Map<String, String> {
+        val fisherName = record.fisher.name
+            ?: throw IllegalStateException("Fisher's name is null")
         return mapOf(
             "%ordinal%" to NumberUtils.ordinalOf(number),
             "%number%" to number.toString(),
-            "%player%" to record.fisher.name,
+            "%player%" to fisherName,
             "%length%" to record.fish.length.toString(),
             "%fish%" to record.fish.type.name
         )
