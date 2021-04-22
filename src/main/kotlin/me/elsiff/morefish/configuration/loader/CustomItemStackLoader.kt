@@ -33,6 +33,7 @@ class CustomItemStackLoader(
                     addEnchant(enchantment, level, true)
                 }
                 isUnbreakable = it.boolean("unbreakable", false)
+                setCustomModelData(it.int("custom-model-data"))
             }
 
             itemStack.editIfIs<Damageable> {
