@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "me.elsiff"
-version = "3.0.3-SNAPSHOT"
+version = "3.1.0-SNAPSHOT"
 
 val pluginName = "MoreFish"
 val mainPackage = "me.elsiff.morefish"
