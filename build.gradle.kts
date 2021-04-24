@@ -57,7 +57,6 @@ bukkit {
 tasks {
     ktlintFormat
     compileKotlin {
-
         kotlinOptions.jvmTarget = "11"
     }
     compileTestKotlin {
@@ -73,5 +72,5 @@ tasks {
 }
 
 configurations {
-    ktlint
+    // ktlint
 }

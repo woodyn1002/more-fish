@@ -5,6 +5,7 @@ import me.elsiff.morefish.configuration.ConfigurationValueAccessor
 import me.elsiff.morefish.configuration.translated
 import me.elsiff.morefish.fishing.FishRarity
 import me.elsiff.morefish.fishing.catchhandler.CatchCommandExecutor
+import me.elsiff.morefish.fishing.catchhandler.CatchFireworkSpawner
 import me.elsiff.morefish.fishing.catchhandler.CatchHandler
 
 /**
@@ -22,6 +23,9 @@ class FishRaritySetLoader(
                 val handler = CatchCommandExecutor(it.strings("commands").translated())
                 catchHandlers.add(handler)
             }
+            if (it.boolean("firework", false)) {
+                catchHandlers.add(CatchFireworkSpawner())
+            }
             FishRarity(
                 name = it.name,
                 displayName = it.string("display-name").translated(),
@@ -33,7 +37,6 @@ class FishRaritySetLoader(
                     ?: Config.defaultCatchAnnouncement,
                 hasNotFishItemFormat = it.boolean("skip-item-format", false),
                 noDisplay = it.boolean("no-display", false),
-                hasCatchFirework = it.boolean("firework", false),
                 additionalPrice = it.double("additional-price", 0.0)
             )
         }.toSet()

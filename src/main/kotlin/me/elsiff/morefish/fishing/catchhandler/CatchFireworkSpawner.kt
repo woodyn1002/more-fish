@@ -19,12 +19,10 @@ class CatchFireworkSpawner : CatchHandler {
         .build()
 
     override fun handle(catcher: Player, fish: Fish) {
-        if (fish.type.hasCatchFirework) {
-            val firework = catcher.world.spawn(catcher.location, Firework::class.java)
-            val meta = firework.fireworkMeta
-            meta.addEffect(effect)
-            meta.power = 1
-            firework.fireworkMeta = meta
-        }
+        val firework = catcher.world.spawn(catcher.location, Firework::class.java)
+        val meta = firework.fireworkMeta
+        meta.addEffect(effect)
+        meta.power = 1
+        firework.fireworkMeta = meta
     }
 }

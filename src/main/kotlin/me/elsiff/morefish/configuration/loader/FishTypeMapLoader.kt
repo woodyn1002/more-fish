@@ -5,6 +5,7 @@ import me.elsiff.morefish.configuration.translated
 import me.elsiff.morefish.fishing.FishRarity
 import me.elsiff.morefish.fishing.FishType
 import me.elsiff.morefish.fishing.catchhandler.CatchCommandExecutor
+import me.elsiff.morefish.fishing.catchhandler.CatchFireworkSpawner
 import me.elsiff.morefish.fishing.catchhandler.CatchHandler
 
 /**
@@ -29,6 +30,9 @@ class FishTypeMapLoader(
                         val handler = CatchCommandExecutor(it.strings("commands").translated())
                         catchHandlers.add(handler)
                     }
+                    if (it.boolean("firework", false)) {
+                        catchHandlers.add(CatchFireworkSpawner())
+                    }
                     FishType(
                         name = it.name,
                         displayName = it.string("display-name").translated(),
@@ -42,7 +46,6 @@ class FishTypeMapLoader(
                         conditions = fishConditionSetLoader.loadFrom(it, "conditions"),
                         hasNotFishItemFormat = it.boolean("skip-item-format", rarity.hasNotFishItemFormat),
                         noDisplay = it.boolean("no-display", rarity.noDisplay),
-                        hasCatchFirework = it.boolean("firework", rarity.hasCatchFirework),
                         additionalPrice = rarity.additionalPrice + it.double("additional-price", 0.0)
                     )
                 }.toSet()

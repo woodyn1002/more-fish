@@ -17,6 +17,5 @@ data class FishRarity(
     val catchAnnouncement: PlayerAnnouncement,
     val hasNotFishItemFormat: Boolean = false,
     val noDisplay: Boolean = false,
-    val hasCatchFirework: Boolean = false,
     val additionalPrice: Double = 0.0
 )

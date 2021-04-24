@@ -8,7 +8,7 @@ import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.Plugin
 import java.io.File
-import java.util.*
+import java.util.UUID
 import kotlin.math.min
 
 /**
@@ -45,7 +45,8 @@ class YamlRecordDao(
         setRecord(
             yaml.getConfigurationSection(id)
                 ?: throw IllegalStateException("Couldn't get configuration section"),
-            record)
+            record
+        )
         yaml.save(file)
     }
 
@@ -80,7 +81,8 @@ class YamlRecordDao(
             val fish = Fish(
                 fishType,
                 fishLength
-                    ?: throw IllegalStateException("Illegal fish type"))
+                    ?: throw IllegalStateException("Illegal fish type")
+            )
             records.add(Record(player, fish))
         }
         return records.sortedDescending()
