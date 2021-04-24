@@ -20,7 +20,7 @@ class FishTypeMapLoader(
     override fun loadFrom(section: ConfigurationValueAccessor, path: String): Map<FishRarity, Set<FishType>> {
         section[path].let { root ->
             val rarities = fishRaritySetLoader.loadFrom(root, "rarity-list")
-            return root["fish-list"].children.map { groupByRarity ->
+            return root["fish-list"].children.associate { groupByRarity ->
                 val rarity = findRarity(rarities, groupByRarity.name)
                 val fishTypes = groupByRarity.children.map {
                     val catchHandlers = mutableListOf<CatchHandler>()
@@ -30,7 +30,7 @@ class FishTypeMapLoader(
                         val handler = CatchCommandExecutor(it.strings("commands").translated())
                         catchHandlers.add(handler)
                     }
-                    if (it.boolean("firework", false)) {
+                    if (it.boolean("firework", rarity.hasCatchFirework)) {
                         catchHandlers.add(CatchFireworkSpawner())
                     }
                     FishType(
@@ -50,7 +50,7 @@ class FishTypeMapLoader(
                     )
                 }.toSet()
                 Pair(rarity, fishTypes)
-            }.toMap()
+            }
         }
     }
 
