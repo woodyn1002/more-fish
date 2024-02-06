@@ -3,8 +3,7 @@ package me.elsiff.morefish.util
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
+import kotlin.test.assertEquals
 import kotlin.test.assertFails
 
 /**

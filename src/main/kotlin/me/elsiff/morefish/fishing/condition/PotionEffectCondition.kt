@@ -10,6 +10,6 @@ class PotionEffectCondition(
     private val minAmplifier: Int
 ) : FishCondition {
     override fun check(caught: Item, fisher: Player, competition: FishingCompetition): Boolean {
-        return fisher.hasPotionEffect(effectType) && fisher.getPotionEffect(effectType).amplifier >= minAmplifier
+        return fisher.hasPotionEffect(effectType) && fisher.getPotionEffect(effectType)!!.amplifier >= minAmplifier
     }
 }

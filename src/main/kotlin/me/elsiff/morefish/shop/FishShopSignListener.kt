@@ -36,9 +36,9 @@ class FishShopSignListener(
     @EventHandler
     fun onPlayerInteract(event: PlayerInteractEvent) {
         if (event.action == Action.RIGHT_CLICK_BLOCK &&
-            event.clickedBlock.state is Sign
+            event.clickedBlock?.state is Sign
         ) {
-            val sign = event.clickedBlock.state as Sign
+            val sign = event.clickedBlock?.state as Sign
             if (sign.lines[0] == shopSignTitle) {
                 if (Config.standard.boolean("fish-shop.enable")) {
                     fishShop.openGuiTo(event.player)

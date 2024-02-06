@@ -5,6 +5,7 @@ import me.elsiff.morefish.configuration.ConfigurationValueAccessor
 import me.elsiff.morefish.configuration.translated
 import me.elsiff.morefish.fishing.FishRarity
 import me.elsiff.morefish.fishing.catchhandler.CatchCommandExecutor
+import me.elsiff.morefish.fishing.catchhandler.CatchFireworkSpawner
 import me.elsiff.morefish.fishing.catchhandler.CatchHandler
 
 /**

@@ -5,6 +5,7 @@ import me.elsiff.morefish.configuration.translated
 import me.elsiff.morefish.fishing.FishRarity
 import me.elsiff.morefish.fishing.FishType
 import me.elsiff.morefish.fishing.catchhandler.CatchCommandExecutor
+import me.elsiff.morefish.fishing.catchhandler.CatchFireworkSpawner
 import me.elsiff.morefish.fishing.catchhandler.CatchHandler
 
 /**
@@ -19,7 +20,7 @@ class FishTypeMapLoader(
     override fun loadFrom(section: ConfigurationValueAccessor, path: String): Map<FishRarity, Set<FishType>> {
         section[path].let { root ->
             val rarities = fishRaritySetLoader.loadFrom(root, "rarity-list")
-            return root["fish-list"].children.map { groupByRarity ->
+            return root["fish-list"].children.associate { groupByRarity ->
                 val rarity = findRarity(rarities, groupByRarity.name)
                 val fishTypes = groupByRarity.children.map {
                     val catchHandlers = mutableListOf<CatchHandler>()
@@ -28,6 +29,9 @@ class FishTypeMapLoader(
                     if (it.contains("commands")) {
                         val handler = CatchCommandExecutor(it.strings("commands").translated())
                         catchHandlers.add(handler)
+                    }
+                    if (it.boolean("firework", rarity.hasCatchFirework)) {
+                        catchHandlers.add(CatchFireworkSpawner())
                     }
                     FishType(
                         name = it.name,
@@ -42,12 +46,11 @@ class FishTypeMapLoader(
                         conditions = fishConditionSetLoader.loadFrom(it, "conditions"),
                         hasNotFishItemFormat = it.boolean("skip-item-format", rarity.hasNotFishItemFormat),
                         noDisplay = it.boolean("no-display", rarity.noDisplay),
-                        hasCatchFirework = it.boolean("firework", rarity.hasCatchFirework),
                         additionalPrice = rarity.additionalPrice + it.double("additional-price", 0.0)
                     )
                 }.toSet()
                 Pair(rarity, fishTypes)
-            }.toMap()
+            }
         }
     }
 

@@ -23,7 +23,7 @@ abstract class AbstractBroadcaster : CatchHandler {
             val receivers = fish.type.catchAnnouncement.receiversOf(catcher).toMutableList()
 
             if (Config.standard.boolean("messages.only-announce-fishing-rod")) {
-                receivers.removeIf { it.inventory.itemInMainHand?.type != Material.FISHING_ROD }
+                receivers.removeIf { it.inventory.itemInMainHand.type != Material.FISHING_ROD }
             }
 
             val msg = catchMessageFormat.replace(
@@ -31,7 +31,7 @@ abstract class AbstractBroadcaster : CatchHandler {
                 "%length%" to fish.length,
                 "%rarity%" to fish.type.rarity.displayName.toUpperCase(),
                 "%rarity_color%" to fish.type.rarity.color,
-                "%fish%" to fish.type.name,
+                "%fish%" to fish.type.displayName,
                 "%fish_with_rarity%" to fishNameWithRarity(fish.type)
             ).output(catcher)
             for (receiver in receivers) {
@@ -42,6 +42,6 @@ abstract class AbstractBroadcaster : CatchHandler {
 
     private fun fishNameWithRarity(fishType: FishType): String {
         return (if (fishType.noDisplay) "" else fishType.rarity.displayName.toUpperCase() + " ") +
-                fishType.displayName
+            fishType.displayName
     }
 }
